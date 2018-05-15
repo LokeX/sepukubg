@@ -196,9 +196,13 @@ public class Moves {
     parentLayout = new Layout(layout);
     legalMoves = new ArrayList<>();
     evaluatedMoves = new ArrayList<>();
-    for (int a = 0; a < (useDice.length == 2 ? 2 : 1); a++) {
+    for (int a = 0; a < (dice.areDouble() ? 1 : 2); a++) {
       dieFaces = a == 0 ? useDice : dice.getSwappedDice();
-      partMove(0, dieFaces, moveLayout, moveLayout.getMoveablePointsList(dieFaces[0]));
+      List<Integer> moveablePointsList = moveLayout.getMoveablePointsList(dieFaces[0]);
+
+      if (!moveablePointsList.isEmpty()) {
+        partMove(0, dieFaces, moveLayout, moveablePointsList);
+      }
     }
     if (legalMoves.isEmpty()) {
       evaluatedMoves.add(new EvaluatedMove(moveLayout));

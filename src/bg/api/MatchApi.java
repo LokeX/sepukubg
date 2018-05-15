@@ -232,7 +232,7 @@ public class MatchApi extends Selection {
     ).
       setSearchEvaluations().
       sort().
-      applyToEvaluatedMoves();
+      applyToMoves();
   }
 
   private boolean okToSearch () {

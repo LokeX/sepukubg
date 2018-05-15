@@ -13,14 +13,14 @@ import javax.swing.KeyStroke;
 
 public class MatchMenu extends JMenu implements Timeable {
 
-  JMenuItem newMatch = new JMenuItem("New MatchApi");
+  JMenuItem newMatch = new JMenuItem("New Match");
   JMenuItem resignGame = new JMenuItem("Resign game");
   JMenuItem autoCompleteGame = new JMenuItem("Auto complete game");
   JMenuItem nextAction = new JMenuItem("Next action");
 
   public MatchMenu () {
 
-    super("MatchApi");
+    super("Match");
     setupMatchMenu();
   }
 

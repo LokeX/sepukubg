@@ -79,7 +79,7 @@ public class SearchMoves {
     return this;
   }
 
-  public SearchMoves applyToEvaluatedMoves () {
+  public SearchMoves applyToMoves() {
 
     moves.setEvaluatedMoves(evaluatedMoves);
 

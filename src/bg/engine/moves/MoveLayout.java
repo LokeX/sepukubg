@@ -3,7 +3,6 @@ package bg.engine.moves;
 import bg.engine.Dice;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MoveLayout extends Layout {
@@ -51,10 +50,45 @@ public class MoveLayout extends Layout {
 //    return hitPoints.clone();
   }
 
-  public Layout getParentLayout () {
+  public Layout getParentLayout() {
 
     return parentLayout;
   }
+
+//  public List<MoveLayout> getPartMoveLayouts () {
+//
+//    List<MoveLayout> partMoveLayouts = new ArrayList<>();
+//    MoveLayout moveLayout = this;
+//
+//    while (moveLayout.parentLayout != null) {
+//      partMoveLayouts.add(moveLayout);
+//      moveLayout = moveLayout.parentLayout;
+//    }
+//
+//    return partMoveLayouts;
+//
+//  }
+
+//  public List<MoveLayout> getPartMoveLayouts () {
+//
+//    return getPartMoveLayoutList(
+//      this,
+//      new ArrayList<>()
+//    );
+//  }
+//
+//  private List<MoveLayout> getPartMoveLayoutList (
+//
+//    MoveLayout moveLayout,
+//    List<MoveLayout> partMoveLayouts
+//  ) {
+//
+//    if (moveLayout.parentLayout != null) {
+//      getPartMoveLayoutList(moveLayout.parentLayout, partMoveLayouts);
+//    }
+//    partMoveLayouts.add(moveLayout);
+//    return partMoveLayouts;
+//  }
 
   public MoveLayout () {
 

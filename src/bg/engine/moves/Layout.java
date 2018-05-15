@@ -85,9 +85,10 @@ public class Layout {
 
   public int getPlayerPip (int playerID) {
 
-    return playerID == this.playerID ?
-      calcPip().getPip() :
-      getFlippedLayout().calcPip().getPip();
+    return
+      playerID == this.playerID ?
+        calcPip().getPip() :
+        getFlippedLayout().calcPip().getPip();
   }
 
   public int getOpponentPip () {
