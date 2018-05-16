@@ -10,8 +10,8 @@ import static java.util.stream.Collectors.toList;
 
 public class Moves {
 
-  List<EvaluatedMove> evaluatedMoves;
-  private SearchMoves searchMoves;
+  private List<EvaluatedMove> evaluatedMoves;
+  private SearchEvaluation searchEvaluation;
   private List<MoveLayout> legalMoves;
   private MoveLayout parentMove;
   private Dice dice;
@@ -34,16 +34,26 @@ public class Moves {
     return new Layout(parentMove);
   }
 
-  public SearchMoves getSearchMoves () {
+  public Moves generateSearchEvaluations (int nrOfMovesToSearch, int plyDepth) {
 
-    return searchMoves;
+    searchEvaluation = new SearchEvaluation().generateSearchMoves(
+      nrOfMovesToSearch,
+      plyDepth,
+      evaluatedMoves
+    );
+    return this;
   }
 
-  public SearchMoves searchMoves(int nrOfMovesToSearch, int plyDepth) {
+  public void sortMovesBySearchEvaluation () {
 
-    searchMoves = new SearchMoves(nrOfMovesToSearch, plyDepth, this);
+    if (searchEvaluation != null) {
+      searchEvaluation.sortEvaluatedMoves();
+    }
+  }
 
-    return searchMoves;
+  public SearchEvaluation getSearchEvaluation () {
+
+    return searchEvaluation;
   }
 
   protected int getMoveNr (EvaluatedMove evaluatedMove) {
@@ -59,11 +69,6 @@ public class Moves {
   public List<EvaluatedMove> getEvaluatedMoves() {
 
     return Collections.unmodifiableList(evaluatedMoves);
-  }
-
-  void setEvaluatedMoves(List<EvaluatedMove> list) {
-
-    evaluatedMoves = list;
   }
 
   public List<int[]> getLegalMovePoints () {

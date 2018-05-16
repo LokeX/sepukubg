@@ -220,19 +220,24 @@ public class MatchApi extends Selection {
     TextDisplay.displayReport(
       "Search report",
       "Turn nr: "+(getLatestTurnNr()+1)+"\n"+
-        getLatestTurn().getSearchMoves().getReport()
+        getLatestTurn().getSearchEvaluation().getReport()
     );
   }
 
   private void searchTurn (Turn turn) {
 
-    turn.searchMoves(
+
+    turn.generateSearchEvaluations(
       settings.getNrOfMovesToSearch(),
       settings.getSearchToPly()
-    ).
-      setSearchEvaluations().
-      sort();
-//      applyToMoves();
+    ).sortMovesBySearchEvaluation();
+
+//    turn.generateSearchEvaluations(
+//      settings.getNrOfMovesToSearch(),
+//      settings.getSearchToPly()
+//    ).
+//      setSearchEvaluations().
+//      sort();
   }
 
   private boolean okToSearch () {

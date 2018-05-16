@@ -1,35 +1,51 @@
 package bg.engine.moves;
 
+import java.util.Collections;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
-public class SearchMoves {
+public class SearchEvaluation {
 
   private String report = "";
 //  private Moves moves;
-  private List<EvaluatedMove> evaluatedMoves;
+  private List<EvaluatedMove> searchMoves;
   private int nrOfMoves;
   private int nrOfTurns;
   private long startTime;
 
-  public SearchMoves (int nrOfMoves, int nrOfTurns, Moves moves) {
+  List<EvaluatedMove> getSearchMoves () {
 
-    evaluatedMoves = moves.evaluatedMoves;
-//    this.moves = moves;
-    this.nrOfMoves = nrOfMoves;
-    this.nrOfTurns = nrOfTurns;
+    return Collections.unmodifiableList(searchMoves);
   }
 
-  public SearchMoves setSearchEvaluations () {
+  public String getReport () {
+
+    return report;
+  }
+
+  public SearchEvaluation() {
+
+//    generateSearchEvaluations = moves.generateSearchEvaluations;
+//    this.moves = moves;
+//    this.searchMoves = new ArrayList<>(searchMoves);
+//    this.nrOfMoves = nrOfMoves;
+//    this.nrOfTurns = nrOfTurns;
+  }
+
+  public SearchEvaluation generateSearchMoves (int nrOfMoves, int nrOfTurns, List<EvaluatedMove> searchMoves) {
 
     startTime = System.currentTimeMillis();
-    evaluatedMoves.parallelStream().limit(nrOfMoves).forEach(move -> {
+    this.searchMoves = searchMoves;
+    this.nrOfMoves = nrOfMoves;
+    this.nrOfTurns = nrOfTurns;
+    searchMoves.parallelStream().limit(nrOfMoves).forEach(move -> {
       move.setSearchEvaluation(
         move.getLayoutStrength() - getTurnStrengthAverage(1, move)
       );
     });
     report += "Before values:\n";
     appendReportValues();
+//    sortEvaluatedMoves();
     return this;
   }
 
@@ -47,7 +63,7 @@ public class SearchMoves {
     return turnsStrengthAverage - nextTurnsStrengthAverage;
   }
 
-  public int getMovesStrengthAverage(List<Moves> moves) {
+  private int getMovesStrengthAverage(List<Moves> moves) {
 
     return moves.parallelStream().map(Moves::getBestMove).
       mapToInt(EvaluatedMove::getProbabilityAdjustedLayoutStrength).sum()/36;
@@ -60,28 +76,27 @@ public class SearchMoves {
       average().getAsDouble();
   }
 
-  public SearchMoves sort () {
+  void sortEvaluatedMoves() {
 
     printSearchReport();
 
-    List<EvaluatedMove> sortedMoves = evaluatedMoves.stream().
+    List<EvaluatedMove> sortedMoves = searchMoves.stream().
       limit(nrOfMoves).
       sorted((a, b) -> b.searchEvaluation - a.searchEvaluation).
       collect(toList());
 
     for (int a = 0; a < sortedMoves.size(); a++) {
-      evaluatedMoves.set(a, sortedMoves.get(a));
+      searchMoves.set(a, sortedMoves.get(a));
     }
     report += "After values:\n";
     appendReportValues();
     appendTime();
     printSearchReport();
-    return this;
   }
 
-//  public SearchMoves applyToMoves() {
+//  public SearchEvaluation applyToMoves() {
 //
-//    moves.setEvaluatedMoves(evaluatedMoves);
+//    moves.setEvaluatedMoves(generateSearchEvaluations);
 //
 //    return this;
 //  }
@@ -96,7 +111,7 @@ public class SearchMoves {
 
   private void appendReportValues () {
 
-    report += evaluatedMoves.stream().
+    report += searchMoves.stream().
       limit(nrOfMoves).
       map(move ->
         move.getMovePointsString()+": "+
@@ -104,17 +119,12 @@ public class SearchMoves {
       ).reduce(String::concat);
   }
 
-  public String getReport () {
-
-    return report;
-  }
-
-  public SearchMoves printSearchReport () {
+  public SearchEvaluation printSearchReport () {
 
     long searchEndTime = System.currentTimeMillis();
 
     System.out.println("SearchMove: strength difference");
-    evaluatedMoves.stream().limit(nrOfMoves).forEach(move -> {
+    searchMoves.stream().limit(nrOfMoves).forEach(move -> {
       move.printMovePoints();
       System.out.print(": "+move.getSearchEvaluation());
       System.out.println();
