@@ -10,8 +10,8 @@ import static java.util.stream.Collectors.toList;
 
 public class Moves {
 
+  List<EvaluatedMove> evaluatedMoves;
   private SearchMoves searchMoves;
-  private List<EvaluatedMove> evaluatedMoves;
   private List<MoveLayout> legalMoves;
   private MoveLayout parentMove;
   private Dice dice;
@@ -54,11 +54,6 @@ public class Moves {
   public List<MoveLayout> getLegalMoves() {
 
     return Collections.unmodifiableList(legalMoves);
-  }
-
-  List<EvaluatedMove> getModifiableEvaluatedMoves () {
-
-    return evaluatedMoves;
   }
 
   public List<EvaluatedMove> getEvaluatedMoves() {

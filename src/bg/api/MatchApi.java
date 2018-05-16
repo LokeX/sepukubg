@@ -231,8 +231,8 @@ public class MatchApi extends Selection {
       settings.getSearchToPly()
     ).
       setSearchEvaluations().
-      sort().
-      applyToMoves();
+      sort();
+//      applyToMoves();
   }
 
   private boolean okToSearch () {

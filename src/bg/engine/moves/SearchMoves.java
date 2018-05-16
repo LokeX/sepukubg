@@ -6,7 +6,7 @@ import static java.util.stream.Collectors.toList;
 public class SearchMoves {
 
   private String report = "";
-  private Moves moves;
+//  private Moves moves;
   private List<EvaluatedMove> evaluatedMoves;
   private int nrOfMoves;
   private int nrOfTurns;
@@ -14,8 +14,8 @@ public class SearchMoves {
 
   public SearchMoves (int nrOfMoves, int nrOfTurns, Moves moves) {
 
-    evaluatedMoves = moves.getModifiableEvaluatedMoves();
-    this.moves = moves;
+    evaluatedMoves = moves.evaluatedMoves;
+//    this.moves = moves;
     this.nrOfMoves = nrOfMoves;
     this.nrOfTurns = nrOfTurns;
   }
@@ -49,7 +49,7 @@ public class SearchMoves {
 
   public int getMovesStrengthAverage(List<Moves> moves) {
 
-    return moves.stream().map(Moves::getBestMove).
+    return moves.parallelStream().map(Moves::getBestMove).
       mapToInt(EvaluatedMove::getProbabilityAdjustedLayoutStrength).sum()/36;
   }
 
@@ -79,13 +79,13 @@ public class SearchMoves {
     return this;
   }
 
-  public SearchMoves applyToMoves() {
-
-    moves.setEvaluatedMoves(evaluatedMoves);
-
-    return this;
-  }
-
+//  public SearchMoves applyToMoves() {
+//
+//    moves.setEvaluatedMoves(evaluatedMoves);
+//
+//    return this;
+//  }
+//
   private void appendTime () {
 
     report +=
