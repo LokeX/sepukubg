@@ -40,10 +40,10 @@ public class Turn extends Moves {
     return this;
   }
 
-  public Layout getStartLayout() {
-
-    return new Layout(getParentLayout());
-  }
+//  public Layout getStartLayout() {
+//
+//    return new Layout(getParentLayout());
+//  }
 
   public EvaluatedMove getMoveByNr (int moveNr) {
 
@@ -72,7 +72,7 @@ public class Turn extends Moves {
 
   public void setDice (int[] dice) {
 
-    generateMoves(getStartLayout(), dice);
+    generateMoves(getParentLayout(), dice);
     setPlayedMoveNr(0);
   }
 

@@ -27,7 +27,7 @@ public class MoveInput {
     outputMove();
   }
 
-  private Layout customMoveLayout = new Layout(Main.matchApi.getSelectedTurn().getStartLayout());
+  private Layout customMoveLayout = new Layout(Main.matchApi.getSelectedTurn().getParentLayout());
   private List<int[]> legalMovePoints = Main.matchApi.getSelectedTurn().getLegalMovePoints();
   private Batch[] points = new Batch[26];
   private int[] movePoints = new int[matchApi.getSelectedTurn().getDice().length*2];

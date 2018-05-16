@@ -14,7 +14,7 @@ public class SearchMoves {
 
   public SearchMoves (int nrOfMoves, int nrOfTurns, Moves moves) {
 
-    evaluatedMoves = moves.getEvaluatedMoves();
+    evaluatedMoves = moves.getModifiableEvaluatedMoves();
     this.moves = moves;
     this.nrOfMoves = nrOfMoves;
     this.nrOfTurns = nrOfTurns;

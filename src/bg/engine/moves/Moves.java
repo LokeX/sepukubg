@@ -3,6 +3,7 @@ package bg.engine.moves;
 import bg.engine.Dice;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -12,13 +13,13 @@ public class Moves {
   private SearchMoves searchMoves;
   private List<EvaluatedMove> evaluatedMoves;
   private List<MoveLayout> legalMoves;
-  private Layout parentLayout;
+  private MoveLayout parentMove;
   private Dice dice;
   private int nrOfLegalPartMoves;
 
   public Moves(Moves moves) {
 
-    parentLayout = new Layout(moves.parentLayout);
+    parentMove = moves.parentMove;
     dice = new Dice(moves.dice);
     legalMoves = moves.legalMoves;
     evaluatedMoves = moves.evaluatedMoves;
@@ -30,7 +31,7 @@ public class Moves {
 
   public Layout getParentLayout() {
 
-    return parentLayout;
+    return new Layout(parentMove);
   }
 
   public SearchMoves getSearchMoves () {
@@ -45,31 +46,39 @@ public class Moves {
     return searchMoves;
   }
 
-  public int getMoveNr (EvaluatedMove evaluatedMove) {
+  protected int getMoveNr (EvaluatedMove evaluatedMove) {
 
     return evaluatedMoves.indexOf(evaluatedMove);
   }
 
   public List<MoveLayout> getLegalMoves() {
 
-    return legalMoves.stream().collect(toList());
+    return Collections.unmodifiableList(legalMoves);
+  }
+
+  List<EvaluatedMove> getModifiableEvaluatedMoves () {
+
+    return evaluatedMoves;
   }
 
   public List<EvaluatedMove> getEvaluatedMoves() {
 
-    return evaluatedMoves.stream().collect(toList());
+    return Collections.unmodifiableList(evaluatedMoves);
   }
 
-  public void setEvaluatedMoves(List<EvaluatedMove> list) {
+  void setEvaluatedMoves(List<EvaluatedMove> list) {
 
     evaluatedMoves = list;
   }
 
   public List<int[]> getLegalMovePoints () {
 
-    return legalMoves.stream().
-      map(MoveLayout::getMovePoints).
-      collect(toList());
+    return
+      Collections.unmodifiableList(
+        legalMoves.stream().
+        map(MoveLayout::getMovePoints).
+        collect(toList())
+      );
   }
 
   public Layout getLayout (int layoutNr) {
@@ -82,12 +91,12 @@ public class Moves {
     return new MoveLayout(evaluatedMoves.get(moveLayoutNr));
   }
 
-  public EvaluatedMove getEvaluatedMove (int evaluatedMoveNr) {
+  protected EvaluatedMove getEvaluatedMove (int evaluatedMoveNr) {
 
     return evaluatedMoves.get(evaluatedMoveNr);
   }
 
-  public EvaluatedMove getBestMove() {
+  protected EvaluatedMove getBestMove() {
 
     return evaluatedMoves.get(0);
   }
@@ -95,6 +104,11 @@ public class Moves {
   public int getNrOfMoves () {
 
     return evaluatedMoves.size();
+  }
+
+  public int getNrOfLegalPartMoves () {
+
+    return nrOfLegalPartMoves;
   }
 
   public int[] getDice () {
@@ -132,31 +146,30 @@ public class Moves {
     System.out.println();
   }
 
-  private void partMove (int dieNr, int[] dieFaces, MoveLayout moveLayout, List<Integer> moveablePointsList) {
+  private void partMove (int dieNr, int[] dieFaces, MoveLayout moveLayout, List<Integer> moveablePoints) {
 
-    List<Integer> nextMoveablePointsList;
+    List<Integer> nextMoveablePoints;
     MoveLayout nextMoveLayout;
+    int nextDieNr = dieNr+1;
     boolean nextPartMoveOK = false;
 
-    for (int a = 0; a < moveablePointsList.size(); a++) {
-      nextMoveLayout = moveLayout.getPartMoveLayout(dieNr, dieFaces, moveablePointsList.get(a));
-      if (dieNr+1 < dieFaces.length) {
-        nextMoveablePointsList = nextMoveLayout.getMoveablePointsList(dieFaces[dieNr+1]);
-        nextPartMoveOK = nextMoveablePointsList.size() > 0;
+    for (int a = 0; a < moveablePoints.size(); a++) {
+      nextMoveLayout = moveLayout.getPartMoveLayout(dieNr, dieFaces, moveablePoints.get(a));
+      if (nextDieNr < dieFaces.length) {
+        nextMoveablePoints = nextMoveLayout.getMoveablePoints(dieFaces[nextDieNr]);
+        nextPartMoveOK = nextMoveablePoints.size() > 0;
         if (nextPartMoveOK) {
-          partMove(dieNr+1, dieFaces, nextMoveLayout, nextMoveablePointsList);
+          partMove(nextDieNr, dieFaces, nextMoveLayout, nextMoveablePoints);
         }
       }
-      if (!nextPartMoveOK) {
-        int nrOfPartMoves = nextMoveLayout.getNrOfPartMoves();
-
-        if (nrOfPartMoves >= nrOfLegalPartMoves) {
-          if (nrOfPartMoves > nrOfLegalPartMoves) {
-            nrOfLegalPartMoves = nrOfPartMoves;
+      if (!nextPartMoveOK && nextDieNr >= nrOfLegalPartMoves) {
+        if (nextDieNr > nrOfLegalPartMoves) {
+          nrOfLegalPartMoves = nextDieNr;
+          if (!legalMoves.isEmpty()) {
             legalMoves.clear();
           }
-          legalMoves.add(nextMoveLayout);
         }
+        legalMoves.add(nextMoveLayout);
       }
     }
   }
@@ -187,25 +200,28 @@ public class Moves {
     return this;
   }
 
-  public Moves generateMoves (Layout layout, int[] useDice) {
+  private void generateLegalMoves () {
 
-    MoveLayout moveLayout = new MoveLayout(layout, useDice);
-    int[] dieFaces;
-
-    dice = new Dice(useDice);
-    parentLayout = new Layout(layout);
-    legalMoves = new ArrayList<>();
-    evaluatedMoves = new ArrayList<>();
     for (int a = 0; a < (dice.areDouble() ? 1 : 2); a++) {
-      dieFaces = a == 0 ? useDice : dice.getSwappedDice();
-      List<Integer> moveablePointsList = moveLayout.getMoveablePointsList(dieFaces[0]);
 
-      if (!moveablePointsList.isEmpty()) {
-        partMove(0, dieFaces, moveLayout, moveablePointsList);
+      int[] dieFaces = a == 0 ? dice.getDice() : dice.getSwappedDice();
+      List<Integer> moveablePoints = parentMove.getMoveablePoints(dieFaces[0]);
+
+      if (!moveablePoints.isEmpty()) {
+        partMove(0, dieFaces, parentMove, moveablePoints);
       }
     }
+  }
+
+  public Moves generateMoves (Layout layout, int[] diceToMove) {
+
+    parentMove = new MoveLayout(layout, diceToMove);
+    dice = new Dice(diceToMove);
+    legalMoves = new ArrayList<>();
+    evaluatedMoves = new ArrayList<>();
+    generateLegalMoves();
     if (legalMoves.isEmpty()) {
-      evaluatedMoves.add(new EvaluatedMove(moveLayout));
+      evaluatedMoves.add(new EvaluatedMove(parentMove));
     } else {
       if (!dice.areDouble() && nrOfLegalPartMoves == 1) {
         removeHighPipMoves();
