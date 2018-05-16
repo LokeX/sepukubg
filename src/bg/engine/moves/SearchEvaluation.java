@@ -1,35 +1,19 @@
 package bg.engine.moves;
 
-import java.util.Collections;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class SearchEvaluation {
 
-  private String report = "";
-//  private Moves moves;
   private List<EvaluatedMove> searchMoves;
+  private String report = "";
   private int nrOfMoves;
   private int nrOfTurns;
   private long startTime;
 
-  List<EvaluatedMove> getSearchMoves () {
-
-    return Collections.unmodifiableList(searchMoves);
-  }
-
   public String getReport () {
 
     return report;
-  }
-
-  public SearchEvaluation() {
-
-//    generateSearchEvaluations = moves.generateSearchEvaluations;
-//    this.moves = moves;
-//    this.searchMoves = new ArrayList<>(searchMoves);
-//    this.nrOfMoves = nrOfMoves;
-//    this.nrOfTurns = nrOfTurns;
   }
 
   public SearchEvaluation generateSearchMoves (int nrOfMoves, int nrOfTurns, List<EvaluatedMove> searchMoves) {
@@ -45,7 +29,6 @@ public class SearchEvaluation {
     });
     report += "Before values:\n";
     appendReportValues();
-//    sortEvaluatedMoves();
     return this;
   }
 
@@ -94,13 +77,6 @@ public class SearchEvaluation {
     printSearchReport();
   }
 
-//  public SearchEvaluation applyToMoves() {
-//
-//    moves.setEvaluatedMoves(generateSearchEvaluations);
-//
-//    return this;
-//  }
-//
   private void appendTime () {
 
     report +=

@@ -208,8 +208,8 @@ public class MatchApi extends Selection {
     }
     selectedTurn = game.getLatestTurnNr();
     selectedMove = 0;
-    searchRolledMoves();
     Main.sound.playSoundEffect("wuerfelbecher");
+    searchRolledMoves();
     getActionButton().setHideActionButton(true);
     getActionButton().setShowPleaseWaitButton(false);
     Move();
@@ -226,18 +226,10 @@ public class MatchApi extends Selection {
 
   private void searchTurn (Turn turn) {
 
-
     turn.generateSearchEvaluations(
       settings.getNrOfMovesToSearch(),
       settings.getSearchToPly()
     ).sortMovesBySearchEvaluation();
-
-//    turn.generateSearchEvaluations(
-//      settings.getNrOfMovesToSearch(),
-//      settings.getSearchToPly()
-//    ).
-//      setSearchEvaluations().
-//      sort();
   }
 
   private boolean okToSearch () {
