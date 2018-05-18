@@ -16,47 +16,42 @@ public class SearchEvaluation {
     return report;
   }
 
-  public SearchEvaluation generateSearchMoves (int nrOfMoves, int nrOfTurns, List<EvaluatedMove> searchMoves) {
+  public SearchEvaluation generateSearchEvaluations (
+
+    int nrOfMoves, int nrOfTurns,
+    List<EvaluatedMove> searchMoves) {
 
     startTime = System.currentTimeMillis();
     this.searchMoves = searchMoves;
     this.nrOfMoves = nrOfMoves;
     this.nrOfTurns = nrOfTurns;
-    searchMoves.parallelStream().limit(nrOfMoves).forEach(move -> {
+    searchMoves.parallelStream().limit(nrOfMoves).forEach(move ->
       move.setSearchEvaluation(
-        move.getLayoutStrength() - getTurnStrengthAverage(1, move)
-      );
-    });
+        move.getLayoutStrength() - projectedStrengthAverage(1, move)
+      )
+    );
     report += "Before values:\n";
     appendReportValues();
     return this;
   }
 
-  private int getTurnStrengthAverage(int turnCount, EvaluatedMove move) {
+  private int projectedStrengthAverage (int turnCount, EvaluatedMove move) {
 
-    List<Moves> searchMoves = move.getSearchMoves();
-    int turnsStrengthAverage = getMovesStrengthAverage(searchMoves);
+    List<EvaluatedMove> bestMoves = move.getSearchMoves().
+      parallelStream().map(Moves::getBestMove).collect(toList());
     int nextTurnsStrengthAverage = 0;
+    int turnsStrengthAverage = bestMoves.parallelStream().
+      mapToInt(EvaluatedMove::getProbabilityAdjustedLayoutStrength).
+      sum()/36;
 
     if (turnCount < nrOfTurns && !move.isWinningMove()) {
-      nextTurnsStrengthAverage = getNextTurnsStrengthAverage(turnCount, searchMoves);
+      nextTurnsStrengthAverage = (int)bestMoves.parallelStream().
+        mapToInt(bestMove -> projectedStrengthAverage(turnCount+1, bestMove)).
+        average().getAsDouble();
     } else {
       nrOfTurns = turnCount;
     }
     return turnsStrengthAverage - nextTurnsStrengthAverage;
-  }
-
-  private int getMovesStrengthAverage(List<Moves> moves) {
-
-    return moves.parallelStream().map(Moves::getBestMove).
-      mapToInt(EvaluatedMove::getProbabilityAdjustedLayoutStrength).sum()/36;
-  }
-
-  private int getNextTurnsStrengthAverage(int turnCount, List<Moves> moves) {
-
-    return (int)moves.parallelStream().map(Moves::getBestMove).
-      mapToInt(bestMove -> getTurnStrengthAverage(turnCount+1, bestMove)).
-      average().getAsDouble();
   }
 
   void sortEvaluatedMoves() {

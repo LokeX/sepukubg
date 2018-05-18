@@ -87,7 +87,7 @@ public class MoveLayout extends Layout {
 
   public List<Integer> getMoveablePoints(int die) {
 
-    List<Integer> moveablePoints = new ArrayList();
+    List<Integer> moveablePoints = new ArrayList<>();
 
     if (rearPos < 0) {
       calcRearPos();
@@ -96,7 +96,6 @@ public class MoveLayout extends Layout {
     } else if (point[rearPos] == 0) {
       calcRearPos(rearPos);
     }
-//    calcRearPos(); // Brute force, I can't fix
     for (int startingPoint = rearPos; startingPoint > 0; startingPoint--) {
       if (point[startingPoint] > 0) {
         if (partMoveIsLegal(startingPoint, startingPoint-die)) {

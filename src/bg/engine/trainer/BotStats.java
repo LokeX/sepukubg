@@ -25,7 +25,7 @@ public class BotStats implements Serializable {
         format(((((float)matchesWon)/(float)matchesPlayed)*100));
     }
 
-    public void printStats () {
+    void printStats () {
 
       System.out.println("Opponents name: "+opponentName);
       System.out.println("Name: "+name);
@@ -39,7 +39,7 @@ public class BotStats implements Serializable {
       System.out.println();
     }
 
-    public String getBotReport () {
+    String getBotReport () {
 
       DecimalFormat df = new DecimalFormat("#,#00");
 
@@ -55,17 +55,17 @@ public class BotStats implements Serializable {
         "\nMatchApi win percentage ["+name+"]: "+getWinningPercentage()+"%\n\n";
     }
 
-    public String getOpponentsName () {
+    String getOpponentsName () {
 
       return opponentName;
     }
 
-    public void  setOpponentName (String name) {
+    void  setOpponentName (String name) {
 
       opponentName = name;
     }
 
-    public void addScores (Score score, int thisPlayerID) {
+    void addScores (Score score, int thisPlayerID) {
 
       if (score.getWinnerID() == thisPlayerID) {
         matchesWon++;
@@ -78,13 +78,13 @@ public class BotStats implements Serializable {
 
   }
 
-  public BotStats (String name) {
+  BotStats (String name) {
 
     this.name = name;
   }
 
-  List<Stats> botStats = new ArrayList<>();
-  String name;
+  private List<Stats> botStats = new ArrayList<>();
+  private String name;
 
   private int getBotOpponentsNr (Bot bot) {
 
@@ -118,7 +118,7 @@ public class BotStats implements Serializable {
     botStats.get(getBotOpponentsNr(opponent)).printStats();
   }
 
-  public List<String> getBotReports() {
+  private List<String> getBotReports() {
 
     return botStats.stream().
       map(Stats::getBotReport).

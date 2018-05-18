@@ -20,11 +20,11 @@ public class BotEditor extends TextDisplay {
     this.bot = bot;
     originalText = textArea.getText();
     textArea.setEditable(true);
-    addWindowListener(windowEvent());
+    addWindowListener(onWindowEvent());
     setVisible(true);
   }
 
-  public WindowAdapter windowEvent () {
+  private WindowAdapter onWindowEvent() {
 
     return new WindowAdapter () {
       @Override
@@ -45,7 +45,7 @@ public class BotEditor extends TextDisplay {
     );
   }
 
-  public List<Integer> getParsedValues() {
+  private List<Integer> getParsedValues() {
 
     List<Integer> values = new ArrayList<>();
     String text = textArea.getText();
@@ -68,7 +68,7 @@ public class BotEditor extends TextDisplay {
     return values;
   }
 
-  public void confirmApplication () {
+  private void confirmApplication () {
 
     if (bg.util.Dialogs.confirmed(
       "Apply changes to bot:\n"+bot.getName(),

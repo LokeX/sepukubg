@@ -619,8 +619,8 @@ System.out.println("bonusNullifier = "+bonusNullifier);
     int temp;
     int stacBonusContactMultiplier;
 
-    if (contact >= stacBonusMaxContact){
-      stacBonusContactMultiplier = stacBonusMaxContact*stacBonusMaxContact;
+    if (contact >= stackBonusMaxContact){
+      stacBonusContactMultiplier = stackBonusMaxContact * stackBonusMaxContact;
     } else {
       stacBonusContactMultiplier = contact*contact;
     }
@@ -661,7 +661,7 @@ System.out.println("bonusNullifier = "+bonusNullifier);
     }
 
     if (contact == 0){
-      stackBonus /= stacBonusNoContactDivisor;
+      stackBonus /= stackBonusNoContactDivisor;
     }
     stackBonus *= stacBonusContactMultiplier;
     if (stackBonus < 0){
@@ -910,15 +910,15 @@ System.out.println("bonusNullifier = "+bonusNullifier);
       }
     }
 
-    rearHomePoint1Mulitplier = homeCommingBonusRearHomePointMulitplierReducer+rearHomePoint[1];
-    rearHomePoint2Mulitplier = homeCommingBonusRearHomePointMulitplierReducer+rearHomePoint[2];
-    rearHomePoint3Mulitplier = homeCommingBonusRearHomePointMulitplierReducer+rearHomePoint[3];
+    rearHomePoint1Mulitplier = homeComingBonusRearHomePointMultiplierReducer +rearHomePoint[1];
+    rearHomePoint2Mulitplier = homeComingBonusRearHomePointMultiplierReducer +rearHomePoint[2];
+    rearHomePoint3Mulitplier = homeComingBonusRearHomePointMultiplierReducer +rearHomePoint[3];
 
     if (anchorChekkers == 0 && chekkersAtHome > 11 && rearHomePointChekkers[1] > 0){
       combinedCount = chekkersQuadrantsAway+rearHomePointChekkers[1];
       for (int a = 2; combinedCount > 1 && a < 7; a++){
         if (combinedCount >= a){
-          homeCommingBonus += (homeCommingBonusBonusCounter-count)*rearHomePoint1Mulitplier;
+          homeCommingBonus += (homeComingBonusBonusCounter -count)*rearHomePoint1Mulitplier;
           combinedCount -= 2;
           count += 2;
         }
@@ -927,7 +927,7 @@ System.out.println("bonusNullifier = "+bonusNullifier);
       if (count < 6 && rearHomePointChekkers[2] > 0){
         for (int a = 2; count < 6 && a < 6; a++){
           if (rearHomePointChekkers[2]+combinedCount == a){
-            homeCommingBonus += (homeCommingBonusBonusCounter-count)*rearHomePoint2Mulitplier;
+            homeCommingBonus += (homeComingBonusBonusCounter -count)*rearHomePoint2Mulitplier;
             combinedCount = 0;
             count += a;
             break;
@@ -937,7 +937,7 @@ System.out.println("bonusNullifier = "+bonusNullifier);
         if (count < 6 && rearHomePointChekkers[3] > 0){
           for (int a = 2; count < 6 && a < 6; a++){
             if (rearHomePointChekkers[3]+combinedCount == a){
-              homeCommingBonus += (homeCommingBonusBonusCounter-count)*rearHomePoint3Mulitplier;
+              homeCommingBonus += (homeComingBonusBonusCounter -count)*rearHomePoint3Mulitplier;
               count += a;
               break;
             }
@@ -946,8 +946,8 @@ System.out.println("bonusNullifier = "+bonusNullifier);
       }
     }
     if (vacantPoint > 0){
-      homeCommingBonus *= homeCommingBonusVacantPointEqualizer;
-      homeCommingBonus /= (homeCommingBonusVacantPointEqualizer+vacantPoint);
+      homeCommingBonus *= homeComingBonusVacantPointEqualizer;
+      homeCommingBonus /= (homeComingBonusVacantPointEqualizer +vacantPoint);
     }
   }
 
@@ -967,7 +967,7 @@ System.out.println("bonusNullifier = "+bonusNullifier);
         singleChekkers += point[a] == 1 ? 1 : 0;
       }
       if (contact > 0 && singleChekkers < 2 && point[0] == 11){
-        fourChekkersLeftBonus = (6-rearPos)*checkingOutBonusFourChekkersLeftBaseBonus;
+        fourChekkersLeftBonus = (6-rearPos)* checkingOutBonusFourCheckersLeftBaseBonus;
       }
       for (int a = rearPos; a > 0; a--){
         if (point[a] > 0){
@@ -975,7 +975,7 @@ System.out.println("bonusNullifier = "+bonusNullifier);
         }
       }
       if (rearPos <= (secondRearPos*2) && point[0] == 12){
-        threeChekkersLeftBonus = checkingOutBonusThreeChekkersLeftBaseBonus;
+        threeChekkersLeftBonus = checkingOutBonusThreeCheckersLeftBaseBonus;
       }
     }
     if (contact > 0 && (point[rearPos] == 2 || point[rearPos] == 4 || point[rearPos] == 6)){
@@ -1261,7 +1261,7 @@ System.out.println("bonusNullifier = "+bonusNullifier);
         }
       }
     }
-    bestDiceBonus *= bestDiceBonusMulitplier;
+    bestDiceBonus *= bestDiceBonusMultiplier;
     bestDiceBonus /= bestDiceBonusDivisor;
     bestDiceBonus /= (1+ point[25]);
   }

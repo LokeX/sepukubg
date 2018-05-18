@@ -36,7 +36,7 @@ public class Moves {
 
   public Moves generateSearchEvaluations (int nrOfMovesToSearch, int plyDepth) {
 
-    searchEvaluation = new SearchEvaluation().generateSearchMoves(
+    searchEvaluation = new SearchEvaluation().generateSearchEvaluations(
       nrOfMovesToSearch,
       plyDepth,
       evaluatedMoves
@@ -73,12 +73,9 @@ public class Moves {
 
   public List<int[]> getLegalMovePoints () {
 
-    return
-      Collections.unmodifiableList(
-        legalMoves.stream().
-        map(MoveLayout::getMovePoints).
-        collect(toList())
-      );
+    return legalMoves.stream().
+      map(MoveLayout::getMovePoints).
+      collect(toList());
   }
 
   public Layout getLayout (int layoutNr) {
@@ -211,6 +208,9 @@ public class Moves {
         partMove(0, dieFaces, parentMove, moveablePoints);
       }
     }
+    if (legalMoves.size() > 1 && nrOfLegalPartMoves == 1 && !dice.areDouble()) {
+      removeHighPipMoves();
+    }
   }
 
   public Moves generateMoves (Layout layout, int[] diceToMove) {
@@ -223,9 +223,6 @@ public class Moves {
     if (legalMoves.isEmpty()) {
       evaluatedMoves.add(new EvaluatedMove(parentMove));
     } else {
-      if (!dice.areDouble() && nrOfLegalPartMoves == 1) {
-        removeHighPipMoves();
-      }
       generateEvaluatedMoves();
       sortEvaluatedMoves();
     }
