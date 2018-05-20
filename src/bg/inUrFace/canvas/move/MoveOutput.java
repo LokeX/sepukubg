@@ -47,9 +47,11 @@ public class MoveOutput extends MoveLayout {
               }
             }
             if ((a+2)%2 == 0) {
-              point[movePoints2[a] == 0 && playerID == 1 ? 25 : movePoints2[a]]--;
+//              point[movePoints2[a] == 0 && playerID == 1 ? 25 : movePoints2[a]]--;
+              point[movePoints2[a]]--;
             } else {
-              point[movePoints2[a] == 25 && playerID == 1 ? 0 : movePoints2[a]]++;
+//              point[movePoints2[a] == 25 && playerID == 1 ? 0 : movePoints2[a]]++;
+              point[movePoints2[a]]++;
             }
             if (a >= startPoint) {
               displayLayout();

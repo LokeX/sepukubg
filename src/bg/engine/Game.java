@@ -83,7 +83,10 @@ public class Game {
 
   public boolean playerCanOfferCube () {
 
-    return turns.size() > 0 && gameCube.playerCanOfferCube(getLatestTurn().getPlayerOnRollsID());
+    return
+      turns.size() > 0 && gameCube.playerCanOfferCube(
+        getLatestTurn().getPlayerOnRollsID() == 0 ? 1 : 0
+      );
   }
 
   public EvaluatedMove getPlayedMove () {
