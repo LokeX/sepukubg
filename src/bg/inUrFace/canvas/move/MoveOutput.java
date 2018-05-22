@@ -26,47 +26,62 @@ public class MoveOutput extends MoveLayout {
     this.evaluatedMove = evaluatedMove;
   }
 
+//  public void showMove (final int startPoint, final int endPoint, final Object notifier) {
+//
+//    new Thread(() -> {
+//
+//      int errorCorrectedEndPoint = endPoint < movePoints2.length ? endPoint : movePoints2.length-1;
+//      int[] tempPoint = point.clone();
+//
+//      point = parentLayout.point.clone();
+//      for (int a = 0; a <= errorCorrectedEndPoint; a++) {
+//        if (movePoints2[a] >= 0) {
+//          if (hitPoints[a] >= 0) {
+//            if ((a+2)%2 == 0) {
+//              point[hitPoints[a]]--;
+//            } else {
+//              point[hitPoints[a]]++;
+//            }
+//          }
+//          if ((a+2)%2 == 0) {
+////              point[movePoints2[a] == 0 && playerID == 1 ? 25 : movePoints2[a]]--;
+//            point[movePoints2[a]]--;
+//          } else {
+////              point[movePoints2[a] == 25 && playerID == 1 ? 0 : movePoints2[a]]++;
+//            point[movePoints2[a]]++;
+//          }
+//          if (a >= startPoint) {
+//            displayLayout();
+//            Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
+//            threadSleep(settings.getShowMoveDelay());
+//          }
+//        }
+//      }
+//      point = tempPoint.clone();
+//      synchronized (notifier) {
+//
+//        notifier.notifyAll();
+//      }
+//    }).start();
+//  }
+
   public void showMove (final int startPoint, final int endPoint, final Object notifier) {
 
-    new Thread () {
+    new Thread(() -> {
 
-      @Override
-      public void run () {
+      List<Layout> movePointLayouts = getMovePointLayouts();
+      int errorCorrectedEndPoint = endPoint < movePointLayouts.size() ? endPoint : movePointLayouts.size()-1;
 
-        int errorCorrectedEndPoint = endPoint < movePoints2.length ? endPoint : movePoints2.length-1;
-        int[] tempPoint = point.clone();
-
-        point = parentLayout.point.clone();
-        for (int a = 0; a <= errorCorrectedEndPoint; a++) {
-          if (movePoints2[a] >= 0) {
-            if (hitPoints[a] >= 0) {
-              if ((a+2)%2 == 0) {
-                point[hitPoints[a]]--;
-              } else {
-                point[hitPoints[a]]++;
-              }
-            }
-            if ((a+2)%2 == 0) {
-//              point[movePoints2[a] == 0 && playerID == 1 ? 25 : movePoints2[a]]--;
-              point[movePoints2[a]]--;
-            } else {
-//              point[movePoints2[a] == 25 && playerID == 1 ? 0 : movePoints2[a]]++;
-              point[movePoints2[a]]++;
-            }
-            if (a >= startPoint) {
-              displayLayout();
-              Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
-              threadSleep(settings.getShowMoveDelay());
-            }
-          }
-        }
-        point = tempPoint.clone();
-        synchronized (notifier) {
-
-          notifier.notifyAll();
-        }
+      for (int a = startPoint; a <= errorCorrectedEndPoint; a++) {
+//        for (int a = startPoint; a <= errorCorrectedEndPoint; a++) {
+        displayLayout(movePointLayouts.get(a));
+        Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
+        threadSleep(settings.getShowMoveDelay());
       }
-    }.start();
+      synchronized (notifier) {
+        notifier.notifyAll();
+      }
+    }).start();
   }
 
   public void showMove () {
@@ -91,6 +106,16 @@ public class MoveOutput extends MoveLayout {
         getPlayerID() == 0 ?
           new Layout(this) :
           new Layout(this).getFlippedLayout()
+      );
+  }
+
+  public void displayLayout(Layout layout) {
+
+    win.canvas.
+      setDisplayedLayout(
+        getPlayerID() == 0 ?
+          new Layout(layout) :
+          new Layout(layout).getFlippedLayout()
       );
   }
 

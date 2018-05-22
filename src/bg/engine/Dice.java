@@ -13,7 +13,7 @@ public class Dice {
 
   public Dice () {
 
-    dice = rollDice().getDice();
+    rollDice();
   }
 
   public Dice (Dice dice) {
@@ -33,14 +33,7 @@ public class Dice {
 
   public int[] getSwappedDice () {
 
-    int[] diceT = dice.clone();
-    int t;
-
-    t = diceT[0];
-    diceT[0] = diceT[1];
-    diceT[1] = t;
-
-    return diceT;
+    return new int[] {dice[1],dice[0]};
   }
 
   public void setDice (String diceToSet) {
@@ -100,7 +93,7 @@ public class Dice {
     return intPair;
   }
 
-  public int[] expandDice() {
+  public Dice expandDice() {
 
     if (dice.length == 1) {
       if (dice[0] > 9) {
@@ -109,7 +102,7 @@ public class Dice {
       	dice = expandDouble(dice);
       }
     }
-    return dice;
+    return this;
   }
 
   public boolean areDouble() {
@@ -190,7 +183,7 @@ public class Dice {
 
   public int[] getDice () {
 
-    return expandDice();
+    return dice;
   }
 
 }

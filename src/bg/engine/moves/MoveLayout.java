@@ -173,6 +173,21 @@ public class MoveLayout extends Layout {
     return false;
   }
 
+//  public boolean movePointsMatch (int[] movePointsToCheck) {
+//
+//    return Arrays.hashCode(movePoints) == Arrays.hashCode(movePointsToCheck);
+//  }
+
+  public boolean movePointsMatch (int[] movePointsToCheck) {
+
+    for (int a = 0; a < movePoints.length; a++) {
+      if (movePoints[a] != movePointsToCheck[a]) {
+        return a > 0 && movePointsToCheck[a] == -1;
+      }
+    }
+    return true;
+  }
+
   public void setMovePoints(int[] newPoints) {
 
 //    movePoints = newPoints.clone();
@@ -199,6 +214,30 @@ public class MoveLayout extends Layout {
   public boolean isWinningMove () {
 
     return rearPos == 0;
+  }
+
+  public List<Layout> getMovePointLayouts () {
+
+    List<Layout> movePointLayouts = new ArrayList<>();
+    int[] tempPoint = parentLayout.point.clone();
+    int nrOfMovePoints = getNrOfPartMoves()*2;
+
+    for (int a = 0; a < nrOfMovePoints; a++) {
+      if (hitPoints[a] >= 0) {
+        if ((a+2)%2 == 0) {
+          tempPoint[hitPoints[a]]--;
+        } else {
+          tempPoint[hitPoints[a]]++;
+        }
+      }
+      if ((a+2)%2 == 0) {
+        tempPoint[movePoints2[a]]--;
+      } else {
+        tempPoint[movePoints2[a]]++;
+      }
+      movePointLayouts.add(new Layout(tempPoint));
+    }
+    return movePointLayouts;
   }
 
   public String getMovePointsString() {

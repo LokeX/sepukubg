@@ -150,8 +150,8 @@ public class Moves {
     int nextDieNr = dieNr+1;
     boolean nextPartMoveOK = false;
 
-    for (int a = 0; a < moveablePoints.size(); a++) {
-      nextMoveLayout = moveLayout.getPartMoveLayout(dieNr, dieFaces, moveablePoints.get(a));
+    for (Integer startingPoint : moveablePoints) {
+      nextMoveLayout = moveLayout.getPartMoveLayout(dieNr, dieFaces, startingPoint);
       if (nextDieNr < dieFaces.length) {
         nextMoveablePoints = nextMoveLayout.getMoveablePoints(dieFaces[nextDieNr]);
         nextPartMoveOK = nextMoveablePoints.size() > 0;
@@ -183,11 +183,15 @@ public class Moves {
 
   private void generateEvaluatedMoves () {
 
-    legalMoves.forEach(legalMove -> {
-      if (legalMove.notIn(evaluatedMoves)) {
-        evaluatedMoves.add(new EvaluatedMove(legalMove));
-      }
-    });
+    if (legalMoves.isEmpty()) {
+      evaluatedMoves.add(new EvaluatedMove(parentMove));
+    } else {
+      legalMoves.forEach(legalMove -> {
+        if (legalMove.notIn(evaluatedMoves)) {
+          evaluatedMoves.add(new EvaluatedMove(legalMove));
+        }
+      });
+    }
   }
 
   public Moves sortEvaluatedMoves () {
@@ -220,12 +224,8 @@ public class Moves {
     legalMoves = new ArrayList<>();
     evaluatedMoves = new ArrayList<>();
     generateLegalMoves();
-    if (legalMoves.isEmpty()) {
-      evaluatedMoves.add(new EvaluatedMove(parentMove));
-    } else {
-      generateEvaluatedMoves();
-      sortEvaluatedMoves();
-    }
+    generateEvaluatedMoves();
+    sortEvaluatedMoves();
     return this;
   }
 

@@ -160,6 +160,7 @@ public class MoveInput {
     customMoveLayout.generateHashCode();
     for (int a = 0; a < moves.size(); a++) {
       if (moves.get(a).IsIdenticalTo(customMoveLayout)) {
+//        if (partMoves.length == movePoints.length || moves.get(a).movePointsMatch(partMoves)) {
         if (partMoves.length == movePoints.length || moves.get(a).containsThesePartMoves(partMoves)) {
           System.out.println("Selecting move nr: "+a);
           matchApi.setSelectedMove(a);
