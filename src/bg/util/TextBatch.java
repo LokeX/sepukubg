@@ -212,10 +212,8 @@ public class TextBatch extends Batch {
   public void mouseClicked (MouseEvent e) {
 
     super.mousePressed(e);
-    System.out.println("Mouse clicked");
     setMarkerPosition(component);
     if (mouseOnBatch(e) && lines.size() > 0 && getMarkerPosition() < lines.size()) {
-      System.out.println("Mouse clicked");
       if (isMarked(getMarkerPosition())) {
         removeMarkup(getMarkerPosition());
       } else {

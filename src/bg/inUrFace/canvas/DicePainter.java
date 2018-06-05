@@ -4,9 +4,10 @@ import static bg.Main.matchApi;
 import static bg.Main.mouse;
 import static bg.Main.win;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.MultiResolutionImage;
+import java.util.List;
 import javax.swing.ImageIcon;
 
 public class DicePainter implements Paintable {
@@ -29,8 +30,8 @@ public class DicePainter implements Paintable {
     public void paintDie (Graphics g) {
 
       BoardDim d = win.canvas.getDimensions();
-      int newDieWidth = (int)(dieFaces[dieFace].getIconWidth()*(d.factor/2));
-      int newDieHeight = (int)(dieFaces[dieFace].getIconHeight()*(d.factor/2));
+      int newDieWidth = (int)(dieFaces[dieFace].getIconWidth()*(d.factor/1.65));
+      int newDieHeight = (int)(dieFaces[dieFace].getIconHeight()*(d.factor/1.65));
       int oldDieWidth = (dieFaceIcons[dieFace].getIconWidth());
       int oldDieHeight = (dieFaceIcons[dieFace].getIconHeight());
       boolean rescaled = false;
@@ -39,14 +40,25 @@ public class DicePainter implements Paintable {
         rescaled = true;
         dieWidth = newDieWidth;
         dieHeight = newDieHeight;
-        dieFaceIcons[dieFace] = new ImageIcon(dieFaces[dieFace].getImage().getScaledInstance(dieWidth, dieHeight, Image.SCALE_SMOOTH));
+
+        dieFaceIcons[dieFace] = new ImageIcon(dieFaces[dieFace]
+          .getImage()
+//          .getScaledInstance(dieWidth, dieHeight, Image.SCALE_DEFAULT)
+        );
       }
 //      if (oldDiceLength != dice.length || rescaled) {
         oldDiceLength = dice.length;
         centerX = d.leftPlayAreaOffsetX+(d.leftPlayAreaWidth-(((int)(dieWidth*1.2))*dice.length))/2;
         centerY = (int)((d.frameOffsetY+(d.boardInnerHeight/2))*0.95);
 //      }
-      g.drawImage(dieFaceIcons[dieFace].getImage(), centerX+(diePosition*(int)(dieWidth*1.2)), centerY, null);
+      Graphics2D g2 = (Graphics2D) g;
+      g2.setRenderingHint(
+        RenderingHints.KEY_INTERPOLATION,
+        RenderingHints.VALUE_INTERPOLATION_BILINEAR
+      );
+      g2.drawImage(dieFaceIcons[dieFace].getImage(),
+        centerX+(diePosition*(int)(dieWidth*1.2)),
+        centerY, dieWidth, dieHeight, null);
     }
 
     public void paintShade (Graphics g) {
@@ -69,7 +81,9 @@ public class DicePainter implements Paintable {
   public DicePainter () {
 
     for (int a = 0; a < dieFaces.length; a++) {
-      dieFaces[a] = new ImageIcon(this.getClass().getResource("Dice/" + Integer.toString(a + 1) + ".gif"));
+      dieFaces[a] = new ImageIcon(
+        this.getClass().getResource("Dice/" + Integer.toString(a + 1) + ".gif")
+      );
       dieFaceIcons[a] = new ImageIcon(dieFaces[a].getImage());
     }
   }
@@ -93,7 +107,9 @@ public class DicePainter implements Paintable {
       makeDice();
 
       boolean pointsAreInput =
-        matchApi.turnsPlayerIsHuman(matchApi.getLatestTurn()) && mouse.moveInputController.acceptsMoveInput();
+        matchApi
+          .turnsPlayerIsHuman(matchApi.getLatestTurn())
+          && mouse.moveInputController.acceptsMoveInput();
       int nrOfLegalPartMoves = matchApi.getSelectedMove().getNrOfPartMoves();
       int nrOfPartMoves = 0;
       int[] shades = new int[dice.length];

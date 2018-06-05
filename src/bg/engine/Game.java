@@ -71,11 +71,6 @@ public class Game {
     return gameCube;
   }
 
-  public int[] getDice () {
-
-    return new Dice(turns.get(0).getMoveByNr(0).getDice()).getDice();
-  }
-
   public int getNrOfTurns () {
 
     return turns.size();

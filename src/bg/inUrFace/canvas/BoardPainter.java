@@ -9,9 +9,7 @@ package bg.inUrFace.canvas;
 import static bg.Main.matchApi;
 import static bg.Main.win;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.*;
 
 public class BoardPainter implements Paintable {
 
@@ -20,6 +18,9 @@ public class BoardPainter implements Paintable {
 
     int[] startNrs = new int[]{13, 12};
     BoardDim d = win.canvas.getDimensions();
+    Graphics2D g2D = (Graphics2D)g;
+
+    g2D.setStroke(new BasicStroke(4));
 
     g.setColor(new Color(94, 58, 1));
     g.fillRect(
@@ -125,13 +126,13 @@ public class BoardPainter implements Paintable {
       for (int a = 0; a < (int) (160 * d.factor); a++) {
         colors = new Color[]{Color.white, Color.black};
         g.setColor(colors[b % 2]);
-        g.drawLine(
+        g2D.drawLine(
           d.leftTrianglesOffsetX + (d.chequerTotalSpace * b) + (a / 9),
           d.frameOffsetY + a,
           d.leftTrianglesOffsetX + (int) (d.chequerTotalSpace * (b + 0.81)) - (a / 9),
           d.frameOffsetY + a
         );
-        g.drawLine(
+        g2D.drawLine(
           d.rightTrianglesOffsetX + (d.chequerTotalSpace * b) + (a / 9),
           d.frameOffsetY + a,
           d.rightTrianglesOffsetX + (int) (d.chequerTotalSpace * (b + 0.81)) - (a / 9),
@@ -139,13 +140,13 @@ public class BoardPainter implements Paintable {
         );
         colors = new Color[]{Color.black, Color.white};
         g.setColor(colors[b % 2]);
-        g.drawLine(
+        g2D.drawLine(
           d.leftTrianglesOffsetX + (d.chequerTotalSpace * b) + (a / 9),
           d.frameOffsetY + d.boardInnerHeight - a,
           d.leftTrianglesOffsetX + (int) (d.chequerTotalSpace * (b + 0.81)) - (a / 9),
           d.frameOffsetY + d.boardInnerHeight - a
         );
-        g.drawLine(
+        g2D.drawLine(
           d.rightTrianglesOffsetX + (d.chequerTotalSpace * b) + (a / 9),
           d.frameOffsetY + d.boardInnerHeight - a,
           d.rightTrianglesOffsetX + (int) (d.chequerTotalSpace * (b + 0.81)) - (a / 9),
@@ -153,6 +154,7 @@ public class BoardPainter implements Paintable {
         );
       }
     }
+    g2D.setStroke(new BasicStroke(1));
   }
 
 }

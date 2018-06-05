@@ -3,17 +3,17 @@ package bg;
 import bg.IO.FileHandler;
 import bg.IO.Sound;
 import bg.api.MatchApi;
-import bg.engine.Dice;
 import bg.engine.trainer.Trainer;
 import bg.engine.Scenarios;
 import bg.inUrFace.canvas.Canvas;
 import bg.inUrFace.canvas.DoublingCube;
 import bg.inUrFace.canvas.ActionButton;
 import bg.inUrFace.canvas.ScenarioEditor;
-import bg.inUrFace.canvas.TextArea;
+import bg.inUrFace.canvas.BonusPainter;
 import bg.inUrFace.mouse.MouseController;
 import bg.inUrFace.mouse.MoveInput;
 import bg.inUrFace.mouse.MoveInputController;
+import bg.inUrFace.windows.InformationBar;
 import bg.util.time.TimedTasks;
 import bg.inUrFace.windows.Window;
 
@@ -71,14 +71,19 @@ public class Main {
     return mouse.getMoveInput();
   }
 
+  public static InformationBar getInformationBar() {
+
+    return win.informationBar;
+  }
+
   public static MoveInputController getMoveInputController () {
 
     return mouse.getMoveInputController();
   }
 
-  public static TextArea getTextArea () {
+  public static BonusPainter getTextArea () {
 
-    return win.getCanvas().getPaintJobs().textArea;
+    return win.getCanvas().getPaintJobs().bonusPainter;
   }
 
 

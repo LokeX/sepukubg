@@ -6,6 +6,8 @@ import bg.Main;
 import static bg.Main.matchApi;
 import static bg.Main.settings;
 import static bg.Main.win;
+
+import bg.engine.moves.MovePointsInput;
 import bg.inUrFace.canvas.BoardDim;
 import bg.inUrFace.canvas.move.MoveOutput;
 import bg.util.Batch;
@@ -27,6 +29,8 @@ public class MoveInput {
     outputMove();
   }
 
+//  private MovePoints movesAnalysis = matchApi.getMovesAnalysis();
+  private MovePointsInput movePointsInput = matchApi.getMovePointsInput();
   private Layout customMoveLayout = new Layout(Main.matchApi.getSelectedTurn().getParentLayout());
   private List<int[]> legalMovePoints = Main.matchApi.getSelectedTurn().getLegalMovePoints();
   private Batch[] points = new Batch[26];
@@ -159,7 +163,7 @@ public class MoveInput {
     printMove(movePoints);
     customMoveLayout.generateHashCode();
     for (int a = 0; a < moves.size(); a++) {
-      if (moves.get(a).IsIdenticalTo(customMoveLayout)) {
+      if (moves.get(a).isIdenticalTo(customMoveLayout)) {
 //        if (partMoves.length == movePoints.length || moves.get(a).movePointsMatch(partMoves)) {
         if (partMoves.length == movePoints.length || moves.get(a).containsThesePartMoves(partMoves)) {
           System.out.println("Selecting move nr: "+a);
@@ -379,6 +383,7 @@ public class MoveInput {
 
     int clickedPoint = getClickedPoint();
 
+    movePointsInput.input(clickedPoint);
     if (clickedPoint >= 0 && !endOfInputReached()) {
       if (!isLegalEndingPoint(clickedPoint)) {
         if (isLegalStartingPoint(clickedPoint))  {
@@ -494,6 +499,7 @@ public class MoveInput {
 
   public void undoPointSelection() {
 
+    movePointsInput.deleteLatestInput();
     if (inputPoint > 0) {
 //      mouse.actionButton.setShowButton(false);
       if ((inputPoint + 2) % 2 == 1) {

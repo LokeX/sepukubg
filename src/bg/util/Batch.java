@@ -182,10 +182,6 @@ public class Batch implements MouseListener {
 
   public boolean mouseOnBatch (MouseEvent e) {
 
-    System.out.println("egetX: "+e.getX());
-    System.out.println("egetY: "+e.getY());
-    System.out.println("x: "+x);
-    System.out.println("y: "+y);
     return layer == Layers.getActiveLayer() && (e.getX() >= x && e.getX() <= x + w && e.getY() >= y && e.getY() <= y + h);
   }
 

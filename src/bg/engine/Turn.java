@@ -40,11 +40,6 @@ public class Turn extends Moves {
     return this;
   }
 
-//  public Layout getStartLayout() {
-//
-//    return new Layout(getParentLayout());
-//  }
-
   public EvaluatedMove getMoveByNr (int moveNr) {
 
     return getEvaluatedMove(moveNr);

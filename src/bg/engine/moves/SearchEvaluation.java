@@ -25,11 +25,15 @@ public class SearchEvaluation {
     this.searchMoves = searchMoves;
     this.nrOfMoves = nrOfMoves;
     this.nrOfTurns = nrOfTurns;
-    searchMoves.parallelStream().limit(nrOfMoves).forEach(move ->
-      move.setSearchEvaluation(
-        move.getLayoutStrength() - projectedStrengthAverage(1, move)
-      )
-    );
+    searchMoves
+      .parallelStream()
+      .limit(nrOfMoves)
+      .forEach(move ->
+        move.setSearchEvaluation(
+          move.getLayoutStrength() -
+            projectedStrengthAverage(1, move)
+        )
+      );
     report += "Before values:\n";
     appendReportValues();
     return this;
@@ -37,17 +41,30 @@ public class SearchEvaluation {
 
   private int projectedStrengthAverage (int turnCount, EvaluatedMove move) {
 
-    List<EvaluatedMove> bestMoves = move.getSearchMoves().
-      parallelStream().map(Moves::getBestMove).collect(toList());
+    List<EvaluatedMove> bestMoves
+      = move.getSearchMoves()
+        .parallelStream()
+        .map(Moves::getBestMove)
+        .collect(toList());
     int nextTurnsStrengthAverage = 0;
-    int turnsStrengthAverage = bestMoves.parallelStream().
-      mapToInt(EvaluatedMove::getProbabilityAdjustedLayoutStrength).
-      sum()/36;
+    int turnsStrengthAverage
+      = bestMoves
+        .parallelStream()
+        .mapToInt(EvaluatedMove::getProbabilityAdjustedLayoutStrength)
+        .sum()/36;
 
     if (turnCount < nrOfTurns && !move.isWinningMove()) {
-      nextTurnsStrengthAverage = (int)bestMoves.parallelStream().
-        mapToInt(bestMove -> projectedStrengthAverage(turnCount+1, bestMove)).
-        average().getAsDouble();
+      nextTurnsStrengthAverage
+        = (int) bestMoves
+          .parallelStream()
+          .mapToInt(bestMove ->
+            projectedStrengthAverage(
+              turnCount+1,
+              bestMove
+            )
+          )
+          .average()
+          .orElse(0);
     } else {
       nrOfTurns = turnCount;
     }

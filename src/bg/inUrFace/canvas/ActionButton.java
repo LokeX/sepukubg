@@ -71,7 +71,7 @@ public class ActionButton extends TextBatch implements Paintable {
       } else if (okToSetText()) {
         setBackgroundColor(backgroundColor);
         setButtonText(
-          matchApi.matchOver() && selectedTurnIsLatestTurn() ? "New MatchApi" :
+          matchApi.matchOver() && selectedTurnIsLatestTurn() ? "New Match" :
             matchApi.gameOver() && selectedTurnIsLatestTurn() ? "New game" :
               selectedTurnsPlayerIsHuman() ? "Play move" : "Roll dice"
         );

@@ -13,7 +13,7 @@ public class PaintJobs {
   public LayoutPainter layoutPainter = new LayoutPainter();
   public ScenarioEditor scenarioEditor = new ScenarioEditor();
   public MatchScorePainter matchScorePainter = new MatchScorePainter();
-  public TextArea textArea = new TextArea();
+  public BonusPainter bonusPainter = new BonusPainter();
   public ActionButton actionButton = new ActionButton();
   public DicePainter dicePainter = new DicePainter();
   public DoublingCube doublingCube = new DoublingCube();

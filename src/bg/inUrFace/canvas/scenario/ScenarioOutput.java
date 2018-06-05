@@ -1,7 +1,7 @@
 package bg.inUrFace.canvas.scenario;
 
 import bg.engine.Scenarios;
-import bg.inUrFace.canvas.TextArea;
+import bg.inUrFace.canvas.BonusPainter;
 
 import static bg.Main.getTextArea;
 import static bg.Main.scenarios;
@@ -28,17 +28,17 @@ public class ScenarioOutput extends Scenarios {
 
   public void writeScenario () {
 
-    TextArea text = getTextArea();
+    BonusPainter text = getTextArea();
 
     text.clear();
-    text.nlWrite("Select a scenario:");
-    text.nlWrite("Scenario:  #"+
+    text.writeLine("Select a scenario:");
+    text.writeLine("Scenario:  #"+
       (getSelectedScenariosNr()+1)+" / "+
       getScenarios().size()+":  "+
       getSelectedScenariosTitle());
-    text.nlWrite("");
-    text.nlWrite("Press left and right arrow keys to browse");
-    text.nlWrite("Press space to start the scenario");
+    text.writeLine("");
+    text.writeLine("Press left and right arrow keys to browse");
+    text.writeLine("Press space to start the scenario");
   }
 
 }

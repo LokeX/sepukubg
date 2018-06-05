@@ -2,7 +2,9 @@ package bg.api;
 
 import bg.Main;
 import bg.engine.*;
+import bg.engine.moves.EvaluatedMove;
 import bg.engine.moves.Layout;
+import bg.engine.moves.MovePointsInput;
 import bg.inUrFace.canvas.move.MoveOutput;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
 import bg.inUrFace.mouse.MoveInput;
@@ -33,9 +35,70 @@ public class MatchApi extends Selection {
     getLayoutEditor().startEditor();
   }
 
+  private EvaluatedMove getMove (int turnNr, int moveNr) {
+
+    return game.getTurnByNr(turnNr).getMoveByNr(moveNr);
+  }
+
+  public boolean moveExists (int turnNr, int moveNr) {
+
+    return
+      getNrOfTurns() > 0
+      && turnNr < getNrOfTurns()
+      && moveNr < getTurnByNr(turnNr).getNrOfMoves();
+  }
+
+  public boolean moveExists () {
+
+    return moveExists(getSelectedTurnNr(), getSelectedMoveNr());
+  }
+
+  public MoveBonuses getMoveBonuses (int turnNr, int moveNr) {
+
+    if (moveExists(turnNr, moveNr)) {
+      return new MoveBonuses(settings, getMove(turnNr, moveNr));
+    } else {
+      return null;
+    }
+  }
+
+  public MoveBonuses getMoveBonuses () {
+
+    return gameIsPlaying()
+      ? getMoveBonuses(
+        getSelectedTurnNr(),
+        getSelectedMoveNr()
+    ) : null;
+  }
+
   public Input getInput () {
 
     return new Input(this);
+  }
+
+  public MovePointsInput getMovePointsInput () {
+
+    return getSelectedTurn().getMovePointsInput();
+  }
+
+  public boolean playerIsComputer () {
+
+    return
+      getSettings()
+        .playerStatus[
+          getLatestTurn()
+            .getPlayerOnRollsID()
+        ] == settings.COMPUTER;
+  }
+
+  public String getPlayerDescription () {
+
+    return
+      getSelectedTurn()
+        .getPlayerTitle()
+          + (playerIsComputer()
+            ? "[Computer]"
+            : "[Human]");
   }
 
   public boolean matchOver () {
@@ -45,7 +108,7 @@ public class MatchApi extends Selection {
 
   public boolean gameIsPlaying () {
 
-    return getGame() != null && getLatestTurn() != null;
+    return game != null && getNrOfTurns() > 0;
   }
 
   public ScoreBoard getScoreBoard () {
@@ -147,7 +210,6 @@ public class MatchApi extends Selection {
       showMoveStartPoint,
       getSelectedMove().getMovePoints().length-1,
       runWhenNotified(this::endTurn)
-//      runWhenNotified(() -> endTurn())
     );
   }
 

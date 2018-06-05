@@ -147,7 +147,7 @@ public class EvaluatedMove extends BonusElements {
         if (!startReached) {
           start = fieldNr;
           startReached = true;
-        } else {
+        } else if (!name.equals("end")){
           names.add(name);
         }
       }

@@ -1,7 +1,9 @@
 package bg.inUrFace.mouse;
 
-import bg.Main;
+import bg.inUrFace.canvas.BoardDim;
+import bg.util.Batch;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -15,14 +17,11 @@ public class MoveInputController implements MouseListener {
   @Override
   public void mouseClicked (MouseEvent e) {
 
-//    System.out.println("Move input controller accepts input: "+acceptMoveInput);
     if (acceptsMoveInput()) {
-//      System.out.println("Move input accepted");
       if (e.getButton() == MouseEvent.BUTTON3) {
         getActionButton().setHideActionButton(true);
         moveInput.undoPointSelection();
       } else {
-//        System.out.println("Point clicked");
         moveInput.pointClicked();
       }
     }
@@ -35,7 +34,7 @@ public class MoveInputController implements MouseListener {
 
   public boolean acceptsMoveInput() {
 
-    return acceptMoveInput; //&& !api.isNavigating();
+    return acceptMoveInput;
   }
 
   @Override

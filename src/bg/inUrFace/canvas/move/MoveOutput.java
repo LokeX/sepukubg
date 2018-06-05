@@ -1,7 +1,7 @@
 package bg.inUrFace.canvas.move;
 
 import bg.Main;
-import bg.inUrFace.canvas.TextArea;
+import bg.inUrFace.canvas.BonusPainter;
 import bg.inUrFace.mouse.MoveInput;
 import bg.engine.moves.Layout;
 import bg.engine.moves.EvaluatedMove;
@@ -26,7 +26,7 @@ public class MoveOutput extends MoveLayout {
     this.evaluatedMove = evaluatedMove;
   }
 
-//  public void showMove (final int startPoint, final int endPoint, final Object notifier) {
+//  public void showMovePoints (final int startPoint, final int endPoint, final Object notifier) {
 //
 //    new Thread(() -> {
 //
@@ -121,27 +121,27 @@ public class MoveOutput extends MoveLayout {
 
   public void writeMove () {
 
-    TextArea text = getTextArea();
+    BonusPainter text = getTextArea();
 
     text.clear();
-    text.nlWrite("Moves matchLayout information:");
-    text.nlWrite("Player: " + getPlayerTitle());
-    text.nlWrite("Turn: #" + (matchApi.getSelectedTurn().getTurnNr() + 1));
-    text.nlWrite("Dice cast: ");
+    text.writeLine("Moves matchLayout information:");
+    text.writeLine("Player: " + getPlayerTitle());
+    text.writeLine("Turn: #" + (matchApi.getSelectedTurn().getTurnNr() + 1));
+    text.writeLine("Dice cast: ");
     for (int a = 0; a < getDice().length; a++) {
       text.write(getDice()[a] + ",");
     }
-    text.nlWrite("");
+    text.writeLine("");
     text.write("Legal move:  #" + (matchApi.getSelectedMoveNr()+1) + "/" + matchApi.getSelectedTurn().getNrOfMoves() + ":  ");
     for (int a = 0; a < getMovePoints().length; a++) {
-//      win.textArea.write(Integer.toString(playerID == 0 ? partMovePoints[a] : 25 - partMovePoints[a]) + ", ");
+//      win.bonusPainter.write(Integer.toString(playerID == 0 ? partMovePoints[a] : 25 - partMovePoints[a]) + ", ");
       text.write(Integer.toString(getMovePoints()[a]) + ", ");
     }
-    text.nlWrite("");
+    text.writeLine("");
 
 /*
     if (moveLayout.i.isWinningMove()) {
-      win.text.nlWrite(playerTitle[playerID] + " player is the winner");
+      win.text.writeLine(playerTitle[playerID] + " player is the winner");
     }
 */
   }
@@ -153,20 +153,20 @@ public class MoveOutput extends MoveLayout {
     int[] rolledDice = matchApi.getSelectedTurn().getDice();
     int[] movePoints = moveInput.getMovePoints();
     Layout customLayout = moveInput.getCustomMoveLayout();
-    TextArea text = getTextArea();
+    BonusPainter text = getTextArea();
 
     win.canvas.setDisplayedLayout(new Layout(
       moveInput.getPlayerID() == 0 ? customLayout : customLayout)
     );
     text.clear();
-    text.nlWrite("Custom move input: ");
-    text.nlWrite("Player: " + playerTitle);
-    text.nlWrite("Turn: #" + (turnNr + 1));
-    text.nlWrite("Dice rolled: ");
+    text.writeLine("Custom move input: ");
+    text.writeLine("Player: " + playerTitle);
+    text.writeLine("Turn: #" + (turnNr + 1));
+    text.writeLine("Dice rolled: ");
     for (int a = 0; a < rolledDice.length; a++) {
       text.write(rolledDice[a] + ",");
     }
-    text.nlWrite("");
+    text.writeLine("");
     text.write("Moves: ");
     for (int a = 0; a < movePoints.length; a++) {
       text.write(movePoints[a] + ",");
@@ -182,7 +182,7 @@ public class MoveOutput extends MoveLayout {
       "Listing opponents bonuses:",
       "Press T to toggle bonus views",
     };
-    TextArea text = getTextArea();
+    BonusPainter text = getTextArea();
 
     evaluatedMove.initBonusValues();
 
@@ -190,11 +190,11 @@ public class MoveOutput extends MoveLayout {
     List<Integer> bonusValues = evaluatedMove.getBonusValues();
     List<Integer> foeValues = evaluatedMove.getFoeValues();
 
-    text.nlWrite("");
-    text.nlWrite(bonusHeaders[settings.getBonusDisplayMode()]);
+    text.writeLine("");
+    text.writeLine(bonusHeaders[settings.getBonusDisplayMode()]);
     for (int a = 0; a < bonusTexts.size()-1; a++) {
       if (settings.getBonusDisplayMode() < 3) {
-        text.nlWrite(bonusTexts.get(a)+": ");
+        text.writeLine(bonusTexts.get(a)+": ");
         if (settings.getBonusDisplayMode() == 2) {
           text.write(foeValues.get(a) >= 0 ? Integer.toString(foeValues.get(a)) : "N/A");
         } else if (settings.getBonusDisplayMode() == 1) {
@@ -204,7 +204,7 @@ public class MoveOutput extends MoveLayout {
         }
       }
     }
-    text.setMenuFromLine(bonusTexts.get(0));
+//    text.setMenuFromLine(bonusTexts.get(0));
   }
 
   public void outputMove() {

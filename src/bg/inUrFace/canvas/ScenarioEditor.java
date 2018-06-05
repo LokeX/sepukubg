@@ -62,7 +62,6 @@ public class ScenarioEditor extends MouseAdapter implements Paintable {
       int clickedPoint = getClickedPoint();
       int button;
 
-      System.out.println("Editor point clicked = "+clickedPoint);
       layout = Main.win.canvas.getDisplayedLayout();
       if (clickedPoint >= 0) {
         if (clickedPoint == 0 || clickedPoint < 25 && layout.point[clickedPoint] > 0 && layout.point[clickedPoint + 26] == 0) {

@@ -3,6 +3,7 @@ package bg.engine.moves;
 import bg.engine.Dice;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Layout {
@@ -27,7 +28,6 @@ public class Layout {
 
   public Layout(Layout layout, int pID) {
 
-//    point = layout.point.clone();
     point = layout.getPoint();
     playerID = pID;
     useBlackBot = layout.useBlackBot;
@@ -112,7 +112,6 @@ public class Layout {
 
     System.arraycopy(point, 0, temp, 0, point.length);
     return temp;
-//    return point;
   }
 
   public Layout getClone () {
@@ -125,7 +124,7 @@ public class Layout {
     hash = Arrays.hashCode(point);
   }
 
-  public boolean IsIdenticalTo (Layout layout) {
+  public boolean isIdenticalTo (Layout layout) {
 
     return layout.hash == hash;
   }

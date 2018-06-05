@@ -4,6 +4,7 @@ import bg.engine.Dice;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MoveLayout extends Layout {
@@ -30,7 +31,6 @@ public class MoveLayout extends Layout {
 
     System.arraycopy(movePoints, 0, temp, 0, movePoints.length);
     return temp;
-//    return movePoints.clone();
   }
 
   public int[] getMovePoints2() {
@@ -39,7 +39,6 @@ public class MoveLayout extends Layout {
 
     System.arraycopy(movePoints2, 0, temp, 0, movePoints2.length);
     return temp;
-//    return movePoints2.clone();
   }
 
   public int[] getHitPoints() {
@@ -48,7 +47,6 @@ public class MoveLayout extends Layout {
 
     System.arraycopy(hitPoints, 0, temp, 0, hitPoints.length);
     return temp;
-//    return hitPoints.clone();
   }
 
   public Layout getParentLayout() {
@@ -88,6 +86,7 @@ public class MoveLayout extends Layout {
   public List<Integer> getMoveablePoints(int die) {
 
     List<Integer> moveablePoints = new ArrayList<>();
+//    List<Integer> moveablePoints = new LinkedList<>();
 
     if (rearPos < 0) {
       calcRearPos();
@@ -173,30 +172,27 @@ public class MoveLayout extends Layout {
     return false;
   }
 
-//  public boolean movePointsMatch (int[] movePointsToCheck) {
-//
-//    return Arrays.hashCode(movePoints) == Arrays.hashCode(movePointsToCheck);
-//  }
+  public boolean movePointsMatch (int[] movePointsToMatch) {
 
-  public boolean movePointsMatch (int[] movePointsToCheck) {
+    int nrOfMovePointsToMatch = 0;
+    int nrOfMatches = 0;
 
-    for (int a = 0; a < movePoints.length; a++) {
-      if (movePoints[a] != movePointsToCheck[a]) {
-        return a > 0 && movePointsToCheck[a] == -1;
+    for (int movePoint : movePointsToMatch) {
+      if (movePoint != -1) {
+        nrOfMovePointsToMatch++;
       }
     }
-    return true;
+    for (int a = 0; a < nrOfMovePointsToMatch; a++) {
+      if (movePointsToMatch[a] == movePoints[a]) {
+        nrOfMatches++;
+      }
+    }
+    return nrOfMatches == nrOfMovePointsToMatch;
   }
 
   public void setMovePoints(int[] newPoints) {
 
-//    movePoints = newPoints.clone();
-    movePoints2 = newPoints.clone();
-    if (playerID == 1) {
-      for (int a = 0; a < newPoints.length; a++) {
-        movePoints[a] = 25-newPoints[a];
-      }
-    }
+    movePoints = newPoints.clone();
   }
 
   final public int getNrOfPartMoves() {
@@ -214,6 +210,15 @@ public class MoveLayout extends Layout {
   public boolean isWinningMove () {
 
     return rearPos == 0;
+  }
+
+  public boolean endingPointIsAmbiguous(int endingPoint) {
+
+    return
+      !dice.areDouble() &&
+      movePoints[3] == endingPoint &&
+      hitPoints[1] != -1 &&
+      movePoints[1] == movePoints[2];
   }
 
   public List<Layout> getMovePointLayouts () {
@@ -238,6 +243,17 @@ public class MoveLayout extends Layout {
       movePointLayouts.add(new Layout(tempPoint));
     }
     return movePointLayouts;
+  }
+
+  public List<Layout> getPartMoveLayouts () {
+
+    List<Layout> movePointsLayout = getMovePointLayouts();
+    List<Layout> partMoveLayouts = new ArrayList<>();
+
+    for (int a = 1; a < movePoints.length; a += 2) {
+      partMoveLayouts.add(movePointsLayout.get(a));
+    }
+    return partMoveLayouts;
   }
 
   public String getMovePointsString() {

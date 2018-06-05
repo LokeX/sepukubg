@@ -130,14 +130,14 @@ public class Trainer {
 
     return
       "Using scenario: "+scenarios.getScenarios().get(selectedScenarioNr).getName()+
-      "\nPlaying to matchApi-scoreBoard: "+statScoreToWin+
+      "\nPlaying to score: "+statScoreToWin+
       "\nUsing Nr of cores: "+getNrOfCores();
   }
 
   private void printInitialReport () {
 
     System.out.println("Running "+nrOfMatchesToPlay+" matches");
-    System.out.println("Playing to scoreBoard: "+statScoreToWin);
+    System.out.println("Playing to score: "+statScoreToWin);
     System.out.println("Using scenario: "+scenarios.getScenarios().get(selectedScenarioNr).getName());
     System.out.println("Using Nr of cores: "+getNrOfCores());
   }

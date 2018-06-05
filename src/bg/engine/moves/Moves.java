@@ -4,42 +4,52 @@ import bg.engine.Dice;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
+import static java.util.List.*;
 import static java.util.stream.Collectors.toList;
 
 public class Moves {
 
   private List<EvaluatedMove> evaluatedMoves;
-  private SearchEvaluation searchEvaluation;
   private List<MoveLayout> legalMoves;
-  private MoveLayout parentMove;
+  private SearchEvaluation searchEvaluation;
+  private MoveLayout parentMoveLayout;
   private Dice dice;
   private int nrOfLegalPartMoves;
+  private int playerID;
 
   public Moves(Moves moves) {
 
-    parentMove = moves.parentMove;
-    dice = new Dice(moves.dice);
+    parentMoveLayout = moves.parentMoveLayout;
+    dice = moves.dice;
     legalMoves = moves.legalMoves;
     evaluatedMoves = moves.evaluatedMoves;
+    nrOfLegalPartMoves = moves.nrOfLegalPartMoves;
   }
 
   public Moves() {
 
   }
 
+  public int getPlayerID () {
+
+    return playerID;
+  }
+
   public Layout getParentLayout() {
 
-    return new Layout(parentMove);
+    return new Layout(parentMoveLayout);
   }
 
   public Moves generateSearchEvaluations (int nrOfMovesToSearch, int plyDepth) {
 
-    searchEvaluation = new SearchEvaluation().generateSearchEvaluations(
-      nrOfMovesToSearch,
-      plyDepth,
-      evaluatedMoves
+    searchEvaluation = new SearchEvaluation()
+      .generateSearchEvaluations(
+        nrOfMovesToSearch,
+        plyDepth,
+        evaluatedMoves
     );
     return this;
   }
@@ -113,6 +123,28 @@ public class Moves {
     return dice.getDice();
   }
 
+//  public MovePoints getMovesAnalysis () {
+//
+//    return new MovePoints(this);
+//  }
+
+  public MovePointsInput getMovePointsInput () {
+
+    return new MovePointsInput(this);
+  }
+
+  public int getMoveNr (Layout layout) {
+
+    if (layout != null) {
+      for (int a = 0; a < evaluatedMoves.size(); a++) {
+        if (layout.isIdenticalTo(evaluatedMoves.get(a))) {
+          return a;
+        }
+      }
+    }
+    return -1;
+  }
+
   public void printEvaluatedMoves() {
 
     System.out.println("Moves:");
@@ -143,7 +175,11 @@ public class Moves {
     System.out.println();
   }
 
-  private void partMove (int dieNr, int[] dieFaces, MoveLayout moveLayout, List<Integer> moveablePoints) {
+  private void partMove (
+
+    int dieNr, int[] dieFaces,
+    MoveLayout moveLayout,
+    List<Integer> moveablePoints) {
 
     List<Integer> nextMoveablePoints;
     MoveLayout nextMoveLayout;
@@ -151,12 +187,19 @@ public class Moves {
     boolean nextPartMoveOK = false;
 
     for (Integer startingPoint : moveablePoints) {
-      nextMoveLayout = moveLayout.getPartMoveLayout(dieNr, dieFaces, startingPoint);
+      nextMoveLayout = moveLayout
+        .getPartMoveLayout(dieNr, dieFaces, startingPoint);
       if (nextDieNr < dieFaces.length) {
-        nextMoveablePoints = nextMoveLayout.getMoveablePoints(dieFaces[nextDieNr]);
+        nextMoveablePoints = nextMoveLayout
+          .getMoveablePoints(dieFaces[nextDieNr]);
         nextPartMoveOK = nextMoveablePoints.size() > 0;
         if (nextPartMoveOK) {
-          partMove(nextDieNr, dieFaces, nextMoveLayout, nextMoveablePoints);
+          partMove(
+            nextDieNr,
+            dieFaces,
+            nextMoveLayout,
+            nextMoveablePoints
+          );
         }
       }
       if (!nextPartMoveOK && nextDieNr >= nrOfLegalPartMoves) {
@@ -184,7 +227,7 @@ public class Moves {
   private void generateEvaluatedMoves () {
 
     if (legalMoves.isEmpty()) {
-      evaluatedMoves.add(new EvaluatedMove(parentMove));
+      evaluatedMoves.add(new EvaluatedMove(parentMoveLayout));
     } else {
       legalMoves.forEach(legalMove -> {
         if (legalMove.notIn(evaluatedMoves)) {
@@ -206,10 +249,10 @@ public class Moves {
     for (int a = 0; a < (dice.areDouble() ? 1 : 2); a++) {
 
       int[] dieFaces = a == 0 ? dice.getDice() : dice.getSwappedDice();
-      List<Integer> moveablePoints = parentMove.getMoveablePoints(dieFaces[0]);
+      List<Integer> moveablePoints = parentMoveLayout.getMoveablePoints(dieFaces[0]);
 
       if (!moveablePoints.isEmpty()) {
-        partMove(0, dieFaces, parentMove, moveablePoints);
+        partMove(0, dieFaces, parentMoveLayout, moveablePoints);
       }
     }
     if (legalMoves.size() > 1 && nrOfLegalPartMoves == 1 && !dice.areDouble()) {
@@ -219,8 +262,10 @@ public class Moves {
 
   public Moves generateMoves (Layout layout, int[] diceToMove) {
 
-    parentMove = new MoveLayout(layout, diceToMove);
+    parentMoveLayout = new MoveLayout(layout, diceToMove);
     dice = new Dice(diceToMove);
+    playerID = layout.playerID;
+//    legalMoves = new LinkedList<>();
     legalMoves = new ArrayList<>();
     evaluatedMoves = new ArrayList<>();
     generateLegalMoves();

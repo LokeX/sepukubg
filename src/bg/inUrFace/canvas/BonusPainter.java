@@ -1,15 +1,17 @@
 package bg.inUrFace.canvas;
 
+import bg.api.MoveBonuses;
 import bg.util.TextBatch;
 
 import java.awt.*;
 
 import static bg.Main.getTextArea;
+import static bg.Main.matchApi;
 import static bg.Main.win;
 
-public class TextArea extends TextBatch implements Paintable {
+public class BonusPainter extends TextBatch implements Paintable {
 
-  public TextArea() {
+  public BonusPainter() {
 
     setHeaderColor(Color.yellow);
     setTextColor(new Color(27,124,34));
@@ -18,7 +20,7 @@ public class TextArea extends TextBatch implements Paintable {
     setMarkerTextColor(Color.white);
     setActAsMenu(true);
     setActAsMarkup(true);
-    setMenuFromLine(7);
+    setMenuFromLine(2);
   }
 
   @Override
@@ -26,17 +28,24 @@ public class TextArea extends TextBatch implements Paintable {
 
     if (getTextArea() != null) {
 
-      TextArea text = getTextArea();
+      BonusPainter text = getTextArea();
       BoardDim d = win.canvas.getDimensions();
+      MoveBonuses bonuses = matchApi.getMoveBonuses();
+      Font font = new Font("Ariel", Font.BOLD, (int) (10 * (d.factor * 1.0)));
       int offsetX = (int) ((d.boardOffsetX + d.boardWidth) * 1.03);
       int width = win.canvas.getWidth() - offsetX;
       int height = win.canvas.getHeight();
 
+      if (matchApi.moveExists()) {
+        text.clear();
+        bonuses.getMoveBonusList()
+          .forEach(this::writeLine);
+      }
       text.setX(offsetX);
       text.setWidth(width);
       text.setY(1);
       text.setHeight(height);
-      text.setFont(new Font("Ariel", Font.BOLD, (int) (10 * (d.factor * 0.9))));
+      text.setFont(font);
       text.setLineHeight(g);
       text.drawBatch(g);
     }
@@ -47,7 +56,7 @@ public class TextArea extends TextBatch implements Paintable {
     appendText(s);
   }
 
-  public void nlWrite (String s) {
+  public void writeLine(String s) {
 
     addText(s);
   }

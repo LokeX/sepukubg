@@ -4,11 +4,9 @@ import bg.Main;
 
 import static bg.Main.getCanvas;
 import static bg.Main.win;
-import bg.inUrFace.canvas.BoardDim;
-import bg.inUrFace.canvas.DoublingCube;
-import bg.inUrFace.canvas.ActionButton;
-import bg.inUrFace.canvas.ScenarioEditor;
-import bg.inUrFace.canvas.TextArea;
+
+import bg.inUrFace.canvas.*;
+import bg.inUrFace.canvas.BonusPainter;
 import bg.util.Batch;
 import static bg.util.Reflection.getFieldsList;
 import java.awt.event.MouseAdapter;
@@ -23,7 +21,7 @@ public class MouseController extends MouseAdapter {
   public ActionButton actionButton = getCanvas().getPaintJobs().actionButton;
   public DoublingCube doublingCube = getCanvas().getPaintJobs().doublingCube;
   public MoveInputController moveInputController = new MoveInputController();
-  public TextArea textArea = getCanvas().getPaintJobs().textArea;
+  public BonusPainter bonusPainter = getCanvas().getPaintJobs().bonusPainter;
   private List<MouseListener> controllers = new ArrayList();
 
   public MouseController() {
@@ -42,9 +40,9 @@ public class MouseController extends MouseAdapter {
     return scenarioEditor;
   }
 
-  public TextArea getTextArea() {
+  public BonusPainter getBonusPainter() {
 
-    return textArea;
+    return bonusPainter;
   }
 
   public ActionButton getActionButton() {

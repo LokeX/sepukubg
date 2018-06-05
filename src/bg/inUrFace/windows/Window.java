@@ -25,20 +25,21 @@ public class Window extends JFrame {
   static boolean windowReady = false;
 
   public Canvas canvas = new Canvas();
-//  public TextArea text = new TextArea();
   public MenuBar menu = new MenuBar();
   public MatchPlay progressBar = new MatchPlay();
+  public InformationBar informationBar = new InformationBar();
 
   public Window() {
 
-    super("Sepuku Backgammon - pre-alpha: 0.23-2017.12.14");
+    super("Sepuku Backgammon - pre-alpha: 0.29/2018.06.03");
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
     setIconImage(new ImageIcon(getClass().getResource("Icon/AppIcon.gif")).getImage());
-    canvas.getPaintJobs().textArea.setComponent(canvas);
+    canvas.getPaintJobs().bonusPainter.setComponent(canvas);
     setJMenuBar(menu);
     setLayout(new BorderLayout());
     add(canvas, BorderLayout.CENTER);
+    add(informationBar, BorderLayout.SOUTH);
     addWindowStateListener(new WinMax());
     addWindowListener(files);
     addComponentListener(new WindowControl());
@@ -53,7 +54,7 @@ public class Window extends JFrame {
 
   static public void runWindow () {
 
-    Font font = new Font("Sansserif",Font.PLAIN,20);
+    Font font = new Font("Sansserif",Font.PLAIN,16);
 
     UIManager.put("Menu.font", font);
     UIManager.put("MenuItem.font", font);
@@ -130,7 +131,7 @@ public class Window extends JFrame {
     return canvas;
   }
 
-//  public TextArea getTextArea () {
+//  public BonusPainter getBonusPainter () {
 //
 //    return text;
 //  }
