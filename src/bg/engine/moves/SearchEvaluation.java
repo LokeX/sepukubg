@@ -1,6 +1,8 @@
 package bg.engine.moves;
 
 import java.util.List;
+import java.util.stream.Stream;
+
 import static java.util.stream.Collectors.toList;
 
 public class SearchEvaluation {

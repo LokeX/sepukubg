@@ -3,6 +3,7 @@ package bg;
 import bg.IO.FileHandler;
 import bg.IO.Sound;
 import bg.api.MatchApi;
+import bg.engine.moves.Layout;
 import bg.engine.trainer.Trainer;
 import bg.engine.Scenarios;
 import bg.inUrFace.canvas.Canvas;
@@ -34,6 +35,11 @@ public class Main {
   public static Window getWin () {
 
     return win;
+  }
+
+  public static Layout getDisplayedLayout () {
+
+    return win.canvas.getDisplayedLayout();
   }
 
   public static Canvas getCanvas () {
