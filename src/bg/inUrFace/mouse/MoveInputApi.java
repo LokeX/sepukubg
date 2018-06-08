@@ -1,5 +1,6 @@
 package bg.inUrFace.mouse;
 
+import bg.api.Moveable;
 import bg.inUrFace.canvas.BoardDim;
 import bg.util.Batch;
 import java.awt.*;
@@ -7,21 +8,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import static bg.Main.getActionButton;
+import static bg.Main.matchApi;
 import static bg.Main.win;
 
-public class MoveInputControllerNew extends MouseAdapter {
+public class MoveInputApi extends MouseAdapter {
 
-  private MoveInputNew moveInput;
-  private boolean acceptMoveInput = false;
+//  private Moveable moveable;
+  private MoveInput moveInput;
 
-  Batch[] getClickPoints() {
+  private Batch[] getClickPoints() {
 
     BoardDim d = win.canvas.getDimensions();
-    Batch[] regularPoints = MouseController.getRegularPoints();
+    Batch[] regularPoints = MouseApi.getRegularClickPoints();
     Batch[] points = new Batch[26];
     Color pointsColor = new Color(56, 75, 174, 150);
 
-    if (moveInput.getMovePointsInput().getPlayerID() == 1) {
+    if (matchApi.getMoveInputNew().getPlayerID() == 1) {
       points[0] = new Batch(
         d.leftPlayAreaOffsetX+d.leftPlayAreaWidth,
         d.frameOffsetY+d.boardInnerHeight/2,
@@ -42,7 +44,7 @@ public class MoveInputControllerNew extends MouseAdapter {
       points[a+1] = regularPoints[a];
       points[a+1].setBackgroundColor(pointsColor);
     }
-    if (moveInput.getMovePointsInput().getPlayerID() == 1) {
+    if (matchApi.getMoveInputNew().getPlayerID() == 1) {
       points[25] = new Batch(
         d.topRightBearOffOffsetX,
         d.topRightBearOffOffsetY,
@@ -77,29 +79,44 @@ public class MoveInputControllerNew extends MouseAdapter {
   @Override
   public void mouseClicked (MouseEvent e) {
 
-    if (acceptsMoveInput()) {
+    if (isAcceptingInput()) {
       if (e.getButton() == MouseEvent.BUTTON3) {
         getActionButton().setHideActionButton(true);
-        moveInput.undoPointInput();
+        moveInput.undoPointSelection();
       } else {
-        moveInput.pointClicked(clickedPoint());
+        moveInput.pointClicked();
+      }
+      if (matchApi.getMoveInputNew().isAcceptingInput()) {
+        matchApi.getMoveInputNew().pointClicked(e, clickedPoint());
       }
     }
   }
 
-  public void setAcceptMoveInput (boolean ready) {
+  public MoveInput getMoveInput () {
 
-    acceptMoveInput = ready;
+    return moveInput;
+  }
+
+  void setMoveInput (MoveInput moveInput) {
+
+    this.moveInput = moveInput;
+  }
+
+  public void setAcceptMoveInput (boolean acceptMoveInput) {
+
+    //Old code begin:
     if (acceptMoveInput) {
-      moveInput = new MoveInputNew();
+      moveInput = new MoveInput();
     } else {
       moveInput = null;
     }
+    //:Old code end
+
   }
 
-  public boolean acceptsMoveInput() {
+  public boolean isAcceptingInput() {
 
-    return acceptMoveInput;
+    return moveInput != null && matchApi != null && matchApi.getMoveInputNew() != null;
   }
 
 }

@@ -7,7 +7,6 @@ import static bg.Main.matchApi;
 import static bg.Main.settings;
 import static bg.Main.win;
 
-import bg.engine.moves.MovePointsInput;
 import bg.inUrFace.canvas.BoardDim;
 import bg.inUrFace.canvas.move.MoveOutput;
 import bg.util.Batch;
@@ -30,7 +29,7 @@ public class MoveInput {
   }
 
 //  private MovePoints movesAnalysis = matchApi.getMovesAnalysis();
-  private MovePointsInput movePointsInput = matchApi.getMovePointsInput();
+//  private MovePointsInput movePointsInput = matchApi.getMovePoints();
   private Layout customMoveLayout = new Layout(Main.matchApi.getSelectedTurn().getParentLayout());
   private List<int[]> legalMovePoints = Main.matchApi.getSelectedTurn().getLegalMovePoints();
   private Batch[] points = new Batch[26];
@@ -43,7 +42,7 @@ public class MoveInput {
   final public void calculatePoints () {
 
     BoardDim d = win.canvas.getDimensions();
-    Batch[] regularPoints = MouseController.getRegularPoints();
+    Batch[] regularPoints = MouseApi.getRegularClickPoints();
     Color pointsColor = new Color(56, 75, 174, 150);
 
     if (playerID == 1) {
@@ -383,7 +382,7 @@ public class MoveInput {
 
     int clickedPoint = getClickedPoint();
 
-    movePointsInput.input(clickedPoint);
+//    movePointsInput.input(clickedPoint);
     if (clickedPoint >= 0 && !endOfInputReached()) {
       if (!isLegalEndingPoint(clickedPoint)) {
         if (isLegalStartingPoint(clickedPoint))  {
@@ -499,7 +498,7 @@ public class MoveInput {
 
   public void undoPointSelection() {
 
-    movePointsInput.deleteLatestInput();
+//    movePointsInput.deleteLatestInput();
     if (inputPoint > 0) {
 //      mouse.actionButton.setShowButton(false);
       if ((inputPoint + 2) % 2 == 1) {

@@ -1,8 +1,10 @@
 package bg.engine.moves;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static bg.util.StreamsUtil.streamAsList;
 
@@ -21,6 +23,11 @@ public class MovePointsInput extends MovePoints {
     super(moves);
   }
 
+  public int getStoredPosition () {
+
+    return storedPosition;
+  }
+
   private boolean inputPointIsLegalStartingPoint (int position) {
 
     return
@@ -28,36 +35,39 @@ public class MovePointsInput extends MovePoints {
         .anyMatch(point -> point == inputPoint);
   }
 
-  public List<Layout> autoMove () {
+  private List<Layout> autoMove (List<Layout> layouts, int max) {
 
-    List<Layout> layouts = new ArrayList<>();
-    int position = 0;
-
-    while (uniquePointIn(position)) {
-
-      movePoints[position]
-        = pointsIn(position)
-          .findFirst()
-          .orElse(-1);
-
+    if (position() <= max && uniquePointIn(position())) {
+      movePoints[position()]
+        = pointsIn(position())
+        .findFirst()
+        .orElse(-1);
       layouts.add(
-        matchingMoves()
-          .findFirst()
-          .get()
-          .getMovePointLayouts()
-          .get(position++)
+        getMatchingLayout()
       );
+      autoMove(layouts, max);
     }
-    return
-      streamAsList(
-        layouts.stream()
-        .limit(position + (position%2))
-      );
+    return layouts;
   }
 
-  public String getMovePointsString () {
+  private boolean isVirginMove () {
 
-    return new MoveLayout().getMovePointsString();
+    return
+      Arrays.stream(movePoints)
+        .filter(point -> point == -1)
+        .count() == movePoints.length;
+  }
+
+  public List<Layout> initialAutoMove () {
+
+    if (isVirginMove()) {
+      int max = autoMove(new ArrayList<>(), movePoints.length).size();
+
+      resetMovePoints();
+      return autoMove(new ArrayList<>(), max - (max%2));
+    } else {
+      return new ArrayList<>();
+    }
   }
 
   public Layout getMatchingLayout () {
@@ -68,8 +78,8 @@ public class MovePointsInput extends MovePoints {
       return matchingMoves()
         .findFirst()
         .get()
-        .getMovePointLayouts()
-        .get(position()-1);
+        .getMoveLayouts()
+        .get(position());
     }
   }
 
@@ -94,7 +104,7 @@ public class MovePointsInput extends MovePoints {
         null;
   }
 
-  public List<Layout> getUniqueMovePointsLayouts () {
+  public List<Layout> getUniqueMoveLayouts () {
 
     if (isUniqueMove() && position() > 0) {
       return matchingMoves()
@@ -112,7 +122,7 @@ public class MovePointsInput extends MovePoints {
   private void setAnyUniqueMove () {
 
     if (isUniqueMove()) {
-      movePoints = uniqueMove().getMovePoints().clone();
+      movePoints = uniqueMove().getMovePoints();
     }
   }
 
@@ -170,7 +180,7 @@ public class MovePointsInput extends MovePoints {
     }
   }
 
-  private void printMovePoints () {
+  public void printMovePoints () {
 
     System.out.print("movePoints: ");
     for (int a : movePoints) {

@@ -192,7 +192,7 @@ public class Moves {
       if (nextDieNr < dieFaces.length) {
         nextMoveablePoints = nextMoveLayout
           .getMoveablePoints(dieFaces[nextDieNr]);
-        nextPartMoveOK = nextMoveablePoints.size() > 0;
+        nextPartMoveOK = !nextMoveablePoints.isEmpty();
         if (nextPartMoveOK) {
           partMove(
             nextDieNr,
@@ -216,12 +216,15 @@ public class Moves {
 
   private void removeHighPipMoves () {
 
-    final int lowPIP = legalMoves.stream().
-      mapToInt(Layout::getPip).min().getAsInt();
+    final int lowPip
+      = legalMoves.stream()
+        .mapToInt(Layout::getPip)
+        .min().getAsInt();
 
-    legalMoves = legalMoves.stream().
-      filter(legalMove -> legalMove.getPip() <= lowPIP).
-      collect(toList());
+    legalMoves
+      = legalMoves.stream()
+        .filter(legalMove -> legalMove.getPip() <= lowPip)
+        .collect(toList());
   }
 
   private void generateEvaluatedMoves () {
@@ -244,18 +247,36 @@ public class Moves {
     return this;
   }
 
+  private boolean possibleHighPipMove () {
+
+    return
+      legalMoves.size() > 1
+        && nrOfLegalPartMoves == 1
+        && !dice.areDouble();
+  }
+
   private void generateLegalMoves () {
 
     for (int a = 0; a < (dice.areDouble() ? 1 : 2); a++) {
 
-      int[] dieFaces = a == 0 ? dice.getDice() : dice.getSwappedDice();
-      List<Integer> moveablePoints = parentMoveLayout.getMoveablePoints(dieFaces[0]);
+      int[] dieFaces
+        = a == 0
+        ? dice.getDice()
+        : dice.getSwappedDice();
+      List<Integer> moveablePoints
+        = parentMoveLayout
+        .getMoveablePoints(dieFaces[0]);
 
       if (!moveablePoints.isEmpty()) {
-        partMove(0, dieFaces, parentMoveLayout, moveablePoints);
+        partMove(
+          0,
+          dieFaces,
+          parentMoveLayout,
+          moveablePoints
+        );
       }
     }
-    if (legalMoves.size() > 1 && nrOfLegalPartMoves == 1 && !dice.areDouble()) {
+    if (possibleHighPipMove()) {
       removeHighPipMoves();
     }
   }
@@ -265,9 +286,8 @@ public class Moves {
     parentMoveLayout = new MoveLayout(layout, diceToMove);
     dice = new Dice(diceToMove);
     playerID = layout.playerID;
-//    legalMoves = new LinkedList<>();
-    legalMoves = new ArrayList<>();
-    evaluatedMoves = new ArrayList<>();
+    legalMoves = new ArrayList<>(100);
+    evaluatedMoves = new ArrayList<>(100);
     generateLegalMoves();
     generateEvaluatedMoves();
     sortEvaluatedMoves();

@@ -1,7 +1,6 @@
 package bg.engine.moves;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -18,7 +17,7 @@ public class SearchEvaluation {
     return report;
   }
 
-  public SearchEvaluation generateSearchEvaluations (
+  SearchEvaluation generateSearchEvaluations (
 
     int nrOfMoves, int nrOfTurns,
     List<EvaluatedMove> searchMoves) {
@@ -41,46 +40,72 @@ public class SearchEvaluation {
     return this;
   }
 
-  private int projectedStrengthAverage (int turnCount, EvaluatedMove move) {
+  private List<EvaluatedMove> bestMoves (
 
-    List<EvaluatedMove> bestMoves
-      = move.getSearchMoves()
+    List<Moves> searchMoves) {
+
+    return
+      searchMoves
         .parallelStream()
         .map(Moves::getBestMove)
         .collect(toList());
-    int nextTurnsStrengthAverage = 0;
-    int turnsStrengthAverage
-      = bestMoves
+  }
+
+  private int movesStrengthAverage (
+
+    List<EvaluatedMove> moves) {
+
+    return
+      moves
         .parallelStream()
         .mapToInt(EvaluatedMove::getProbabilityAdjustedLayoutStrength)
         .sum()/36;
+  }
+
+  private int nextProjectedStrengthAverage (
+
+    int turnCount,
+    List<EvaluatedMove> moves) {
+
+    return
+      (int) moves
+        .parallelStream()
+        .mapToInt(bestMove ->
+          projectedStrengthAverage(
+            turnCount + 1,
+            bestMove
+          )
+        )
+        .average()
+        .orElse(0);
+  }
+
+  private int projectedStrengthAverage (int turnCount, EvaluatedMove move) {
+
+    List<EvaluatedMove> bestMoves = bestMoves(move.getSearchMoves());
+    int projectedStrengthAverage = 0;
 
     if (turnCount < nrOfTurns && !move.isWinningMove()) {
-      nextTurnsStrengthAverage
-        = (int) bestMoves
-          .parallelStream()
-          .mapToInt(bestMove ->
-            projectedStrengthAverage(
-              turnCount+1,
-              bestMove
-            )
-          )
-          .average()
-          .orElse(0);
+      projectedStrengthAverage =
+        nextProjectedStrengthAverage(
+          turnCount,
+          bestMoves
+        );
     } else {
       nrOfTurns = turnCount;
     }
-    return turnsStrengthAverage - nextTurnsStrengthAverage;
+    return movesStrengthAverage(bestMoves) - projectedStrengthAverage;
   }
 
   void sortEvaluatedMoves() {
 
     printSearchReport();
 
-    List<EvaluatedMove> sortedMoves = searchMoves.stream().
-      limit(nrOfMoves).
-      sorted((a, b) -> b.searchEvaluation - a.searchEvaluation).
-      collect(toList());
+    List<EvaluatedMove> sortedMoves
+      = searchMoves.stream()
+        .limit(nrOfMoves)
+        .sorted((a, b) -> b.searchEvaluation - a.searchEvaluation)
+        .collect(toList());
 
     for (int a = 0; a < sortedMoves.size(); a++) {
       searchMoves.set(a, sortedMoves.get(a));

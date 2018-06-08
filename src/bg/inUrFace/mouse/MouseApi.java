@@ -5,6 +5,7 @@ import bg.Main;
 import static bg.Main.getCanvas;
 import static bg.Main.win;
 
+import bg.api.Moveable;
 import bg.inUrFace.canvas.*;
 import bg.inUrFace.canvas.BonusPainter;
 import bg.util.Batch;
@@ -15,24 +16,25 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MouseController extends MouseAdapter {
+public class MouseApi extends MouseAdapter {
 
   public ScenarioEditor scenarioEditor = getCanvas().getPaintJobs().scenarioEditor;
   public ActionButton actionButton = getCanvas().getPaintJobs().actionButton;
   public DoublingCube doublingCube = getCanvas().getPaintJobs().doublingCube;
-  public MoveInputController moveInputController = new MoveInputController();
+//  public MoveInputController moveInputController = new MoveInputController();
+  public MoveInputApi moveInputApi = new MoveInputApi();
   public BonusPainter bonusPainter = getCanvas().getPaintJobs().bonusPainter;
   private List<MouseListener> controllers = new ArrayList();
 
-  public MouseController() {
+  public MouseApi() {
 
     getCanvas().addMouseListener(this);
     setupControllersList();
   }
 
-  public MoveInputController getMoveInputController () {
+  public MoveInputApi getMoveInputController () {
 
-    return moveInputController;
+    return moveInputApi;
   }
 
   public ScenarioEditor getLayoutEditor() {
@@ -57,17 +59,22 @@ public class MouseController extends MouseAdapter {
 
   public MoveInput getMoveInput () {
 
-    return moveInputController.moveInput;
+    return moveInputApi.getMoveInput();
+  }
+
+  public MoveInputApi getMoveInputApi () {
+
+    return moveInputApi;
   }
 
   public void setMoveInput (MoveInput moveInput) {
 
-    this.moveInputController.moveInput = moveInput;
+    this.moveInputApi.setMoveInput(moveInput);
   }
 
   public void setAcceptMoveInput (boolean acceptMoveInput) {
 
-    moveInputController.setAcceptMoveInput(acceptMoveInput);
+    moveInputApi.setAcceptMoveInput(acceptMoveInput);
   }
 
   private void setupControllersList () {
@@ -97,7 +104,7 @@ public class MouseController extends MouseAdapter {
     }
   }
 
-  static public Batch[] getRegularPoints () {
+  static public Batch[] getRegularClickPoints () {
 
     Batch[] points = new Batch[24];
     BoardDim d = win.canvas.getDimensions();

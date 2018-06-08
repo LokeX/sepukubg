@@ -16,6 +16,7 @@ import static bg.util.ThreadUtil.runWhenNotified;
 
 public class MatchApi extends Selection {
 
+  MoveInputNew moveInputNew = new MoveInputNew();
   protected ScoreBoard scoreBoard;
   private boolean autoCompleteGame = false;
 
@@ -69,6 +70,11 @@ public class MatchApi extends Selection {
         getSelectedTurnNr(),
         getSelectedMoveNr()
     ) : null;
+  }
+
+  public Moveable getMoveInputNew () {
+
+    return moveInputNew;
   }
 
   public Input getInput () {
@@ -223,9 +229,15 @@ public class MatchApi extends Selection {
 
     getActionButton().setHideActionButton(true);
     if (getSelectedTurn().getNrOfMoves() > 1 || noMoveAutoCompletion()) {
+
       getMouse().setMoveInput(new MoveInput());
       getMouse().setAcceptMoveInput(true);
+      moveInputNew.setPointInput(getSelectedTurn().getMovePointsInput());
+      moveInputNew.setAcceptInput(true);
+//      getMouse().getMoveInputApi().resetInput();
       if (getSettings().isAutoCompletePartMoves()) {
+//        getMouse().getMoveInputApi().initialAutoMove();
+        moveInputNew.initialAutoMove();
         getMouse().getMoveInput().initialAutoMove(runWhenNotified(() -> {
           if (getMouse().getMoveInput().endOfInputReached()) {
             endTurn();
@@ -342,10 +354,8 @@ public class MatchApi extends Selection {
   private void newGame () {
 
     if (!gameIsPlaying()) {
-      System.out.println("Init Match");
       initMatch();
     } else {
-      System.out.println("Init Game");
       initGame();
     }
     startNewGame ();

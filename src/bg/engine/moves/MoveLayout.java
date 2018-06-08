@@ -3,9 +3,9 @@ package bg.engine.moves;
 import bg.engine.Dice;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
+
+import static java.util.Arrays.*;
 
 public class MoveLayout extends Layout {
 
@@ -83,9 +83,9 @@ public class MoveLayout extends Layout {
     }
   }
 
-  public List<Integer> getMoveablePoints(int die) {
+  List<Integer> getMoveablePoints(int die) {
 
-    List<Integer> moveablePoints = new ArrayList<>();
+    List<Integer> moveablePoints = new ArrayList<>(20);
 //    List<Integer> moveablePoints = new LinkedList<>();
 
     if (rearPos < 0) {
@@ -107,7 +107,7 @@ public class MoveLayout extends Layout {
     return moveablePoints;
   }
 
-  public boolean partMoveIsLegal (int startingPoint, int endingPoint) {
+  private boolean partMoveIsLegal (int startingPoint, int endingPoint) {
 
     return
       point[startingPoint] > 0 &&
@@ -116,7 +116,7 @@ public class MoveLayout extends Layout {
       (startingPoint == rearPos || endingPoint >= llep(rearPos));
   }
 
-  public boolean notIn (List<EvaluatedMove> moveLayoutsList) {
+  boolean notIn (List<EvaluatedMove> moveLayoutsList) {
 
     generateHashCode();
     return moveLayoutsList.stream().
@@ -145,19 +145,23 @@ public class MoveLayout extends Layout {
     return this;
   }
 
-  public MoveLayout getPartMoveLayout (int dieNr, int[] dieFaces, int startingPoint) {
+  MoveLayout getPartMoveLayout (int dieNr, int[] dieFaces, int startingPoint) {
 
     return new MoveLayout(this).setPartMove(dieNr, dieFaces, startingPoint);
   }
 
   public boolean isIllegal () {
 
-    for (int a = 0; a < movePoints.length; a++) {
-      if (movePoints[a] != -1) {
-        return false;
-      }
-    }
-    return true;
+    return
+      stream(movePoints)
+        .noneMatch(point -> point != -1);
+
+//    for (int a = 0; a < movePoints.length; a++) {
+//      if (movePoints[a] != -1) {
+//        return false;
+//      }
+//    }
+//    return true;
   }
 
   public boolean containsThesePartMoves (int[] partMove) {
@@ -243,6 +247,68 @@ public class MoveLayout extends Layout {
       movePointLayouts.add(new Layout(tempPoint));
     }
     return movePointLayouts;
+  }
+
+  private void paintPosition (int position) {
+
+    if (hitPoints[position] >= 0) {
+      if (position%2 == 0) {
+        point[hitPoints[position]]--;
+      } else {
+        point[hitPoints[position]]++;
+      }
+    }
+    if (position%2 == 0) {
+      point[movePoints2[position]]--;
+    } else {
+      point[movePoints2[position]]++;
+    }
+  }
+
+  private List<MoveLayout> generateMoveLayouts (
+
+    List<MoveLayout> moveLayouts,
+    int[] originalMovePoints,
+    int position ) {
+
+    movePoints[position]
+      = originalMovePoints[position];
+    paintPosition(position);
+    moveLayouts.add(this);
+    if (position < movePoints.length-1) {
+      if (movePoints[position+1] != -1) {
+        new MoveLayout(this)
+          .generateMoveLayouts(
+            moveLayouts,
+            originalMovePoints,
+            position+1
+          );
+      }
+    }
+    return moveLayouts;
+  }
+
+  private void resetMovePoints () {
+
+    for (int a = 0; a < movePoints.length; a++) {
+      movePoints[a] = -1;
+    }
+  }
+
+  public List<MoveLayout> getMoveLayouts () {
+
+    MoveLayout moveLayout = new MoveLayout(this);
+
+    moveLayout.point = parentLayout.point.clone();
+    moveLayout.resetMovePoints();
+
+    return
+      moveLayout
+        .generateMoveLayouts(
+          new ArrayList<>(),
+          movePoints,
+          0
+        );
   }
 
   public List<Layout> getPartMoveLayouts () {

@@ -1,17 +1,19 @@
 package bg.inUrFace.canvas.move;
 
 import bg.Main;
+import bg.api.Displayable;
 import bg.engine.moves.Layout;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static bg.Main.matchApi;
 import static bg.Main.settings;
 import static bg.Main.win;
 import static bg.util.ThreadUtil.threadSleep;
 
-public class LayoutDisplay {
+public class LayoutDisplay implements Displayable {
 
-  public void showMovePoints (List<Layout> frames, final Object notifier) {
+  public void displayLayouts (List<Layout> frames, final Object notifier) {
 
     new Thread(() -> {
 
@@ -26,7 +28,7 @@ public class LayoutDisplay {
     }).start();
   }
 
-  public void displayLayout(Layout layout) {
+  public void displayLayout (Layout layout) {
 
     win.canvas.
       setDisplayedLayout(

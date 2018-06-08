@@ -237,7 +237,7 @@ public class Layout {
 
   public List<Moves> getSearchMoves () {
 
-    List<Moves> movesList = new ArrayList<>();
+    List<Moves> movesList = new ArrayList<>(21);
     Dice dice = new Dice();
 
     movesList.add(

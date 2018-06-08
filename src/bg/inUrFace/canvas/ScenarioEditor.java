@@ -11,7 +11,6 @@ import bg.util.Batch;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 public class ScenarioEditor extends MouseAdapter implements Paintable {
 
@@ -117,7 +116,7 @@ public class ScenarioEditor extends MouseAdapter implements Paintable {
   final public void generateClickPoints () {
 
     BoardDim d = win.canvas.getDimensions();
-    Batch[] regularPoints = mouse.getRegularPoints();
+    Batch[] regularPoints = mouse.getRegularClickPoints();
     final Color backgroundColor = new Color(0, 0, 0, 0);
     final Color frameColor = new Color(0, 0, 0, 15);
 

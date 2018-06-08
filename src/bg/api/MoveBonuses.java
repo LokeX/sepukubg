@@ -12,6 +12,9 @@ import static java.util.stream.IntStream.range;
 
 public class MoveBonuses {
 
+  private final static int NO_HEADER = 0;
+  private final static int WITH_HEADER = 0;
+
   private final int DISPLAY_MODE;
 
   private EvaluatedMove move;
@@ -28,7 +31,7 @@ public class MoveBonuses {
     return bonus > -1 ? Integer.toString(bonus) : "N/A";
   }
 
-  private String bonusWithHeader (int index, int bonus) {
+  private String bonusWithTitle (int index, int bonus) {
 
     return move.getBonusTexts().get(index)
       + ": " + bonus(bonus);
@@ -36,7 +39,7 @@ public class MoveBonuses {
 
   private String onRollBonus (int index) {
 
-    return bonusWithHeader(index, move.getBonusValues().get(index));
+    return bonusWithTitle(index, move.getBonusValues().get(index));
   }
 
   private Stream<String> onRollBonuses  () {
@@ -47,7 +50,7 @@ public class MoveBonuses {
 
   private String foeBonus (int index) {
 
-    return bonusWithHeader(index, move.getFoeValues().get(index));
+    return bonusWithTitle(index, move.getFoeValues().get(index));
   }
 
   private Stream<String> foeBonuses () {
@@ -78,44 +81,50 @@ public class MoveBonuses {
     return bonusHeaders[DISPLAY_MODE];
   }
 
-  private List<String> bonusesAsList (Stream<String> bonuses) {
+  private List<String> bonusesAsList (Stream<String> bonuses, int headerUse) {
 
     List<String> bonusList = new ArrayList<>();
 
-    bonusList.add(bonusHeader());
-    bonusList.add("");
+    if (headerUse != NO_HEADER) {
+      bonusList.add(bonusHeader());
+      bonusList.add("");
+    }
     bonusList.addAll(streamAsList(bonuses));
-
     return bonusList;
   }
 
-  public List<String> bothPlayersBonusesList () {
+  public List<String> bothPlayersBonusesList (int headerUse) {
 
-    return bonusesAsList(bothBonuses());
+    return bonusesAsList(bothBonuses(), headerUse);
   }
 
-  public List<String> onRollBonusesList () {
+  public List<String> onRollBonusesList (int headerUse) {
 
-    return bonusesAsList(onRollBonuses());
+    return bonusesAsList(onRollBonuses(), headerUse);
   }
 
-  public List<String> foeBonusesList () {
+  public List<String> foeBonusesList (int headerUse) {
 
-    return bonusesAsList(foeBonuses());
+    return bonusesAsList(foeBonuses(), headerUse);
   }
 
-  public List<String> getMoveBonusList () {
+  public List<String> getMoveBonusList (int headerUse) {
 
     final int BOTH_BONUSES = 0;
     final int ON_ROLL_BONUSES = 1;
     final int FOE_BONUSES = 2;
 
     switch (DISPLAY_MODE) {
-      case BOTH_BONUSES    : return bothPlayersBonusesList();
-      case ON_ROLL_BONUSES : return onRollBonusesList();
-      case FOE_BONUSES     : return foeBonusesList();
+      case BOTH_BONUSES    : return bothPlayersBonusesList(headerUse);
+      case ON_ROLL_BONUSES : return onRollBonusesList(headerUse);
+      case FOE_BONUSES     : return foeBonusesList(headerUse);
     }
     return new ArrayList<>(); //Display no bonuses
+  }
+
+  public List<String> getMoveBonusList () {
+
+    return getMoveBonusList(WITH_HEADER);
   }
 
 }

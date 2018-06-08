@@ -11,9 +11,9 @@ import bg.inUrFace.canvas.DoublingCube;
 import bg.inUrFace.canvas.ActionButton;
 import bg.inUrFace.canvas.ScenarioEditor;
 import bg.inUrFace.canvas.BonusPainter;
-import bg.inUrFace.mouse.MouseController;
+import bg.inUrFace.mouse.MouseApi;
 import bg.inUrFace.mouse.MoveInput;
-import bg.inUrFace.mouse.MoveInputController;
+import bg.inUrFace.mouse.MoveInputApi;
 import bg.inUrFace.windows.InformationBar;
 import bg.util.time.TimedTasks;
 import bg.inUrFace.windows.Window;
@@ -25,7 +25,7 @@ public class Main {
   static public Scenarios scenarios;
   static public Settings settings;
   static public Window win;
-  static public MouseController mouse;
+  static public MouseApi mouse;
   static public MatchApi matchApi;
   static public Trainer trainer;
   static public Sound sound;
@@ -47,7 +47,7 @@ public class Main {
     return getWin().getCanvas();
   }
 
-  public static MouseController getMouse () {
+  public static MouseApi getMouse () {
 
     return mouse;
   }
@@ -82,7 +82,7 @@ public class Main {
     return win.informationBar;
   }
 
-  public static MoveInputController getMoveInputController () {
+  public static MoveInputApi getMoveInputController () {
 
     return mouse.getMoveInputController();
   }
@@ -104,7 +104,7 @@ public class Main {
 
     if (nrOfStatGames == 0) {
       Window.runWindow();
-      mouse = new MouseController();
+      mouse = new MouseApi();
       matchApi = new MatchApi();
     } else {
       trainer.playMatches(nrOfStatGames);

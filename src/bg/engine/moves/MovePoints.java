@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static bg.util.StreamsUtil.streamAsList;
+import static java.util.stream.IntStream.range;
 
 public class MovePoints extends Moves {
 
@@ -20,20 +21,26 @@ public class MovePoints extends Moves {
   MovePoints(Moves moves) {
 
     super(moves);
+    resetMovePoints();
+  }
+
+  public void resetMovePoints () {
+
     movePoints = new int[getDice().length*2];
     for (int pointNr = 0; pointNr < movePoints.length; pointNr++) {
       movePoints[pointNr] = -1;
     }
   }
 
-  public Layout getMatchingLayout () {
-
-    return matchingMoves()
-      .map(MoveLayout::getMovePointLayouts)
-      .map(layouts -> layouts.get(position()))
-      .findFirst()
-      .orElse(getParentLayout());
-  }
+//  public Layout getMatchingLayout () {
+//
+//    return
+//      matchingMoves()
+//        .map(MoveLayout::getMovePointLayouts)
+//        .map(layouts -> layouts.get(position()))
+//        .findFirst()
+//        .orElse(getParentLayout());
+//  }
 
   public boolean endOfInput () {
 
@@ -91,19 +98,19 @@ public class MovePoints extends Moves {
 
   Stream<Integer> endingPointsIn (int position) {
 
-    return position != 3
-      ? pointsIn(position)
-      : pointsIn(position)
-        .filter(endingPoint ->
-          !isAmbiguous(endingPoint)
-        );
+    return
+      position != 3
+        ? pointsIn(position)
+        : pointsIn(position)
+            .filter(endingPoint ->
+              !isAmbiguous(endingPoint)
+            );
   }
 
   int endingPointPosition (int endingPoint) {
 
-    return IntStream
-      .range(1, movePoints.length)
-      .filter(position -> position%2 == 1)
+    return range(1, movePoints.length)
+      .filter(this::isEndingPoint)
       .filter(position -> endingPointIsInPosition(endingPoint, position))
       .findAny()
       .orElse(-1);
@@ -128,9 +135,9 @@ public class MovePoints extends Moves {
 
   Stream<Integer> validEndingPoints () {
 
-    return new
-      MoveProjection(this)
-      .projectedEndingPoints();
+    return
+      new MoveProjection(this)
+        .projectedEndingPoints();
   }
 
   private boolean isEndingPoint (int position) {
