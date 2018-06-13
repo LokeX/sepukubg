@@ -11,7 +11,7 @@ import static bg.Main.settings;
 import static bg.Main.win;
 import static bg.util.ThreadUtil.threadSleep;
 
-public class LayoutDisplay implements Displayable {
+public class LayoutDisplay {
 
   public void displayLayouts (List<Layout> frames, final Object notifier) {
 

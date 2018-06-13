@@ -12,8 +12,6 @@ import static bg.Main.timedTasks;
 
 public class InformationBar extends JLabel implements Timeable {
 
-  TurnInfo turnInfo = new TurnInfo();
-
   public InformationBar() {
 
     setPreferredSize(new Dimension(900, 35));
@@ -29,7 +27,7 @@ public class InformationBar extends JLabel implements Timeable {
   public void timerUpdate() {
 
     if (matchApi != null && matchApi.gameIsPlaying()) {
-      setText(turnInfo.updateInfo().getTurnInfoString());
+      setText(matchApi.getTurnInfoString());
     }
   }
 

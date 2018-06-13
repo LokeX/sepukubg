@@ -276,7 +276,7 @@ public class MoveLayout extends Layout {
     paintPosition(position);
     moveLayouts.add(this);
     if (position < movePoints.length-1) {
-      if (movePoints[position+1] != -1) {
+      if (movePoints2[position+1] != -1) {
         new MoveLayout(this)
           .generateMoveLayouts(
             moveLayouts,

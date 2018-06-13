@@ -4,10 +4,8 @@ import bg.engine.Dice;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
-import static java.util.List.*;
 import static java.util.stream.Collectors.toList;
 
 public class Moves {
@@ -38,9 +36,9 @@ public class Moves {
     return playerID;
   }
 
-  public Layout getParentLayout() {
+  public MoveLayout getParentMoveLayout() {
 
-    return new Layout(parentMoveLayout);
+    return new MoveLayout(parentMoveLayout);
   }
 
   public Moves generateSearchEvaluations (int nrOfMovesToSearch, int plyDepth) {
@@ -128,9 +126,9 @@ public class Moves {
 //    return new MovePoints(this);
 //  }
 
-  public MovePointsInput getMovePointsInput () {
+  public InputPoints getMovePointsInput () {
 
-    return new MovePointsInput(this);
+    return new InputPoints(this);
   }
 
   public int getMoveNr (Layout layout) {

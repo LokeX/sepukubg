@@ -2,11 +2,10 @@ package bg.api;
 
 import java.awt.event.MouseEvent;
 
-public interface Moveable {
+public interface MoveInputApi {
 
   void pointClicked (MouseEvent e, int clickedPoint);
 
-  boolean isAcceptingInput ();
-
   int getPlayerID ();
+
 }

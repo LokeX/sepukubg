@@ -36,7 +36,7 @@ public class BonusPainter extends TextBatch implements Paintable {
       int width = win.canvas.getWidth() - offsetX;
       int height = win.canvas.getHeight();
 
-      if (matchApi.moveExists()) {
+      if (bonuses != null) {
         text.clear();
         bonuses.getMoveBonusList()
           .forEach(this::writeLine);

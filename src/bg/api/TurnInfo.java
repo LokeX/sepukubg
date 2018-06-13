@@ -18,6 +18,7 @@ public class TurnInfo {
 
   private String moveNumbers;
   private String turnNumbers;
+  private String movePoints;
   private String playerDescription;
   private String dice;
 
@@ -31,7 +32,6 @@ public class TurnInfo {
     dice = NA;
 
     if (matchApi != null && matchApi.gameIsPlaying()) {
-
       int turnNr = matchApi.getSelectedTurnNr();
       int moveNr = matchApi.getSelectedMoveNr()+1;
       int nrOfMoves = matchApi.getTurnByNr(turnNr).getNrOfMoves();
@@ -42,8 +42,17 @@ public class TurnInfo {
       moveNumbers = moveNr + "/" + nrOfMoves;
       turnNumbers = nrOfTurn + "/" + nrOfTurns;
       dice = dice(matchApi.getTurnByNr(turnNr).getDice());
+      movePoints = getMovePointsString();
     }
     return this;
+  }
+
+  private String getMovePointsString () {
+
+    return
+      matchApi.humanInputReady()
+        ? matchApi.moveInputNew.getMovePointsString()
+        : matchApi.getSelectedMove().getMovePointsString();
   }
 
   private String dieWithComma (int[] dice, int dieNr) {
@@ -59,7 +68,7 @@ public class TurnInfo {
       .orElse("N/A");
   }
 
-  public List<String> getTurnInfoList (String movePoints) {
+  public List<String> getTurnInfoList () {
 
     final String white = "white>";
     final String whiteTag = fontTag + white;
@@ -73,18 +82,9 @@ public class TurnInfo {
     );
   }
 
-  public List<String> getTurnInfoList () {
+  public String getTurnInfoString (char separator) {
 
-    return getTurnInfoList(
-      matchApi
-        .getSelectedMove()
-        .getMovePointsString()
-    );
-  }
-
-  public String getTurnInfoString (String movePoints, char separator) {
-
-    List<String> turnInfo = getTurnInfoList(movePoints);
+    List<String> turnInfo = getTurnInfoList();
 
     return IntStream.range(0, turnInfo.size())
       .mapToObj(index ->
@@ -102,18 +102,9 @@ public class TurnInfo {
       .orElse("N/A");
   }
 
-  public String getTurnInfoString(String movePoints) {
-
-    return getTurnInfoString(movePoints, '|');
-  }
-
   public String getTurnInfoString() {
 
-    return getTurnInfoString(
-      matchApi.getSelectedMove()
-        .getMovePointsString(),
-      '|'
-    );
+    return getTurnInfoString('|');
   }
 
 }

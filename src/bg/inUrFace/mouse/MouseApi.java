@@ -5,7 +5,6 @@ import bg.Main;
 import static bg.Main.getCanvas;
 import static bg.Main.win;
 
-import bg.api.Moveable;
 import bg.inUrFace.canvas.*;
 import bg.inUrFace.canvas.BonusPainter;
 import bg.util.Batch;
@@ -22,9 +21,9 @@ public class MouseApi extends MouseAdapter {
   public ActionButton actionButton = getCanvas().getPaintJobs().actionButton;
   public DoublingCube doublingCube = getCanvas().getPaintJobs().doublingCube;
 //  public MoveInputController moveInputController = new MoveInputController();
-  public MoveInputApi moveInputApi = new MoveInputApi();
+  public MoveInputListener moveInputListener = new MoveInputListener();
   public BonusPainter bonusPainter = getCanvas().getPaintJobs().bonusPainter;
-  private List<MouseListener> controllers = new ArrayList();
+  private List<MouseListener> listeners = new ArrayList();
 
   public MouseApi() {
 
@@ -32,9 +31,9 @@ public class MouseApi extends MouseAdapter {
     setupControllersList();
   }
 
-  public MoveInputApi getMoveInputController () {
+  public MoveInputListener getMoveInputListener() {
 
-    return moveInputApi;
+    return moveInputListener;
   }
 
   public ScenarioEditor getLayoutEditor() {
@@ -59,48 +58,43 @@ public class MouseApi extends MouseAdapter {
 
   public MoveInput getMoveInput () {
 
-    return moveInputApi.getMoveInput();
-  }
-
-  public MoveInputApi getMoveInputApi () {
-
-    return moveInputApi;
+    return moveInputListener.getMoveInput();
   }
 
   public void setMoveInput (MoveInput moveInput) {
 
-    this.moveInputApi.setMoveInput(moveInput);
+    this.moveInputListener.setMoveInput(moveInput);
   }
 
   public void setAcceptMoveInput (boolean acceptMoveInput) {
 
-    moveInputApi.setAcceptMoveInput(acceptMoveInput);
+    moveInputListener.setAcceptMoveInput(acceptMoveInput);
   }
 
   private void setupControllersList () {
 
-    getFieldsList(this, controllers);
+    getFieldsList(this, listeners);
   }
 
   @Override
   public void mouseClicked (MouseEvent e) {
 
     synchronized (this) {
-      controllers.forEach(control -> control.mouseClicked(e));
+      listeners.forEach(listener -> listener.mouseClicked(e));
     }
   }
 
   public void addController (MouseAdapter controller) {
 
     synchronized (this) {
-      controllers.add(controller);
+      listeners.add(controller);
     }
   }
 
   public void removeController (MouseAdapter controller) {
 
     synchronized (this) {
-      controllers.remove(controller);
+      listeners.remove(controller);
     }
   }
 

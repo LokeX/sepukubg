@@ -2,6 +2,7 @@ package bg.engine.moves;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -31,16 +32,6 @@ public class MovePoints extends Moves {
       movePoints[pointNr] = -1;
     }
   }
-
-//  public Layout getMatchingLayout () {
-//
-//    return
-//      matchingMoves()
-//        .map(MoveLayout::getMovePointLayouts)
-//        .map(layouts -> layouts.get(position()))
-//        .findFirst()
-//        .orElse(getParentLayout());
-//  }
 
   public boolean endOfInput () {
 
@@ -150,6 +141,47 @@ public class MovePoints extends Moves {
     return
       position < movePoints.length
         && pointsIn(position).count() == 1;
+  }
+
+  MoveLayout matchingMoveLayout() {
+
+//    System.out.println("moveLayouts size: "+moveLayouts().size());
+//    moveLayouts().stream()
+//      .map(MoveLayout::getMovePointsString)
+//      .forEach(System.out::println);
+    return
+      position() == 0
+        ? getParentMoveLayout()
+        : moveLayouts().get(position()-1);
+  }
+
+  List<MoveLayout> moveLayouts() {
+
+    return
+      matchingMoves()
+        .findAny()
+        .get()
+        .getMoveLayouts();
+  }
+
+  public List<MoveLayout> getMoveLayouts () {
+
+    return moveLayouts();
+  }
+
+  public List<Layout> getMoveLayoutsAsLayouts () {
+
+    return
+      moveLayouts()
+      .stream()
+      .map(Layout::new)
+      .collect(Collectors.toList());
+  }
+
+  public String getMovePointsString () {
+
+    return
+      matchingMoveLayout().getMovePointsString();
   }
 
 

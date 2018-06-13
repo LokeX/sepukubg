@@ -25,7 +25,7 @@ public class MatchScorePainter implements Paintable {
 //      int whiteMatchScore = api.getScoreBoard().getWhiteMatchScore();
 //      int blackMatchScore = api.getScoreBoard().getBlackMatchScore();
 //
-//      if (api.getGame() != null && latestTurnSelected() && api.getGame().gameOver()) {
+//      if (api.getGame() != null && latestTurnIsSelected() && api.getGame().gameOver()) {
 //        whiteMatchScore += api.getScoreBoard().getWhiteGameScore();
 //        blackMatchScore += api.getScoreBoard().getBlackGameScore();
 //      }

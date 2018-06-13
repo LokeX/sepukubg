@@ -5,18 +5,18 @@ import java.util.List;
 
 public class Reflection {
   
-  static public <T> List<T> getFieldsList (Object obj, List<T> objList) {
+  static public <T> List<T> getFieldsList (Object obj, List<T> tList) {
     
     Field[] fields = obj.getClass().getDeclaredFields();
     
     for (Field field : fields) {
       try {
-        objList.add((T)field.get(obj));
+        tList.add((T)field.get(obj));
       } catch (IllegalArgumentException | IllegalAccessException ex) {
         System.out.println(ex.getMessage());
       }       
     }
-    return objList;
+    return tList;
   }
   
 }

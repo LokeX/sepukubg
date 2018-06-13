@@ -13,7 +13,8 @@ import bg.inUrFace.canvas.ScenarioEditor;
 import bg.inUrFace.canvas.BonusPainter;
 import bg.inUrFace.mouse.MouseApi;
 import bg.inUrFace.mouse.MoveInput;
-import bg.inUrFace.mouse.MoveInputApi;
+import bg.inUrFace.mouse.MoveInputController;
+import bg.inUrFace.mouse.MoveInputListener;
 import bg.inUrFace.windows.InformationBar;
 import bg.util.time.TimedTasks;
 import bg.inUrFace.windows.Window;
@@ -82,9 +83,9 @@ public class Main {
     return win.informationBar;
   }
 
-  public static MoveInputApi getMoveInputController () {
+  public static MoveInputListener getMoveInputListener() {
 
-    return mouse.getMoveInputController();
+    return mouse.getMoveInputListener();
   }
 
   public static BonusPainter getTextArea () {

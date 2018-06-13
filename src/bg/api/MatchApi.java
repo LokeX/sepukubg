@@ -3,8 +3,8 @@ package bg.api;
 import bg.Main;
 import bg.engine.*;
 import bg.engine.moves.EvaluatedMove;
+import bg.engine.moves.InputPoints;
 import bg.engine.moves.Layout;
-import bg.engine.moves.MovePointsInput;
 import bg.inUrFace.canvas.move.MoveOutput;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
 import bg.inUrFace.mouse.MoveInput;
@@ -17,6 +17,8 @@ import static bg.util.ThreadUtil.runWhenNotified;
 public class MatchApi extends Selection {
 
   MoveInputNew moveInputNew = new MoveInputNew();
+  bg.api.MoveOutput moveOutput = new bg.api.MoveOutput();
+  private TurnInfo turnInfo = new TurnInfo();
   protected ScoreBoard scoreBoard;
   private boolean autoCompleteGame = false;
 
@@ -36,12 +38,33 @@ public class MatchApi extends Selection {
     getLayoutEditor().startEditor();
   }
 
+  public String getTurnInfoString () {
+
+    return
+      turnInfo
+      .updateInfo()
+      .getTurnInfoString();
+  }
+
+  private boolean latestTurnIsSelected() {
+
+    return getLatestTurnNr() == getSelectedTurnNr();
+  }
+
+  public boolean humanInputReady () {
+
+    return
+      latestTurnIsSelected()
+        && turnsPlayerIsHuman(getLatestTurn())
+        && moveInputNew.inputPointsReady();
+  }
+
   private EvaluatedMove getMove (int turnNr, int moveNr) {
 
     return game.getTurnByNr(turnNr).getMoveByNr(moveNr);
   }
 
-  public boolean moveExists (int turnNr, int moveNr) {
+  private boolean moveExists (int turnNr, int moveNr) {
 
     return
       getNrOfTurns() > 0
@@ -49,30 +72,26 @@ public class MatchApi extends Selection {
       && moveNr < getTurnByNr(turnNr).getNrOfMoves();
   }
 
-  public boolean moveExists () {
+  private MoveBonuses getMoveBonuses (int turnNr, int moveNr) {
 
-    return moveExists(getSelectedTurnNr(), getSelectedMoveNr());
-  }
-
-  public MoveBonuses getMoveBonuses (int turnNr, int moveNr) {
-
-    if (moveExists(turnNr, moveNr)) {
-      return new MoveBonuses(settings, getMove(turnNr, moveNr));
-    } else {
-      return null;
-    }
+    return
+      moveExists(turnNr, moveNr)
+        ? new MoveBonuses(settings, getMove(turnNr, moveNr))
+        : null;
   }
 
   public MoveBonuses getMoveBonuses () {
 
-    return gameIsPlaying()
-      ? getMoveBonuses(
-        getSelectedTurnNr(),
-        getSelectedMoveNr()
-    ) : null;
+    return
+      gameIsPlaying()
+        ? getMoveBonuses(
+            getSelectedTurnNr(),
+            getSelectedMoveNr()
+          )
+        : null;
   }
 
-  public Moveable getMoveInputNew () {
+  public MoveInputApi getMoveInput () {
 
     return moveInputNew;
   }
@@ -82,7 +101,7 @@ public class MatchApi extends Selection {
     return new Input(this);
   }
 
-  public MovePointsInput getMovePointsInput () {
+  public InputPoints getMovePointsInput () {
 
     return getSelectedTurn().getMovePointsInput();
   }
@@ -197,7 +216,7 @@ public class MatchApi extends Selection {
     getActionButton().setShowPleaseWaitButton(false);
     getActionButton().setHideActionButton(false);
     if (settings.isAutomatedEndTurn() && !getGame().gameOver()) {
-      getMoveInputController().setAcceptMoveInput(false);
+      getMoveInputListener().setAcceptMoveInput(false);
       actionButtonClicked();
     } else if (gameOver()) {
       autoCompleteGame = false;
@@ -232,12 +251,12 @@ public class MatchApi extends Selection {
 
       getMouse().setMoveInput(new MoveInput());
       getMouse().setAcceptMoveInput(true);
-      moveInputNew.setPointInput(getSelectedTurn().getMovePointsInput());
-      moveInputNew.setAcceptInput(true);
+      moveInputNew.setInputPoints(getSelectedTurn().getMovePointsInput());
+//      moveInputNew.setAcceptInput(true);
 //      getMouse().getMoveInputApi().resetInput();
       if (getSettings().isAutoCompletePartMoves()) {
 //        getMouse().getMoveInputApi().initialAutoMove();
-        moveInputNew.initialAutoMove();
+//        moveInputNew.initialAutoMove();
         getMouse().getMoveInput().initialAutoMove(runWhenNotified(() -> {
           if (getMouse().getMoveInput().endOfInputReached()) {
             endTurn();

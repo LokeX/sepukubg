@@ -5,9 +5,6 @@ import static bg.Main.mouse;
 import static bg.Main.win;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.MultiResolutionImage;
-import java.util.List;
 import javax.swing.ImageIcon;
 
 public class DicePainter implements Paintable {
@@ -109,14 +106,14 @@ public class DicePainter implements Paintable {
       boolean pointsAreInput =
         matchApi
           .turnsPlayerIsHuman(matchApi.getLatestTurn())
-          && mouse.getMoveInputController().isAcceptingInput();
+          && mouse.getMoveInputListener().acceptInput();
       int nrOfLegalPartMoves = matchApi.getSelectedMove().getNrOfPartMoves();
       int nrOfPartMoves = 0;
       int[] shades = new int[dice.length];
       int[] legalMovePoints = matchApi.getSelectedMove().getMovePoints();
       int[] movePoints = !pointsAreInput ? legalMovePoints :
               dice.length == 2 && nrOfLegalPartMoves == 1 ? legalMovePoints :
-              mouse.getMoveInputController().getMoveInput().getMovePoints();
+              mouse.getMoveInputListener().getMoveInput().getMovePoints();
 
       if (movePoints.length != dice.length * 2) {
         movePoints = new int[dice.length*2];

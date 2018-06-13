@@ -1,60 +1,87 @@
 package bg.api;
 
-import bg.engine.moves.MovePointsInput;
+import bg.engine.moves.InputPoints;
+import bg.engine.moves.Layout;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-import static bg.Main.*;
+import static bg.Main.matchApi;
+import static bg.util.ListUtil.listInRange;
 
-public class MoveInputNew implements Moveable {
+public class MoveInputNew implements MoveInputApi {
 
-  private MovePointsInput pointInput;
-  private boolean acceptMoveInput = false;
-
-  public boolean isAcceptingInput () {
-
-    return acceptMoveInput;
-  }
+  private InputPoints inputPoints;
 
   public int getPlayerID () {
 
-    return pointInput.getPlayerID();
+    return inputPoints.getPlayerID();
   }
 
-  public void pointClicked (MouseEvent e, int clickedPoint) {
+  public void pointClicked (MouseEvent mouseEvent, int clickedPoint) {
 
-    if (isAcceptingInput()) {
-      if (e.getButton() == MouseEvent.BUTTON3) {
-        undoPointInput();
-      } else {
-        inputPoint(clickedPoint);
-      }
+    int storedPosition = inputPoints.getPosition();
+
+    if (mouseEvent.getButton() == MouseEvent.BUTTON3) {
+      inputPoints.deleteLatestInput();
+    } else if (!inputPoints.endOfInput()){
+      inputPoints.input(clickedPoint);
     }
+    matchApi.moveOutput.outputLayouts(outputLayouts(storedPosition));
   }
 
-  private void undoPointInput () {
+  private List<Layout> outputLayouts (int storedPosition) {
 
-    getActionButton().setHideActionButton(true);
-    pointInput.deleteLatestInput();
+    if (storedPosition > inputPoints.getPosition()) {
+      return
+        filteredLayouts(
+          inputPoints.getPosition(),
+          storedPosition
+        );
+    } else if (storedPosition < inputPoints.getPosition()) {
+      return
+        filteredLayouts(
+          storedPosition,
+          inputPoints.getPosition()
+        );
+    }
+    return new ArrayList<>();
   }
 
-  private void inputPoint (int point) {
+  private List<Layout> filteredLayouts (int startPosition, int endPosition) {
 
-    pointInput.input(point);
+    return listInRange(
+      inputPoints.getMoveLayoutsAsLayouts(),
+      startPosition,
+      endPosition
+    );
   }
 
-  void setPointInput (MovePointsInput pointInput) {
+  int getSelectedMoveNr () {
 
-    this.pointInput = pointInput;
+    return inputPoints.getUniqueEvaluatedMoveNr();
   }
 
-  void initialAutoMove () {
+  void setInputPoints (InputPoints inputPoints) {
 
-    pointInput.initialAutoMove();
+    this.inputPoints = inputPoints;
   }
 
-  void setAcceptInput (boolean accept) {
+  List<Layout> initialAutoMove () {
 
-    acceptMoveInput = accept;
+    inputPoints.initialAutoMove();
+    return
+      filteredLayouts(0, inputPoints.getPosition());
+  }
+
+  boolean inputPointsReady () {
+
+    return inputPoints != null;
+  }
+
+  String getMovePointsString () {
+
+    return inputPoints.getMovePointsString();
   }
 
 }

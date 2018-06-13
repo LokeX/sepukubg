@@ -1,6 +1,5 @@
 package bg.inUrFace.mouse;
 
-import bg.api.Moveable;
 import bg.inUrFace.canvas.BoardDim;
 import bg.util.Batch;
 import java.awt.*;
@@ -11,9 +10,8 @@ import static bg.Main.getActionButton;
 import static bg.Main.matchApi;
 import static bg.Main.win;
 
-public class MoveInputApi extends MouseAdapter {
+public class MoveInputListener extends MouseAdapter {
 
-//  private Moveable moveable;
   private MoveInput moveInput;
 
   private Batch[] getClickPoints() {
@@ -23,7 +21,7 @@ public class MoveInputApi extends MouseAdapter {
     Batch[] points = new Batch[26];
     Color pointsColor = new Color(56, 75, 174, 150);
 
-    if (matchApi.getMoveInputNew().getPlayerID() == 1) {
+    if (matchApi.getMoveInput().getPlayerID() == 1) {
       points[0] = new Batch(
         d.leftPlayAreaOffsetX+d.leftPlayAreaWidth,
         d.frameOffsetY+d.boardInnerHeight/2,
@@ -44,7 +42,7 @@ public class MoveInputApi extends MouseAdapter {
       points[a+1] = regularPoints[a];
       points[a+1].setBackgroundColor(pointsColor);
     }
-    if (matchApi.getMoveInputNew().getPlayerID() == 1) {
+    if (matchApi.getMoveInput().getPlayerID() == 1) {
       points[25] = new Batch(
         d.topRightBearOffOffsetX,
         d.topRightBearOffOffsetY,
@@ -79,16 +77,16 @@ public class MoveInputApi extends MouseAdapter {
   @Override
   public void mouseClicked (MouseEvent e) {
 
-    if (isAcceptingInput()) {
+    if (acceptInput()) {
       if (e.getButton() == MouseEvent.BUTTON3) {
         getActionButton().setHideActionButton(true);
         moveInput.undoPointSelection();
       } else {
         moveInput.pointClicked();
       }
-      if (matchApi.getMoveInputNew().isAcceptingInput()) {
-        matchApi.getMoveInputNew().pointClicked(e, clickedPoint());
-      }
+      matchApi
+        .getMoveInput()
+        .pointClicked(e, clickedPoint());
     }
   }
 
@@ -114,9 +112,9 @@ public class MoveInputApi extends MouseAdapter {
 
   }
 
-  public boolean isAcceptingInput() {
+  public boolean acceptInput() {
 
-    return moveInput != null && matchApi != null && matchApi.getMoveInputNew() != null;
+    return moveInput != null && matchApi != null && matchApi.getMoveInput() != null;
   }
 
 }
