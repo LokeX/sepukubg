@@ -1,8 +1,6 @@
 package bg.engine;
 
-import bg.api.MatchApi;
 import bg.engine.moves.Layout;
-import bg.engine.moves.EvaluatedMove;
 import bg.engine.trainer.Trainer;
 
 public class Match {
@@ -15,11 +13,11 @@ public class Match {
 
   }
 
-  public Match (MatchApi matchApi) {
-
-    game = matchApi.game;
-  }
-
+//  public Match (EngineApi engineApi) {
+//
+//    game = engineApi.game;
+//  }
+//
   public Match (Layout matchLayout, int playToScore) {
 
     this.matchLayout = new Layout(matchLayout);

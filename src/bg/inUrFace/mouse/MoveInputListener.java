@@ -7,7 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import static bg.Main.getActionButton;
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.win;
 
 public class MoveInputListener extends MouseAdapter {
@@ -21,7 +21,7 @@ public class MoveInputListener extends MouseAdapter {
     Batch[] points = new Batch[26];
     Color pointsColor = new Color(56, 75, 174, 150);
 
-    if (matchApi.getMoveInput().getPlayerID() == 1) {
+    if (engineApi.getMoveInput().getPlayerID() == 1) {
       points[0] = new Batch(
         d.leftPlayAreaOffsetX+d.leftPlayAreaWidth,
         d.frameOffsetY+d.boardInnerHeight/2,
@@ -42,7 +42,7 @@ public class MoveInputListener extends MouseAdapter {
       points[a+1] = regularPoints[a];
       points[a+1].setBackgroundColor(pointsColor);
     }
-    if (matchApi.getMoveInput().getPlayerID() == 1) {
+    if (engineApi.getMoveInput().getPlayerID() == 1) {
       points[25] = new Batch(
         d.topRightBearOffOffsetX,
         d.topRightBearOffOffsetY,
@@ -75,18 +75,20 @@ public class MoveInputListener extends MouseAdapter {
   }
 
   @Override
-  public void mouseClicked (MouseEvent e) {
+  public void mouseClicked (MouseEvent mouseEvent) {
 
+    System.out.println("Mouse clicked");
     if (acceptInput()) {
-      if (e.getButton() == MouseEvent.BUTTON3) {
+      System.out.println("Accepted input");
+      if (mouseEvent.getButton() == MouseEvent.BUTTON3) {
         getActionButton().setHideActionButton(true);
         moveInput.undoPointSelection();
       } else {
         moveInput.pointClicked();
       }
-      matchApi
+      engineApi
         .getMoveInput()
-        .pointClicked(e, clickedPoint());
+        .pointClicked(mouseEvent, clickedPoint());
     }
   }
 
@@ -114,7 +116,10 @@ public class MoveInputListener extends MouseAdapter {
 
   public boolean acceptInput() {
 
-    return moveInput != null && matchApi != null && matchApi.getMoveInput() != null;
+    return
+      moveInput != null
+        && engineApi != null
+        && engineApi.getMoveInput().inputReady();
   }
 
 }

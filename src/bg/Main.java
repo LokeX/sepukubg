@@ -2,7 +2,7 @@ package bg;
 
 import bg.IO.FileHandler;
 import bg.IO.Sound;
-import bg.api.MatchApi;
+import bg.api.EngineApi;
 import bg.engine.moves.Layout;
 import bg.engine.trainer.Trainer;
 import bg.engine.Scenarios;
@@ -13,7 +13,6 @@ import bg.inUrFace.canvas.ScenarioEditor;
 import bg.inUrFace.canvas.BonusPainter;
 import bg.inUrFace.mouse.MouseApi;
 import bg.inUrFace.mouse.MoveInput;
-import bg.inUrFace.mouse.MoveInputController;
 import bg.inUrFace.mouse.MoveInputListener;
 import bg.inUrFace.windows.InformationBar;
 import bg.util.time.TimedTasks;
@@ -27,7 +26,7 @@ public class Main {
   static public Settings settings;
   static public Window win;
   static public MouseApi mouse;
-  static public MatchApi matchApi;
+  static public EngineApi engineApi;
   static public Trainer trainer;
   static public Sound sound;
 
@@ -106,7 +105,7 @@ public class Main {
     if (nrOfStatGames == 0) {
       Window.runWindow();
       mouse = new MouseApi();
-      matchApi = new MatchApi();
+      engineApi = new EngineApi();
     } else {
       trainer.playMatches(nrOfStatGames);
     }

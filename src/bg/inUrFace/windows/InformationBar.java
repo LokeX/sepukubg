@@ -1,13 +1,12 @@
 package bg.inUrFace.windows;
 
-import bg.api.TurnInfo;
 import bg.util.time.Timeable;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.timedTasks;
 
 public class InformationBar extends JLabel implements Timeable {
@@ -26,8 +25,8 @@ public class InformationBar extends JLabel implements Timeable {
   @Override
   public void timerUpdate() {
 
-    if (matchApi != null && matchApi.gameIsPlaying()) {
-      setText(matchApi.getTurnInfoString());
+    if (engineApi != null && engineApi.gameIsPlaying()) {
+      setText(engineApi.getTurnInfoFormatString());
     }
   }
 

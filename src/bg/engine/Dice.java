@@ -150,17 +150,17 @@ public class Dice {
 
   static public void testRandomDice (int nrOfThrows) {
 
-    int[] occurences = new int[7];
+    int[] occurrences = new int[7];
     int[] testDice;
 
     for (int a = 0; a < nrOfThrows; a++) {
       testDice = new Dice().rollDice().getDice();
       for (int b = 0; b < 2; b++) {
-        occurences[testDice[b]]++;
+        occurrences[testDice[b]]++;
       }
     }
-    for (int a = 1; a < occurences.length; a++) {
-      System.out.println(a+"'s: "+occurences[a]);
+    for (int a = 1; a < occurrences.length; a++) {
+      System.out.println(a+"'s: "+occurrences[a]);
     }
   }
 

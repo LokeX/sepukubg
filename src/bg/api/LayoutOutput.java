@@ -7,7 +7,7 @@ import java.util.List;
 
 import static bg.Main.settings;
 
-public class MoveOutput implements MoveOutputApi {
+public class LayoutOutput implements LayoutOutputApi {
 
   private List<List<Layout>> outputLayoutsBuffer = new ArrayList<>();
   private List<Layout> outputLayouts;
@@ -17,19 +17,26 @@ public class MoveOutput implements MoveOutputApi {
 
   void outputLayouts(List<Layout> outputLayouts, Object notifier) {
 
-    if (outputIsAvailable()) {
-      outputLayoutsBuffer.add(outputLayouts);
-    } else {
-      this.outputLayouts = outputLayouts;
+    synchronized (this) {
+      if (outputIsAvailable()) {
+        outputLayoutsBuffer.add(outputLayouts);
+      } else {
+        this.outputLayouts = outputLayouts;
+      }
+      this.notifier = notifier;
+      layoutNr = 0;
+      timeOfLastOutput = 0;
     }
-    this.notifier = notifier;
-    layoutNr = 0;
-    timeOfLastOutput = 0;
   }
 
   void outputLayouts(List<Layout> outputLayouts) {
 
     outputLayouts(outputLayouts, new Object());
+  }
+
+  void outputLayout (Layout layout) {
+
+    outputLayouts(List.of(layout), new Object());
   }
 
   private long timeDelay () {
@@ -52,7 +59,9 @@ public class MoveOutput implements MoveOutputApi {
 
   public boolean outputReady () {
 
-    return timeDelayElapsed() && outputIsAvailable();
+    return
+      (timeDelayElapsed() || layoutNr == 0)
+      && outputIsAvailable();
   }
 
   private boolean outputIsAvailable() {
@@ -64,8 +73,10 @@ public class MoveOutput implements MoveOutputApi {
 
   private void popNextList () {
 
-    outputLayouts = outputLayoutsBuffer.remove(0);
-    layoutNr = 0;
+    synchronized (this) {
+      outputLayouts = outputLayoutsBuffer.remove(0);
+      layoutNr = 0;
+    }
   }
 
   private boolean nextListReady () {
@@ -83,7 +94,17 @@ public class MoveOutput implements MoveOutputApi {
     return layoutNr == outputLayouts.size()-1;
   }
 
-  public Layout getOutputLayout () {
+  public int getWhitePip () {
+
+    return outputLayouts.get(layoutNr).getWhitePip();
+  }
+
+  public int getBlackPip () {
+
+    return outputLayouts.get(layoutNr).getBlackPip();
+  }
+
+  public int[] getOutputLayout () {
 
     if (nextListReady()) {
       popNextList();
@@ -93,8 +114,12 @@ public class MoveOutput implements MoveOutputApi {
         notifier
           .notifyAll();
       }
-      timeOfLastOutput = System.currentTimeMillis();
-      return outputLayouts.get(layoutNr++);
+      timeOfLastOutput =
+        System.currentTimeMillis();
+      return
+        outputLayouts.get(layoutNr++)
+          .getFlippedLayout()
+          .getPoint();
     }
     return null;
   }

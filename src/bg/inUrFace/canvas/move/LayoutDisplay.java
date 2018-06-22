@@ -1,12 +1,10 @@
 package bg.inUrFace.canvas.move;
 
 import bg.Main;
-import bg.api.Displayable;
 import bg.engine.moves.Layout;
 import java.util.List;
-import java.util.stream.IntStream;
 
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.settings;
 import static bg.Main.win;
 import static bg.util.ThreadUtil.threadSleep;
@@ -32,7 +30,7 @@ public class LayoutDisplay {
 
     win.canvas.
       setDisplayedLayout(
-        matchApi.getSelectedTurn().getPlayerOnRollsID() == 0 ?
+        engineApi.getSelectedTurn().getPlayerOnRollsID() == 0 ?
           new Layout(layout) :
           new Layout(layout).getFlippedLayout()
       );

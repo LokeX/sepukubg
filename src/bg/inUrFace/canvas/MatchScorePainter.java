@@ -5,23 +5,23 @@ import static bg.Main.win;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 
 public class MatchScorePainter implements Paintable {
 
   private boolean latestTurnSelected () {
 
     return
-      matchApi.getGame() != null &&
-      matchApi.getSelectedTurn() == matchApi.getGame().getLatestTurn();
+      engineApi.getGame() != null &&
+      engineApi.getSelectedTurn() == engineApi.getGame().getLatestTurn();
   }
 
   @Override
   public void paint(Graphics g) {
 
-    if (matchApi != null) {
+    if (engineApi != null) {
       BoardDim d = win.canvas.getDimensions();
-      String toScore = Integer.toString(matchApi.getScoreBoard().getPlayToScore());
+      String toScore = Integer.toString(engineApi.getScoreBoard().getPlayToScore());
 //      int whiteMatchScore = api.getScoreBoard().getWhiteMatchScore();
 //      int blackMatchScore = api.getScoreBoard().getBlackMatchScore();
 //
@@ -33,12 +33,12 @@ public class MatchScorePainter implements Paintable {
       int whiteMatchScore;
       int blackMatchScore;
 
-      if (matchApi.getGame() != null && latestTurnSelected() && matchApi.getGame().gameOver()) {
-        whiteMatchScore = matchApi.getScoreBoard().getMatchPlusGameScore()[0];
-        blackMatchScore = matchApi.getScoreBoard().getMatchPlusGameScore()[1];
+      if (engineApi.getGame() != null && latestTurnSelected() && engineApi.getGame().gameOver()) {
+        whiteMatchScore = engineApi.getScoreBoard().getMatchPlusGameScore()[0];
+        blackMatchScore = engineApi.getScoreBoard().getMatchPlusGameScore()[1];
       } else {
-        whiteMatchScore = matchApi.getScoreBoard().getWhiteMatchScore();
-        blackMatchScore = matchApi.getScoreBoard().getBlackMatchScore();
+        whiteMatchScore = engineApi.getScoreBoard().getWhiteMatchScore();
+        blackMatchScore = engineApi.getScoreBoard().getBlackMatchScore();
       }
 
       String whiteScore = Integer.toString(whiteMatchScore);

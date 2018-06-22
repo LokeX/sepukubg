@@ -10,18 +10,13 @@ import static bg.Main.win;
 import static bg.util.Dialogs.getIntegerInput;
 import static bg.util.Dialogs.showMessage;
 
-public class Input extends MatchApi {
-
-  public Input(MatchApi matchApi) {
-
-    super(matchApi);
-  }
+public class Input {
 
   public void inputStatScoreToWin () {
 
     int newScore = getIntegerInput(
       "Type the scoreBoard required " +
-      "to win a statistical matchApi:",
+      "to win a statistical engineApi:",
       win
     );
 
@@ -48,7 +43,7 @@ public class Input extends MatchApi {
 
     if (name != null && name.length() > 0) {
       scenarios.addDisplayedLayout(name);
-      if (matchApi.getLatestTurn() == null) {
+      if (engineApi.getLatestTurn() == null) {
         new ScenarioOutput().outputSelectedScenario();
       }
     }
@@ -65,7 +60,7 @@ public class Input extends MatchApi {
 
   public void inputNewDice () {
 
-    if (getLatestTurn() != null) {
+    if (engineApi.getLatestTurn() != null) {
 
       String diceInput = JOptionPane.showInputDialog(win,
         "Input dice values with no seperation" +
@@ -77,11 +72,11 @@ public class Input extends MatchApi {
         Dice dice = new Dice(diceInput);
 
         if (dice.diceAreValid()) {
-          getSelectedTurn().setDice(dice.getDice());
-          getGame().truncateTurns(selectedTurn);
-          selectedMove = getPlayedMoveNr();
-          searchRolledMoves();
-          Move();
+          engineApi.getSelectedTurn().setDice(dice.getDice());
+          engineApi.getGame().truncateTurns(engineApi.selection.selectedTurn);
+          engineApi.selection.selectedMove = engineApi.getPlayedMoveNr();
+          engineApi.getSearch().searchRolledMoves();
+          engineApi.getMatchPlay().move();
         }
       }
     }
@@ -95,7 +90,7 @@ public class Input extends MatchApi {
     );
 
     if (newScore >= 0 && newScore < 100 && newScore % 2 == 1) {
-      scoreBoard.setPlayToScore(newScore);
+      engineApi.getScoreBoard().setPlayToScore(newScore);
       settings.setScoreToWin(newScore);
     }
   }
@@ -109,7 +104,7 @@ public class Input extends MatchApi {
     );
 
     if (newScore >= 0 && newScore < 100) {
-      scoreBoard.setPlayersMatchScore(playerID, newScore);
+      engineApi.getScoreBoard().setPlayersMatchScore(playerID, newScore);
     }
   }
 
@@ -120,7 +115,7 @@ public class Input extends MatchApi {
     );
 
     if (newCubeValue >= 2 && newCubeValue <= 64 && newCubeValue % 2 == 0) {
-      getGame().getGameCube().setValue(newCubeValue);
+      engineApi.getGame().getGameCube().setValue(newCubeValue);
     }
   }
 

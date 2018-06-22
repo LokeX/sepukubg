@@ -32,7 +32,10 @@ public class SearchEvaluation {
       .forEach(move ->
         move.setSearchEvaluation(
           move.getLayoutStrength() -
-            projectedStrengthAverage(1, move)
+            projectedStrengthAverage(
+              1,
+              move
+            )
         )
       );
     report += "Before values:\n";
@@ -65,10 +68,10 @@ public class SearchEvaluation {
   private int nextProjectedStrengthAverage (
 
     int turnCount,
-    List<EvaluatedMove> moves) {
+    List<EvaluatedMove> bestMoves) {
 
-    return
-      (int) moves
+    return (int)
+      bestMoves
         .parallelStream()
         .mapToInt(bestMove ->
           projectedStrengthAverage(

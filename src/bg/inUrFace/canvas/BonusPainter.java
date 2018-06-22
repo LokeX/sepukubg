@@ -1,12 +1,12 @@
 package bg.inUrFace.canvas;
 
-import bg.api.MoveBonuses;
 import bg.util.TextBatch;
 
 import java.awt.*;
+import java.util.List;
 
 import static bg.Main.getTextArea;
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.win;
 
 public class BonusPainter extends TextBatch implements Paintable {
@@ -30,7 +30,7 @@ public class BonusPainter extends TextBatch implements Paintable {
 
       BonusPainter text = getTextArea();
       BoardDim d = win.canvas.getDimensions();
-      MoveBonuses bonuses = matchApi.getMoveBonuses();
+      List<String> bonuses = engineApi.getMoveBonuses();
       Font font = new Font("Ariel", Font.BOLD, (int) (10 * (d.factor * 1.0)));
       int offsetX = (int) ((d.boardOffsetX + d.boardWidth) * 1.03);
       int width = win.canvas.getWidth() - offsetX;
@@ -38,8 +38,7 @@ public class BonusPainter extends TextBatch implements Paintable {
 
       if (bonuses != null) {
         text.clear();
-        bonuses.getMoveBonusList()
-          .forEach(this::writeLine);
+        bonuses.forEach(this::writeLine);
       }
       text.setX(offsetX);
       text.setWidth(width);

@@ -5,6 +5,7 @@ import bg.engine.Dice;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -12,13 +13,13 @@ public class Moves {
 
   private List<EvaluatedMove> evaluatedMoves;
   private List<MoveLayout> legalMoves;
+  private List<MoveBonuses> moveBonuses;
   private SearchEvaluation searchEvaluation;
   private MoveLayout parentMoveLayout;
   private Dice dice;
   private int nrOfLegalPartMoves;
-  private int playerID;
 
-  public Moves(Moves moves) {
+  public Moves (Moves moves) {
 
     parentMoveLayout = moves.parentMoveLayout;
     dice = moves.dice;
@@ -27,13 +28,26 @@ public class Moves {
     nrOfLegalPartMoves = moves.nrOfLegalPartMoves;
   }
 
-  public Moves() {
+  Moves () {
 
+  }
+
+  public MoveBonuses getMoveBonuses (EvaluatedMove move) {
+
+    if (moveBonuses == null) {
+      generateMoveBonuses();
+    }
+    return moveBonuses.get(getMoveNr(move));
+  }
+
+  public boolean isIllegal () {
+
+    return evaluatedMoves.get(0).isIllegal();
   }
 
   public int getPlayerID () {
 
-    return playerID;
+    return parentMoveLayout.playerID;
   }
 
   public MoveLayout getParentMoveLayout() {
@@ -55,6 +69,7 @@ public class Moves {
   public void sortMovesBySearchEvaluation () {
 
     if (searchEvaluation != null) {
+      moveBonuses = null;
       searchEvaluation.sortEvaluatedMoves();
     }
   }
@@ -64,12 +79,12 @@ public class Moves {
     return searchEvaluation;
   }
 
-  protected int getMoveNr (EvaluatedMove evaluatedMove) {
+  private int getMoveNr (EvaluatedMove evaluatedMove) {
 
     return evaluatedMoves.indexOf(evaluatedMove);
   }
 
-  public List<MoveLayout> getLegalMoves() {
+  List<MoveLayout> getLegalMoves() {
 
     return Collections.unmodifiableList(legalMoves);
   }
@@ -101,7 +116,7 @@ public class Moves {
     return evaluatedMoves.get(evaluatedMoveNr);
   }
 
-  protected EvaluatedMove getBestMove() {
+  public EvaluatedMove getBestMove() {
 
     return evaluatedMoves.get(0);
   }
@@ -111,7 +126,7 @@ public class Moves {
     return evaluatedMoves.size();
   }
 
-  public int getNrOfLegalPartMoves () {
+  int getNrOfLegalPartMoves () {
 
     return nrOfLegalPartMoves;
   }
@@ -121,24 +136,22 @@ public class Moves {
     return dice.getDice();
   }
 
-//  public MovePoints getMovesAnalysis () {
-//
-//    return new MovePoints(this);
-//  }
-
-  public InputPoints getMovePointsInput () {
-
-    return new InputPoints(this);
-  }
-
-  public int getMoveNr (Layout layout) {
+  int getMoveNr (Layout layout) {
 
     if (layout != null) {
-      for (int a = 0; a < evaluatedMoves.size(); a++) {
-        if (layout.isIdenticalTo(evaluatedMoves.get(a))) {
-          return a;
-        }
-      }
+      return
+        IntStream.range(0, evaluatedMoves.size())
+          .filter(index ->
+            evaluatedMoves.get(index)
+              .isIdenticalTo(layout)
+          )
+          .findAny().orElse(-1);
+
+      //      for (int a = 0; a < evaluatedMoves.size(); a++) {
+//        if (layout.isIdenticalTo(evaluatedMoves.get(a))) {
+//          return a;
+//        }
+//      }
     }
     return -1;
   }
@@ -240,6 +253,7 @@ public class Moves {
 
   public Moves sortEvaluatedMoves () {
 
+    moveBonuses = null;
     evaluatedMoves.
       sort((a, b) -> b.getLayoutStrength() - a.getLayoutStrength());
     return this;
@@ -257,13 +271,13 @@ public class Moves {
 
     for (int a = 0; a < (dice.areDouble() ? 1 : 2); a++) {
 
-      int[] dieFaces
-        = a == 0
-        ? dice.getDice()
-        : dice.getSwappedDice();
-      List<Integer> moveablePoints
-        = parentMoveLayout
-        .getMoveablePoints(dieFaces[0]);
+      int[] dieFaces =
+        a == 0
+          ? dice.getDice()
+          : dice.getSwappedDice();
+      List<Integer> moveablePoints =
+        parentMoveLayout
+          .getMoveablePoints(dieFaces[0]);
 
       if (!moveablePoints.isEmpty()) {
         partMove(
@@ -279,11 +293,18 @@ public class Moves {
     }
   }
 
-  public Moves generateMoves (Layout layout, int[] diceToMove) {
+  private void generateMoveBonuses () {
 
-    parentMoveLayout = new MoveLayout(layout, diceToMove);
+    moveBonuses =
+      evaluatedMoves.stream()
+        .map(MoveBonuses::new)
+        .collect(toList());
+  }
+
+  protected Moves generateMoves (Layout layout, int[] diceToMove) {
+
+    parentMoveLayout = new MoveLayout(this, layout, diceToMove);
     dice = new Dice(diceToMove);
-    playerID = layout.playerID;
     legalMoves = new ArrayList<>(100);
     evaluatedMoves = new ArrayList<>(100);
     generateLegalMoves();

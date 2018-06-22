@@ -3,17 +3,20 @@ package bg.engine.moves;
 import bg.engine.Dice;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static java.util.Arrays.*;
 
 public class MoveLayout extends Layout {
 
+  List<MoveLayout> movePointsLayouts;
   protected Dice dice;
-  protected int[] movePoints;
-  protected int[] movePoints2;
-  protected int[] hitPoints;
-  protected Layout parentLayout;
+  private Moves parentMoves;
+  private int[] hitPoints;
+  int[] movePoints;
+  int[] movePoints2;
 
   public int[] getDice() {
 
@@ -49,29 +52,24 @@ public class MoveLayout extends Layout {
     return temp;
   }
 
-  public Layout getParentLayout() {
-
-    return parentLayout;
-  }
-
-  public MoveLayout () {
+  protected MoveLayout () {
 
   }
 
   public MoveLayout (MoveLayout moveLayout) {
 
     super(moveLayout);
-    parentLayout = moveLayout.getParentLayout();
+    parentMoves = moveLayout.parentMoves;
     dice = moveLayout.getDiceObj();
     movePoints = moveLayout.getMovePoints();
     movePoints2 = moveLayout.getMovePoints2();
     hitPoints = moveLayout.getHitPoints();
   }
 
-  public MoveLayout (Layout layout, int[] dice) {
+  MoveLayout (Moves moves, Layout layout, int[] dice) {
 
     super(layout);
-    parentLayout = layout;
+    parentMoves = moves;
     this.dice = new Dice(dice);
     movePoints = new int[this.dice.getDice().length*2];
     hitPoints = new int[movePoints.length];
@@ -86,7 +84,6 @@ public class MoveLayout extends Layout {
   List<Integer> getMoveablePoints(int die) {
 
     List<Integer> moveablePoints = new ArrayList<>(20);
-//    List<Integer> moveablePoints = new LinkedList<>();
 
     if (rearPos < 0) {
       calcRearPos();
@@ -110,10 +107,10 @@ public class MoveLayout extends Layout {
   private boolean partMoveIsLegal (int startingPoint, int endingPoint) {
 
     return
-      point[startingPoint] > 0 &&
-      (point[25] == 0 || startingPoint == 25) &&
-      (endingPoint == 0 || point[endingPoint + 26] < 2) &&
-      (startingPoint == rearPos || endingPoint >= llep(rearPos));
+      point[startingPoint] > 0
+      && (point[25] == 0 || startingPoint == 25)
+      && (endingPoint == 0 || point[endingPoint + 26] < 2)
+      && (startingPoint == rearPos || endingPoint >= llep(rearPos));
   }
 
   boolean notIn (List<EvaluatedMove> moveLayoutsList) {
@@ -147,7 +144,13 @@ public class MoveLayout extends Layout {
 
   MoveLayout getPartMoveLayout (int dieNr, int[] dieFaces, int startingPoint) {
 
-    return new MoveLayout(this).setPartMove(dieNr, dieFaces, startingPoint);
+    return new
+      MoveLayout(this)
+        .setPartMove(
+          dieNr,
+          dieFaces,
+          startingPoint
+        );
   }
 
   public boolean isIllegal () {
@@ -176,21 +179,17 @@ public class MoveLayout extends Layout {
     return false;
   }
 
-  public boolean movePointsMatch (int[] movePointsToMatch) {
+  boolean movePointsMatch (int[] movePointsToMatch) {
 
-    int nrOfMovePointsToMatch = 0;
-    int nrOfMatches = 0;
+    int nrOfMovePointsToMatch =
+      (int) Arrays.stream(movePointsToMatch)
+        .filter(point -> point != -1)
+        .count();
+    int nrOfMatches =
+      (int) IntStream.range(0, movePointsToMatch.length)
+        .filter(position -> movePointsToMatch[position] == movePoints[position])
+        .count();
 
-    for (int movePoint : movePointsToMatch) {
-      if (movePoint != -1) {
-        nrOfMovePointsToMatch++;
-      }
-    }
-    for (int a = 0; a < nrOfMovePointsToMatch; a++) {
-      if (movePointsToMatch[a] == movePoints[a]) {
-        nrOfMatches++;
-      }
-    }
     return nrOfMatches == nrOfMovePointsToMatch;
   }
 
@@ -201,22 +200,15 @@ public class MoveLayout extends Layout {
 
   final public int getNrOfPartMoves() {
 
-    int count = 0;
-
-    for (int a = 0; a < movePoints.length; a++) {
-      if (movePoints[a] < 0) {
-        count++;
-      }
-    }
-    return (movePoints.length - count) / 2;
+    return parentMoves.getNrOfLegalPartMoves();
   }
 
-  public boolean isWinningMove () {
+  boolean isWinningMove () {
 
     return rearPos == 0;
   }
 
-  public boolean endingPointIsAmbiguous(int endingPoint) {
+  boolean endingPointIsAmbiguous(int endingPoint) {
 
     return
       !dice.areDouble() &&
@@ -225,10 +217,10 @@ public class MoveLayout extends Layout {
       movePoints[1] == movePoints[2];
   }
 
-  public List<Layout> getMovePointLayouts () {
+  protected List<Layout> getMovePointLayouts () {
 
     List<Layout> movePointLayouts = new ArrayList<>();
-    int[] tempPoint = parentLayout.point.clone();
+    int[] tempPoint = parentMoves.getParentMoveLayout().getPoint().clone();
     int nrOfMovePoints = getNrOfPartMoves()*2;
 
     for (int a = 0; a < nrOfMovePoints; a++) {
@@ -271,8 +263,8 @@ public class MoveLayout extends Layout {
     int[] originalMovePoints,
     int position ) {
 
-    movePoints[position]
-      = originalMovePoints[position];
+    movePoints[position] =
+      originalMovePoints[position];
     paintPosition(position);
     moveLayouts.add(this);
     if (position < movePoints.length-1) {
@@ -295,15 +287,23 @@ public class MoveLayout extends Layout {
     }
   }
 
-  public List<MoveLayout> getMoveLayouts () {
+  private MoveLayout clonedMoveLayout () {
 
     MoveLayout moveLayout = new MoveLayout(this);
 
-    moveLayout.point = parentLayout.point.clone();
+    moveLayout.point =
+      parentMoves
+        .getParentMoveLayout()
+        .point
+        .clone();
     moveLayout.resetMovePoints();
+    return moveLayout;
+  }
+
+  private List<MoveLayout> moveLayoutsList () {
 
     return
-      moveLayout
+      clonedMoveLayout()
         .generateMoveLayouts(
           new ArrayList<>(),
           movePoints,
@@ -311,15 +311,25 @@ public class MoveLayout extends Layout {
         );
   }
 
-  public List<Layout> getPartMoveLayouts () {
+  private List<MoveLayout> parentMoveLayoutList () {
 
-    List<Layout> movePointsLayout = getMovePointLayouts();
-    List<Layout> partMoveLayouts = new ArrayList<>();
+    return
+      List.of(
+        parentMoves
+          .getParentMoveLayout()
+      );
+  }
 
-    for (int a = 1; a < movePoints.length; a += 2) {
-      partMoveLayouts.add(movePointsLayout.get(a));
+  public List<MoveLayout> getMoveLayouts () {
+
+    if (isIllegal()) {
+      return parentMoveLayoutList();
+    } else {
+      if (movePointsLayouts == null) {
+        movePointsLayouts = moveLayoutsList();
+      }
+      return movePointsLayouts;
     }
-    return partMoveLayouts;
   }
 
   public String getMovePointsString() {

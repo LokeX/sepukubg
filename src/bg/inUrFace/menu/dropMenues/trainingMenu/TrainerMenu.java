@@ -1,6 +1,6 @@
 package bg.inUrFace.menu.dropMenues.trainingMenu;
 
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.trainer;
 
 import bg.engine.trainer.Trainer;
@@ -70,7 +70,7 @@ public class TrainerMenu extends JMenu implements Timeable {
     add(setScoreToWin);
     setScoreToWin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
     setScoreToWin.addActionListener((ActionEvent e) -> {
-      matchApi.getInput().inputStatScoreToWin();
+      engineApi.getInput().inputStatScoreToWin();
     });
   }
 

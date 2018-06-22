@@ -1,6 +1,6 @@
 package bg.inUrFace.canvas;
 
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.mouse;
 import static bg.Main.win;
 
@@ -87,7 +87,7 @@ public class DicePainter implements Paintable {
 
   private void makeDice () {
 
-    dice = matchApi.getSelectedTurn().getDice();
+    dice = engineApi.getSelectedTurn().getDice();
     for (int a = 0; a < dice.length; a++) {
       if (dieIcons[a] == null) {
         dieIcons[a] = new DieIcon();
@@ -100,17 +100,17 @@ public class DicePainter implements Paintable {
   @Override
   public void paint (Graphics g) {
 
-    if (matchApi != null && matchApi.getSelectedTurn() != null) {
+    if (engineApi != null && engineApi.getSelectedTurn() != null) {
       makeDice();
 
       boolean pointsAreInput =
-        matchApi
-          .turnsPlayerIsHuman(matchApi.getLatestTurn())
+        engineApi
+          .turnsPlayerIsHuman(engineApi.getLatestTurn())
           && mouse.getMoveInputListener().acceptInput();
-      int nrOfLegalPartMoves = matchApi.getSelectedMove().getNrOfPartMoves();
+      int nrOfLegalPartMoves = engineApi.getSelectedMove().getNrOfPartMoves();
       int nrOfPartMoves = 0;
       int[] shades = new int[dice.length];
-      int[] legalMovePoints = matchApi.getSelectedMove().getMovePoints();
+      int[] legalMovePoints = engineApi.getSelectedMove().getMovePoints();
       int[] movePoints = !pointsAreInput ? legalMovePoints :
               dice.length == 2 && nrOfLegalPartMoves == 1 ? legalMovePoints :
               mouse.getMoveInputListener().getMoveInput().getMovePoints();
@@ -121,16 +121,16 @@ public class DicePainter implements Paintable {
       for (int a = 0; a < movePoints.length; a += 2) {
         if (movePoints[a] >= 0 && movePoints[a+1] >= 0) {
           nrOfPartMoves++;
-          if (matchApi.getSelectedTurn().getPlayerOnRollsID() == 0) {
+          if (engineApi.getSelectedTurn().getPlayerOnRollsID() == 0) {
             shades[a/2] = movePoints[a] - movePoints[a+1];
           } else {
             shades[a/2] = movePoints[a+1] - movePoints[a];
           }
-        } else if (matchApi.getSelectedMove().isIllegal()) {
+        } else if (engineApi.getSelectedMove().isIllegal()) {
           shades[a/2] = 1;
         }
       }
-      if (!matchApi.getSelectedMove().isIllegal()) {
+      if (!engineApi.getSelectedMove().isIllegal()) {
         if (dice.length == 4) {
           for (int a = 0; a < nrOfPartMoves-(shades.length-nrOfLegalPartMoves); a++) {
             shades[a] = 1;

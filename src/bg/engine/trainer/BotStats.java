@@ -52,7 +52,7 @@ public class BotStats implements Serializable {
         "\nGammons won: "+df.format(gammonsWon)+
         "\nBackgammons won: "+df.format(backgammonsWon)+
         "\nTotal points won: "+df.format((singlePointsWon+(2*gammonsWon)+(3*backgammonsWon)))+
-        "\nMatchApi win percentage ["+name+"]: "+getWinningPercentage()+"%\n\n";
+        "\nEngineApi win percentage ["+name+"]: "+getWinningPercentage()+"%\n\n";
     }
 
     String getOpponentsName () {

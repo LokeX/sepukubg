@@ -126,13 +126,13 @@ public class MoveOutput extends MoveLayout {
     text.clear();
     text.writeLine("Moves matchLayout information:");
     text.writeLine("Player: " + getPlayerTitle());
-    text.writeLine("Turn: #" + (matchApi.getSelectedTurn().getTurnNr() + 1));
+    text.writeLine("Turn: #" + (engineApi.getSelectedTurn().getTurnNr() + 1));
     text.writeLine("Dice cast: ");
     for (int a = 0; a < getDice().length; a++) {
       text.write(getDice()[a] + ",");
     }
     text.writeLine("");
-    text.write("Legal move:  #" + (matchApi.getSelectedMoveNr()+1) + "/" + matchApi.getSelectedTurn().getNrOfMoves() + ":  ");
+    text.write("Legal move:  #" + (engineApi.getSelectedMoveNr()+1) + "/" + engineApi.getSelectedTurn().getNrOfMoves() + ":  ");
     for (int a = 0; a < getMovePoints().length; a++) {
 //      win.bonusPainter.write(Integer.toString(playerID == 0 ? partMovePoints[a] : 25 - partMovePoints[a]) + ", ");
       text.write(Integer.toString(getMovePoints()[a]) + ", ");
@@ -148,9 +148,9 @@ public class MoveOutput extends MoveLayout {
 
   public void outputCustomMove (MoveInput moveInput) {
 
-    int turnNr = matchApi.getSelectedTurn().getTurnNr();
-    String playerTitle = matchApi.getSelectedTurn().getPlayerTitle();
-    int[] rolledDice = matchApi.getSelectedTurn().getDice();
+    int turnNr = engineApi.getSelectedTurn().getTurnNr();
+    String playerTitle = engineApi.getSelectedTurn().getPlayerTitle();
+    int[] rolledDice = engineApi.getSelectedTurn().getDice();
     int[] movePoints = moveInput.getMovePoints();
     Layout customLayout = moveInput.getCustomMoveLayout();
     BonusPainter text = getTextArea();

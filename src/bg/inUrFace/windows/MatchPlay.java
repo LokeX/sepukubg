@@ -126,7 +126,7 @@ public class MatchPlay extends JFrame {
 
     setVisible(false);
     TextDisplay.displayReport(
-      "MatchApi play statistics: ",
+      "EngineApi play statistics: ",
       trainer.getFinalReport()
     );
   }

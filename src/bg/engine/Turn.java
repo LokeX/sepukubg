@@ -2,6 +2,7 @@ package bg.engine;
 
 import bg.engine.moves.Layout;
 import bg.engine.moves.EvaluatedMove;
+import bg.engine.moves.MoveSelect;
 import bg.engine.moves.Moves;
 
 public class Turn extends Moves {
@@ -74,6 +75,11 @@ public class Turn extends Moves {
   public int getPlayerOnRollsID() {
 
     return getPlayedMove().getPlayerID();
+  }
+
+  public MoveSelect getMoveSelection () {
+
+    return new MoveSelect(this);
   }
 
 }

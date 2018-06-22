@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.win;
 
 public class ScenarioMenu extends JMenu implements Timeable {
@@ -32,7 +32,7 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(saveScenario);
     saveScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
     saveScenario.addActionListener((ActionEvent e) -> {
-      matchApi.getInput().saveLayout();
+      engineApi.getInput().saveLayout();
     });
   }
 
@@ -41,7 +41,7 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(renameScenario);
     renameScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
     renameScenario.addActionListener((ActionEvent e) -> {
-      matchApi.getInput().renameSelectedLayout();
+      engineApi.getInput().renameSelectedLayout();
     });
   }
 
@@ -63,14 +63,14 @@ public class ScenarioMenu extends JMenu implements Timeable {
   public void timerUpdate () {
 
     removeScenario.setEnabled(
-      matchApi != null &&
-        matchApi.getSelectedTurn() == null &&
+      engineApi != null &&
+        engineApi.getSelectedTurn() == null &&
         scenarios.getSelectedScenariosNr() > 0
     );
     removeScenario.setVisible(removeScenario.isEnabled());
     renameScenario.setEnabled(
-      matchApi != null &&
-        matchApi.getSelectedTurn() == null &&
+      engineApi != null &&
+        engineApi.getSelectedTurn() == null &&
         scenarios.getSelectedScenariosNr() > 0
     );
     renameScenario.setVisible(renameScenario.isEnabled());

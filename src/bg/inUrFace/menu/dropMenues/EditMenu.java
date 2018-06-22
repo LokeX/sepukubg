@@ -8,7 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.mouse;
 
 public class EditMenu extends JMenu implements Timeable {
@@ -16,7 +16,7 @@ public class EditMenu extends JMenu implements Timeable {
   JMenuItem editDice = new JMenuItem("Input dice values");
   JMenuItem editMove = new JMenuItem("Input (undo) move");
 
-  JMenuItem editPlayToScore = new JMenuItem("Input score to win matchApi");
+  JMenuItem editPlayToScore = new JMenuItem("Input score to win engineApi");
 
   JPopupMenu.Separator editMenuSeparator = new JPopupMenu.Separator();
 
@@ -48,7 +48,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editMove);
     editMove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0));
     editMove.addActionListener((ActionEvent e) -> {
-      matchApi.humanMove();
+      engineApi.getMatchPlay().humanMove();
     });
   }
 
@@ -57,7 +57,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editDice);
     editDice.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.ALT_MASK));
     editDice.addActionListener((ActionEvent e) -> {
-      matchApi.getInput().inputNewDice();
+      engineApi.getInput().inputNewDice();
     });
   }
 
@@ -66,7 +66,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editPlayToScore);
     editPlayToScore.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.ALT_MASK));
     editPlayToScore.addActionListener((ActionEvent e) -> {
-      matchApi.getInput().inputPlayToScore();
+      engineApi.getInput().inputPlayToScore();
     });
   }
 
@@ -80,7 +80,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editCubeValue);
     editCubeValue.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
     editCubeValue.addActionListener((ActionEvent e) -> {
-      matchApi.getInput().inputCubeValue();
+      engineApi.getInput().inputCubeValue();
     });
   }
 
@@ -97,7 +97,7 @@ public class EditMenu extends JMenu implements Timeable {
 //    add(editCubeOwner);
     editCubeOwner.add(noOwner);
     noOwner.addActionListener((ActionEvent e) -> {
-      matchApi.getGame().getGameCube().setOwner(-1);
+      engineApi.getGame().getGameCube().setOwner(-1);
     });
   }
 
@@ -105,7 +105,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editCubeOwner.add(whitePlayerOwner);
     whitePlayerOwner.addActionListener((ActionEvent e) -> {
-      matchApi.getGame().getGameCube().setOwner(0);
+      engineApi.getGame().getGameCube().setOwner(0);
     });
   }
 
@@ -113,7 +113,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editCubeOwner.add(blackPlayerOwner);
     blackPlayerOwner.addActionListener((ActionEvent e) -> {
-      matchApi.getGame().getGameCube().setOwner(1);
+      engineApi.getGame().getGameCube().setOwner(1);
     });
   }
 
@@ -128,7 +128,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editPlayerScore.add(whitePlayerScore);
     whitePlayerScore.addActionListener((ActionEvent e) -> {
-      matchApi.getInput().inputPlayerMatchScore(0);
+      engineApi.getInput().inputPlayerMatchScore(0);
     });
   }
 
@@ -136,16 +136,16 @@ public class EditMenu extends JMenu implements Timeable {
 
     editPlayerScore.add(blackPlayerScore);
     blackPlayerScore.addActionListener((ActionEvent e) -> {
-      matchApi.getInput().inputPlayerMatchScore(1);
+      engineApi.getInput().inputPlayerMatchScore(1);
     });
   }
 
   @Override
   public void timerUpdate() {
 
-    editDice.setEnabled(matchApi != null && matchApi.getGame() != null && matchApi.getSelectedTurn() != null);
+    editDice.setEnabled(engineApi != null && engineApi.getGame() != null && engineApi.getSelectedTurn() != null);
     editDice.setVisible(editDice.isEnabled());
-    editMove.setEnabled(matchApi != null && matchApi.getSelectedTurn() != null);
+    editMove.setEnabled(engineApi != null && engineApi.getSelectedTurn() != null);
     editMove.setVisible(editMove.isEnabled());
     editPlayerScore.setEnabled(editMove.isEnabled());
     editPlayerScore.setVisible(editPlayerScore.isEnabled());

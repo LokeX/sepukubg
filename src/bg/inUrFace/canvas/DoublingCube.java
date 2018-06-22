@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.settings;
 import static bg.Main.win;
 
@@ -21,10 +21,10 @@ public class DoublingCube extends MouseAdapter implements Paintable {
   public boolean isVisible () {
 
     return
-      matchApi != null &&
-      !matchApi.getScoreBoard().isCrawfordGame() &&
+      engineApi != null &&
+      !engineApi.getScoreBoard().isCrawfordGame() &&
       settings.getScoreToWin() > 1 &&
-      matchApi.getLatestTurn() != null;
+      engineApi.getLatestTurn() != null;
   }
 
   private Batch[] getClickPoints () {
@@ -69,11 +69,11 @@ public class DoublingCube extends MouseAdapter implements Paintable {
 
     bg.engine.Cube cube;
 
-    if (matchApi != null && matchApi.getSelectedTurn() != null) {
-      if (matchApi.getSelectedTurn() != matchApi.getGame().getLatestTurn()) {
-        cube = matchApi.getGame().getGameCube();
+    if (engineApi != null && engineApi.getSelectedTurn() != null) {
+      if (engineApi.getSelectedTurn() != engineApi.getGame().getLatestTurn()) {
+        cube = engineApi.getGame().getGameCube();
       } else {
-        cube = matchApi.getSelectedTurn().getTurnCube();
+        cube = engineApi.getSelectedTurn().getTurnCube();
       }
       if (isVisible()) {
 
@@ -115,9 +115,9 @@ public class DoublingCube extends MouseAdapter implements Paintable {
   @Override
   public void mouseClicked (MouseEvent e) {
 
-    if (matchApi != null && matchApi.getGame() != null && !matchApi.getGame().gameOver() && getClickedPoint(e) >= 0) {
+    if (engineApi != null && engineApi.getGame() != null && !engineApi.getGame().gameOver() && getClickedPoint(e) >= 0) {
       System.out.println("DoublingCube clicked");
-      matchApi.humanHandlesCube();
+      engineApi.getMatchCube().humanHandlesCube();
     }
   }
 

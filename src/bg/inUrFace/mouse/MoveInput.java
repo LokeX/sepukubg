@@ -3,7 +3,7 @@ package bg.inUrFace.mouse;
 import bg.engine.moves.Layout;
 import bg.engine.moves.EvaluatedMove;
 import bg.Main;
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.settings;
 import static bg.Main.win;
 
@@ -28,13 +28,13 @@ public class MoveInput {
     outputMove();
   }
 
-//  private MovePoints movesAnalysis = matchApi.getMovesAnalysis();
-//  private InputPoints movePointsInput = matchApi.getMovePointsString();
-  private Layout customMoveLayout = new Layout(Main.matchApi.getSelectedTurn().getParentMoveLayout());
-  private List<int[]> legalMovePoints = Main.matchApi.getSelectedTurn().getLegalMovePoints();
+//  private MoveSelect movesAnalysis = engineApi.getMovesAnalysis();
+//  private InputPoints movePointsInput = engineApi.getMovePointsString();
+  private Layout customMoveLayout = new Layout(Main.engineApi.getSelectedTurn().getParentMoveLayout());
+  private List<int[]> legalMovePoints = Main.engineApi.getSelectedTurn().getLegalMovePoints();
   private Batch[] points = new Batch[26];
-  private int[] movePoints = new int[matchApi.getSelectedTurn().getDice().length*2];
-  private int playerID = Main.matchApi.getSelectedTurn().getPlayerOnRollsID();
+  private int[] movePoints = new int[engineApi.getSelectedTurn().getDice().length*2];
+  private int playerID = Main.engineApi.getSelectedTurn().getPlayerOnRollsID();
   private List<Integer> hits = new ArrayList();
   private Integer[] legalEndingPoints;
   private int inputPoint = 0;
@@ -147,7 +147,7 @@ public class MoveInput {
 
   private void setMoveInputAsSelectedTurnsSelectedLegalMove() {
 
-    List<EvaluatedMove> moves = matchApi.getSelectedTurn().getEvaluatedMoves();
+    List<EvaluatedMove> moves = engineApi.getSelectedTurn().getEvaluatedMoves();
     int nrOfLegalMovePoints = getNrOfLegalMovePoints(movePoints);
     int[] partMoves = new int[nrOfLegalMovePoints - (nrOfLegalMovePoints % 2)];
     int completeMove = getCompleteMove();
@@ -166,9 +166,9 @@ public class MoveInput {
 //        if (partMoves.length == movePoints.length || moves.get(a).movePointsMatch(partMoves)) {
         if (partMoves.length == movePoints.length || moves.get(a).containsThesePartMoves(partMoves)) {
           System.out.println("Selecting move nr: "+a);
-          matchApi.setSelectedMove(a);
-          matchApi.getSelectedMove().printMovePoints();
-          matchApi.getSelectedTurn().getPlayedMove().setMovePoints(movePoints);
+          engineApi.setSelectedMove(a);
+          engineApi.getSelectedMove().printMovePoints();
+          engineApi.getSelectedTurn().getPlayedMove().setMovePoints(movePoints);
           break;
         }
       }
@@ -264,10 +264,10 @@ public class MoveInput {
     if (identicalPointsCount > 1) {
 
       int endPoint = identicalPointsCount-((identicalPointsCount+2)%2)-1;
-      int storedInputPoint = autoSetPoints(matchApi.getSelectedMove().getMovePoints(), endPoint);
+      int storedInputPoint = autoSetPoints(engineApi.getSelectedMove().getMovePoints(), endPoint);
 
       if (endPoint < movePoints.length) {
-        new MoveOutput(matchApi.getSelectedMove()).showMove(storedInputPoint, endPoint, notifier);
+        new MoveOutput(engineApi.getSelectedMove()).showMove(storedInputPoint, endPoint, notifier);
       }
     }
   }
@@ -343,7 +343,7 @@ public class MoveInput {
 
   public boolean endOfInputReached () {
 
-    return inputPoint == movePoints.length || inputPoint/2 == matchApi.getSelectedMove().getNrOfPartMoves();
+    return inputPoint == movePoints.length || inputPoint/2 == engineApi.getSelectedMove().getNrOfPartMoves();
   }
 
   public boolean moveAutoCompletion () {
@@ -359,12 +359,12 @@ public class MoveInput {
         customMoveLayout.flipLayout();
       }
       setMoveInputAsSelectedTurnsSelectedLegalMove();
-      if (inputPoint < matchApi.getSelectedMove().getNrOfPartMoves()*2) {
-        matchApi.showMove(inputPoint);
-        inputPoint = matchApi.getSelectedMove().getNrOfPartMoves()*2;
+      if (inputPoint < engineApi.getSelectedMove().getNrOfPartMoves()*2) {
+        engineApi.getMatchPlay().showMove(inputPoint);
+        inputPoint = engineApi.getSelectedMove().getNrOfPartMoves()*2;
       } else {
-        new MoveOutput(matchApi.getSelectedMove()).outputMove();
-        matchApi.endTurn();
+        new MoveOutput(engineApi.getSelectedMove()).outputMove();
+        engineApi.getMatchPlay().endTurn();
       }
     } else {
       outputMove();

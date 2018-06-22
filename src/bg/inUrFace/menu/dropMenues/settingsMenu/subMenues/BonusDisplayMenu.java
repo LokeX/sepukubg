@@ -3,7 +3,7 @@ package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 import bg.Main;
 import bg.inUrFace.canvas.move.MoveOutput;
 
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.settings;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -56,7 +56,7 @@ public class BonusDisplayMenu extends JMenu {
       @Override
       public void mousePressed(MouseEvent e) {
         Main.settings.setBonusDisplayMode(1);
-        new MoveOutput(matchApi.getSelectedMove()).writeMove();
+        new MoveOutput(engineApi.getSelectedMove()).writeMove();
 //        Main.api.getSelectedTurn().getSelectedMove().writeMove();
       }
     });
@@ -69,7 +69,7 @@ public class BonusDisplayMenu extends JMenu {
       @Override
       public void mousePressed(MouseEvent e) {
         Main.settings.setBonusDisplayMode(2);
-        new MoveOutput(matchApi.getSelectedMove()).writeMove();
+        new MoveOutput(engineApi.getSelectedMove()).writeMove();
 //        Main.api.getSelectedTurn().getSelectedMove().writeMove();
       }
     });
@@ -82,7 +82,7 @@ public class BonusDisplayMenu extends JMenu {
       @Override
       public void mousePressed(MouseEvent e) {
         Main.settings.setBonusDisplayMode(0);
-        new MoveOutput(matchApi.getSelectedMove()).writeMove();
+        new MoveOutput(engineApi.getSelectedMove()).writeMove();
 //        Main.api.getSelectedTurn().getSelectedMove().writeMove();
       }
     });
@@ -95,7 +95,7 @@ public class BonusDisplayMenu extends JMenu {
       @Override
       public void mousePressed(MouseEvent e) {
         settings.setBonusDisplayMode(3);
-        new MoveOutput(matchApi.getSelectedMove()).writeMove();
+        new MoveOutput(engineApi.getSelectedMove()).writeMove();
 //        Main.api.getSelectedTurn().getSelectedMove().writeMove();
       }
     });

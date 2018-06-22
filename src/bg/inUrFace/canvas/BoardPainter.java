@@ -6,7 +6,7 @@
 
 package bg.inUrFace.canvas;
 
-import static bg.Main.matchApi;
+import static bg.Main.engineApi;
 import static bg.Main.win;
 
 import java.awt.*;
@@ -98,7 +98,7 @@ public class BoardPainter implements Paintable {
     g.setFont(new Font("Ariel", Font.BOLD, (int) (20.0 * d.factor)));
     g.setColor(Color.WHITE);
 
-    if (matchApi != null) {
+    if (engineApi != null) {
 
       int t;
       String s;

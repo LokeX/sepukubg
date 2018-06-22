@@ -35,23 +35,39 @@ public class ActionButton extends TextBatch implements Paintable {
 
   private boolean okToSetText() {
 
-    return matchApi != null && matchApi.gameIsPlaying() && matchApi.getLatestTurn() != null;
+    return
+      engineApi != null
+        && engineApi.gameIsPlaying()
+        && engineApi.getLatestTurn() != null;
   }
 
   private boolean selectedTurnIsLatestTurn () {
 
-    return matchApi.getSelectedTurnNr() == matchApi.getLatestTurnNr();
+    return
+      engineApi.getSelectedTurnNr() == engineApi.getLatestTurnNr();
   }
 
   private boolean selectedTurnsPlayerIsHuman () {
 
-    return matchApi.turnsPlayerIsHuman(matchApi.getSelectedTurn());
+    return
+      engineApi.turnsPlayerIsHuman(engineApi.getSelectedTurn());
   }
 
   private boolean playedMoveIsSelected () {
 
-    return matchApi.getSelectedTurn().
-      getPlayedMoveNr() == matchApi.getSelectedMoveNr();
+    return
+      engineApi
+        .getSelectedTurn()
+        .getPlayedMoveNr() == engineApi.getSelectedMoveNr();
+  }
+
+  private boolean buttonClicked (MouseEvent e) {
+
+    return
+      e.getButton() == MouseEvent.BUTTON1
+        && !showPleaseWaitButton
+        && mouseOnBatch()
+        && showButton();
   }
 
   public void paint(Graphics g) {
@@ -71,8 +87,8 @@ public class ActionButton extends TextBatch implements Paintable {
       } else if (okToSetText()) {
         setBackgroundColor(backgroundColor);
         setButtonText(
-          matchApi.matchOver() && selectedTurnIsLatestTurn() ? "New Match" :
-            matchApi.gameOver() && selectedTurnIsLatestTurn() ? "New game" :
+          engineApi.matchOver() && selectedTurnIsLatestTurn() ? "New Match" :
+            engineApi.gameOver() && selectedTurnIsLatestTurn() ? "New game" :
               selectedTurnsPlayerIsHuman() ? "Play move" : "Roll dice"
         );
       }
@@ -91,25 +107,21 @@ public class ActionButton extends TextBatch implements Paintable {
     }
   }
 
+  private void execButtonClick () {
+
+    showPleaseWaitButton = true;
+    mouse.getMoveInputListener().setAcceptMoveInput(false);
+    Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
+    bg.util.ThreadUtil.threadSleep(100);
+    engineApi.getMatchPlay().actionButtonClicked();
+  }
+
   @Override
   public void mouseClicked (MouseEvent e) {
 
-    if (e.getButton() == MouseEvent.BUTTON1 && !showPleaseWaitButton && mouseOnBatch() && showButton()) {
-
-      new Thread () {
-
-        @Override
-        public void run () {
-
-          showPleaseWaitButton = true;
-          mouse.getMoveInputListener().setAcceptMoveInput(false);
-          Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
-          bg.util.ThreadUtil.threadSleep(100);
-          matchApi.actionButtonClicked();
-        }
-      }.start();
+    if (buttonClicked(e)) {
+      new Thread(this::execButtonClick).start();
     }
-
   }
 
   public boolean showPleaseWaitButton () {
@@ -155,8 +167,8 @@ public class ActionButton extends TextBatch implements Paintable {
         showButton = false;
       }
     }
-    return showButton || !matchApi.gameIsPlaying() ||
-      matchApi.gameOver() && selectedTurnIsLatestTurn();
+    return showButton || !engineApi.gameIsPlaying() ||
+      engineApi.gameOver() && selectedTurnIsLatestTurn();
   }
 
 }
