@@ -2,7 +2,7 @@ package bg.IO;
 
 import bg.Main;
 import bg.Settings;
-import bg.engine.Scenarios.NamedLayout;
+import bg.engine.api.Scenarios.NamedLayout;
 import bg.engine.trainer.Bot;
 import bg.engine.trainer.Trainer;
 
@@ -19,9 +19,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
 
 import static bg.Main.timedTasks;
 

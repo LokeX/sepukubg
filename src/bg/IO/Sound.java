@@ -24,11 +24,18 @@ public class Sound {
 
     for (int a = 0; a < soundEffect.length; a++) {
       try {
-        audioIn = AudioSystem.getAudioInputStream(getClass().getResource("Sounds/" + EFFECT_FILES[a] + ".wav"));
+        audioIn =
+          AudioSystem
+            .getAudioInputStream(
+              getClass()
+                .getResource(
+                  "Sounds/" + EFFECT_FILES[a] + ".wav")
+            );
         soundEffect[a] = AudioSystem.getClip();
         soundEffect[a].open(audioIn);
 
-        FloatControl gainControl = (FloatControl) soundEffect[a].getControl(FloatControl.Type.MASTER_GAIN);
+        FloatControl gainControl = (FloatControl)
+          soundEffect[a].getControl(FloatControl.Type.MASTER_GAIN);
 
         gainControl.setValue(-15.0f);
       } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ue) {

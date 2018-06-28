@@ -1,5 +1,6 @@
 package bg.inUrFace.canvas;
 
+import bg.engine.match.Cube;
 import bg.util.Batch;
 
 import javax.swing.*;
@@ -67,10 +68,10 @@ public class DoublingCube extends MouseAdapter implements Paintable {
 
   public void paint(Graphics g) {
 
-    bg.engine.Cube cube;
+    Cube cube;
 
     if (engineApi != null && engineApi.getSelectedTurn() != null) {
-      if (engineApi.getSelectedTurn() != engineApi.getGame().getLatestTurn()) {
+      if (engineApi.getSelectedTurn() != engineApi.getGame().lastTurn()) {
         cube = engineApi.getGame().getGameCube();
       } else {
         cube = engineApi.getSelectedTurn().getTurnCube();

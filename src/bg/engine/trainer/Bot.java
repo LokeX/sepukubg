@@ -1,6 +1,6 @@
 package bg.engine.trainer;
 
-import bg.engine.moves.BonusElements;
+import bg.engine.match.moves.BonusElements;
 import java.lang.reflect.Field;
 import java.util.List;
 

@@ -50,7 +50,7 @@ public class ActionButton extends TextBatch implements Paintable {
   private boolean selectedTurnsPlayerIsHuman () {
 
     return
-      engineApi.turnsPlayerIsHuman(engineApi.getSelectedTurn());
+      engineApi.humanTurnSelected();
   }
 
   private boolean playedMoveIsSelected () {
@@ -113,7 +113,7 @@ public class ActionButton extends TextBatch implements Paintable {
     mouse.getMoveInputListener().setAcceptMoveInput(false);
     Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
     bg.util.ThreadUtil.threadSleep(100);
-    engineApi.getMatchPlay().actionButtonClicked();
+    engineApi.getMatchState().actionButtonClicked();
   }
 
   @Override

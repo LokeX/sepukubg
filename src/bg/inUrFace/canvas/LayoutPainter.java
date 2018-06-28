@@ -9,7 +9,7 @@ package bg.inUrFace.canvas;
 import static bg.Main.getDisplayedLayout;
 import static bg.Main.win;
 
-import bg.engine.moves.Layout;
+import bg.engine.match.moves.Layout;
 
 import java.awt.*;
 

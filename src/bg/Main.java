@@ -2,10 +2,10 @@ package bg;
 
 import bg.IO.FileHandler;
 import bg.IO.Sound;
-import bg.api.EngineApi;
-import bg.engine.moves.Layout;
+import bg.engine.api.EngineApi;
+import bg.engine.match.moves.Layout;
 import bg.engine.trainer.Trainer;
-import bg.engine.Scenarios;
+import bg.engine.api.Scenarios;
 import bg.inUrFace.canvas.Canvas;
 import bg.inUrFace.canvas.DoublingCube;
 import bg.inUrFace.canvas.ActionButton;

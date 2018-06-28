@@ -1,6 +1,6 @@
 package bg.inUrFace.canvas.scenario;
 
-import bg.engine.Scenarios;
+import bg.engine.api.Scenarios;
 import bg.inUrFace.canvas.BonusPainter;
 
 import static bg.Main.getTextArea;

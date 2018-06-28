@@ -13,7 +13,7 @@ public class MatchScorePainter implements Paintable {
 
     return
       engineApi.getGame() != null &&
-      engineApi.getSelectedTurn() == engineApi.getGame().getLatestTurn();
+      engineApi.getSelectedTurn() == engineApi.getGame().lastTurn();
   }
 
   @Override
@@ -25,7 +25,7 @@ public class MatchScorePainter implements Paintable {
 //      int whiteMatchScore = api.getScoreBoard().getWhiteMatchScore();
 //      int blackMatchScore = api.getScoreBoard().getBlackMatchScore();
 //
-//      if (api.getGame() != null && latestTurnIsSelected() && api.getGame().gameOver()) {
+//      if (api.game() != null && latestTurnIsSelected() && api.game().gameOver()) {
 //        whiteMatchScore += api.getScoreBoard().getWhiteGameScore();
 //        blackMatchScore += api.getScoreBoard().getBlackGameScore();
 //      }

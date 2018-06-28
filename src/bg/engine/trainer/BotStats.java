@@ -1,6 +1,6 @@
 package bg.engine.trainer;
 
-import bg.engine.Score;
+import bg.engine.match.Score;
 
 import java.io.Serializable;
 import java.text.*;
@@ -71,9 +71,9 @@ public class BotStats implements Serializable {
         matchesWon++;
       }
       matchesPlayed++;
-      singlePointsWon += score.matchBoard[thisPlayerID].singlePoint;
-      gammonsWon += score.matchBoard[thisPlayerID].gammons;
-      backgammonsWon += score.matchBoard[thisPlayerID].backgammons;
+      singlePointsWon += score.matchBoards[thisPlayerID].singlePoint;
+      gammonsWon += score.matchBoards[thisPlayerID].gammons;
+      backgammonsWon += score.matchBoards[thisPlayerID].backgammons;
     }
 
   }

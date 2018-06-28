@@ -3,9 +3,9 @@ package bg.inUrFace.canvas.move;
 import bg.Main;
 import bg.inUrFace.canvas.BonusPainter;
 import bg.inUrFace.mouse.MoveInput;
-import bg.engine.moves.Layout;
-import bg.engine.moves.EvaluatedMove;
-import bg.engine.moves.MoveLayout;
+import bg.engine.match.moves.Layout;
+import bg.engine.match.moves.EvaluatedMove;
+import bg.engine.match.moves.MoveLayout;
 
 import java.util.List;
 

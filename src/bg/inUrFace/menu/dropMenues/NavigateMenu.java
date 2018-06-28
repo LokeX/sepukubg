@@ -45,28 +45,67 @@ public class NavigateMenu extends JMenu implements Timeable {
   private void setupPreviousHumanTurn () {
 
     add(previousHumanTurn);
-    previousHumanTurn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, ActionEvent.CTRL_MASK));
-    previousHumanTurn.addActionListener((ActionEvent e) -> {
-      new MoveOutput(engineApi.getSelection().selectPreviousHumanTurn().getPlayedMove()).outputMove();
-    });
+    previousHumanTurn
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_LEFT,
+            ActionEvent.CTRL_MASK
+          )
+      );
+    previousHumanTurn
+      .addActionListener((ActionEvent e) -> {
+        new MoveOutput(
+          engineApi
+            .getGameState()
+            .selectPreviousHumanTurn()
+            .getPlayedMove()
+        ).outputMove();
+      });
   }
 
   private void setupNextHumanTurn () {
 
     add(nextHumanTurn);
-    nextHumanTurn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, ActionEvent.CTRL_MASK));
-    nextHumanTurn.addActionListener((ActionEvent e) -> {
-      new MoveOutput(engineApi.getSelection().selectNextHumanTurn().getPlayedMove()).outputMove();
-    });
+    nextHumanTurn
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_RIGHT,
+            ActionEvent.CTRL_MASK
+          )
+      );
+    nextHumanTurn
+      .addActionListener((ActionEvent e) -> {
+        new MoveOutput(
+          engineApi
+            .getGameState()
+            .selectNextHumanTurn()
+            .getPlayedMove()
+        ).outputMove();
+      });
   }
 
   private void setupLatestHumanTurn () {
 
     add(latestHumanTurn);
-    latestHumanTurn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
-    latestHumanTurn.addActionListener((ActionEvent e) -> {
-      new MoveOutput(engineApi.getSelection().selectLatestHumanTurn().getPlayedMove()).outputMove();
-    });
+    latestHumanTurn
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_END,
+            0
+          )
+      );
+    latestHumanTurn
+      .addActionListener((ActionEvent e) -> {
+        new MoveOutput(
+          engineApi
+            .getGameState()
+            .selectLatestHumanTurn()
+            .getPlayedMove()
+        ).outputMove();
+      });
   }
 
   private void setupNavigateMenuSeparator() {
@@ -77,10 +116,22 @@ public class NavigateMenu extends JMenu implements Timeable {
   private void setupPreviousTurn () {
 
     add(nextTurn);
-    nextTurn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
+    nextTurn
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_RIGHT,
+            0
+          )
+      );
     nextTurn.addActionListener((ActionEvent e) -> {
       if (engineApi.getSelectedTurn() != null) {
-        new MoveOutput(engineApi.getSelection().selectNextTurn().getPlayedMove()).outputMove();
+        new MoveOutput(
+          engineApi
+            .getGameState()
+            .selectNextTurn()
+            .getPlayedMove()
+        ).outputMove();
       }
     });
   }
@@ -88,10 +139,22 @@ public class NavigateMenu extends JMenu implements Timeable {
   private void setupNextTurn () {
 
     add(previousTurn);
-    previousTurn.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
+    previousTurn
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_LEFT,
+            0
+          )
+      );
     previousTurn.addActionListener((ActionEvent e) -> {
       if (engineApi.getSelectedTurn() != null) {
-        new MoveOutput(engineApi.getSelection().selectPreviousTurn().getPlayedMove()).outputMove();
+        new MoveOutput(
+          engineApi
+            .getGameState()
+            .selectPreviousTurn()
+            .getPlayedMove()
+        ).outputMove();
       }
     });
   }
@@ -99,10 +162,21 @@ public class NavigateMenu extends JMenu implements Timeable {
   private void setupPreviousMove () {
 
     add(previousMove);
-    previousMove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0));
+    previousMove
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_UP,
+            0
+          )
+      );
     previousMove.addActionListener((ActionEvent e) -> {
       if (engineApi.getSelectedTurn() != null) {
-        new MoveOutput(engineApi.getSelection().selectPreviousMove()).outputMove();
+        new MoveOutput(
+          engineApi
+            .getGameState()
+            .selectPreviousMove()
+        ).outputMove();
       }
     });
   }
@@ -110,16 +184,34 @@ public class NavigateMenu extends JMenu implements Timeable {
   private void setupNextMove () {
 
     add(nextMove);
-    nextMove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
+    nextMove
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_DOWN,
+            0
+          )
+      );
     nextMove.addActionListener((ActionEvent e) -> {
-      new MoveOutput(engineApi.getSelection().selectNextMove()).outputMove();
+      new MoveOutput(
+        engineApi
+          .getGameState()
+          .selectNextMove()
+      ).outputMove();
     });
   }
 
   private void setupPreviousScenario () {
 
     add(previousScenario);
-    previousScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0));
+    previousScenario
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_LEFT,
+            0
+          )
+      );
     previousScenario.addActionListener((ActionEvent e) -> {
       scenarios.selectPreviousScenario();
       new ScenarioOutput(scenarios).outputSelectedScenario();
@@ -129,7 +221,14 @@ public class NavigateMenu extends JMenu implements Timeable {
   private void setupNextScenario () {
 
     add(nextScenario);
-    nextScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0));
+    nextScenario
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_RIGHT,
+            0
+          )
+      );
     nextScenario.addActionListener((ActionEvent e) -> {
       scenarios.selectNextScenario();
       new ScenarioOutput(scenarios).outputSelectedScenario();

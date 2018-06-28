@@ -1,7 +1,7 @@
 package bg.inUrFace.canvas.move;
 
 import bg.Main;
-import bg.engine.moves.Layout;
+import bg.engine.match.moves.Layout;
 import java.util.List;
 
 import static bg.Main.engineApi;

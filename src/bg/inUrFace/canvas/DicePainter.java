@@ -105,7 +105,7 @@ public class DicePainter implements Paintable {
 
       boolean pointsAreInput =
         engineApi
-          .turnsPlayerIsHuman(engineApi.getLatestTurn())
+          .humanTurnSelected()
           && mouse.getMoveInputListener().acceptInput();
       int nrOfLegalPartMoves = engineApi.getSelectedMove().getNrOfPartMoves();
       int nrOfPartMoves = 0;

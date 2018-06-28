@@ -5,7 +5,7 @@ import static bg.Main.mouse;
 import static bg.Main.win;
 
 import bg.Main;
-import bg.engine.moves.Layout;
+import bg.engine.match.moves.Layout;
 import bg.util.Batch;
 
 import java.awt.*;

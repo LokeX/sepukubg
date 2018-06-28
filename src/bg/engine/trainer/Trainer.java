@@ -1,13 +1,12 @@
 package bg.engine.trainer;
 
-import bg.engine.Match;
-import bg.engine.moves.Layout;
+import bg.engine.match.Match;
+import bg.engine.match.moves.Layout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static bg.Main.*;
-import static bg.util.Dialogs.getIntegerInput;
 import static bg.util.ThreadUtil.threadSleep;
 import static bg.util.time.Time.getConvertedTime;
 

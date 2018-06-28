@@ -8,16 +8,15 @@ import java.util.TimerTask;
 public class TimedTasks extends TimerTask {
 
 
-  static Timer timer = new Timer(true);
-
+  private static Timer timer = new Timer(true);
   private final List<Timeable> timedTasks = new ArrayList<>();
 
-  public TimedTasks(int startInMillis, int continueInMillis) {
+  private TimedTasks (int startInMillis, int continueInMillis) {
 
     timer.scheduleAtFixedRate(this, startInMillis, continueInMillis);
   }
 
-  public TimedTasks() {
+  public TimedTasks () {
 
     this(100,100);
   }

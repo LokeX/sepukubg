@@ -1,6 +1,6 @@
 package bg.inUrFace.menu.dropMenues;
 
-import bg.api.EngineApi;
+import bg.engine.api.EngineApi;
 import bg.util.time.Timeable;
 
 import static bg.Main.*;
@@ -67,7 +67,7 @@ public class MatchMenu extends JMenu implements Timeable {
         autoCompleteGame.setText("Stop auto complete");
         engineApi.setAutoCompleteGame(true);
         new Thread(() ->
-          engineApi.getMatchPlay().actionButtonClicked()
+          engineApi.getMatchState().actionButtonClicked()
         ).start();
       }
     });
@@ -79,7 +79,7 @@ public class MatchMenu extends JMenu implements Timeable {
     nextAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
     nextAction.addActionListener((ActionEvent e) ->
       new Thread(() ->
-        engineApi.getMatchPlay().actionButtonClicked()
+        engineApi.getMatchState().actionButtonClicked()
       ).start()
     );
   }

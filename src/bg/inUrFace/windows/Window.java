@@ -91,7 +91,7 @@ public class Window extends JFrame {
       if (mouse != null && mouse.scenarioEditor != null) {
         mouse.scenarioEditor.generateClickPoints();
       }
-//      if (mouse != null && mouse.getMoveInputListener().getMoveInput() != null) {
+//      if (mouse != null && mouse.getMoveInputListener().getHumanMove() != null) {
 //        mouse.getMoveInputListener().moveInput.calculatePoints();
 //      }
       if (!settings.getWinMaximized()) {

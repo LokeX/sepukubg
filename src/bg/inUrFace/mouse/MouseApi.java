@@ -98,7 +98,7 @@ public class MouseApi extends MouseAdapter {
     }
   }
 
-  static public Batch[] getRegularClickPoints () {
+  public Batch[] getRegularClickPoints () {
 
     Batch[] points = new Batch[24];
     BoardDim d = win.canvas.getDimensions();

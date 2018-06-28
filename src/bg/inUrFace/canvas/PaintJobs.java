@@ -1,6 +1,7 @@
 package bg.inUrFace.canvas;
 
-import bg.inUrFace.canvas.move.MoveEffectsPainter;
+import bg.inUrFace.canvas.move.ChequerPainter;
+import bg.inUrFace.canvas.move.EndingPointsPainter;
 
 import static bg.util.Reflection.getFieldsList;
 import java.awt.Graphics;
@@ -17,7 +18,8 @@ public class PaintJobs {
   public ActionButton actionButton = new ActionButton();
   public DicePainter dicePainter = new DicePainter();
   public DoublingCube doublingCube = new DoublingCube();
-  public MoveEffectsPainter moveEffectsPainter = new MoveEffectsPainter();
+  public EndingPointsPainter endingPointsPainter = new EndingPointsPainter();
+  public ChequerPainter chequerPainter = new ChequerPainter();
 
   private List<Paintable> paintJobs = new ArrayList();
 

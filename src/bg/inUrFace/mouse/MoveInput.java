@@ -1,11 +1,8 @@
 package bg.inUrFace.mouse;
 
-import bg.engine.moves.Layout;
-import bg.engine.moves.EvaluatedMove;
+import bg.engine.match.moves.Layout;
+import bg.engine.match.moves.EvaluatedMove;
 import bg.Main;
-import static bg.Main.engineApi;
-import static bg.Main.settings;
-import static bg.Main.win;
 
 import bg.inUrFace.canvas.BoardDim;
 import bg.inUrFace.canvas.move.MoveOutput;
@@ -13,6 +10,8 @@ import bg.util.Batch;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+
+import static bg.Main.*;
 
 public class MoveInput {
 
@@ -28,7 +27,7 @@ public class MoveInput {
     outputMove();
   }
 
-//  private MoveSelect movesAnalysis = engineApi.getMovesAnalysis();
+//  private MoveInput movesAnalysis = engineApi.getMovesAnalysis();
 //  private InputPoints movePointsInput = engineApi.getMovePointsString();
   private Layout customMoveLayout = new Layout(Main.engineApi.getSelectedTurn().getParentMoveLayout());
   private List<int[]> legalMovePoints = Main.engineApi.getSelectedTurn().getLegalMovePoints();
@@ -42,7 +41,7 @@ public class MoveInput {
   final public void calculatePoints () {
 
     BoardDim d = win.canvas.getDimensions();
-    Batch[] regularPoints = MouseApi.getRegularClickPoints();
+    Batch[] regularPoints = mouse.getRegularClickPoints();
     Color pointsColor = new Color(56, 75, 174, 150);
 
     if (playerID == 1) {
@@ -360,11 +359,11 @@ public class MoveInput {
       }
       setMoveInputAsSelectedTurnsSelectedLegalMove();
       if (inputPoint < engineApi.getSelectedMove().getNrOfPartMoves()*2) {
-        engineApi.getMatchPlay().showMove(inputPoint);
+        engineApi.getMatchState().showMove(inputPoint);
         inputPoint = engineApi.getSelectedMove().getNrOfPartMoves()*2;
       } else {
         new MoveOutput(engineApi.getSelectedMove()).outputMove();
-        engineApi.getMatchPlay().endTurn();
+        engineApi.getMatchState().endTurn();
       }
     } else {
       outputMove();
