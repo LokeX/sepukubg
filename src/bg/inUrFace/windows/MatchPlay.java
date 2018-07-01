@@ -78,8 +78,8 @@ public class MatchPlay extends JFrame {
   private void setInitialReportText() {
 
     initialReport.setText(
-      Trainer.bots.get(Trainer.whiteBot).getName()+" vs "+
-      Trainer.bots.get(Trainer.blackBot).getName()+"\n"+
+      Trainer.bots.get(Trainer.whiteBot).name()+" vs "+
+      Trainer.bots.get(Trainer.blackBot).name()+"\n"+
       Main.trainer.getInitialReport()
     );
   }

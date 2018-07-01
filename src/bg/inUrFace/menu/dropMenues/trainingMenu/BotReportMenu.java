@@ -18,7 +18,7 @@ public class BotReportMenu implements Listable {
     Bot bot = Trainer.bots.get(selectedItemNr);
 
     TextDisplay.displayReport(
-      "Statistical report: "+bot.getName(),
+      "Statistical report: "+bot.name(),
       bot.getStats().getStatReport()
     );
 //    new BotReport(Trainer.bots.get(selectedItemNr));
@@ -40,7 +40,7 @@ public class BotReportMenu implements Listable {
   public List<String> getElementTitles() {
 
     return Trainer.bots.stream().
-      map(Bot::getName).collect(Collectors.toList());
+      map(Bot::name).collect(Collectors.toList());
   }
 
 }

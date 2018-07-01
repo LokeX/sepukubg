@@ -26,7 +26,7 @@ public class Trainer {
 
   static public boolean isBotMember (String name) {
 
-    return bots.stream().map(Bot::getName).
+    return bots.stream().map(Bot::name).
       anyMatch(botName -> botName.equals(name));
   }
 
@@ -129,14 +129,14 @@ public class Trainer {
 
     return
       "Using scenario: "+scenarios.getScenarios().get(selectedScenarioNr).getName()+
-      "\nPlaying to score: "+statScoreToWin+
+      "\nPlaying to matchScore: "+statScoreToWin+
       "\nUsing Nr of cores: "+getNrOfCores();
   }
 
   private void printInitialReport () {
 
     System.out.println("Running "+nrOfMatchesToPlay+" matches");
-    System.out.println("Playing to score: "+statScoreToWin);
+    System.out.println("Playing to matchScore: "+statScoreToWin);
     System.out.println("Using scenario: "+scenarios.getScenarios().get(selectedScenarioNr).getName());
     System.out.println("Using Nr of cores: "+getNrOfCores());
   }
@@ -178,14 +178,14 @@ public class Trainer {
         bots.get(whiteBot)
           .getStats()
           .addScore(
-            match.getScore(),
+            match.getMatchScore(),
             0,
             bots.get(blackBot)
           );
         bots.get(blackBot)
           .getStats()
           .addScore(
-            match.getScore(),
+            match.getMatchScore(),
             1,
             bots.get(whiteBot)
           );

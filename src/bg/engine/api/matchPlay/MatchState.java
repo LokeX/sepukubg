@@ -3,6 +3,7 @@ package bg.engine.api.matchPlay;
 import bg.Main;
 import bg.engine.api.Search;
 import bg.engine.api.gamePlay.GameState;
+import bg.engine.api.score.MatchBoard;
 import bg.engine.match.moves.Layout;
 import bg.inUrFace.canvas.move.MoveOutput;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
@@ -15,15 +16,15 @@ import static bg.util.ThreadUtil.runWhenNotified;
 
 public class MatchState {
 
-  Layout matchLayout;
-  ScoreBoard scoreBoard;
-  GameState gameState;
-  HumanMove humanMove = new HumanMove();
-  boolean autoCompleteGame = false;
+  private Layout matchLayout;
+  private MatchBoard matchBoard;
+  private GameState gameState;
+  private HumanMove humanMove = new HumanMove();
+  private boolean autoCompleteGame = false;
 
   public MatchState() {
 
-    scoreBoard = new ScoreBoard(settings.getScoreToWin());
+    matchBoard = new MatchBoard(settings.getScoreToWin());
     new ScenarioOutput(scenarios).outputSelectedScenario();
     getActionButton().setShowPleaseWaitButton(false);
     getActionButton().setText("Start Match");
@@ -31,9 +32,9 @@ public class MatchState {
     getLayoutEditor().startEditor();
   }
 
-  public ScoreBoard getScoreBoard () {
+  public MatchBoard getMatchBoard() {
 
-    return scoreBoard;
+    return matchBoard;
   }
 
   public GameState getGameState() {
@@ -84,7 +85,7 @@ public class MatchState {
   boolean matchOver () {
 
     return
-      scoreBoard.matchOver();
+      matchBoard.matchOver();
   }
 
   boolean gameOver () {
@@ -107,7 +108,7 @@ public class MatchState {
     getActionButton().setHideActionButton(false);
     if (gameOver()) {
       autoCompleteGame = false;
-      scoreBoard.writeGameScore(getGameState());
+      matchBoard.addGameScore(getGameState().getGameScore());
     } else if (settings.isAutomatedEndTurn() || autoCompleteGame) {
       getMoveInputListener().setAcceptMoveInput(false);
       humanMove.setMoveInput(null);
@@ -243,7 +244,7 @@ public class MatchState {
 
   private void initGame () {
 
-    scoreBoard.writeMatchScore();
+    matchBoard.mergeScores();
     win.canvas.setDisplayedLayout(new Layout(matchLayout));
   }
 
@@ -272,7 +273,7 @@ public class MatchState {
         return;
       }
     }
-    if (scoreBoard.matchOver()) {
+    if (matchBoard.matchOver()) {
       engineApi.matchState = new MatchState();
     } else if (engineApi.gameOver()) {
       newGame();

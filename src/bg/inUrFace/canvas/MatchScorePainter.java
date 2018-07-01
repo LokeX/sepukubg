@@ -20,29 +20,11 @@ public class MatchScorePainter implements Paintable {
   public void paint(Graphics g) {
 
     if (engineApi != null) {
+
       BoardDim d = win.canvas.getDimensions();
-      String toScore = Integer.toString(engineApi.getScoreBoard().getPlayToScore());
-//      int whiteMatchScore = api.getScoreBoard().getWhiteMatchScore();
-//      int blackMatchScore = api.getScoreBoard().getBlackMatchScore();
-//
-//      if (api.game() != null && latestTurnIsSelected() && api.game().gameOver()) {
-//        whiteMatchScore += api.getScoreBoard().getWhiteGameScore();
-//        blackMatchScore += api.getScoreBoard().getBlackGameScore();
-//      }
-
-      int whiteMatchScore;
-      int blackMatchScore;
-
-      if (engineApi.getGame() != null && latestTurnSelected() && engineApi.getGame().gameOver()) {
-        whiteMatchScore = engineApi.getScoreBoard().getMatchPlusGameScore()[0];
-        blackMatchScore = engineApi.getScoreBoard().getMatchPlusGameScore()[1];
-      } else {
-        whiteMatchScore = engineApi.getScoreBoard().getWhiteMatchScore();
-        blackMatchScore = engineApi.getScoreBoard().getBlackMatchScore();
-      }
-
-      String whiteScore = Integer.toString(whiteMatchScore);
-      String blackScore = Integer.toString(blackMatchScore);
+      String toScore = Integer.toString(engineApi.getScorePresent().getPlayToScore());
+      String whiteScore = engineApi.getScorePresent().getWhiteMatchScore();
+      String blackScore = engineApi.getScorePresent().getBlackMatchScore();
 
       g.setFont(new Font("Ariel", Font.BOLD, (int)(26*d.factor)));
 

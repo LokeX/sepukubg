@@ -45,4 +45,14 @@ public class ScorePresent {
     return Integer.toString(matchScores()[1]);
   }
 
+  public int getPlayToScore () {
+
+    return matchBoard.getPlayToScore();
+  }
+
+  public int getWinnerID () {
+
+    return matchBoard.getWinnerID();
+  }
+
 }

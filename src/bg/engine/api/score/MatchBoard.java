@@ -7,7 +7,7 @@ public class MatchBoard extends MatchScore {
 
   private GameScore gameScore;
 
-  MatchBoard (int playToScore) {
+  public MatchBoard (int playToScore) {
 
     super(playToScore);
   }
@@ -57,12 +57,12 @@ public class MatchBoard extends MatchScore {
       : matchPlusGameScores[1];
   }
 
-  public int getWhiteMatchScore () {
+  int getWhiteMatchScore () {
 
     return playerScores[0].matchScore();
   }
 
-  public int getBlackMatchScore () {
+  int getBlackMatchScore () {
 
     return playerScores[1].matchScore();
   }

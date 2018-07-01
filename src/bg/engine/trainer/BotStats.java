@@ -1,6 +1,7 @@
 package bg.engine.trainer;
 
-import bg.engine.match.Score;
+import bg.engine.match.score.MatchScore;
+import bg.engine.match.score.PlayerScore;
 
 import java.io.Serializable;
 import java.text.*;
@@ -52,7 +53,7 @@ public class BotStats implements Serializable {
         "\nGammons won: "+df.format(gammonsWon)+
         "\nBackgammons won: "+df.format(backgammonsWon)+
         "\nTotal points won: "+df.format((singlePointsWon+(2*gammonsWon)+(3*backgammonsWon)))+
-        "\nEngineApi win percentage ["+name+"]: "+getWinningPercentage()+"%\n\n";
+        "\nWinning percentage ["+name+"]: "+getWinningPercentage()+"%\n\n";
     }
 
     String getOpponentsName () {
@@ -60,20 +61,22 @@ public class BotStats implements Serializable {
       return opponentName;
     }
 
-    void  setOpponentName (String name) {
+    void setOpponentsName(String name) {
 
       opponentName = name;
     }
 
-    void addScores (Score score, int thisPlayerID) {
+    void addScores (MatchScore score, int thisPlayerID) {
+
+      PlayerScore playerScore = score.getPlayerScores()[thisPlayerID];
 
       if (score.getWinnerID() == thisPlayerID) {
         matchesWon++;
       }
       matchesPlayed++;
-      singlePointsWon += score.matchBoards[thisPlayerID].singlePoint;
-      gammonsWon += score.matchBoards[thisPlayerID].gammons;
-      backgammonsWon += score.matchBoards[thisPlayerID].backgammons;
+      singlePointsWon += playerScore.nrOfSinglePointsScored();
+      gammonsWon      += playerScore.nrOfGammonsScored();
+      backgammonsWon  += playerScore.nrOfBackgammonsScored();
     }
 
   }
@@ -89,47 +92,49 @@ public class BotStats implements Serializable {
   private int getBotOpponentsNr (Bot bot) {
 
     for (int a = 0; a < botStats.size(); a++) {
-      if (botStats.get(a).getOpponentsName().equals(bot.getName())) {
+      if (botStats.get(a).getOpponentsName().equals(bot.name())) {
         return a;
       }
     }
     return -1;
   }
 
-  public String getBotReport (Bot bot) {
+  String getBotReport (Bot bot) {
 
     return botStats.get(getBotOpponentsNr(bot)).getBotReport();
   }
 
-  public void addScore (Score score, int thisPlayerID, Bot opponent) {
+  void addScore (MatchScore score, int thisPlayerID, Bot opponent) {
 
-    int botOpponentNr = getBotOpponentsNr(opponent);
-    Stats stats = botOpponentNr > -1 ? botStats.get(botOpponentNr) : new Stats();
+    int botOpponentsNr = getBotOpponentsNr(opponent);
+    Stats stats = botOpponentsNr > -1 ? botStats.get(botOpponentsNr) : new Stats();
 
     stats.addScores(score, thisPlayerID);
-    if (botOpponentNr < 0) {
-      stats.setOpponentName(opponent.getName());
+    if (botOpponentsNr < 0) {
+      stats.setOpponentsName(opponent.name());
       botStats.add(stats);
     }
   }
 
-  public void printStats (Bot opponent) {
+  void printStats (Bot opponent) {
 
     botStats.get(getBotOpponentsNr(opponent)).printStats();
   }
 
   private List<String> getBotReports() {
 
-    return botStats.stream().
-      map(Stats::getBotReport).
-      collect(Collectors.toList());
+    return
+      botStats.stream()
+        .map(Stats::getBotReport)
+        .collect(Collectors.toList());
   }
 
   public String getStatReport () {
 
-    return getBotReports().stream().
-      reduce(String::concat).
-      orElse("No data");
+    return
+      getBotReports().stream()
+        .reduce(String::concat)
+        .orElse("No data");
   }
 
 }

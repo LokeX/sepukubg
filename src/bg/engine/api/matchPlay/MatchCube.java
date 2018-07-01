@@ -1,6 +1,7 @@
 package bg.engine.api.matchPlay;
 
 import bg.engine.api.EngineApi;
+import bg.engine.api.score.MatchBoard;
 import bg.engine.match.Game;
 
 import static bg.Main.settings;
@@ -22,9 +23,9 @@ public class MatchCube {
     return engineApi.getGame();
   }
 
-  private ScoreBoard getScoreBoard () {
+  private MatchBoard getMatchBoard () {
 
-    return engineApi.getMatchState().getScoreBoard();
+    return engineApi.getMatchState().getMatchBoard();
   }
 
   private boolean turnsPlayerIsHuman () {
@@ -64,7 +65,7 @@ public class MatchCube {
   void computerHandlesCube () {
 
     if (nextPlayerIsComputer()) {
-      if (!getScoreBoard().isCrawfordGame() && !cubeWasRejected()) {
+      if (!getMatchBoard().isCrawfordGame() && !cubeWasRejected()) {
         if (getGame().playerCanOfferCube() && engineApi.getSelectedMove().shouldDouble()) {
           resolveCubeHandling();
         }
@@ -75,7 +76,7 @@ public class MatchCube {
   public void humanHandlesCube () {
 
     if (!nextPlayerIsComputer()) {
-      if (!getScoreBoard().isCrawfordGame() && engineApi.getNrOfTurns() > 0) {
+      if (!getMatchBoard().isCrawfordGame() && engineApi.getNrOfTurns() > 0) {
         if (getGame().playerCanOfferCube() || getGame().getGameCube().getOwner() > 0) {
           resolveCubeHandling();
           if (cubeWasRejected()) {

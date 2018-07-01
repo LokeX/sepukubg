@@ -4,6 +4,8 @@ import bg.engine.api.gamePlay.GameState;
 import bg.engine.api.matchPlay.MatchCube;
 import bg.engine.api.matchPlay.MatchState;
 import bg.engine.api.matchPlay.ScoreBoard;
+import bg.engine.api.score.MatchBoard;
+import bg.engine.api.score.ScorePresent;
 import bg.engine.match.Game;
 import bg.engine.match.Turn;
 import bg.engine.match.moves.EvaluatedMove;
@@ -171,7 +173,7 @@ public class EngineApi {
 
   public boolean matchOver () {
 
-    return matchState.getScoreBoard().matchOver();
+    return matchState.getMatchBoard().matchOver();
   }
 
   public boolean humanTurnSelected() {
@@ -189,9 +191,14 @@ public class EngineApi {
         .gameIsPlaying();
   }
 
-  public ScoreBoard getScoreBoard () {
+  public ScorePresent getScorePresent () {
 
-    return matchState.getScoreBoard();
+    return new ScorePresent(getMatchBoard(), getGameState());
+  }
+
+  public MatchBoard getMatchBoard() {
+
+    return matchState.getMatchBoard();
   }
 
   public boolean getAutoCompleteGame () {

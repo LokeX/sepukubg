@@ -16,7 +16,7 @@ public class EditMenu extends JMenu implements Timeable {
   JMenuItem editDice = new JMenuItem("Input dice values");
   JMenuItem editMove = new JMenuItem("Input (undo) move");
 
-  JMenuItem editPlayToScore = new JMenuItem("Input score to win engineApi");
+  JMenuItem editPlayToScore = new JMenuItem("Input matchScore to win engineApi");
 
   JPopupMenu.Separator editMenuSeparator = new JPopupMenu.Separator();
 

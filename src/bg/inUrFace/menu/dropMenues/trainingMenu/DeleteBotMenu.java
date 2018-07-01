@@ -50,7 +50,7 @@ public class DeleteBotMenu implements Listable {
   public List<String> getElementTitles() {
 
     return Trainer.bots.stream().
-      map(Bot::getName).collect(Collectors.toList());
+      map(Bot::name).collect(Collectors.toList());
   }
 
 }

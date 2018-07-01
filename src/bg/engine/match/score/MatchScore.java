@@ -10,6 +10,13 @@ public class MatchScore {
   public MatchScore (int playToScore) {
 
     this.playToScore = playToScore;
+    playerScores[0] = new PlayerScore();
+    playerScores[1] = new PlayerScore();
+  }
+
+  public PlayerScore[] getPlayerScores () {
+
+    return playerScores;
   }
 
   public void addGameScore (GameScore gameScore) {
@@ -22,6 +29,11 @@ public class MatchScore {
 
     playToScore = score;
     resetCrawford();
+  }
+
+  public int getPlayToScore () {
+
+    return playToScore;
   }
 
   protected void resetCrawford () {
@@ -56,11 +68,6 @@ public class MatchScore {
     return
       playerScores[0].matchScore() >
       playerScores[1].matchScore() ? 0 : 1;
-  }
-
-  public PlayerScore[] getPlayerScores() {
-
-    return playerScores;
   }
 
   public boolean matchOver () {

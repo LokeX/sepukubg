@@ -14,7 +14,7 @@ public class GameScore {
   private int totalScore;
   private int winnerID;
 
-  GameScore (Game game) {
+  public GameScore (Game game) {
 
     finalTurn = game.lastTurn();
     cube = game.getGameCube();

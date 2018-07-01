@@ -90,7 +90,7 @@ public class Input {
     );
 
     if (newScore >= 0 && newScore < 100 && newScore % 2 == 1) {
-      engineApi.getScoreBoard().setPlayToScore(newScore);
+      engineApi.getMatchBoard().setPlayToScore(newScore);
       settings.setScoreToWin(newScore);
     }
   }
@@ -104,7 +104,7 @@ public class Input {
     );
 
     if (newScore >= 0 && newScore < 100) {
-      engineApi.getScoreBoard().setPlayersMatchScore(playerID, newScore);
+      engineApi.getMatchBoard().setPlayersMatchScore(playerID, newScore);
     }
   }
 

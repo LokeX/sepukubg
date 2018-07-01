@@ -2,6 +2,8 @@ package bg.engine.match;
 
 import bg.engine.match.moves.EvaluatedMove;
 import bg.engine.match.moves.Layout;
+import bg.engine.match.score.GameScore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +75,11 @@ public class Game {
   public Cube getGameCube() {
 
     return gameCube;
+  }
+
+  public GameScore getGameScore () {
+
+    return new GameScore(this);
   }
 
   public int nrOfTurns() {

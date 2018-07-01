@@ -1,6 +1,7 @@
 package bg.engine.api.gamePlay;
 
 import bg.engine.match.moves.Layout;
+import bg.engine.match.score.GameScore;
 
 public class GameState extends Navigation {
 

@@ -23,7 +23,7 @@ public class DoublingCube extends MouseAdapter implements Paintable {
 
     return
       engineApi != null &&
-      !engineApi.getScoreBoard().isCrawfordGame() &&
+      !engineApi.getMatchBoard().isCrawfordGame() &&
       settings.getScoreToWin() > 1 &&
       engineApi.getLatestTurn() != null;
   }

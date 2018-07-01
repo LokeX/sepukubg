@@ -71,7 +71,7 @@ public class BotEditor extends TextDisplay {
   private void confirmApplication () {
 
     if (bg.util.Dialogs.confirmed(
-      "Apply changes to bot:\n"+bot.getName(),
+      "Apply changes to bot:\n"+bot.name(),
       this)) {
       try {
         bot.applyValues(getParsedValues());

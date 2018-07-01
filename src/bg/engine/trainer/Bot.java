@@ -17,11 +17,11 @@ public class Bot extends BonusElements {
 
   public Bot (Bot bot) {
 
-    this(bot.getName());
+    this(bot.name());
 //    stats = new BotStats(bot);
   }
 
-  public String getName () {
+  public String name() {
 
     return name;
   }
