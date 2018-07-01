@@ -68,11 +68,44 @@ public class MatchState {
       && gameState.nrOfTurns() > 0;
   }
 
+  boolean playerIsHuman () {
+
+    return
+      !autoCompleteGame
+      && gameState.humanTurnSelected();
+  }
+
+  boolean lastTurnSelected () {
+
+    return
+      gameState.lastTurnSelected();
+  }
+
+  boolean matchOver () {
+
+    return
+      scoreBoard.matchOver();
+  }
+
+  boolean gameOver () {
+
+    return
+      gameIsPlaying()
+      && gameState.gameOver();
+  }
+
+  public boolean playedMoveSelected () {
+
+    return
+      gameIsPlaying()
+      && gameState.playedMoveSelected();
+  }
+
   public void endTurn () {
 
     getActionButton().setShowPleaseWaitButton(false);
     getActionButton().setHideActionButton(false);
-    if (getGameState().gameOver()) {
+    if (gameOver()) {
       autoCompleteGame = false;
       scoreBoard.writeGameScore(getGameState());
     } else if (settings.isAutomatedEndTurn() || autoCompleteGame) {
@@ -168,13 +201,6 @@ public class MatchState {
       );
   }
 
-  private boolean playerIsHuman () {
-
-    return
-      !autoCompleteGame
-      && gameState.humanTurnSelected();
-  }
-
   private void computerMoveNew () {
 
     engineApi.displayLayouts(
@@ -196,7 +222,7 @@ public class MatchState {
     }
   }
 
-  private void rollAndMove () {
+  void newTurn() {
 
     gameState.newTurn();
     Main.sound.playSoundEffect("wuerfelbecher");
@@ -224,10 +250,10 @@ public class MatchState {
   private void startNewGame() {
 
     gameState = new GameState(matchLayout);
-    rollAndMove();
+    newTurn();
   }
 
-  private void newGame () {
+  void newGame () {
 
     if (!gameIsPlaying()) {
       initMatch();
@@ -251,7 +277,7 @@ public class MatchState {
     } else if (engineApi.gameOver()) {
       newGame();
     } else {
-      rollAndMove();
+      newTurn();
     }
   }
 

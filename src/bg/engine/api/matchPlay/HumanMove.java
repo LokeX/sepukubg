@@ -119,11 +119,11 @@ public class HumanMove implements HumanMoveApi {
   private void initialSelection () {
 
     displayLayouts(
-      autoSelectedLayouts()
+      getAutoSelectedLayouts()
     );
   }
 
-  private List<Layout> autoSelectedLayouts() {
+  private List<Layout> getAutoSelectedLayouts() {
 
     moveInput.initialSelection();
     return
@@ -132,7 +132,9 @@ public class HumanMove implements HumanMoveApi {
 
   boolean endOfInput () {
 
-    return moveInput.endOfInput();
+    return
+      moveInput == null
+      || moveInput.endOfInput();
   }
 
   private boolean inputIsVoid () {

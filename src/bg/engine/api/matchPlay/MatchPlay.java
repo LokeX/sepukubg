@@ -1,110 +1,126 @@
 package bg.engine.api.matchPlay;
 
+import static bg.Main.engineApi;
+
 public class MatchPlay {
 
-  MatchState matchState = new MatchState();
+  MatchState matchState;
 
-  private boolean okToSetText() {
+  private boolean matchIsPlaying () {
 
     return
-      matchState != null
-      && gameIsPlaying()
-      && matchState
-        .getGameState()
-        .lastTurn() != null;
+      matchState != null;
   }
 
-  private boolean isLastTurn () {
+  private boolean matchOver () {
 
     return
-      gameIsPlaying()
+      matchIsPlaying()
+      && matchState.matchOver();
+  }
+
+  private boolean gameOver () {
+
+    return
+      matchIsPlaying()
+      && !matchOver()
+      && matchState.gameOver();
+  }
+
+  private boolean lastTurnSelected () {
+
+    return
+      matchIsPlaying()
       && matchState
-        .getGameState()
-        .lastTurnSelected();
+          .lastTurnSelected();
   }
 
   private boolean playerIsHuman () {
 
     return
-      gameIsPlaying()
-      && matchState
-        .getGameState()
-        .humanTurnSelected();
+      matchIsPlaying()
+      && matchState.playerIsHuman();
   }
 
   private boolean newMatch () {
 
     return
-      isLastTurn()
-      && matchState
-        .getScoreBoard()
-        .matchOver();
+      !matchIsPlaying() || matchOver();
   }
 
   private boolean newGame () {
 
     return
-      isLastTurn()
-      && matchState
-        .getGameState()
-        .gameOver();
+      matchIsPlaying()
+      && !matchOver()
+      && matchState.gameOver();
   }
 
-  private String buttonText () {
+  private boolean playedMoveSelected () {
+
+    return
+      matchIsPlaying()
+      && matchState.playedMoveSelected();
+  }
+
+  private HumanMove humanMove () {
+
+    return matchState.getHumanMove();
+  }
+
+  private boolean playHumanMove () {
+
+    return
+      playMove()
+      && playerIsHuman()
+      && humanMove().endOfInput();
+  }
+
+  private boolean playMove () {
+
+    return
+      !matchOver()
+      && !gameOver()
+      && (lastTurnSelected() || !playedMoveSelected());
+  }
+
+  private String nextPlayState () {
 
     return
         newMatch()
       ? "New Match"
       : newGame()
       ? "New game"
-      : playerIsHuman()
+      : playHumanMove()
       ? "Play move"
-      : "Roll dice";
+      : playMove()
+      ? "Roll dice"
+      : "";
   }
 
-  private boolean playedMoveSelected () {
+  private boolean nextPlayAvailable () {
 
     return
-      gameIsPlaying()
-      && matchState
-        .getGameState()
-        .playedMoveSelected();
+      nextPlayState().length() == 0;
   }
 
-  private boolean gameIsPlaying () {
+  public void actionButtonClicked () {
 
-    return
-      matchState
-        .gameIsPlaying();
-  }
-
-  private boolean gameOver () {
-
-    return
-      gameIsPlaying()
-      && matchState
-        .getGameState()
-        .gameOver();
-  }
-
-  public boolean showButton() {
-
-    boolean showButton = false;
-
-    if (okToSetText()) {
-      if (isLastTurn()) {
-//        showButton = !hideActionButton;
-      } else if (!playedMoveSelected()) {
-        showButton = true;
-      } else {
-        showButton = false;
+    if (matchState.gameIsPlaying()) {
+      engineApi.getMatchCube().computerHandlesCube();
+      if (engineApi.getMatchCube().cubeWasRejected()) {
+        matchState.endTurn();
+        return;
       }
     }
-    return
-      showButton
-      || gameIsPlaying()
-      || gameOver()
-      && isLastTurn();
+    if (matchOver()) {
+      matchState = new MatchState();
+    } else if (gameOver()) {
+      matchState.newGame();
+    } else {
+      matchState.newTurn();
+    }
   }
+
 
 }

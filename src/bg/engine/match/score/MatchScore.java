@@ -1,0 +1,71 @@
+package bg.engine.match.score;
+
+public class MatchScore {
+
+  protected PlayerScore[] playerScores = new PlayerScore[2];
+
+  private int crawford = 0;
+  private int playToScore;
+
+  public MatchScore (int playToScore) {
+
+    this.playToScore = playToScore;
+  }
+
+  public void addGameScore (GameScore gameScore) {
+
+    playerScores[gameScore.getWinnerID()].addGameScore(gameScore);
+    setCrawford();
+  }
+
+  public void setPlayToScore (int score) {
+
+    playToScore = score;
+    resetCrawford();
+  }
+
+  protected void resetCrawford () {
+
+    crawford = 0;
+    setCrawford();
+  }
+
+  protected int highestMatchScore () {
+
+    return
+        playerScores[0].matchScore() >
+        playerScores[1].matchScore()
+      ? playerScores[0].matchScore()
+      : playerScores[1].matchScore();
+  }
+
+  protected void setCrawford () {
+
+    if (highestMatchScore() == playToScore - 1) {
+      crawford++;
+    }
+  }
+
+  public boolean isCrawfordGame () {
+
+    return crawford == 1;
+  }
+
+  public int getWinnerID () {
+
+    return
+      playerScores[0].matchScore() >
+      playerScores[1].matchScore() ? 0 : 1;
+  }
+
+  public PlayerScore[] getPlayerScores() {
+
+    return playerScores;
+  }
+
+  public boolean matchOver () {
+
+    return highestMatchScore() >= playToScore;
+  }
+
+}

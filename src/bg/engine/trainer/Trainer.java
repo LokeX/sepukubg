@@ -175,8 +175,20 @@ public class Trainer {
 
       for (int a = 0; a < nrOfMatches; a++) {
         match = new Match(layout, statScoreToWin).getMatch();
-        bots.get(whiteBot).getStats().addScore(match.getScore(), 0, bots.get(blackBot));
-        bots.get(blackBot).getStats().addScore(match.getScore(), 1, bots.get(whiteBot));
+        bots.get(whiteBot)
+          .getStats()
+          .addScore(
+            match.getScore(),
+            0,
+            bots.get(blackBot)
+          );
+        bots.get(blackBot)
+          .getStats()
+          .addScore(
+            match.getScore(),
+            1,
+            bots.get(whiteBot)
+          );
         nrOfMatchesPlayed++;
         if (killRun) {
           System.out.println("Statistical run terminated");
