@@ -1,6 +1,5 @@
-package bg.engine.api;
+package bg.engine.api.gameState;
 
-import bg.engine.api.gamePlay.GameState;
 import bg.engine.match.Turn;
 import bg.inUrFace.windows.TextDisplay;
 
@@ -9,10 +8,16 @@ import static bg.Main.settings;
 public class Search {
 
   private GameState gameState;
+  private boolean searching = false;
 
   public Search (GameState gameState) {
 
     this.gameState = gameState;
+  }
+
+  public boolean isSearching() {
+
+    return searching;
   }
 
   private void displaySearchReport () {
@@ -49,7 +54,9 @@ public class Search {
   public void searchRolledMoves () {
 
     if (okToSearch()) {
+      searching = true;
       searchTurn(gameState.lastTurn());
+      searching = false;
       if (settings.isSearchReportOn()) {
         displaySearchReport();
       }

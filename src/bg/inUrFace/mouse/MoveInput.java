@@ -27,7 +27,7 @@ public class MoveInput {
     outputMove();
   }
 
-//  private MoveInput movesAnalysis = engineApi.getMovesAnalysis();
+//  private MoveSelect movesAnalysis = engineApi.getMovesAnalysis();
 //  private InputPoints movePointsInput = engineApi.getMovePointsString();
   private Layout customMoveLayout = new Layout(Main.engineApi.getSelectedTurn().getParentMoveLayout());
   private List<int[]> legalMovePoints = Main.engineApi.getSelectedTurn().getLegalMovePoints();

@@ -1,21 +1,76 @@
-package bg.engine.api.gamePlay;
+package bg.engine.api.gameState;
 
+import bg.engine.api.gameState.humanMove.HumanMove;
 import bg.engine.match.Game;
 import bg.engine.match.Turn;
 import bg.engine.match.moves.EvaluatedMove;
 import bg.engine.match.moves.Layout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static bg.Main.getActionButton;
 import static bg.Main.settings;
 
 public class Navigation extends Game {
 
+  private HumanMove humanMove;
+  private List<Layout> outputLayouts;
   int selectedTurnNr = 0;
   int selectedMoveNr = 0;
 
   Navigation (Layout matchLayout) {
 
     super(matchLayout);
+    humanMove = new HumanMove();
+  }
+
+  public int getTurnNr () {
+
+    return selectedTurnNr;
+  }
+
+  public int getMoveNr () {
+
+    return selectedMoveNr;
+  }
+
+  public void setMoveNr (int moveNr) {
+
+    selectedMoveNr = moveNr;
+  }
+
+  public List<Layout> getOutputLayout () {
+
+    List<Layout> layouts = new ArrayList<>(outputLayouts);
+
+    outputLayouts = null;
+    return layouts;
+  }
+
+  public void setOutputLayout () {
+
+    outputLayouts = List.of(selectedMove());
+  }
+
+  public void setOutputLayouts (List<Layout> layouts) {
+
+    outputLayouts = layouts;
+  }
+
+  public HumanMove getHumanMove () {
+
+    return humanMove;
+  }
+
+  public void startHumanMove () {
+
+    humanMove.setMoveSelection(this);
+  }
+
+  public void endHumanMove () {
+
+    humanMove.setMoveSelection(null);
   }
 
   public Turn selectedTurn () {
@@ -28,7 +83,7 @@ public class Navigation extends Game {
     return selectedTurn().getPlayedMoveNr();
   }
 
-  boolean humanTurn (Turn turn) {
+  boolean isHumanTurn (Turn turn) {
 
     return
       settings
@@ -37,7 +92,7 @@ public class Navigation extends Game {
         );
   }
 
-  private EvaluatedMove selectedMove () {
+  public EvaluatedMove selectedMove () {
 
     return selectedTurn().getMoveByNr(selectedMoveNr);
   }
@@ -70,7 +125,7 @@ public class Navigation extends Game {
 
     getActionButton().setHideActionButton(false);
     while (++turnCount < nrOfTurns()) {
-      if (humanTurn(getTurnByNr(turnCount))) {
+      if (isHumanTurn(getTurnByNr(turnCount))) {
         selectedTurnNr = turnCount;
         return getTurnByNr(selectedTurnNr);
       }
@@ -84,7 +139,7 @@ public class Navigation extends Game {
 
     getActionButton().setHideActionButton(false);
     while (--turnCount >= 0) {
-      if (humanTurn(getTurnByNr(turnCount))) {
+      if (isHumanTurn(getTurnByNr(turnCount))) {
         selectedTurnNr = turnCount;
         return getTurnByNr(selectedTurnNr);
       }
@@ -96,10 +151,10 @@ public class Navigation extends Game {
 
     getActionButton().setHideActionButton(false);
     if (nrOfTurns() > 1) {
-      if (humanTurn(lastTurn())) {
+      if (isHumanTurn(lastTurn())) {
         selectedTurnNr = lastTurnNr();
         return lastTurn();
-      } else if (humanTurn(getTurnByNr(nrOfTurns()-2))) {
+      } else if (isHumanTurn(getTurnByNr(nrOfTurns()-2))) {
         selectedTurnNr = nrOfTurns()-2;
         return selectedTurn();
       }

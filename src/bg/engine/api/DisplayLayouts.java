@@ -64,7 +64,7 @@ public class DisplayLayouts implements DisplayLayoutsApi {
       && outputIsAvailable();
   }
 
-  private boolean outputIsAvailable() {
+  public boolean outputIsAvailable() {
 
     return
       outputLayouts != null

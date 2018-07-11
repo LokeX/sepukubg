@@ -1,28 +1,29 @@
-package bg.engine.api.gamePlay;
+package bg.engine.api.gameState;
 
 import bg.engine.match.moves.Layout;
-import bg.engine.match.score.GameScore;
+
+import java.util.ArrayList;
 
 public class GameState extends Navigation {
+
+  private Search search;
+  private GameData gameData;
 
   public GameState (Layout matchLayout) {
 
     super(matchLayout);
+    search = new Search(this);
+    gameData = new GameData();
   }
 
-  public int getTurnNr () {
+  public Search getSearch() {
 
-    return selectedTurnNr;
+    return search;
   }
 
-  public int getMoveNr () {
+  public GameData getGameData () {
 
-    return selectedMoveNr;
-  }
-
-  public void setMoveNr (int moveNr) {
-
-    selectedMoveNr = moveNr;
+    return gameData.getGameData(this);
   }
 
   public boolean playedMoveSelected() {
@@ -34,7 +35,7 @@ public class GameState extends Navigation {
   public boolean humanTurnSelected () {
 
     return
-      humanTurn(
+      isHumanTurn(
         selectedTurn()
       );
   }
@@ -43,6 +44,30 @@ public class GameState extends Navigation {
 
     return
       selectedTurnNr == lastTurnNr();
+  }
+
+  private void computerMove () {
+
+    setOutputLayouts(
+      new ArrayList<>(
+        selectedMove()
+          .getMoveLayoutsNew())
+    );
+  }
+
+  private boolean playerIsHuman () {
+
+    return
+      isHumanTurn(selectedTurn());
+  }
+
+  void moveNew () {
+
+    if (playerIsHuman()) {
+      startHumanMove();
+    } else {
+      computerMove();
+    }
   }
 
   public void newTurn () {

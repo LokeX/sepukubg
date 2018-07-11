@@ -1,6 +1,9 @@
-package bg.engine.match.moves;
+package bg.engine.api.gameState.humanMove;
 
 import bg.engine.match.Turn;
+import bg.engine.match.moves.Layout;
+import bg.engine.match.moves.MoveLayout;
+import bg.engine.match.moves.Moves;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,29 +14,22 @@ import java.util.stream.Stream;
 import static bg.util.StreamsUtil.streamAsList;
 import static java.util.stream.IntStream.range;
 
-public class MoveInput extends Moves {
+public class MoveSelect extends Moves {
 
   int[] movePoints;
   private int inputPoint;
   private int storedPosition;
-  private int turnNr;
 
-  MoveInput(MoveInput moveInput) {
+  MoveSelect(MoveSelect moveSelect) {
 
-    super(moveInput);
-    this.movePoints = moveInput.movePoints.clone();
+    super(moveSelect);
+    this.movePoints = moveSelect.movePoints.clone();
   }
 
-  public MoveInput(Turn turn) {
+  public MoveSelect(Turn turn) {
 
     super(turn);
-    turnNr = turn.getTurnNr();
     resetMovePoints();
-  }
-
-  public boolean hasIdenticalTurnNrTo(int turnNr) {
-
-    return this.turnNr == turnNr;
   }
 
   private void resetMovePoints () {
@@ -44,7 +40,7 @@ public class MoveInput extends Moves {
       .toArray();
   }
 
-  public boolean endOfInput () {
+  boolean endOfInput () {
 
     return
       position() == movePoints.length
@@ -59,7 +55,7 @@ public class MoveInput extends Moves {
         .count();
   }
 
-  public boolean positionIsEndingPoint () {
+  boolean positionIsEndingPoint () {
 
     return isEndingPoint(position());
   }
@@ -106,11 +102,12 @@ public class MoveInput extends Moves {
 
   private int endingPointPosition (int endingPoint) {
 
-    return range(position(), movePoints.length)
-      .filter(this::isEndingPoint)
-      .filter(position -> endingPointIsInPosition(endingPoint, position))
-      .findAny()
-      .orElse(-1);
+    return
+      range(position(), movePoints.length)
+        .filter(this::isEndingPoint)
+        .filter(position -> endingPointIsInPosition(endingPoint, position))
+        .findAny()
+        .orElse(-1);
   }
 
   private boolean isStartingPoint (int position) {
@@ -125,10 +122,10 @@ public class MoveInput extends Moves {
         .anyMatch(point -> point == endingPoint);
   }
 
-  public Stream<Integer> validEndingPoints () {
+  Stream<Integer> validEndingPoints () {
 
     return
-      new MoveProjection(this)
+      new MoveSelectProjection(this)
         .projectedEndingPoints();
   }
 
@@ -141,10 +138,10 @@ public class MoveInput extends Moves {
 
     return
       position < movePoints.length
-        && pointsIn(position).count() == 1;
+      && pointsIn(position).count() == 1;
   }
 
-  public MoveLayout getMatchingMoveLayout() {
+  MoveLayout getMatchingMoveLayout() {
 
     return
       position() == 0
@@ -160,11 +157,11 @@ public class MoveInput extends Moves {
       matchingMoves()
         .findAny()
         .get()
-        .getMoveLayouts()
+        .getMoveLayoutsNew()
         .stream();
   }
 
-  public List<Layout> getOutputLayouts () {
+  List<Layout> getMoveLayouts() {
 
     List<Layout> layouts = moveLayouts()
       .collect(Collectors.toList());
@@ -183,20 +180,22 @@ public class MoveInput extends Moves {
   private boolean inputPointIsLegalStartingPoint (int position) {
 
     return
-      isStartingPoint(position) && pointsIn(position)
-        .anyMatch(point -> point == inputPoint);
+      isStartingPoint(position)
+      && pointsIn(position).anyMatch(point -> point == inputPoint);
   }
 
   private void autoSelect (int max) {
 
     if (position() < max && uniquePointIn(position())) {
-      movePoints[position()] = pointsIn(position())
-        .findFirst().orElse(-1);
+      movePoints[position()] =
+        pointsIn(position())
+          .findFirst()
+          .orElse(-1);
       autoSelect(max);
     }
   }
 
-  public void initialSelection() {
+  void initialSelection() {
 
     if (position() == 0) {
       autoSelect(movePoints.length);
@@ -211,11 +210,12 @@ public class MoveInput extends Moves {
   private boolean isLegalEndingPoint (int endingPoint) {
 
     return
-      positionIsEndingPoint() && validEndingPoints()
+      positionIsEndingPoint()
+      && validEndingPoints()
         .anyMatch(point -> point == endingPoint);
   }
 
-  private boolean isUniqueMove () {
+  boolean isUniqueMove () {
 
     return
       matchingMoves().count() == 1;
@@ -250,7 +250,7 @@ public class MoveInput extends Moves {
     if (endingPointPosition > position()) {
       System.out.println("Projecting movePoints");
       movePoints =
-        new MoveProjection(this)
+        new MoveSelectProjection(this)
         .projectMovePointsTo(endingPointPosition);
       storedPosition = position()-1;
     } else {
@@ -267,7 +267,7 @@ public class MoveInput extends Moves {
     }
   }
 
-  public void deleteLatestInput () {
+  void deleteLatestInput () {
 
     int inputPointNr = position();
 
@@ -281,7 +281,7 @@ public class MoveInput extends Moves {
     return !isIllegal();
   }
 
-  public boolean inputIsLegal () {
+  boolean inputIsLegal () {
 
     return position() != storedPosition;
   }

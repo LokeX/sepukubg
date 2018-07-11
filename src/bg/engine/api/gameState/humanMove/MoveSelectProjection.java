@@ -1,15 +1,15 @@
-package bg.engine.match.moves;
+package bg.engine.api.gameState.humanMove;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import static bg.util.StreamsUtil.streamAsList;
 
-public class MoveProjection extends MoveInput {
+public class MoveSelectProjection extends MoveSelect {
 
-  MoveProjection(MoveInput moveInput) {
+  MoveSelectProjection(MoveSelect moveSelect) {
 
-    super(moveInput);
+    super(moveSelect);
   }
 
   private void projectMovePoints (

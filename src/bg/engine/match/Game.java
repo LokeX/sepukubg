@@ -77,14 +77,14 @@ public class Game {
     return gameCube;
   }
 
-  public GameScore getGameScore () {
-
-    return new GameScore(this);
-  }
-
   public int nrOfTurns() {
 
     return turns.size();
+  }
+
+  public GameScore getGameScore () {
+
+    return new GameScore(this);
   }
 
   public boolean playerCanOfferCube () {

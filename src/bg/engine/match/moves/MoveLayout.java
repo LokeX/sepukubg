@@ -11,10 +11,11 @@ import static java.util.Arrays.*;
 
 public class MoveLayout extends Layout {
 
+  private MovePointLayouts movePointLayoutsNew;
   List<MoveLayout> movePointsLayouts;
   protected Dice dice;
-  private Moves parentMoves;
-  private int[] hitPoints;
+  Moves parentMoves;
+  int[] hitPoints;
   int[] movePoints;
   int[] movePoints2;
 
@@ -179,7 +180,7 @@ public class MoveLayout extends Layout {
     return false;
   }
 
-  boolean movePointsMatch (int[] movePointsToMatch) {
+  public boolean movePointsMatch (int[] movePointsToMatch) {
 
     int nrOfMovePointsToMatch =
       (int) Arrays.stream(movePointsToMatch)
@@ -208,7 +209,7 @@ public class MoveLayout extends Layout {
     return rearPos == 0;
   }
 
-  boolean endingPointIsAmbiguous(int endingPoint) {
+  public boolean endingPointIsAmbiguous(int endingPoint) {
 
     return
       !dice.areDouble() &&
@@ -330,6 +331,14 @@ public class MoveLayout extends Layout {
       }
       return movePointsLayouts;
     }
+  }
+
+  public List<MoveLayout> getMoveLayoutsNew () {
+
+    if (movePointLayoutsNew == null) {
+      movePointLayoutsNew = new MovePointLayouts(this);
+    }
+    return movePointLayoutsNew.getMoveLayoutsList();
   }
 
   public String getMovePointsString() {

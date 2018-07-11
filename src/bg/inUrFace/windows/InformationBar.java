@@ -26,7 +26,8 @@ public class InformationBar extends JLabel implements Timeable {
   public void timerUpdate() {
 
     if (engineApi != null && engineApi.gameIsPlaying()) {
-      setText(engineApi.getTurnInfoFormatString());
+//      setText(engineApi.getTurnInfoFormatString());
+      setText(engineApi.getGameDataHTML().HTMLFormattedDataString());
     }
   }
 

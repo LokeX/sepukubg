@@ -72,6 +72,11 @@ public class MoveInputListener extends MouseAdapter {
     return -1;
   }
 
+  private boolean rightButtonClicked (MouseEvent mouseEvent) {
+
+    return mouseEvent.getButton() == MouseEvent.BUTTON3;
+  }
+
   @Override
   public void mouseClicked (MouseEvent mouseEvent) {
 
@@ -86,7 +91,11 @@ public class MoveInputListener extends MouseAdapter {
       }
       engineApi
         .getHumanMove()
-        .pointClicked(mouseEvent, clickedPoint());
+        .pointClicked(
+          rightButtonClicked(mouseEvent)
+            ? -1
+            : clickedPoint()
+        );
     }
   }
 

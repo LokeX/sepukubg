@@ -1,6 +1,6 @@
 package bg.inUrFace.canvas.move;
 
-import bg.engine.api.HumanMoveApi;
+import bg.engine.api.gameState.humanMove.HumanMoveApi;
 import bg.inUrFace.canvas.Paintable;
 
 import java.awt.*;
@@ -65,8 +65,9 @@ public class ChequerPainter implements Paintable {
 
     return
       humanMove() != null
-      && mousePosition() != null
-      && humanMove().isEndingPoint();
+      && humanMove().inputReady()
+      && humanMove().isEndingPoint()
+      && mousePosition() != null;
   }
 
   public void paint (Graphics graphics) {

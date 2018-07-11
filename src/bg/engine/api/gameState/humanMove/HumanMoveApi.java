@@ -1,11 +1,10 @@
-package bg.engine.api;
+package bg.engine.api.gameState.humanMove;
 
-import java.awt.event.MouseEvent;
 import java.util.stream.Stream;
 
 public interface HumanMoveApi {
 
-  void pointClicked (MouseEvent e, int clickedPoint);
+  void pointClicked (int clickedPoint);
 
   int getPlayerID ();
 

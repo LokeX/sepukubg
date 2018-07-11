@@ -75,7 +75,7 @@ public class Input {
           engineApi.getSelectedTurn().setDice(dice.getDice());
           engineApi.getGame().truncateTurns(engineApi.getGameState().getTurnNr());
           engineApi.getGameState().setMoveNr(engineApi.getPlayedMoveNr());
-          engineApi.getMatchState().getSearch().searchRolledMoves();
+          engineApi.getMatchState().getGameState().getSearch().searchRolledMoves();
           engineApi.getMatchState().move();
         }
       }

@@ -84,7 +84,7 @@ public class Moves {
     return evaluatedMoves.indexOf(evaluatedMove);
   }
 
-  List<MoveLayout> getLegalMoves() {
+  protected List<MoveLayout> getLegalMoves() {
 
     return Collections.unmodifiableList(legalMoves);
   }
@@ -126,7 +126,7 @@ public class Moves {
     return evaluatedMoves.size();
   }
 
-  int getNrOfLegalPartMoves () {
+  protected int getNrOfLegalPartMoves () {
 
     return nrOfLegalPartMoves;
   }
@@ -146,7 +146,7 @@ public class Moves {
     );
   }
 
-  int getMoveNr (Layout layout) {
+  protected int getMoveNr (Layout layout) {
 
     if (layout != null) {
       return

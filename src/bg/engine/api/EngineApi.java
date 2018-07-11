@@ -1,11 +1,11 @@
 package bg.engine.api;
 
-import bg.engine.api.gamePlay.GameState;
+import bg.engine.api.gameState.GameState;
 import bg.engine.api.matchPlay.MatchCube;
 import bg.engine.api.matchPlay.MatchState;
-import bg.engine.api.matchPlay.ScoreBoard;
+import bg.engine.api.gameState.humanMove.HumanMoveApi;
 import bg.engine.api.score.MatchBoard;
-import bg.engine.api.score.ScorePresent;
+import bg.engine.api.score.ScoreBoard;
 import bg.engine.match.Game;
 import bg.engine.match.Turn;
 import bg.engine.match.moves.EvaluatedMove;
@@ -17,9 +17,11 @@ import static bg.Main.*;
 
 public class EngineApi {
 
+  private GameDataHTML gameDataHTML = new GameDataHTML();
   private TurnInfo turnInfo = new TurnInfo();
-  private DisplayLayouts displayLayouts = new DisplayLayouts();
   public MatchState matchState = new MatchState();
+  private DisplayLayouts displayLayouts = new DisplayLayouts();
+  private ScoreBoard scoreBoard = new ScoreBoard();
 
   public Game getGame () {
 
@@ -27,6 +29,16 @@ public class EngineApi {
       return matchState.getGameState();
     }
     return null;
+  }
+
+  public GameDataHTML getGameDataHTML () {
+
+    return
+      gameDataHTML
+        .getGameDataHTML(
+          getGameState()
+            .getGameData()
+        );
   }
 
   public void displayLayouts (List<Layout> layouts, Object notifier) {
@@ -100,6 +112,7 @@ public class EngineApi {
 
     return getGameState().getMoveNr();
   }
+
   public int getPlayerOnRollsID () {
 
     return getLatestTurn().getPlayerOnRollsID();
@@ -141,8 +154,8 @@ public class EngineApi {
   public HumanMoveApi getHumanMove () {
 
     return
-      matchState.getHumanMove().inputReady()
-        ? matchState.getHumanMove()
+      matchState != null && matchState.gameIsPlaying()
+        ? matchState.getGameState().getHumanMove()
         : null;
   }
 
@@ -191,9 +204,9 @@ public class EngineApi {
         .gameIsPlaying();
   }
 
-  public ScorePresent getScorePresent () {
+  public ScoreBoard getScoreBoard() {
 
-    return new ScorePresent(getMatchBoard(), getGameState());
+    return scoreBoard.getScoreBoard(matchState);
   }
 
   public MatchBoard getMatchBoard() {

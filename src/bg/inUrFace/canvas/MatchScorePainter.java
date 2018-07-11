@@ -22,9 +22,9 @@ public class MatchScorePainter implements Paintable {
     if (engineApi != null) {
 
       BoardDim d = win.canvas.getDimensions();
-      String toScore = Integer.toString(engineApi.getScorePresent().getPlayToScore());
-      String whiteScore = engineApi.getScorePresent().getWhiteMatchScore();
-      String blackScore = engineApi.getScorePresent().getBlackMatchScore();
+      String toScore = Integer.toString(engineApi.getScoreBoard().getPlayToScore());
+      String whiteScore = engineApi.getScoreBoard().getWhiteMatchScore();
+      String blackScore = engineApi.getScoreBoard().getBlackMatchScore();
 
       g.setFont(new Font("Ariel", Font.BOLD, (int)(26*d.factor)));
 

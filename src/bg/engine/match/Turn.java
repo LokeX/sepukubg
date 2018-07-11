@@ -1,5 +1,6 @@
 package bg.engine.match;
 
+import bg.engine.api.gameState.humanMove.MoveSelect;
 import bg.engine.match.moves.*;
 
 public class Turn extends Moves {
@@ -74,9 +75,9 @@ public class Turn extends Moves {
     return getPlayedMove().getPlayerID();
   }
 
-  public MoveInput getMoveInput () {
+  public MoveSelect getMovePoints() {
 
-    return new MoveInput(this);
+    return new MoveSelect(this);
   }
 
 }

@@ -1,25 +1,69 @@
 package bg.engine.api.matchPlay;
 
-import static bg.Main.engineApi;
+import bg.Main;
+import bg.engine.api.DisplayLayouts;
+import bg.engine.api.gameState.humanMove.HumanMove;
+import bg.engine.api.score.ScoreBoard;
+import bg.engine.match.moves.Layout;
+
+import static bg.Main.*;
+import static bg.Main.settings;
 
 public class MatchPlay {
 
-  MatchState matchState;
+  private MatchState matchState;
+  private ScoreBoard scoreBoard;
+  private ActionState actionState;
+  private DisplayLayouts displayLayouts;
 
-  private boolean matchIsPlaying () {
+  MatchPlay () {
+
+    scoreBoard = new ScoreBoard();
+    actionState = new ActionState();
+    displayLayouts = new DisplayLayouts();
+  }
+
+  public MatchState getMatchState () {
+
+    return matchState;
+  }
+
+  public ScoreBoard getScoreBoard () {
+
+    return scoreBoard.getScoreBoard(matchState);
+  }
+
+  public ActionState getActionState() {
+
+    return actionState.getActionState(this);
+  }
+
+  public HumanMove humanMove () {
+
+    return matchState.getHumanMove();
+  }
+
+  boolean matchIsPlaying () {
 
     return
       matchState != null;
   }
 
-  private boolean matchOver () {
+  boolean gameIsPlaying () {
+
+    return
+      matchIsPlaying()
+      && matchState.gameIsPlaying();
+  }
+
+  boolean matchOver () {
 
     return
       matchIsPlaying()
       && matchState.matchOver();
   }
 
-  private boolean gameOver () {
+  boolean gameOver () {
 
     return
       matchIsPlaying()
@@ -27,86 +71,32 @@ public class MatchPlay {
       && matchState.gameOver();
   }
 
-  private boolean lastTurnSelected () {
+  private Layout matchLayout () {
 
-    return
-      matchIsPlaying()
-      && matchState
-          .lastTurnSelected();
+    Layout matchLayout;
+
+    matchLayout = new Layout(win.canvas.getDisplayedLayout());
+    matchLayout.setPlayerID(settings.getGameStartMode());
+    matchLayout.setUseWhiteBot(settings.getWhiteBotOpponent());
+    matchLayout.setUseBlackBot(settings.getBlackBotOpponent());
+    return matchLayout;
   }
 
-  private boolean playerIsHuman () {
+  private void startScenarioEdit () {
 
-    return
-      matchIsPlaying()
-      && matchState.playerIsHuman();
+    matchState = null;
+    getLayoutEditor().startEditor();
   }
 
-  private boolean newMatch () {
+  private void newMatch () {
 
-    return
-      !matchIsPlaying() || matchOver();
+    Main.getLayoutEditor().endEdit();
+    matchState = new MatchState(matchLayout());
   }
 
-  private boolean newGame () {
+  public void nextAction () {
 
-    return
-      matchIsPlaying()
-      && !matchOver()
-      && matchState.gameOver();
-  }
-
-  private boolean playedMoveSelected () {
-
-    return
-      matchIsPlaying()
-      && matchState.playedMoveSelected();
-  }
-
-  private HumanMove humanMove () {
-
-    return matchState.getHumanMove();
-  }
-
-  private boolean playHumanMove () {
-
-    return
-      playMove()
-      && playerIsHuman()
-      && humanMove().endOfInput();
-  }
-
-  private boolean playMove () {
-
-    return
-      !matchOver()
-      && !gameOver()
-      && (lastTurnSelected() || !playedMoveSelected());
-  }
-
-  private String nextPlayState () {
-
-    return
-        newMatch()
-      ? "New Match"
-      : newGame()
-      ? "New game"
-      : playHumanMove()
-      ? "Play move"
-      : playMove()
-      ? "Roll dice"
-      : "";
-  }
-
-  private boolean nextPlayAvailable () {
-
-    return
-      nextPlayState().length() == 0;
-  }
-
-  public void actionButtonClicked () {
-
-    if (matchState.gameIsPlaying()) {
+    if (gameIsPlaying()) {
       engineApi.getMatchCube().computerHandlesCube();
       if (engineApi.getMatchCube().cubeWasRejected()) {
         matchState.endTurn();
@@ -114,13 +104,14 @@ public class MatchPlay {
       }
     }
     if (matchOver()) {
-      matchState = new MatchState();
+      startScenarioEdit();
+    } else if (!matchIsPlaying()) {
+      newMatch();
     } else if (gameOver()) {
       matchState.newGame();
     } else {
       matchState.newTurn();
     }
   }
-
 
 }

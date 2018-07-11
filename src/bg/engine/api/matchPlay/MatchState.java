@@ -1,15 +1,13 @@
 package bg.engine.api.matchPlay;
 
 import bg.Main;
-import bg.engine.api.Search;
-import bg.engine.api.gamePlay.GameState;
+import bg.engine.api.gameState.GameState;
+import bg.engine.api.gameState.humanMove.HumanMove;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.match.moves.Layout;
 import bg.inUrFace.canvas.move.MoveOutput;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
 import bg.inUrFace.mouse.MoveInput;
-
-import java.util.ArrayList;
 
 import static bg.Main.*;
 import static bg.util.ThreadUtil.runWhenNotified;
@@ -19,7 +17,6 @@ public class MatchState {
   private Layout matchLayout;
   private MatchBoard matchBoard;
   private GameState gameState;
-  private HumanMove humanMove = new HumanMove();
   private boolean autoCompleteGame = false;
 
   public MatchState() {
@@ -30,6 +27,12 @@ public class MatchState {
     getActionButton().setText("Start Match");
     getActionButton().setHideActionButton(false);
     getLayoutEditor().startEditor();
+  }
+
+  MatchState (Layout matchLayout) {
+
+    this.matchLayout = matchLayout;
+    matchBoard = new MatchBoard(settings.getScoreToWin());
   }
 
   public MatchBoard getMatchBoard() {
@@ -44,7 +47,10 @@ public class MatchState {
 
   public HumanMove getHumanMove () {
 
-    return humanMove;
+    return
+     gameIsPlaying()
+      ? gameState.getHumanMove()
+      : null;
   }
 
   public boolean getAutoCompleteGame () {
@@ -55,11 +61,6 @@ public class MatchState {
   public void setAutoCompleteGame (boolean autoComplete) {
 
     this.autoCompleteGame = autoComplete;
-  }
-
-  public Search getSearch () {
-
-    return new Search(gameState);
   }
 
   public boolean gameIsPlaying () {
@@ -111,7 +112,7 @@ public class MatchState {
       matchBoard.addGameScore(getGameState().getGameScore());
     } else if (settings.isAutomatedEndTurn() || autoCompleteGame) {
       getMoveInputListener().setAcceptMoveInput(false);
-      humanMove.setMoveInput(null);
+      gameState.endHumanMove();
       actionButtonClicked();
     }
   }
@@ -142,7 +143,7 @@ public class MatchState {
       System.out.println("Get human input");
       getMouse().setMoveInput(new MoveInput());
       getMouse().setAcceptMoveInput(true);
-      humanMove.setMoveInput(gameState);
+      gameState.startHumanMove();
       if (getSettings().isAutoCompletePartMoves()) {
 
         //new input output auto-move
@@ -184,50 +185,11 @@ public class MatchState {
     }
   }
 
-  boolean humanIsMoving () {
-
-    return
-      !humanMove.endOfInput();
-  }
-
-  public void humanMoveNew () {
-
-    humanMove
-      .setMoveInput(
-        gameState
-      );
-    getActionButton()
-      .setHideActionButton(
-        humanMove.inputReady()
-      );
-  }
-
-  private void computerMoveNew () {
-
-    engineApi.displayLayouts(
-      new ArrayList<>(
-        engineApi
-          .getSelectedMove()
-          .getMoveLayouts()
-      ),
-      runWhenNotified(this::endTurn)
-    );
-  }
-
-  void moveNew () {
-
-    if (playerIsHuman()) {
-      humanMoveNew();
-    } else {
-      computerMoveNew();
-    }
-  }
-
   void newTurn() {
 
     gameState.newTurn();
     Main.sound.playSoundEffect("wuerfelbecher");
-    getSearch().searchRolledMoves();
+    getGameState().getSearch().searchRolledMoves();
     getActionButton().setHideActionButton(true);
     getActionButton().setShowPleaseWaitButton(false);
     move();
