@@ -13,19 +13,19 @@ public class Navigation extends Game {
 
   private HumanMove humanMove;
   private MoveOutput moveOutput;
-  private int selectedTurnNr = 0;
-  private int selectedMoveNr = 0;
+  protected int selectedTurnNr = 0;
+  protected int selectedMoveNr = 0;
 
-  Navigation (Layout matchLayout) {
+  public Navigation (Layout matchLayout) {
 
     super(matchLayout);
-    humanMove = new HumanMove();
-    moveOutput = new MoveOutput();
+    humanMove = new HumanMove(this);
+    moveOutput = new MoveOutput(this);
   }
 
   public OutputLayouts getOutputLayouts () {
 
-    return moveOutput.getOutputLayouts(this);
+    return moveOutput.getOutputLayouts();
   }
 
   public void startComputerMove () {
@@ -55,12 +55,12 @@ public class Navigation extends Game {
 
   public void startHumanMove () {
 
-    humanMove.setMoveSelection(this);
+    humanMove.startMoveSelection();
   }
 
   public void endHumanMove () {
 
-    humanMove.setMoveSelection(null);
+    humanMove.endMoveSelection();
   }
 
   public Turn selectedTurn () {
@@ -68,12 +68,12 @@ public class Navigation extends Game {
     return getTurnByNr(selectedTurnNr);
   }
 
-  int playedMoveNr () {
+  protected int playedMoveNr () {
 
     return selectedTurn().getPlayedMoveNr();
   }
 
-  boolean isHumanTurn (Turn turn) {
+  protected boolean isHumanTurn (Turn turn) {
 
     return
       settings

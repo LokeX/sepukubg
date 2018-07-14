@@ -13,43 +13,38 @@ public class HumanMove implements HumanMoveApi {
   private MoveSelector moveSelector;
   private Navigation navigation;
 
-  private List<Layout> autoMoveLayout () {
+  public HumanMove (Navigation navigation) {
 
-    return
-      moveSelector.isIllegal()
-        ? List.of(moveSelector.getParentMoveLayout())
-        : List.of(moveSelector.getBestMove());
+    this.navigation = navigation;
   }
 
-  private boolean settingIsAutoCompletion () {
+  private boolean autoCompleteMove () {
 
     return
-      getSettings().isAutoCompleteMoves()
-      || getSettings().isAutoCompletePartMoves();
+      moveSelector.getNrOfMoves() == 1
+      && getSettings().isAutoCompleteMoves();
   }
 
-  private boolean isAutoSelectable(MoveSelector moveSelector) {
+  private boolean isAutoSelectable () {
 
     return
-      moveSelector.isIllegal()
-        || moveSelector.getNrOfMoves() == 1
-        && settingIsAutoCompletion();
+      getSettings().isAutoCompletePartMoves()
+      || autoCompleteMove();
   }
 
-  public void setMoveSelection(Navigation navigation) {
+  public void startMoveSelection () {
 
-    if (navigation != null) {
-      this.navigation = navigation;
-      moveSelector = new MoveSelector(navigation.selectedTurn());
-      if (isAutoSelectable(moveSelector)) {
-        outputLayouts(autoMoveLayout());
-        moveSelector = null;
-      } else if (getSettings().isAutoCompletePartMoves()){
-        outputLayouts(initialSelection());
-      }
-    } else {
+    moveSelector = new MoveSelector(navigation.selectedTurn());
+    if (moveSelector.isIllegal()) {
       moveSelector = null;
+    }  else if (isAutoSelectable()){
+      moveSelector.initialSelection();
     }
+  }
+
+  public void endMoveSelection () {
+
+    moveSelector = null;
   }
 
   private void selectUniqueMove () {
@@ -74,9 +69,6 @@ public class HumanMove implements HumanMoveApi {
         if (moveSelector.isUniqueMove()) {
           selectUniqueMove();
         }
-        outputLayouts(
-          moveSelector.getMoveLayouts()
-        );
       }
     }
   }
@@ -86,22 +78,11 @@ public class HumanMove implements HumanMoveApi {
     return moveSelector.getMoveLayouts();
   }
 
-  private void outputLayouts (List<Layout> layouts) {
-
-    navigation.setOutputLayouts(layouts);
-  }
-
-  private List<Layout> initialSelection () {
-
-    moveSelector.initialSelection();
-    return moveSelector.getMoveLayouts();
-  }
-
   public boolean endOfInput () {
 
     return
       moveSelector == null
-        || moveSelector.endOfInput();
+      || moveSelector.endOfInput();
   }
 
   public boolean inputReady() {
@@ -120,7 +101,9 @@ public class HumanMove implements HumanMoveApi {
 
   public int getPlayerID () {
 
-    return moveSelector.getPlayerID();
+    return
+      moveSelector
+        .getPlayerID();
   }
 
   public boolean isEndingPoint () {

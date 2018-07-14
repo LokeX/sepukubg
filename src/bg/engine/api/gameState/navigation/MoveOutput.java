@@ -10,9 +10,13 @@ class MoveOutput {
   private Navigation navigation;
   private OutputLayouts outputLayouts;
 
-  OutputLayouts getOutputLayouts (Navigation navigation) {
+  MoveOutput (Navigation navigation) {
 
     this.navigation = navigation;
+  }
+
+  OutputLayouts getOutputLayouts () {
+
     if (isNewMove()) {
       outputLayouts = newOutputLayouts();
     } else if (isHumanMove()) {
