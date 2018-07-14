@@ -9,7 +9,6 @@ import bg.engine.api.score.ScoreBoard;
 import bg.engine.match.Game;
 import bg.engine.match.Turn;
 import bg.engine.match.moves.EvaluatedMove;
-import bg.engine.match.moves.Layout;
 
 import java.util.List;
 
@@ -18,10 +17,9 @@ import static bg.Main.*;
 public class EngineApi {
 
   private GameDataHTML gameDataHTML = new GameDataHTML();
-  private TurnInfo turnInfo = new TurnInfo();
   public MatchState matchState = new MatchState();
-  private DisplayLayouts displayLayouts = new DisplayLayouts();
   private ScoreBoard scoreBoard = new ScoreBoard();
+  private DisplayLayouts displayLayouts = new DisplayLayouts();
 
   public Game getGame () {
 
@@ -41,9 +39,9 @@ public class EngineApi {
         );
   }
 
-  public void displayLayouts (List<Layout> layouts, Object notifier) {
+  public DisplayLayoutsApi getDisplayLayouts () {
 
-    displayLayouts.outputLayouts(layouts, notifier);
+    return displayLayouts;
   }
 
   public MatchState getMatchState() {
@@ -54,11 +52,6 @@ public class EngineApi {
   public GameState getGameState () {
 
     return matchState.getGameState();
-  }
-
-  Turn getTurnByNr (int turnNr) {
-
-    return getGameState().getTurnByNr(turnNr);
   }
 
   int getPlayedMoveNr () {
@@ -123,32 +116,16 @@ public class EngineApi {
     return new MatchCube(this);
   }
 
-  public String getTurnInfoFormatString () {
-
-    return
-      turnInfo
-        .HTMLFormattedInfoString();
-  }
-
-  public boolean humanInputReady () {
-
-    return
-      matchState.getHumanMove().inputReady();
-  }
-
   public List<String> getMoveBonuses () {
 
     return
       getNrOfTurns() > 0
-      ? getSelectedTurn()
-          .getMoveBonuses(
-            getSelectedMove()
-          )
-          .getMoveBonusList(
-            settings
-              .getBonusDisplayMode()
-          )
-      : null;
+        ? getSelectedTurn()
+            .getMoveBonuses(getSelectedMove())
+            .getMoveBonusList(
+              settings.getBonusDisplayMode()
+            )
+        : null;
   }
 
   public HumanMoveApi getHumanMove () {
@@ -162,26 +139,6 @@ public class EngineApi {
   public Input getInput () {
 
     return new Input();
-  }
-
-  public boolean playerIsComputer () {
-
-    return
-      getSettings()
-        .playerStatus[
-          getLatestTurn()
-            .getPlayerOnRollsID()
-        ] == settings.COMPUTER;
-  }
-
-  public String getPlayerDescription () {
-
-    return
-      getSelectedTurn()
-        .getPlayerTitle()
-          + (playerIsComputer()
-            ? "[Computer]"
-            : "[Human]");
   }
 
   public boolean matchOver () {

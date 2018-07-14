@@ -1,6 +1,6 @@
 package bg.engine.api.gameState.humanMove;
 
-import bg.engine.api.gameState.Navigation;
+import bg.engine.api.gameState.navigation.Navigation;
 import bg.engine.match.moves.Layout;
 
 import java.util.List;
@@ -10,15 +10,15 @@ import static bg.Main.getSettings;
 
 public class HumanMove implements HumanMoveApi {
 
-  private MoveSelect moveSelect;
+  private MoveSelector moveSelector;
   private Navigation navigation;
 
   private List<Layout> autoMoveLayout () {
 
     return
-      moveSelect.isIllegal()
-        ? List.of(moveSelect.getParentMoveLayout())
-        : List.of(moveSelect.getBestMove());
+      moveSelector.isIllegal()
+        ? List.of(moveSelector.getParentMoveLayout())
+        : List.of(moveSelector.getBestMove());
   }
 
   private boolean settingIsAutoCompletion () {
@@ -28,11 +28,11 @@ public class HumanMove implements HumanMoveApi {
       || getSettings().isAutoCompletePartMoves();
   }
 
-  private boolean isAutoCompletable (MoveSelect moveSelect) {
+  private boolean isAutoSelectable(MoveSelector moveSelector) {
 
     return
-      moveSelect.isIllegal()
-        || moveSelect.getNrOfMoves() == 1
+      moveSelector.isIllegal()
+        || moveSelector.getNrOfMoves() == 1
         && settingIsAutoCompletion();
   }
 
@@ -40,45 +40,50 @@ public class HumanMove implements HumanMoveApi {
 
     if (navigation != null) {
       this.navigation = navigation;
-      moveSelect = new MoveSelect(navigation.selectedTurn());
-      if (isAutoCompletable(moveSelect)) {
+      moveSelector = new MoveSelector(navigation.selectedTurn());
+      if (isAutoSelectable(moveSelector)) {
         outputLayouts(autoMoveLayout());
-        moveSelect = null;
+        moveSelector = null;
       } else if (getSettings().isAutoCompletePartMoves()){
         outputLayouts(initialSelection());
       }
     } else {
-      moveSelect = null;
+      moveSelector = null;
     }
   }
 
   private void selectUniqueMove () {
 
     navigation.setMoveNr(
-      moveSelect.getUniqueEvaluatedMoveNr()
+      moveSelector.getUniqueEvaluatedMoveNr()
     );
     navigation
       .selectedMove()
-      .setMovePoints(moveSelect.movePoints);
+      .setMovePoints(moveSelector.movePoints);
   }
 
   public void pointClicked (int clickedPoint) {
 
     if (inputReady()) {
       if (clickedPoint == -1) {
-        moveSelect.deleteLatestInput();
+        moveSelector.deleteLatestInput();
       } else {
-        moveSelect.input(clickedPoint);
+        moveSelector.input(clickedPoint);
       }
-      if (moveSelect.inputIsLegal()) {
-        if (moveSelect.isUniqueMove()) {
+      if (moveSelector.inputIsLegal()) {
+        if (moveSelector.isUniqueMove()) {
           selectUniqueMove();
         }
         outputLayouts(
-          moveSelect.getMoveLayouts()
+          moveSelector.getMoveLayouts()
         );
       }
     }
+  }
+
+  public List<Layout> getMoveLayouts () {
+
+    return moveSelector.getMoveLayouts();
   }
 
   private void outputLayouts (List<Layout> layouts) {
@@ -88,47 +93,47 @@ public class HumanMove implements HumanMoveApi {
 
   private List<Layout> initialSelection () {
 
-    moveSelect.initialSelection();
-    return moveSelect.getMoveLayouts();
+    moveSelector.initialSelection();
+    return moveSelector.getMoveLayouts();
   }
 
   public boolean endOfInput () {
 
     return
-      moveSelect == null
-        || moveSelect.endOfInput();
+      moveSelector == null
+        || moveSelector.endOfInput();
   }
 
   public boolean inputReady() {
 
     return
-      moveSelect != null;
+      moveSelector != null;
   }
 
   public String getMovePointsString () {
 
     return
-      moveSelect
+      moveSelector
         .getMatchingMoveLayout()
         .getMovePointsString();
   }
 
   public int getPlayerID () {
 
-    return moveSelect.getPlayerID();
+    return moveSelector.getPlayerID();
   }
 
   public boolean isEndingPoint () {
 
     return
-      moveSelect
+      moveSelector
         .positionIsEndingPoint();
   }
 
   public Stream<Integer> getEndingPoints () {
 
     return
-      moveSelect
+      moveSelector
         .validEndingPoints();
   }
 

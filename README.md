@@ -1,5 +1,5 @@
 # sepukubg
-Backgammon Java engine: moveSelect-generation, evaluation and training
+Backgammon Java engine: moveSelector-generation, evaluation and training
 
 If you should choose to use any of the engine code, please credit the authors:
 

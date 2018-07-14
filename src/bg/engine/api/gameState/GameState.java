@@ -1,8 +1,7 @@
 package bg.engine.api.gameState;
 
+import bg.engine.api.gameState.navigation.Navigation;
 import bg.engine.match.moves.Layout;
-
-import java.util.ArrayList;
 
 public class GameState extends Navigation {
 
@@ -46,15 +45,6 @@ public class GameState extends Navigation {
       selectedTurnNr == lastTurnNr();
   }
 
-  private void computerMove () {
-
-    setOutputLayouts(
-      new ArrayList<>(
-        selectedMove()
-          .getMoveLayoutsNew())
-    );
-  }
-
   private boolean playerIsHuman () {
 
     return
@@ -66,7 +56,7 @@ public class GameState extends Navigation {
     if (playerIsHuman()) {
       startHumanMove();
     } else {
-      computerMove();
+      startComputerMove();
     }
   }
 

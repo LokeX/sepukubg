@@ -8,6 +8,5 @@
     </content>
     <orderEntry type="jdk" jdkName="9(4)" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="src" level="project" />
   </component>
 </module>

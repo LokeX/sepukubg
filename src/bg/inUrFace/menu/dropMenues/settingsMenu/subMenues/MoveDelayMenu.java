@@ -17,7 +17,7 @@ public class MoveDelayMenu extends JMenu {
 
   public MoveDelayMenu() {
 
-    super("MoveSelect delay");
+    super("MoveSelector delay");
     setupButtonGroup();
     setupMilli500();
     setupMilli300();

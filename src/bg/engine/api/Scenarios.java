@@ -66,9 +66,10 @@ public class Scenarios {
 
   public List<String> getLayoutTitles () {
 
-    return namedLayouts.stream().
-      map(NamedLayout::getName).
-      collect(Collectors.toList());
+    return
+      namedLayouts.stream()
+        .map(NamedLayout::getName)
+        .collect(Collectors.toList());
   }
 
   public Layout getStartGameLayout () {

@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.stream.Stream;
 import static bg.util.StreamsUtil.streamAsList;
 
-public class MoveSelectProjection extends MoveSelect {
+public class MoveProjection extends MoveSelector {
 
-  MoveSelectProjection(MoveSelect moveSelect) {
+  MoveProjection(MoveSelector moveSelector) {
 
-    super(moveSelect);
+    super(moveSelector);
   }
 
   private void projectMovePoints (
