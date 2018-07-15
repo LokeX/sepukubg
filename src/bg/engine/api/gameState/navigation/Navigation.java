@@ -32,7 +32,7 @@ public class Navigation extends Game {
 
   public void startComputerMove () {
 
-    moveOutput.reset();
+    moveOutput.newMove();
   }
 
   public int getTurnNr () {

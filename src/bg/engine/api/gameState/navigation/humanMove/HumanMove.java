@@ -73,22 +73,22 @@ public class HumanMove implements HumanMoveApi {
     }
   }
 
-  public List<Layout> getMoveLayouts () {
-
-    return moveSelector.getMoveLayouts();
-  }
-
   public boolean endOfInput () {
 
     return
       moveSelector == null
-      || moveSelector.endOfInput();
+        || moveSelector.endOfInput();
   }
 
   public boolean inputReady() {
 
     return
       moveSelector != null;
+  }
+
+  public List<Layout> getMoveLayouts () {
+
+    return moveSelector.getMoveLayouts();
   }
 
   public String getMovePointsString () {
@@ -118,6 +118,13 @@ public class HumanMove implements HumanMoveApi {
     return
       moveSelector
         .validEndingPoints();
+  }
+
+  public boolean hasMoveLayouts () {
+
+    return
+      moveSelector
+        .hasMoveLayouts();
   }
 
 }

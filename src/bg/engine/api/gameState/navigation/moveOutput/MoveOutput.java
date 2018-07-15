@@ -20,8 +20,8 @@ public class MoveOutput {
 
     if (isNewMove()) {
       outputLayouts = newOutputLayouts();
-    } else if (isHumanMove()) {
-      outputLayouts = outputLayouts.getOutputLayouts(human());
+    } else if (isHumanMove() && hasHumanOutput()) {
+      outputLayouts.setOutputLayouts(human());
     }
     return outputLayouts;
   }
@@ -39,7 +39,7 @@ public class MoveOutput {
     return outputLayouts == null;
   }
 
-  public void reset () {
+  public void newMove () {
 
     outputLayouts = null;
   }
@@ -50,6 +50,14 @@ public class MoveOutput {
       navigation
         .getHumanMove()
         .inputReady();
+  }
+
+  private boolean hasHumanOutput() {
+
+    return
+      navigation
+        .getHumanMove()
+        .hasMoveLayouts();
   }
 
   private List<Layout> human () {

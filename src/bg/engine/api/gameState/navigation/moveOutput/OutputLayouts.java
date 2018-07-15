@@ -18,10 +18,9 @@ public class OutputLayouts {
     timeOfLastOutput = System.currentTimeMillis();
   }
 
-  public OutputLayouts getOutputLayouts (List<Layout> outputLayouts) {
+  void setOutputLayouts(List<Layout> outputLayouts) {
 
     this.outputLayouts = outputLayouts;
-    return this;
   }
 
   private boolean hasOutput () {

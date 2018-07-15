@@ -175,15 +175,20 @@ public class MoveSelector extends Moves {
       .collect(Collectors.toList());
     int start =
       lastInputPosition > position()
-        ? position()
+        ? position() - 1
         : lastInputPosition;
     int end =
       lastInputPosition < position()
-        ? position()
+        ? position() - 1
         : lastInputPosition;
 
     lastInputPosition = position();
     return layouts.subList(start, end);
+  }
+
+  public boolean hasMoveLayouts () {
+
+    return  lastInputPosition != position();
   }
 
   private boolean inputPointIsLegalStartingPoint (int position) {

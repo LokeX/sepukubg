@@ -21,6 +21,12 @@ public class EngineApi {
   private ScoreBoard scoreBoard = new ScoreBoard();
   private DisplayLayouts displayLayouts = new DisplayLayouts();
 
+  public boolean matchIsPlaying () {
+
+    return
+      matchState != null;
+  }
+
   public Game getGame () {
 
     if (matchState != null && matchState.getGameState() != null) {
