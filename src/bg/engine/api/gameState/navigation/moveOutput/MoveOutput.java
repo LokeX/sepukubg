@@ -1,21 +1,22 @@
-package bg.engine.api.gameState.navigation;
+package bg.engine.api.gameState.navigation.moveOutput;
 
+import bg.engine.api.gameState.navigation.Navigation;
 import bg.engine.match.moves.Layout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class MoveOutput {
+public class MoveOutput {
 
   private Navigation navigation;
   private OutputLayouts outputLayouts;
 
-  MoveOutput (Navigation navigation) {
+  public MoveOutput (Navigation navigation) {
 
     this.navigation = navigation;
   }
 
-  OutputLayouts getOutputLayouts () {
+  public OutputLayouts getOutputLayouts () {
 
     if (isNewMove()) {
       outputLayouts = newOutputLayouts();
@@ -38,7 +39,7 @@ class MoveOutput {
     return outputLayouts == null;
   }
 
-  void reset () {
+  public void reset () {
 
     outputLayouts = null;
   }

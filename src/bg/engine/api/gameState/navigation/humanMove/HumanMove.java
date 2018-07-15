@@ -1,4 +1,4 @@
-package bg.engine.api.gameState.humanMove;
+package bg.engine.api.gameState.navigation.humanMove;
 
 import bg.engine.api.gameState.navigation.Navigation;
 import bg.engine.match.moves.Layout;
@@ -37,7 +37,7 @@ public class HumanMove implements HumanMoveApi {
     moveSelector = new MoveSelector(navigation.selectedTurn());
     if (moveSelector.isIllegal()) {
       moveSelector = null;
-    }  else if (isAutoSelectable()){
+    } else if (isAutoSelectable()){
       moveSelector.initialSelection();
     }
   }

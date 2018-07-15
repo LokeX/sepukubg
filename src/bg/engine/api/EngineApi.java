@@ -3,7 +3,7 @@ package bg.engine.api;
 import bg.engine.api.gameState.GameState;
 import bg.engine.api.matchPlay.MatchCube;
 import bg.engine.api.matchPlay.MatchState;
-import bg.engine.api.gameState.humanMove.HumanMoveApi;
+import bg.engine.api.gameState.navigation.humanMove.HumanMoveApi;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.api.score.ScoreBoard;
 import bg.engine.match.Game;
@@ -37,11 +37,6 @@ public class EngineApi {
           getGameState()
             .getGameData()
         );
-  }
-
-  public DisplayLayoutsApi getDisplayLayouts () {
-
-    return displayLayouts;
   }
 
   public MatchState getMatchState() {

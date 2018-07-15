@@ -1,6 +1,8 @@
 package bg.engine.api.gameState.navigation;
 
-import bg.engine.api.gameState.humanMove.HumanMove;
+import bg.engine.api.gameState.navigation.moveOutput.MoveOutput;
+import bg.engine.api.gameState.navigation.moveOutput.OutputLayouts;
+import bg.engine.api.gameState.navigation.humanMove.HumanMove;
 import bg.engine.match.Game;
 import bg.engine.match.Turn;
 import bg.engine.match.moves.EvaluatedMove;

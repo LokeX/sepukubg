@@ -2,7 +2,7 @@ package bg.engine.api.matchPlay;
 
 import bg.Main;
 import bg.engine.api.gameState.GameState;
-import bg.engine.api.gameState.humanMove.HumanMove;
+import bg.engine.api.gameState.navigation.humanMove.HumanMove;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.match.moves.Layout;
 import bg.inUrFace.canvas.move.MoveOutput;

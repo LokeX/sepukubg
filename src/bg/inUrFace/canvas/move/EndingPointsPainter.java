@@ -1,6 +1,6 @@
 package bg.inUrFace.canvas.move;
 
-import bg.engine.api.gameState.humanMove.HumanMoveApi;
+import bg.engine.api.gameState.navigation.humanMove.HumanMoveApi;
 import bg.inUrFace.canvas.Paintable;
 import bg.util.Batch;
 

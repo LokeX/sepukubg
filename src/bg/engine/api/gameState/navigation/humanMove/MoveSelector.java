@@ -1,4 +1,4 @@
-package bg.engine.api.gameState.humanMove;
+package bg.engine.api.gameState.navigation.humanMove;
 
 import bg.engine.match.Turn;
 import bg.engine.match.moves.Layout;
