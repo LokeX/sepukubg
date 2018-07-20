@@ -12,7 +12,7 @@ public class GameState extends Navigation {
 
     super(matchLayout);
     search = new Search(this);
-    gameData = new GameData();
+    gameData = new GameData(this);
   }
 
   public Search getSearch() {
@@ -22,7 +22,7 @@ public class GameState extends Navigation {
 
   public GameData getGameData () {
 
-    return gameData.getGameData(this);
+    return gameData.getGameData();
   }
 
   public boolean playedMoveSelected() {
@@ -51,9 +51,15 @@ public class GameState extends Navigation {
       isHumanTurn(selectedTurn());
   }
 
-  void moveNew () {
+  private boolean moveIsLegal () {
 
-    if (playerIsHuman()) {
+    return
+      !selectedMove().isIllegal();
+  }
+
+  public void moveNew () {
+
+    if (moveIsLegal() && playerIsHuman()) {
       startHumanMove();
     } else {
       startComputerMove();

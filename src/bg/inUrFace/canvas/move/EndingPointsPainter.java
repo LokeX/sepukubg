@@ -1,6 +1,5 @@
 package bg.inUrFace.canvas.move;
 
-import bg.engine.api.gameState.navigation.humanMove.HumanMoveApi;
 import bg.inUrFace.canvas.Paintable;
 import bg.util.Batch;
 
@@ -16,8 +15,8 @@ public class EndingPointsPainter implements Paintable {
 
     return
       mouse != null
-        && humanMove() != null
-        && humanMove().inputReady();
+        && engineApi.getHumanInput() != null
+        && engineApi.getHumanInput().humanInputActive();
   }
 
   private Batch[] clickPoints () {
@@ -33,21 +32,19 @@ public class EndingPointsPainter implements Paintable {
     Batch[] clickPoints = clickPoints();
 
     return
-      humanMove()
+      engineApi
+        .getHumanInput()
         .getEndingPoints()
         .map(endingPoint -> clickPoints[endingPoint]);
-  }
-
-  private HumanMoveApi humanMove () {
-
-    return engineApi.getHumanMove();
   }
 
   private boolean gotEndingPoints () {
 
     return
       humanMoveReady()
-      && humanMove().isEndingPoint();
+      && engineApi
+        .getHumanInput()
+        .isEndingPoint();
   }
 
   public void paint (Graphics graphics) {

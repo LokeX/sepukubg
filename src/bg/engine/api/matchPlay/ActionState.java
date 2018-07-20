@@ -4,10 +4,9 @@ public class ActionState {
 
   private MatchPlay matchPlay;
 
-  public ActionState getActionState (MatchPlay matchPlay) {
+  ActionState (MatchPlay matchPlay) {
 
     this.matchPlay = matchPlay;
-    return this;
   }
 
   private MatchState matchState () {
@@ -52,8 +51,7 @@ public class ActionState {
   private boolean playHumanMove () {
 
     return
-      playMove()
-        && playerIsHuman();
+      playMove() && playerIsHuman();
   }
 
   private boolean playMove () {
@@ -81,7 +79,7 @@ public class ActionState {
       scenarioEdit()
         ? "Start match"
         : newMatchPlay()
-        ? "New Match"
+        ? "New match"
         : newGamePlay()
         ? "New game"
         : playHumanMove()

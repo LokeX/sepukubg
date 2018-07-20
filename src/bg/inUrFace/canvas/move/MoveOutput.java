@@ -159,7 +159,7 @@ public class MoveOutput extends MoveLayout {
       moveInput.getPlayerID() == 0 ? customLayout : customLayout)
     );
     text.clear();
-    text.writeLine("Custom move input: ");
+    text.writeLine("Custom move inputPoint: ");
     text.writeLine("Player: " + playerTitle);
     text.writeLine("Turn: #" + (turnNr + 1));
     text.writeLine("Dice rolled: ");

@@ -15,7 +15,7 @@ public class ScoreBoard {
     return this;
   }
 
-  private boolean gameOver () {
+  public boolean gameOver () {
 
     return
       gameState != null
@@ -55,6 +55,11 @@ public class ScoreBoard {
   public int getWinnerID () {
 
     return matchBoard.getWinnerID();
+  }
+
+  public boolean matchOver () {
+
+    return matchBoard.matchOver();
   }
 
 }

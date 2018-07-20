@@ -22,12 +22,23 @@ public class InformationBar extends JLabel implements Timeable {
     timedTasks.addTimedTask(this);
   }
 
+  private boolean dataAvailable () {
+
+    return
+      engineApi.getGameDataHTML() != null;
+  }
+
+  private boolean engineRunning () {
+
+    return
+      engineApi != null;
+  }
+
   @Override
   public void timerUpdate() {
 
-    if (engineApi != null && engineApi.gameIsPlaying()) {
-//      setText(engineApi.getTurnInfoFormatString());
-      setText(engineApi.getGameDataHTML().HTMLFormattedDataString());
+    if (engineRunning() && dataAvailable()) {
+      setText(engineApi.getGameDataHTML().getHTMLFormattedDataString());
     }
   }
 

@@ -1,6 +1,7 @@
 package bg.engine.api;
 
 import bg.engine.api.gameState.navigation.humanMove.HumanMove;
+import bg.engine.api.gameState.navigation.humanMove.MoveSelector;
 
 import java.util.stream.Stream;
 
@@ -8,9 +9,10 @@ public class HumanInput {
 
   private EngineApi engineApi;
 
-  HumanInput (EngineApi engineApi) {
+  public HumanInput getHumanInput (EngineApi engineApi) {
 
     this.engineApi = engineApi;
+    return this;
   }
 
   private HumanMove humanMove () {
@@ -21,9 +23,16 @@ public class HumanInput {
         .getHumanMove();
   }
 
+  private MoveSelector moveSelector () {
+
+    return
+      humanMove()
+        .getMoveSelector();
+  }
+
   public void pointClicked (int clickedPoint) {
 
-    if (inputReady()) {
+    if (humanInputActive()) {
       humanMove().pointClicked(clickedPoint);
     }
   }
@@ -31,12 +40,12 @@ public class HumanInput {
   public int getPlayerID () {
 
     return
-      inputReady()
-        ? humanMove().getPlayerID()
+      humanInputActive()
+        ? moveSelector().getPlayerID()
         : -1;
   }
 
-  public boolean inputReady () {
+  public boolean humanInputActive () {
 
     return
       engineApi.matchIsPlaying()
@@ -47,15 +56,16 @@ public class HumanInput {
   public boolean isEndingPoint () {
 
     return
-      inputReady()
-      && humanMove().isEndingPoint();
+      humanInputActive()
+      && moveSelector()
+        .positionIsEndingPoint();
   }
 
   public Stream<Integer> getEndingPoints () {
 
     return
-      inputReady()
-        ? humanMove().getEndingPoints()
+      humanInputActive()
+        ? moveSelector().validEndingPoints()
         : null;
   }
 

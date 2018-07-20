@@ -19,7 +19,7 @@ public class MoveInputListener extends MouseAdapter {
     Batch[] points = new Batch[26];
     Color pointsColor = new Color(56, 75, 174, 150);
 
-    if (engineApi.getHumanMove().getPlayerID() == 1) {
+    if (engineApi.getHumanInput().getPlayerID() == 1) {
       points[0] = new Batch(
         d.leftPlayAreaOffsetX+d.leftPlayAreaWidth,
         d.frameOffsetY+d.boardInnerHeight/2,
@@ -40,7 +40,7 @@ public class MoveInputListener extends MouseAdapter {
       points[a+1] = regularPoints[a];
       points[a+1].setBackgroundColor(pointsColor);
     }
-    if (engineApi.getHumanMove().getPlayerID() == 1) {
+    if (engineApi.getHumanInput().getPlayerID() == 1) {
       points[25] = new Batch(
         d.topRightBearOffOffsetX,
         d.topRightBearOffOffsetY,
@@ -82,7 +82,7 @@ public class MoveInputListener extends MouseAdapter {
 
     System.out.println("Mouse clicked");
     if (acceptInput()) {
-      System.out.println("Accepted input");
+      System.out.println("Accepted inputPoint");
       if (mouseEvent.getButton() == MouseEvent.BUTTON3) {
         getActionButton().setHideActionButton(true);
         moveInput.undoPointSelection();
@@ -90,7 +90,7 @@ public class MoveInputListener extends MouseAdapter {
         moveInput.pointClicked();
       }
       engineApi
-        .getHumanMove()
+        .getHumanInput()
         .pointClicked(
           rightButtonClicked(mouseEvent)
             ? -1
@@ -126,8 +126,8 @@ public class MoveInputListener extends MouseAdapter {
     return
       moveInput != null
         && engineApi != null
-        && engineApi.getHumanMove() != null
-        && engineApi.getHumanMove().inputReady();
+//        && engineApi.getHumanMove() != null
+        && engineApi.getHumanInput().humanInputActive();
   }
 
 }

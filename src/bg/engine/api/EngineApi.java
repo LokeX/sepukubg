@@ -3,7 +3,6 @@ package bg.engine.api;
 import bg.engine.api.gameState.GameState;
 import bg.engine.api.matchPlay.MatchCube;
 import bg.engine.api.matchPlay.MatchState;
-import bg.engine.api.gameState.navigation.humanMove.HumanMoveApi;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.api.score.ScoreBoard;
 import bg.engine.match.Game;
@@ -16,10 +15,11 @@ import static bg.Main.*;
 
 public class EngineApi {
 
+  private HumanInput humanInput = new HumanInput();
   private GameDataHTML gameDataHTML = new GameDataHTML();
   public MatchState matchState = new MatchState();
   private ScoreBoard scoreBoard = new ScoreBoard();
-  private DisplayLayouts displayLayouts = new DisplayLayouts();
+//  private DisplayLayouts displayLayouts = new DisplayLayouts();
 
   public boolean matchIsPlaying () {
 
@@ -35,14 +35,19 @@ public class EngineApi {
     return null;
   }
 
+  public HumanInput getHumanInput () {
+
+    return humanInput.getHumanInput(this);
+  }
+
   public GameDataHTML getGameDataHTML () {
 
     return
-      gameDataHTML
-        .getGameDataHTML(
-          getGameState()
-            .getGameData()
-        );
+      gameIsPlaying()
+        ? gameDataHTML.getGameDataHTML(
+            getGameState().getGameData()
+          )
+        : null;
   }
 
   public MatchState getMatchState() {
@@ -129,13 +134,13 @@ public class EngineApi {
         : null;
   }
 
-  public HumanMoveApi getHumanMove () {
-
-    return
-      matchState != null && matchState.gameIsPlaying()
-        ? matchState.getGameState().getHumanMove()
-        : null;
-  }
+//  public HumanMoveApi getHumanMove () {
+//
+//    return
+//      matchState != null && matchState.gameIsPlaying()
+//        ? matchState.getGameState().getHumanMove()
+//        : null;
+//  }
 
   public Input getInput () {
 

@@ -1,34 +1,39 @@
 package bg.engine.api;
 
+import bg.engine.api.gameState.navigation.moveOutput.OutputLayouts;
 import bg.engine.match.moves.Layout;
-
-import java.util.List;
 
 public class DisplayLayouts {
 
-  private List<Layout> outputLayouts;
-  private int layoutNr;
+  private EngineApi engineApi;
+  private OutputLayouts outputLayouts;
 
-  public boolean outputIsAvailable() {
+  DisplayLayouts (EngineApi engineApi) {
+
+    this.engineApi = engineApi;
+  }
+
+  public Layout getNextLayout () {
+
+    if (engineApi.gameIsPlaying()) {
+      this.outputLayouts =
+        engineApi
+        .getMatchState()
+        .getGameState()
+        .getOutputLayouts();
+    } else {
+      return null;
+    }
+    return
+      outputLayouts.getNextLayout();
+  }
+
+  private boolean outputAvailable () {
 
     return
-      outputLayouts != null
-      && !lastLayoutConsumed();
-  }
-
-  private boolean lastLayoutConsumed () {
-
-    return layoutNr == outputLayouts.size();
-  }
-
-  public int getWhitePip () {
-
-    return outputLayouts.get(layoutNr).getWhitePip();
-  }
-
-  public int getBlackPip () {
-
-    return outputLayouts.get(layoutNr).getBlackPip();
+      engineApi.matchIsPlaying()
+      && engineApi.gameIsPlaying()
+      && outputLayouts.hasOutput();
   }
 
 }

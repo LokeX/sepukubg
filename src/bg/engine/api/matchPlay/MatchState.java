@@ -140,16 +140,16 @@ public class MatchState {
 
     getActionButton().setHideActionButton(true);
     if (engineApi.getSelectedTurn().getNrOfMoves() > 1 || noMoveAutoCompletion()) {
-      System.out.println("Get human input");
+      System.out.println("Get human inputPoint");
       getMouse().setMoveInput(new MoveInput());
       getMouse().setAcceptMoveInput(true);
       gameState.startHumanMove();
       if (getSettings().isAutoCompletePartMoves()) {
 
-        //new input output auto-move
+        //new inputPoint output auto-move
 //        engineApi.humanMove.initialSelection();
 
-        //old input output auto-move
+        //old inputPoint output auto-move
         getMouse().getMoveInput().initialAutoMove(runWhenNotified(() -> {
           if (getMouse().getMoveInput().endOfInputReached()) {
             endTurn();
@@ -195,6 +195,16 @@ public class MatchState {
     move();
   }
 
+  void newTurnNew() {
+
+    gameState.newTurn();
+    Main.sound.playSoundEffect("wuerfelbecher");
+    getGameState().getSearch().searchRolledMoves();
+    getActionButton().setHideActionButton(true);
+    getActionButton().setShowPleaseWaitButton(false);
+    gameState.moveNew();
+  }
+
   private void initMatch () {
 
     Main.getLayoutEditor().endEdit();
@@ -224,6 +234,14 @@ public class MatchState {
       initGame();
     }
     startNewGame ();
+  }
+
+  void newGameNew () {
+
+    matchBoard.mergeScores();
+    win.canvas.setDisplayedLayout(new Layout(matchLayout));
+    gameState = new GameState(matchLayout);
+    newTurn();
   }
 
   public void actionButtonClicked () {

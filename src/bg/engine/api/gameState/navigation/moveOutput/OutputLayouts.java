@@ -10,12 +10,12 @@ public class OutputLayouts {
 
   private List<Layout> outputLayouts;
   private int layoutNr;
-  private long timeOfLastOutput;
+  private long startTime;
 
   OutputLayouts (List<Layout> outputLayouts) {
 
     this.outputLayouts = outputLayouts;
-    timeOfLastOutput = System.currentTimeMillis();
+    startTime = System.currentTimeMillis();
   }
 
   void setOutputLayouts(List<Layout> outputLayouts) {
@@ -23,49 +23,38 @@ public class OutputLayouts {
     this.outputLayouts = outputLayouts;
   }
 
-  private boolean hasOutput () {
+  public boolean hasOutput () {
 
     return
-      outputLayouts != null;
-  }
-
-  public boolean endOfOutput () {
-
-    return
-      !hasOutput() || layoutNr == outputLayouts.size();
+      outputLayouts != null
+      && layoutNr < outputLayouts.size();
   }
 
   public Layout getNextLayout () {
 
     return
-      mustEmit()
+      hasOutput() && timeDelayElapsed()
         ? outputLayouts.get(layoutNr++)
         : null;
   }
 
-  private boolean mustEmit () {
+  private long delayTime () {
 
     return
-      timeDelayElapsed()
-        && layoutNr < outputLayouts.size();
-  }
-
-  private long timeDelay () {
-
-    return settings.getShowMoveDelay();
+      settings
+        .getShowMoveDelay()*layoutNr;
   }
 
   private long timeElapsed () {
 
     return
-      System.currentTimeMillis() - timeOfLastOutput;
+      System.currentTimeMillis() - startTime;
   }
 
   private boolean timeDelayElapsed () {
 
     return
-      outputLayouts.size() == 1
-        || timeElapsed() >= timeDelay();
+      timeElapsed() > delayTime();
   }
 
 }

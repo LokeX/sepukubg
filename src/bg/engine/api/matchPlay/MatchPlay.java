@@ -1,7 +1,6 @@
 package bg.engine.api.matchPlay;
 
 import bg.Main;
-import bg.engine.api.DisplayLayouts;
 import bg.engine.api.gameState.navigation.humanMove.HumanMove;
 import bg.engine.api.score.ScoreBoard;
 import bg.engine.match.moves.Layout;
@@ -14,13 +13,11 @@ public class MatchPlay {
   private MatchState matchState;
   private ScoreBoard scoreBoard;
   private ActionState actionState;
-  private DisplayLayouts displayLayouts;
 
   MatchPlay () {
 
     scoreBoard = new ScoreBoard();
-    actionState = new ActionState();
-    displayLayouts = new DisplayLayouts();
+    actionState = new ActionState(this);
   }
 
   public MatchState getMatchState () {
@@ -35,7 +32,7 @@ public class MatchPlay {
 
   public ActionState getActionState() {
 
-    return actionState.getActionState(this);
+    return actionState;
   }
 
   public HumanMove humanMove () {
@@ -49,7 +46,7 @@ public class MatchPlay {
       matchState != null;
   }
 
-  boolean gameIsPlaying () {
+  public boolean gameIsPlaying () {
 
     return
       matchIsPlaying()
@@ -108,7 +105,7 @@ public class MatchPlay {
     } else if (!matchIsPlaying()) {
       newMatch();
     } else if (gameOver()) {
-      matchState.newGame();
+      matchState.newGameNew();
     } else {
       matchState.newTurn();
     }

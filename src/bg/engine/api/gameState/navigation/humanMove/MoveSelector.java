@@ -102,7 +102,7 @@ public class MoveSelector extends Moves {
         .anyMatch(point -> point == endingPoint);
   }
 
-  Stream<Integer> validEndingPoints () {
+  public Stream<Integer> validEndingPoints () {
 
     return
       new MoveProjection(this)
@@ -124,7 +124,7 @@ public class MoveSelector extends Moves {
         .orElse(-1);
   }
 
-  boolean positionIsEndingPoint () {
+  public boolean positionIsEndingPoint () {
 
     return isEndingPoint(position());
   }
@@ -149,7 +149,7 @@ public class MoveSelector extends Moves {
       && pointsIn(position).count() == 1;
   }
 
-  MoveLayout getMatchingMoveLayout() {
+  public MoveLayout getMatchingMoveLayout() {
 
     return
       position() == 0
@@ -169,7 +169,7 @@ public class MoveSelector extends Moves {
         .stream();
   }
 
-  List<Layout> getMoveLayouts() {
+  public List<Layout> getMoveLayouts() {
 
     List<Layout> layouts = moveLayouts()
       .collect(Collectors.toList());
@@ -273,7 +273,7 @@ public class MoveSelector extends Moves {
     }
   }
 
-  void deleteLatestInput () {
+  private void deleteLatestInput () {
 
     int inputPointNr = position();
 
@@ -292,16 +292,26 @@ public class MoveSelector extends Moves {
     return position() != lastInputPosition;
   }
 
-  public void input (int inputPoint) {
+  public void inputPoint (int point) {
 
     if (!endOfInput() && moveIsLegal()) {
-      this.inputPoint = inputPoint;
+      this.inputPoint = point;
       lastInputPosition = position();
       printReport();
       setInputPoint();
       setAnyUniqueMove();
       printReport();
     }
+  }
+
+  public void input (int input) {
+
+    if (input == -1) {
+      deleteLatestInput();
+    } else {
+      inputPoint(input);
+    }
+
   }
 
   private void printMovePoints () {

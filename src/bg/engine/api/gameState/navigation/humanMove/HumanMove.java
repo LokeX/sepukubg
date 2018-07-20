@@ -1,14 +1,10 @@
 package bg.engine.api.gameState.navigation.humanMove;
 
 import bg.engine.api.gameState.navigation.Navigation;
-import bg.engine.match.moves.Layout;
-
-import java.util.List;
-import java.util.stream.Stream;
 
 import static bg.Main.getSettings;
 
-public class HumanMove implements HumanMoveApi {
+public class HumanMove {
 
   private MoveSelector moveSelector;
   private Navigation navigation;
@@ -16,6 +12,11 @@ public class HumanMove implements HumanMoveApi {
   public HumanMove (Navigation navigation) {
 
     this.navigation = navigation;
+  }
+
+  public MoveSelector getMoveSelector () {
+
+    return moveSelector;
   }
 
   private boolean autoCompleteMove () {
@@ -47,6 +48,12 @@ public class HumanMove implements HumanMoveApi {
     moveSelector = null;
   }
 
+  public boolean inputReady() {
+
+    return
+      moveSelector != null;
+  }
+
   private void selectUniqueMove () {
 
     navigation.setMoveNr(
@@ -60,71 +67,13 @@ public class HumanMove implements HumanMoveApi {
   public void pointClicked (int clickedPoint) {
 
     if (inputReady()) {
-      if (clickedPoint == -1) {
-        moveSelector.deleteLatestInput();
-      } else {
-        moveSelector.input(clickedPoint);
-      }
+      moveSelector.input(clickedPoint);
       if (moveSelector.inputIsLegal()) {
         if (moveSelector.isUniqueMove()) {
           selectUniqueMove();
         }
       }
     }
-  }
-
-  public boolean endOfInput () {
-
-    return
-      moveSelector == null
-        || moveSelector.endOfInput();
-  }
-
-  public boolean inputReady() {
-
-    return
-      moveSelector != null;
-  }
-
-  public List<Layout> getMoveLayouts () {
-
-    return moveSelector.getMoveLayouts();
-  }
-
-  public String getMovePointsString () {
-
-    return
-      moveSelector
-        .getMatchingMoveLayout()
-        .getMovePointsString();
-  }
-
-  public int getPlayerID () {
-
-    return
-      moveSelector
-        .getPlayerID();
-  }
-
-  public boolean isEndingPoint () {
-
-    return
-      moveSelector
-        .positionIsEndingPoint();
-  }
-
-  public Stream<Integer> getEndingPoints () {
-
-    return
-      moveSelector
-        .validEndingPoints();
-  }
-
-  public boolean hasMoveLayouts () {
-
-    return
-      moveSelector
-        .hasMoveLayouts();
   }
 
 }

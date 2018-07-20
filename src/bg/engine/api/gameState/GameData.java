@@ -1,15 +1,44 @@
 package bg.engine.api.gameState;
 
+import bg.engine.api.gameState.navigation.humanMove.HumanMove;
+
 import static java.util.stream.IntStream.range;
 
 public class GameData {
 
   private GameState gameState;
+  private String[] dataItems;
+  private boolean dataUpdate = false;
+  private int selectedTurnNr;
+  private int selectedMoveNr;
 
-  GameData getGameData (GameState gameState) {
+  GameData (GameState gameState) {
 
     this.gameState = gameState;
+  }
+
+  GameData getGameData () {
+
+    dataUpdate = updateRequired();
+    if (dataUpdate) {
+      dataItems = dataItems();
+      selectedMoveNr = gameState.getMoveNr();
+      selectedTurnNr = gameState.getTurnNr();
+    }
     return this;
+  }
+
+  public boolean dataIsUpdated () {
+
+    return dataUpdate;
+  }
+
+  private boolean updateRequired () {
+
+    return
+      dataItems == null
+      || selectedTurnNr != gameState.getTurnNr()
+      || selectedMoveNr != gameState.getMoveNr();
   }
 
   private String moveNr () {
@@ -68,12 +97,47 @@ public class GameData {
       .orElse("N/A");
   }
 
+  private HumanMove humanMove () {
+
+    return
+      gameState
+        .getHumanMove();
+  }
+
+  private String humanMovePointsString () {
+
+    return
+      humanMove()
+        .getMoveSelector()
+        .getMatchingMoveLayout()
+        .getMovePointsString();
+  }
+
+  private String selectedMovePointsString () {
+
+    return
+      gameState
+        .selectedMove()
+        .getMovePointsString();
+  }
+
   private String movePoints () {
 
     return
-      gameState.getHumanMove().inputReady()
-        ? gameState.getHumanMove().getMovePointsString()
-        : gameState.selectedMove().getMovePointsString();
+      humanMove().inputReady()
+        ? humanMovePointsString()
+        : selectedMovePointsString();
+  }
+
+  private String[] dataItems () {
+
+    return new String[] {
+      playerDescription(),
+      turnNr()+"/"+nrOfTurns(),
+      dice(gameState.selectedTurn().getDice()),
+      moveNr()+"/"+nrOfMoves(),
+      movePoints()
+    };
   }
 
   public String[] labels () {
@@ -87,15 +151,9 @@ public class GameData {
     };
   }
 
-  public String[] dataItems () {
+  public String[] getDataItems () {
 
-    return new String[] {
-      playerDescription(),
-      turnNr()+"/"+nrOfTurns(),
-      dice(gameState.selectedTurn().getDice()),
-      moveNr()+"/"+nrOfMoves(),
-      movePoints()
-    };
+    return dataItems;
   }
 
 }

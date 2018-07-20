@@ -13,10 +13,15 @@ public class GameDataHTML {
   private String[] labels;
   private String[] dataItems;
 
+  private String HTMLFormattedDataString;
+
   GameDataHTML getGameDataHTML (GameData gameData) {
 
-    labels = gameData.labels();
-    dataItems = gameData.dataItems();
+    if (gameData.dataIsUpdated()) {
+      labels = gameData.labels();
+      dataItems = gameData.getDataItems();
+      HTMLFormattedDataString = HTML_DataString();
+    }
     return this;
   }
 
@@ -85,9 +90,9 @@ public class GameDataHTML {
     return HTML_DataString();
   }
 
-  public String HTMLFormattedDataString () {
+  public String getHTMLFormattedDataString () {
 
-    return HTML_DataString();
+    return HTMLFormattedDataString;
   }
 
 }

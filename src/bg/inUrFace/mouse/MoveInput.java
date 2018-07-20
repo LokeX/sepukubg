@@ -381,7 +381,7 @@ public class MoveInput {
 
     int clickedPoint = getClickedPoint();
 
-//    movePointsInput.input(clickedPoint);
+//    movePointsInput.inputPoint(clickedPoint);
     if (clickedPoint >= 0 && !endOfInputReached()) {
       if (!isLegalEndingPoint(clickedPoint)) {
         if (isLegalStartingPoint(clickedPoint))  {

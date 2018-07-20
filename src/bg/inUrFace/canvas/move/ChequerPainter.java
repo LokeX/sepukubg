@@ -1,6 +1,5 @@
 package bg.inUrFace.canvas.move;
 
-import bg.engine.api.gameState.navigation.humanMove.HumanMoveApi;
 import bg.inUrFace.canvas.Paintable;
 
 import java.awt.*;
@@ -13,13 +12,9 @@ public class ChequerPainter implements Paintable {
   private int playerID () {
 
     return
-      humanMove()
+      engineApi
+        .getHumanInput()
         .getPlayerID();
-  }
-
-  private HumanMoveApi humanMove () {
-
-    return engineApi.getHumanMove();
   }
 
   private int chequerSize () {
@@ -43,12 +38,12 @@ public class ChequerPainter implements Paintable {
         : Color.red;
   }
 
-  private void drawChequer (Graphics graphics, Point point) {
+  private void drawChequer (Graphics graphics, Point mousePoint) {
 
     graphics.setColor(playerColor());
     graphics.fillOval(
-      position(point.getX()),
-      position(point.getY()),
+      position(mousePoint.getX()),
+      position(mousePoint.getY()),
       chequerSize(),
       chequerSize()
     );
@@ -64,9 +59,9 @@ public class ChequerPainter implements Paintable {
   private boolean mustPaint () {
 
     return
-      humanMove() != null
-      && humanMove().inputReady()
-      && humanMove().isEndingPoint()
+      engineApi != null
+      && engineApi.getHumanInput().humanInputActive()
+      && engineApi.getHumanInput().isEndingPoint()
       && mousePosition() != null;
   }
 
