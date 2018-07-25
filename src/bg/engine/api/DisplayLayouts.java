@@ -1,39 +1,39 @@
 package bg.engine.api;
 
-import bg.engine.api.gameState.navigation.moveOutput.OutputLayouts;
+import bg.engine.api.gameState.navigation.moveOutput.MoveOutputLayouts;
 import bg.engine.match.moves.Layout;
 
 public class DisplayLayouts {
 
   private EngineApi engineApi;
-  private OutputLayouts outputLayouts;
+  private Layout outputLayout;
+  private boolean endOfOutput;
 
   DisplayLayouts (EngineApi engineApi) {
 
     this.engineApi = engineApi;
   }
 
-  public Layout getNextLayout () {
+  private MoveOutputLayouts moveOutputLayouts () {
 
-    if (engineApi.gameIsPlaying()) {
-      this.outputLayouts =
-        engineApi
-        .getMatchState()
-        .getGameState()
-        .getOutputLayouts();
-    } else {
-      return null;
-    }
     return
-      outputLayouts.getNextLayout();
+      engineApi.gameIsPlaying()
+        ? engineApi
+            .getMatchState()
+            .getGameState()
+            .getMoveOutputLayouts()
+        : null;
   }
 
-  private boolean outputAvailable () {
+  private void moveOutputLayout () {
 
-    return
-      engineApi.matchIsPlaying()
-      && engineApi.gameIsPlaying()
-      && outputLayouts.hasOutput();
+    if (moveOutputLayouts() != null) {
+      outputLayout = moveOutputLayouts().getNextLayout();
+      endOfOutput = false;
+    } else {
+      endOfOutput = true;
+      outputLayout = null;
+    }
   }
 
 }

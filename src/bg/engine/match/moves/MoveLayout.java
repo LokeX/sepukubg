@@ -12,7 +12,6 @@ import static java.util.Arrays.*;
 public class MoveLayout extends Layout {
 
   private MovePointLayouts movePointLayoutsNew;
-  List<MoveLayout> movePointsLayouts;
   protected Dice dice;
   Moves parentMoves;
   int[] hitPoints;
@@ -180,18 +179,18 @@ public class MoveLayout extends Layout {
     return false;
   }
 
-  public boolean movePointsMatch (int[] movePointsToMatch) {
+  public boolean movePointsMatch (int[] pointsToMatch) {
 
-    int nrOfMovePointsToMatch =
-      (int) Arrays.stream(movePointsToMatch)
+    int nrOfMatchesRequired =
+      (int) Arrays.stream(pointsToMatch)
         .filter(point -> point != -1)
         .count();
     int nrOfMatches =
-      (int) IntStream.range(0, movePointsToMatch.length)
-        .filter(position -> movePointsToMatch[position] == movePoints[position])
+      (int) IntStream.range(0, pointsToMatch.length)
+        .filter(position -> pointsToMatch[position] == movePoints[position])
         .count();
 
-    return nrOfMatches == nrOfMovePointsToMatch;
+    return nrOfMatches == nrOfMatchesRequired;
   }
 
   public void setMovePoints(int[] newPoints) {
@@ -242,98 +241,7 @@ public class MoveLayout extends Layout {
     return movePointLayouts;
   }
 
-  private void paintPosition (int position) {
-
-    if (hitPoints[position] >= 0) {
-      if (position%2 == 0) {
-        point[hitPoints[position]]--;
-      } else {
-        point[hitPoints[position]]++;
-      }
-    }
-    if (position%2 == 0) {
-      point[movePoints2[position]]--;
-    } else {
-      point[movePoints2[position]]++;
-    }
-  }
-
-  private List<MoveLayout> generateMoveLayouts (
-
-    List<MoveLayout> moveLayouts,
-    int[] originalMovePoints,
-    int position ) {
-
-    movePoints[position] =
-      originalMovePoints[position];
-    paintPosition(position);
-    moveLayouts.add(this);
-    if (position < movePoints.length-1) {
-      if (movePoints2[position+1] != -1) {
-        new MoveLayout(this)
-          .generateMoveLayouts(
-            moveLayouts,
-            originalMovePoints,
-            position+1
-          );
-      }
-    }
-    return moveLayouts;
-  }
-
-  private void resetMovePoints () {
-
-    for (int a = 0; a < movePoints.length; a++) {
-      movePoints[a] = -1;
-    }
-  }
-
-  private MoveLayout clonedMoveLayout () {
-
-    MoveLayout moveLayout = new MoveLayout(this);
-
-    moveLayout.point =
-      parentMoves
-        .getParentMoveLayout()
-        .point
-        .clone();
-    moveLayout.resetMovePoints();
-    return moveLayout;
-  }
-
-  private List<MoveLayout> moveLayoutsList () {
-
-    return
-      clonedMoveLayout()
-        .generateMoveLayouts(
-          new ArrayList<>(),
-          movePoints,
-          0
-        );
-  }
-
-  private List<MoveLayout> parentMoveLayoutList () {
-
-    return
-      List.of(
-        parentMoves
-          .getParentMoveLayout()
-      );
-  }
-
   public List<MoveLayout> getMoveLayouts () {
-
-    if (isIllegal()) {
-      return parentMoveLayoutList();
-    } else {
-      if (movePointsLayouts == null) {
-        movePointsLayouts = moveLayoutsList();
-      }
-      return movePointsLayouts;
-    }
-  }
-
-  public List<MoveLayout> getMoveLayoutsNew () {
 
     if (movePointLayoutsNew == null) {
       movePointLayoutsNew = new MovePointLayouts(this);

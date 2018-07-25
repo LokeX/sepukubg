@@ -165,7 +165,7 @@ public class MoveSelector extends Moves {
       matchingMoves()
         .findAny()
         .get()
-        .getMoveLayoutsNew()
+        .getMoveLayouts()
         .stream();
   }
 

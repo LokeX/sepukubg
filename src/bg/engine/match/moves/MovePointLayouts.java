@@ -3,11 +3,11 @@ package bg.engine.match.moves;
 import java.util.ArrayList;
 import java.util.List;
 
-class MovePointLayouts extends MoveLayout {
+public class MovePointLayouts extends MoveLayout {
 
   private List<MoveLayout> movePointsLayouts;
 
-  MovePointLayouts (MoveLayout moveLayout) {
+  public MovePointLayouts (MoveLayout moveLayout) {
 
     super(moveLayout);
   }
@@ -92,7 +92,7 @@ class MovePointLayouts extends MoveLayout {
       );
   }
 
-  List<MoveLayout> getMoveLayoutsList() {
+  public List<MoveLayout> getMoveLayoutsList() {
 
     if (isIllegal()) {
       return parentMoveLayoutList();

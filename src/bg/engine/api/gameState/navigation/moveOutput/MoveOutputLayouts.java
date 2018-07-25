@@ -6,35 +6,39 @@ import java.util.List;
 
 import static bg.Main.settings;
 
-public class OutputLayouts {
+public class MoveOutputLayouts {
 
-  private List<Layout> outputLayouts;
+  private List<Layout> moveLayouts;
   private int layoutNr;
-  private long startTime;
+  private long startTime = System.currentTimeMillis();
 
-  OutputLayouts (List<Layout> outputLayouts) {
+  MoveOutputLayouts(List<Layout> moveLayouts) {
 
-    this.outputLayouts = outputLayouts;
-    startTime = System.currentTimeMillis();
+    this.moveLayouts = moveLayouts;
   }
 
-  void setOutputLayouts(List<Layout> outputLayouts) {
+  void setMoveLayouts (List<Layout> moveLayouts) {
 
-    this.outputLayouts = outputLayouts;
+    startTime = System.currentTimeMillis();
+    this.moveLayouts = moveLayouts;
+    layoutNr = 0;
   }
 
   public boolean hasOutput () {
 
     return
-      outputLayouts != null
-      && layoutNr < outputLayouts.size();
+      moveLayouts != null
+      && layoutNr < moveLayouts.size();
   }
 
   public Layout getNextLayout () {
 
+    if (timeDelayElapsed()) {
+      layoutNr++;
+    }
     return
-      hasOutput() && timeDelayElapsed()
-        ? outputLayouts.get(layoutNr++)
+      hasOutput()
+        ? moveLayouts.get(layoutNr)
         : null;
   }
 

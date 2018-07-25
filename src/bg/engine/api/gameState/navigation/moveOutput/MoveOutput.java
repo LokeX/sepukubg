@@ -10,39 +10,39 @@ import java.util.List;
 public class MoveOutput {
 
   private Navigation navigation;
-  private OutputLayouts outputLayouts;
+  private MoveOutputLayouts moveOutputLayouts;
 
   public MoveOutput (Navigation navigation) {
 
     this.navigation = navigation;
   }
 
-  public OutputLayouts getOutputLayouts () {
+  public MoveOutputLayouts getMoveOutputLayouts() {
 
     if (isNewMove()) {
-      outputLayouts = newOutputLayouts();
+      moveOutputLayouts = newMoveLayouts();
     } else if (isHumanMove() && hasHumanOutput()) {
-      outputLayouts.setOutputLayouts(human());
+      moveOutputLayouts.setMoveLayouts(human());
     }
-    return outputLayouts;
+    return moveOutputLayouts;
   }
 
-  private OutputLayouts newOutputLayouts () {
+  private MoveOutputLayouts newMoveLayouts () {
 
     return
       isHumanMove()
-        ? new OutputLayouts(human())
-        : new OutputLayouts(computer());
+        ? new MoveOutputLayouts(human())
+        : new MoveOutputLayouts(computer());
   }
 
   private boolean isNewMove () {
 
-    return outputLayouts == null;
+    return moveOutputLayouts == null;
   }
 
   public void newMove () {
 
-    outputLayouts = null;
+    moveOutputLayouts = null;
   }
 
   private boolean isHumanMove () {
@@ -75,11 +75,12 @@ public class MoveOutput {
 
   private List<Layout> computer () {
 
-    return new ArrayList<>(
-      navigation
-        .selectedMove()
-        .getMoveLayoutsNew()
-    );
+    return
+      new ArrayList<>(
+        navigation
+          .selectedMove()
+          .getMoveLayouts()
+      );
   }
 
 }
