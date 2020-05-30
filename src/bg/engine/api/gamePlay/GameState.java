@@ -1,18 +1,18 @@
-package bg.engine.api.gameState;
+package bg.engine.api.gamePlay;
 
-import bg.engine.api.gameState.navigation.Navigation;
+import bg.engine.api.gamePlay.navigation.Navigation;
 import bg.engine.match.moves.Layout;
 
 public class GameState extends Navigation {
 
   private Search search;
-  private GameData gameData;
+  private GameInfo gameInfo;
 
   public GameState (Layout matchLayout) {
 
     super(matchLayout);
     search = new Search(this);
-    gameData = new GameData(this);
+    gameInfo = new GameInfo(this);
   }
 
   public Search getSearch() {
@@ -20,9 +20,9 @@ public class GameState extends Navigation {
     return search;
   }
 
-  public GameData getGameData () {
+  public GameInfo getGameInfo() {
 
-    return gameData.getGameData();
+    return gameInfo.getGameData();
   }
 
   public boolean playedMoveSelected() {

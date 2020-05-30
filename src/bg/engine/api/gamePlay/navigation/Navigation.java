@@ -1,8 +1,8 @@
-package bg.engine.api.gameState.navigation;
+package bg.engine.api.gamePlay.navigation;
 
-import bg.engine.api.gameState.navigation.moveOutput.MoveOutput;
-import bg.engine.api.gameState.navigation.moveOutput.MoveOutputLayouts;
-import bg.engine.api.gameState.navigation.humanMove.HumanMove;
+import bg.engine.api.gamePlay.navigation.moveOutput.MoveOutput;
+import bg.engine.api.gamePlay.navigation.moveOutput.MoveOutputLayouts;
+import bg.engine.api.gamePlay.navigation.humanMove.HumanMove;
 import bg.engine.match.Game;
 import bg.engine.match.Turn;
 import bg.engine.match.moves.EvaluatedMove;
@@ -17,6 +17,7 @@ public class Navigation extends Game {
   private MoveOutput moveOutput;
   protected int selectedTurnNr = 0;
   protected int selectedMoveNr = 0;
+  protected int selectedPartMoveNr = -1;
 
   public Navigation (Layout matchLayout) {
 
@@ -32,7 +33,9 @@ public class Navigation extends Game {
 
   public void startComputerMove () {
 
+    endHumanMove();
     moveOutput.newMove();
+    System.out.println("Computer move started");
   }
 
   public int getTurnNr () {
@@ -57,11 +60,13 @@ public class Navigation extends Game {
 
   public void startHumanMove () {
 
+    System.out.println("Human move started");
     humanMove.startMoveSelection();
   }
 
   public void endHumanMove () {
 
+    System.out.println("Human move ended");
     humanMove.endMoveSelection();
   }
 
@@ -92,6 +97,7 @@ public class Navigation extends Game {
   public Turn selectNextTurn () {
 
     getActionButton().setHideActionButton(false);
+    selectedPartMoveNr = (selectedMove().getNrOfPartMoves()*2)-1;
     if (++selectedTurnNr == nrOfTurns()) {
       return getTurnByNr(--selectedTurnNr);
     } else {
@@ -103,6 +109,7 @@ public class Navigation extends Game {
   public Turn selectPreviousTurn () {
 
     getActionButton().setHideActionButton(false);
+    selectedPartMoveNr = (selectedMove().getNrOfPartMoves()*2)-1;
     if (--selectedTurnNr == -1) {
       return getTurnByNr(++selectedTurnNr);
     } else {
@@ -116,6 +123,7 @@ public class Navigation extends Game {
     int turnCount = selectedTurnNr;
 
     getActionButton().setHideActionButton(false);
+    selectedPartMoveNr = (selectedMove().getNrOfPartMoves()*2)-1;
     while (++turnCount < nrOfTurns()) {
       if (isHumanTurn(getTurnByNr(turnCount))) {
         selectedTurnNr = turnCount;
@@ -130,6 +138,7 @@ public class Navigation extends Game {
     int turnCount = selectedTurnNr;
 
     getActionButton().setHideActionButton(false);
+    selectedPartMoveNr = (selectedMove().getNrOfPartMoves()*2)-1;
     while (--turnCount >= 0) {
       if (isHumanTurn(getTurnByNr(turnCount))) {
         selectedTurnNr = turnCount;
@@ -142,6 +151,7 @@ public class Navigation extends Game {
   public Turn selectLatestHumanTurn() {
 
     getActionButton().setHideActionButton(false);
+    selectedPartMoveNr = (selectedMove().getNrOfPartMoves()*2)-1;
     if (nrOfTurns() > 1) {
       if (isHumanTurn(lastTurn())) {
         selectedTurnNr = lastTurnNr();
@@ -157,23 +167,51 @@ public class Navigation extends Game {
   public EvaluatedMove selectNextMove () {
 
     getActionButton().setHideActionButton(false);
-    if (++selectedMoveNr < selectedTurn().getNrOfMoves()) {
-      return selectedMove();
-    } else {
+    selectedPartMoveNr = (selectedMove().getNrOfPartMoves()*2)-1;
+    if (++selectedMoveNr >= selectedTurn().getNrOfMoves()) {
       selectedMoveNr = 0;
-      return selectedMove();
     }
+    return selectedMove();
   }
 
   public EvaluatedMove selectPreviousMove () {
 
     getActionButton().setHideActionButton(false);
-    if (--selectedMoveNr >= 0) {
-      return selectedMove();
-    } else {
-      selectedMoveNr = selectedTurn().getNrOfMoves()-1;
-      return selectedMove();
+    selectedPartMoveNr = (selectedMove().getNrOfPartMoves()*2)-1;
+    if (--selectedMoveNr < 0) {
+      selectedMoveNr = selectedTurn().getNrOfMoves() - 1;
     }
+    return selectedMove();
+  }
+
+  public Layout selectNextPartMove () {
+
+    if (selectedPartMoveNr < 0) {
+      selectedPartMoveNr = (selectedMove().getNrOfPartMoves()*2)-1;
+    }
+    System.out.println("selectNextPartMove");
+    System.out.println("selectedPartMoveNr = "+selectedPartMoveNr);
+    getActionButton().setHideActionButton(false);
+    if (++selectedPartMoveNr >= selectedMove().getNrOfPartMoves()*2) {
+      selectedPartMoveNr = (selectedMove().getNrOfPartMoves()*2)-1;
+    }
+    System.out.println("selectedPartMoveNr = "+selectedPartMoveNr);
+    return selectedMove().getMovePointLayouts().get(selectedPartMoveNr);
+  }
+
+  public Layout selectPreviousPartMove () {
+
+    if (selectedPartMoveNr < 0) {
+      selectedPartMoveNr = (selectedMove().getNrOfPartMoves()*2)-1;
+    }
+    System.out.println("selectPreviousPartMove");
+    System.out.println("selectedPartMoveNr = "+selectedPartMoveNr);
+    getActionButton().setHideActionButton(false);
+    if (--selectedPartMoveNr < 0) {
+      selectedPartMoveNr = 0;
+    }
+    System.out.println("selectedPartMoveNr = "+selectedPartMoveNr);
+    return selectedMove().getMovePointLayouts().get(selectedPartMoveNr);
   }
 
 }

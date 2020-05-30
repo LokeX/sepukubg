@@ -1,7 +1,7 @@
 package bg.engine.api.matchPlay;
 
 import bg.Main;
-import bg.engine.api.gameState.navigation.humanMove.HumanMove;
+import bg.engine.api.gamePlay.navigation.humanMove.HumanMove;
 import bg.engine.api.score.ScoreBoard;
 import bg.engine.match.moves.Layout;
 
@@ -17,7 +17,7 @@ public class MatchPlay {
   MatchPlay () {
 
     scoreBoard = new ScoreBoard();
-    actionState = new ActionState(this);
+    actionState = new ActionState(matchState);
   }
 
   public MatchState getMatchState () {
@@ -30,10 +30,10 @@ public class MatchPlay {
     return scoreBoard.getScoreBoard(matchState);
   }
 
-  public ActionState getActionState() {
-
-    return actionState;
-  }
+//  public ActionState getActionState() {
+//
+//    return actionState;
+//  }
 
   public HumanMove humanMove () {
 

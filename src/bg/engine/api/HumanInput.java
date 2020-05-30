@@ -1,11 +1,11 @@
 package bg.engine.api;
 
-import bg.engine.api.gameState.navigation.humanMove.HumanMove;
-import bg.engine.api.gameState.navigation.humanMove.MoveSelector;
+import bg.engine.api.gamePlay.navigation.humanMove.HumanMove;
+import bg.engine.api.gamePlay.navigation.humanMove.MoveSelector;
 
 import java.util.stream.Stream;
 
-public class HumanInput {
+public class HumanInput implements HumanInputAPI {
 
   private EngineApi engineApi;
 
@@ -30,14 +30,16 @@ public class HumanInput {
         .getMoveSelector();
   }
 
-  public void pointClicked (int clickedPoint) {
+  @Override
+  public void pointClicked(int clickedPoint) {
 
     if (humanInputActive()) {
       humanMove().pointClicked(clickedPoint);
     }
   }
 
-  public int getPlayerID () {
+  @Override
+  public int getPlayerID() {
 
     return
       humanInputActive()
@@ -45,23 +47,25 @@ public class HumanInput {
         : -1;
   }
 
-  public boolean humanInputActive () {
+  @Override
+  public boolean humanInputActive() {
 
     return
-      engineApi.matchIsPlaying()
-      && engineApi.getMatchState().gameIsPlaying()
+      engineApi.gameIsPlaying()
       && humanMove().inputReady();
   }
 
-  public boolean isEndingPoint () {
+  @Override
+  public boolean endingPointIsNext() {
 
     return
       humanInputActive()
-      && moveSelector()
-        .positionIsEndingPoint();
+      && !moveSelector().endOfInput()
+      && moveSelector().positionIsEndingPoint();
   }
 
-  public Stream<Integer> getEndingPoints () {
+  @Override
+  public Stream<Integer> getEndingPoints() {
 
     return
       humanInputActive()

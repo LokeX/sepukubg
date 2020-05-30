@@ -61,12 +61,17 @@ public class ChequerPainter implements Paintable {
     return
       engineApi != null
       && engineApi.getHumanInput().humanInputActive()
-      && engineApi.getHumanInput().isEndingPoint()
+      && engineApi.getMatchState().playerIsHuman()
+      && engineApi.getHumanInput().endingPointIsNext()
       && mousePosition() != null;
   }
 
   public void paint (Graphics graphics) {
 
+//    System.out.println("mustPaint = "+mustPaint());
+//    System.out.println("humanInputActive = "+engineApi.getHumanInput().humanInputActive());
+//    System.out.println("playerIsHuman = "+engineApi.getMatchState().playerIsHuman());
+//    System.out.println("endingPointIsNext = "+engineApi.getHumanInput().endingPointIsNext());
     if (mustPaint()) {
       drawChequer(graphics, mousePosition());
     }

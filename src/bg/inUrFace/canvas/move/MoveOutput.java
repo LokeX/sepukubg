@@ -8,6 +8,7 @@ import bg.engine.match.moves.EvaluatedMove;
 import bg.engine.match.moves.MoveLayout;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static bg.Main.*;
 import static bg.util.ThreadUtil.threadSleep;
@@ -69,7 +70,7 @@ public class MoveOutput extends MoveLayout {
 
     new Thread(() -> {
 
-      List<Layout> movePointLayouts = getMovePointLayouts();
+      List<Layout> movePointLayouts = getMovePointLayouts().stream().map(Layout::new).collect(Collectors.toList());
       int errorCorrectedEndPoint = endPoint < movePointLayouts.size() ? endPoint : movePointLayouts.size()-1;
 
       for (int a = startPoint; a <= errorCorrectedEndPoint; a++) {

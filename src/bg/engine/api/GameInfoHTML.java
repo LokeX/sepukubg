@@ -1,10 +1,10 @@
 package bg.engine.api;
 
-import bg.engine.api.gameState.GameData;
+import bg.engine.api.gamePlay.GameInfo;
 
 import java.util.stream.IntStream;
 
-public class GameDataHTML {
+public class GameInfoHTML {
 
   private String labelColor = "yellow";
   private String infoColor = "white";
@@ -15,11 +15,11 @@ public class GameDataHTML {
 
   private String HTMLFormattedDataString;
 
-  GameDataHTML getGameDataHTML (GameData gameData) {
+  GameInfoHTML getGameDataHTML (GameInfo gameInfo) {
 
-    if (gameData.dataIsUpdated()) {
-      labels = gameData.labels();
-      dataItems = gameData.getDataItems();
+    if (gameInfo.dataIsUpdated()) {
+      labels = gameInfo.labels();
+      dataItems = gameInfo.getDataItems();
       HTMLFormattedDataString = HTML_DataString();
     }
     return this;

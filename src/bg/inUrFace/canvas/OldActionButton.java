@@ -8,14 +8,14 @@ import java.awt.event.MouseEvent;
 
 import static bg.Main.*;
 
-public class ActionButton extends TextBatch implements Paintable {
+public class OldActionButton extends TextBatch implements Paintable {
 
   private boolean init = true;
   private boolean hideActionButton = false;
   private boolean showPleaseWaitButton = false;
   private Color backgroundColor = new Color(255, 0, 255, 75);
 
-  public ActionButton() {
+  public OldActionButton() {
 
     super(470, 250, 125, 65);
   }
@@ -86,7 +86,6 @@ public class ActionButton extends TextBatch implements Paintable {
         setBackgroundColor(new Color(108,13,13));
       } else if (okToSetText()) {
         setBackgroundColor(backgroundColor);
-//        setButtonText(engineApi.getActionState().nextPlay());
         setButtonText(
           engineApi.matchOver() && selectedTurnIsLatestTurn() ? "New Match" :
             engineApi.gameOver() && selectedTurnIsLatestTurn() ? "New game" :

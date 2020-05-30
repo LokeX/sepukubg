@@ -1792,7 +1792,7 @@ System.out.println("bonusNullifier = "+bonusNullifier);
 
   public int getProbabilityAdjustedLayoutStrength () {
 
-    return (dice.areDouble() ? 1 : 2)*getLayoutStrength();
+    return (parentMoves.getDiceObj().areDouble() ? 1 : 2)*getLayoutStrength();
   }
 
   public boolean shouldTake () {

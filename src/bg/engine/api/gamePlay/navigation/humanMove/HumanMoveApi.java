@@ -1,4 +1,4 @@
-package bg.engine.api.gameState.navigation.humanMove;
+package bg.engine.api.gamePlay.navigation.humanMove;
 
 import java.util.stream.Stream;
 

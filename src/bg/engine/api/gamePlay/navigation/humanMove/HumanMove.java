@@ -1,6 +1,6 @@
-package bg.engine.api.gameState.navigation.humanMove;
+package bg.engine.api.gamePlay.navigation.humanMove;
 
-import bg.engine.api.gameState.navigation.Navigation;
+import bg.engine.api.gamePlay.navigation.Navigation;
 
 import static bg.Main.getSettings;
 
@@ -36,7 +36,7 @@ public class HumanMove {
   public void startMoveSelection () {
 
     moveSelector = new MoveSelector(navigation.selectedTurn());
-    if (moveSelector.isIllegal()) {
+    if (moveSelector.noLegalMove()) {
       moveSelector = null;
     } else if (isAutoSelectable()){
       moveSelector.initialSelection();

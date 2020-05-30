@@ -2,49 +2,49 @@ package bg.engine.api.matchPlay;
 
 public class ActionState {
 
-  private MatchPlay matchPlay;
+  private MatchState matchState;
 
-  ActionState (MatchPlay matchPlay) {
+  ActionState (MatchState matchState) {
 
-    this.matchPlay = matchPlay;
+    this.matchState = matchState;
   }
 
   private MatchState matchState () {
 
-    return matchPlay.getMatchState();
+    return matchState;
   }
 
   private boolean lastTurnSelected () {
 
     return
-      matchPlay.matchIsPlaying()
+      matchState.gameIsPlaying()
       && matchState().lastTurnSelected();
   }
 
   private boolean playerIsHuman () {
 
     return
-      matchPlay.matchIsPlaying()
+      matchState.gameIsPlaying()
       && matchState().playerIsHuman();
   }
 
   private boolean newMatchPlay() {
 
     return
-      matchPlay.matchIsPlaying()
-      && matchPlay.matchOver();
+      matchState.gameIsPlaying()
+      && matchState.matchOver();
   }
 
   private boolean newGamePlay() {
 
     return
-      matchPlay.gameOver();
+      matchState.gameOver();
   }
 
   private boolean playedMoveSelected () {
 
     return
-      matchPlay.matchIsPlaying()
+      matchState.gameIsPlaying()
         && matchState().playedMoveSelected();
   }
 
@@ -57,8 +57,8 @@ public class ActionState {
   private boolean playMove () {
 
     return
-      !matchPlay.matchOver()
-        && !matchPlay.gameOver()
+      !matchState.matchOver()
+        && !matchState.gameOver()
         && (lastTurnSelected() || !playedMoveSelected());
   }
 
@@ -70,23 +70,23 @@ public class ActionState {
   public boolean nextPlayAvailable () {
 
     return
-      nextPlayState().length() == 0;
+      nextPlay().length() == 0;
   }
 
-  public String nextPlayState () {
+  public String nextPlay() {
 
     return
-      scenarioEdit()
-        ? "Start match"
-        : newMatchPlay()
-        ? "New match"
-        : newGamePlay()
-        ? "New game"
-        : playHumanMove()
-        ? "Play move"
-        : playMove()
-        ? "Roll dice"
-        : "";
+        scenarioEdit()
+      ? "Start match"
+      : newMatchPlay()
+      ? "New match"
+      : newGamePlay()
+      ? "New game"
+      : playHumanMove()
+      ? "Play move"
+      : playMove()
+      ? "Roll dice"
+      : "";
   }
 
 }

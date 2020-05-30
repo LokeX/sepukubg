@@ -1,4 +1,4 @@
-package bg.engine.api.gameState;
+package bg.engine.api.gamePlay;
 
 import bg.engine.match.Turn;
 import bg.inUrFace.windows.TextDisplay;

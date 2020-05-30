@@ -1,10 +1,10 @@
-package bg.engine.api.gameState;
+package bg.engine.api.gamePlay;
 
-import bg.engine.api.gameState.navigation.humanMove.HumanMove;
+import bg.engine.api.gamePlay.navigation.humanMove.HumanMove;
 
 import static java.util.stream.IntStream.range;
 
-public class GameData {
+public class GameInfo {
 
   private GameState gameState;
   private String[] dataItems;
@@ -12,12 +12,12 @@ public class GameData {
   private int selectedTurnNr;
   private int selectedMoveNr;
 
-  GameData (GameState gameState) {
+  GameInfo(GameState gameState) {
 
     this.gameState = gameState;
   }
 
-  GameData getGameData () {
+  GameInfo getGameData () {
 
     dataUpdate = updateRequired();
     if (dataUpdate) {

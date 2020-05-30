@@ -1,4 +1,4 @@
-package bg.engine.api.gameState.navigation.humanMove;
+package bg.engine.api.gamePlay.navigation.humanMove;
 
 import bg.engine.match.Turn;
 import bg.engine.match.moves.Layout;
@@ -7,11 +7,10 @@ import bg.engine.match.moves.Moves;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static bg.util.StreamsUtil.streamAsList;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
 public class MoveSelector extends Moves {
@@ -34,17 +33,15 @@ public class MoveSelector extends Moves {
 
   private void resetMovePoints () {
 
-    movePoints = IntStream
-      .range(0, getDice().length*2)
-      .map(i -> -1)
-      .toArray();
+    movePoints = new int[getNrOfLegalPartMoves()*2];
+    Arrays.fill(movePoints, -1);
   }
 
-  boolean endOfInput () {
+  public boolean endOfInput () {
 
     return
       position() == movePoints.length
-      || position()/2 == getNrOfLegalPartMoves();
+      || position() == getNrOfLegalPartMoves()*2;
   }
 
   int position () {
@@ -126,6 +123,8 @@ public class MoveSelector extends Moves {
 
   public boolean positionIsEndingPoint () {
 
+    System.out.println("isEndingPoint = "+isEndingPoint(position()));
+    System.out.println("position = "+position());
     return isEndingPoint(position());
   }
 
@@ -139,7 +138,9 @@ public class MoveSelector extends Moves {
 
   private boolean isStartingPoint (int position) {
 
-    return position%2 == 0;
+    return
+      !endOfInput()
+      && position%2 == 0;
   }
 
   private boolean uniquePointIn (int position) {
@@ -155,7 +156,7 @@ public class MoveSelector extends Moves {
       position() == 0
         ? getParentMoveLayout()
         : moveLayouts()
-          .collect(Collectors.toList())
+          .collect(toList())
           .get(position()-1);
   }
 
@@ -165,21 +166,21 @@ public class MoveSelector extends Moves {
       matchingMoves()
         .findAny()
         .get()
-        .getMoveLayouts()
+        .getMovePointLayouts()
         .stream();
   }
 
   public List<Layout> getMoveLayouts() {
 
     List<Layout> layouts = moveLayouts()
-      .collect(Collectors.toList());
+      .collect(toList());
     int start =
       lastInputPosition > position()
-        ? position() - 1
+        ? position()
         : lastInputPosition;
     int end =
       lastInputPosition < position()
-        ? position() - 1
+        ? position()
         : lastInputPosition;
 
     lastInputPosition = position();
@@ -243,7 +244,7 @@ public class MoveSelector extends Moves {
     }
   }
 
-  public int getUniqueEvaluatedMoveNr () {
+  int getUniqueEvaluatedMoveNr () {
 
     return getMoveNr(uniqueMove());
   }
@@ -264,10 +265,20 @@ public class MoveSelector extends Moves {
     }
   }
 
+  private boolean explicitEndingPoint () {
+
+    return
+      isLegalEndingPoint(position())
+      && pointsIn(position()).count() == 1;
+  }
+
   private void setInputPoint () {
 
     if (inputPointIsLegalStartingPoint(position())) {
       movePoints[position()] = inputPoint;
+      if (explicitEndingPoint()) {
+        movePoints[position()] = pointsIn(position()).findAny().get();
+      }
     } else if (isLegalEndingPoint(inputPoint)) {
       setEndingPoint();
     }
@@ -284,15 +295,15 @@ public class MoveSelector extends Moves {
 
   private boolean moveIsLegal () {
 
-    return !isIllegal();
+    return !noLegalMove();
   }
 
-  boolean inputIsLegal () {
+  public boolean inputIsLegal () {
 
     return position() != lastInputPosition;
   }
 
-  public void inputPoint (int point) {
+  void inputPoint (int point) {
 
     if (!endOfInput() && moveIsLegal()) {
       this.inputPoint = point;
@@ -304,7 +315,7 @@ public class MoveSelector extends Moves {
     }
   }
 
-  public void input (int input) {
+  void input (int input) {
 
     if (input == -1) {
       deleteLatestInput();

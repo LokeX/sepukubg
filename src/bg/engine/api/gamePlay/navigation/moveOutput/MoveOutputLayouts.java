@@ -1,4 +1,4 @@
-package bg.engine.api.gameState.navigation.moveOutput;
+package bg.engine.api.gamePlay.navigation.moveOutput;
 
 import bg.engine.match.moves.Layout;
 

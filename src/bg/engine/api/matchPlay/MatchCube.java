@@ -39,7 +39,9 @@ public class MatchCube {
 
     return
       engineApi
-        .getGame()
+        .gameIsPlaying()
+      &&
+        engineApi.getGame()
         .getGameCube()
         .cubeWasRejected();
   }
@@ -64,9 +66,16 @@ public class MatchCube {
 
   void computerHandlesCube () {
 
+    System.out.println("Computer handles cube:");
+    System.out.println("Next player is computer: "+nextPlayerIsComputer());
+    System.out.println("Is Crawford game: "+getMatchBoard().isCrawfordGame());
+    System.out.println("Cube was rejected: "+cubeWasRejected());
+    System.out.println("Computer can offer cube: "+getGame().playerCanOfferCube());
+    System.out.println("Computer should double: "+engineApi.getSelectedMove().shouldDouble());
     if (nextPlayerIsComputer()) {
       if (!getMatchBoard().isCrawfordGame() && !cubeWasRejected()) {
         if (getGame().playerCanOfferCube() && engineApi.getSelectedMove().shouldDouble()) {
+
           resolveCubeHandling();
         }
       }
@@ -99,7 +108,7 @@ public class MatchCube {
     return
       settings
         .playerIsComputer(
-          engineApi.getPlayerOnRollsID()
+          engineApi.getPlayerOnRollsID() == 0 ? 1 : 0
         );
   }
 

@@ -114,6 +114,11 @@ public class Layout {
     return temp;
   }
 
+  public void setPoint (int[] newPoint) {
+
+    System.arraycopy(newPoint, 0, point, 0, newPoint.length);
+  }
+
   public Layout getClone () {
 
     return new Layout(this);

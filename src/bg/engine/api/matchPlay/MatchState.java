@@ -1,8 +1,8 @@
 package bg.engine.api.matchPlay;
 
 import bg.Main;
-import bg.engine.api.gameState.GameState;
-import bg.engine.api.gameState.navigation.humanMove.HumanMove;
+import bg.engine.api.gamePlay.GameState;
+import bg.engine.api.gamePlay.navigation.humanMove.HumanMove;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.match.moves.Layout;
 import bg.inUrFace.canvas.move.MoveOutput;
@@ -17,11 +17,13 @@ public class MatchState {
   private Layout matchLayout;
   private MatchBoard matchBoard;
   private GameState gameState;
+  private ActionState actionState;
   private boolean autoCompleteGame = false;
 
   public MatchState() {
 
     matchBoard = new MatchBoard(settings.getScoreToWin());
+    actionState = new ActionState(this);
     new ScenarioOutput(scenarios).outputSelectedScenario();
     getActionButton().setShowPleaseWaitButton(false);
     getActionButton().setText("Start Match");
@@ -43,6 +45,11 @@ public class MatchState {
   public GameState getGameState() {
 
     return gameState;
+  }
+
+  public ActionState getActionState() {
+
+    return actionState;
   }
 
   public HumanMove getHumanMove () {
@@ -70,10 +77,11 @@ public class MatchState {
       && gameState.nrOfTurns() > 0;
   }
 
-  boolean playerIsHuman () {
+  public boolean playerIsHuman () {
 
     return
       !autoCompleteGame
+      && gameIsPlaying()
       && gameState.humanTurnSelected();
   }
 
@@ -86,7 +94,8 @@ public class MatchState {
   boolean matchOver () {
 
     return
-      matchBoard.matchOver();
+      matchBoard.matchOver()
+      || engineApi.getMatchCube().cubeWasRejected();
   }
 
   boolean gameOver () {
@@ -163,6 +172,7 @@ public class MatchState {
 
   private void computerMove () {
 
+//    gameState.startComputerMove();
     showMove(0);
   }
 
@@ -187,6 +197,7 @@ public class MatchState {
 
   void newTurn() {
 
+    gameState.endHumanMove();
     gameState.newTurn();
     Main.sound.playSoundEffect("wuerfelbecher");
     getGameState().getSearch().searchRolledMoves();
@@ -195,15 +206,15 @@ public class MatchState {
     move();
   }
 
-  void newTurnNew() {
-
-    gameState.newTurn();
-    Main.sound.playSoundEffect("wuerfelbecher");
-    getGameState().getSearch().searchRolledMoves();
-    getActionButton().setHideActionButton(true);
-    getActionButton().setShowPleaseWaitButton(false);
-    gameState.moveNew();
-  }
+//  void newTurnNew() {
+//
+//    gameState.newTurn();
+//    Main.sound.playSoundEffect("wuerfelbecher");
+//    getGameState().getSearch().searchRolledMoves();
+//    getActionButton().setHideActionButton(true);
+//    getActionButton().setShowPleaseWaitButton(false);
+//    gameState.moveNew();
+//  }
 
   private void initMatch () {
 
@@ -244,22 +255,36 @@ public class MatchState {
     newTurn();
   }
 
+  private boolean startMatch () {
+
+    return
+      actionState.nextPlay().equals("Start match");
+  }
+
+  private boolean newMatch () {
+
+    return
+      actionState.nextPlay().equals("New match");
+  }
+
   public void actionButtonClicked () {
 
-    if (engineApi.gameIsPlaying()) {
+    System.out.println("Next action: "+actionState.nextPlay());
+    if (gameIsPlaying()) {
       engineApi.getMatchCube().computerHandlesCube();
       if (engineApi.getMatchCube().cubeWasRejected()) {
         endTurn();
         return;
       }
     }
-    if (matchBoard.matchOver()) {
+    if (startMatch() || newMatch()) {
       engineApi.matchState = new MatchState();
-    } else if (engineApi.gameOver()) {
+    } else if (!gameIsPlaying() || gameOver()) {
       newGame();
     } else {
       newTurn();
     }
+    System.out.println("Next action: "+actionState.nextPlay());
   }
 
 }

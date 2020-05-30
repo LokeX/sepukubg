@@ -1,6 +1,6 @@
 package bg.engine.api;
 
-import bg.engine.api.gameState.navigation.moveOutput.MoveOutputLayouts;
+import bg.engine.api.gamePlay.navigation.moveOutput.MoveOutputLayouts;
 import bg.engine.match.moves.Layout;
 
 public class DisplayLayouts {

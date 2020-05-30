@@ -40,7 +40,7 @@ public class Moves {
     return moveBonuses.get(getMoveNr(move));
   }
 
-  public boolean isIllegal () {
+  public boolean noLegalMove () {
 
     return evaluatedMoves.get(0).isIllegal();
   }
@@ -129,6 +129,11 @@ public class Moves {
   protected int getNrOfLegalPartMoves () {
 
     return nrOfLegalPartMoves;
+  }
+
+  Dice getDiceObj () {
+
+    return dice;
   }
 
   public int[] getDice () {
@@ -309,8 +314,8 @@ public class Moves {
 
   protected Moves generateMoves (Layout layout, int[] diceToMove) {
 
-    parentMoveLayout = new MoveLayout(this, layout, diceToMove);
     dice = new Dice(diceToMove);
+    parentMoveLayout = new MoveLayout(this, layout);
     legalMoves = new ArrayList<>(100);
     evaluatedMoves = new ArrayList<>(100);
     generateLegalMoves();

@@ -1,11 +1,14 @@
 package bg.inUrFace.menu.dropMenues;
 
+import bg.engine.api.DisplayLayouts;
+import bg.inUrFace.canvas.move.LayoutDisplay;
 import bg.inUrFace.canvas.move.MoveOutput;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
 import bg.util.time.Timeable;
 import static bg.Main.scenarios;
 import static bg.Main.settings;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -24,6 +27,8 @@ public class NavigateMenu extends JMenu implements Timeable {
   private JMenuItem nextTurn = new JMenuItem("Next turn");
   private JMenuItem previousMove = new JMenuItem("Previous move");
   private JMenuItem nextMove = new JMenuItem("Next move");
+  private JMenuItem previousPartMove = new JMenuItem("Previous part move");
+  private JMenuItem nextPartMove = new JMenuItem("Next part move");
   private JMenuItem previousScenario = new JMenuItem("Previous scenario");
   private JMenuItem nextScenario = new JMenuItem("Next scenario");
 
@@ -38,6 +43,8 @@ public class NavigateMenu extends JMenu implements Timeable {
     setupNextTurn();
     setupPreviousMove();
     setupNextMove();
+    setupNextPartMove();
+    setupPreviousPartMove();
     setupPreviousScenario();
     setupNextScenario();
   }
@@ -201,6 +208,44 @@ public class NavigateMenu extends JMenu implements Timeable {
     });
   }
 
+  private void setupPreviousPartMove () {
+
+    add(previousPartMove);
+    previousPartMove
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_LEFT,
+            InputEvent.SHIFT_DOWN_MASK
+          )
+      );
+    previousPartMove.addActionListener((ActionEvent e) -> {
+      if (engineApi.getSelectedTurn() != null) {
+        new LayoutDisplay().displayLayout(engineApi
+          .getGameState()
+          .selectPreviousPartMove());
+      }
+    });
+  }
+
+  private void setupNextPartMove () {
+
+    add(nextPartMove);
+    nextPartMove
+      .setAccelerator(
+        KeyStroke
+          .getKeyStroke(
+            KeyEvent.VK_RIGHT,
+            InputEvent.SHIFT_DOWN_MASK
+          )
+      );
+    nextPartMove.addActionListener((ActionEvent e) -> {
+      new LayoutDisplay().displayLayout(engineApi
+        .getGameState()
+        .selectNextPartMove());
+    });
+  }
+
   private void setupPreviousScenario () {
 
     add(previousScenario);
@@ -255,6 +300,8 @@ public class NavigateMenu extends JMenu implements Timeable {
     previousMove.setVisible(previousMove.isEnabled());
     nextMove.setEnabled(previousMove.isEnabled());
     nextMove.setVisible(nextMove.isEnabled());
+    nextPartMove.setEnabled(previousMove.isEnabled());
+    previousPartMove.setVisible(nextMove.isEnabled());
 
     previousScenario.setEnabled(engineApi == null || engineApi.getSelectedTurn() == null);
     previousScenario.setVisible(previousScenario.isEnabled());

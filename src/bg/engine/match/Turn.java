@@ -1,6 +1,6 @@
 package bg.engine.match;
 
-import bg.engine.api.gameState.navigation.humanMove.MoveSelector;
+import bg.engine.api.gamePlay.navigation.humanMove.MoveSelector;
 import bg.engine.match.moves.*;
 
 public class Turn extends Moves {

@@ -151,16 +151,16 @@ public class Trainer {
 
     int nrOfCores = getNrOfCores();
     int matchesPerCore = nrOfMatches/nrOfCores;
+    int deviation = nrOfMatches-(matchesPerCore*nrOfCores);
+    int lastThreadNOM = matchesPerCore+deviation;
 
     for (int a = 0; a < nrOfCores; a++) {
-      if (a == nrOfCores-1) {
-        playMatchesThread(
-          matchesPerCore+
-          (nrOfMatches-(matchesPerCore*nrOfCores)),
+      if (a < nrOfCores-1) {
+        playMatchesThread(matchesPerCore,
           true
         );
       } else {
-        playMatchesThread(matchesPerCore, false);
+        playMatchesThread(lastThreadNOM, false);
       }
     }
     printInitialReport();
@@ -191,6 +191,7 @@ public class Trainer {
           );
         nrOfMatchesPlayed++;
         if (killRun) {
+          running = false;
           System.out.println("Statistical run terminated");
           break;
         }

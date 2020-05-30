@@ -1,6 +1,6 @@
 package bg.engine.api.score;
 
-import bg.engine.api.gameState.GameState;
+import bg.engine.api.gamePlay.GameState;
 import bg.engine.api.matchPlay.MatchState;
 
 public class ScoreBoard {

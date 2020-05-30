@@ -11,8 +11,7 @@ import static java.util.Arrays.*;
 
 public class MoveLayout extends Layout {
 
-  private MovePointLayouts movePointLayoutsNew;
-  protected Dice dice;
+  private MovePointLayouts movePointLayouts;
   Moves parentMoves;
   int[] hitPoints;
   int[] movePoints;
@@ -20,12 +19,12 @@ public class MoveLayout extends Layout {
 
   public int[] getDice() {
 
-    return dice.getDice();
+    return parentMoves.getDice();
   }
 
   public Dice getDiceObj () {
 
-    return new Dice(dice);
+    return new Dice(parentMoves.getDice());
   }
 
   public int[] getMovePoints() {
@@ -60,18 +59,16 @@ public class MoveLayout extends Layout {
 
     super(moveLayout);
     parentMoves = moveLayout.parentMoves;
-    dice = moveLayout.getDiceObj();
     movePoints = moveLayout.getMovePoints();
     movePoints2 = moveLayout.getMovePoints2();
     hitPoints = moveLayout.getHitPoints();
   }
 
-  MoveLayout (Moves moves, Layout layout, int[] dice) {
+  MoveLayout (Moves moves, Layout layout) {
 
     super(layout);
     parentMoves = moves;
-    this.dice = new Dice(dice);
-    movePoints = new int[this.dice.getDice().length*2];
+    movePoints = new int[parentMoves.getDice().length*2];
     hitPoints = new int[movePoints.length];
     movePoints2 = new int[movePoints.length];
     for (int a = 0; a < movePoints.length; a++) {
@@ -158,13 +155,6 @@ public class MoveLayout extends Layout {
     return
       stream(movePoints)
         .noneMatch(point -> point != -1);
-
-//    for (int a = 0; a < movePoints.length; a++) {
-//      if (movePoints[a] != -1) {
-//        return false;
-//      }
-//    }
-//    return true;
   }
 
   public boolean containsThesePartMoves (int[] partMove) {
@@ -193,9 +183,9 @@ public class MoveLayout extends Layout {
     return nrOfMatches == nrOfMatchesRequired;
   }
 
-  public void setMovePoints(int[] newPoints) {
+  public void setMovePoints(int[] newMovePoints) {
 
-    movePoints = newPoints.clone();
+    movePoints = newMovePoints.clone();
   }
 
   final public int getNrOfPartMoves() {
@@ -211,42 +201,18 @@ public class MoveLayout extends Layout {
   public boolean endingPointIsAmbiguous(int endingPoint) {
 
     return
-      !dice.areDouble() &&
+      !parentMoves.getDiceObj().areDouble() &&
       movePoints[3] == endingPoint &&
       hitPoints[1] != -1 &&
       movePoints[1] == movePoints[2];
   }
 
-  protected List<Layout> getMovePointLayouts () {
+  public List<MoveLayout> getMovePointLayouts() {
 
-    List<Layout> movePointLayouts = new ArrayList<>();
-    int[] tempPoint = parentMoves.getParentMoveLayout().getPoint().clone();
-    int nrOfMovePoints = getNrOfPartMoves()*2;
-
-    for (int a = 0; a < nrOfMovePoints; a++) {
-      if (hitPoints[a] >= 0) {
-        if ((a+2)%2 == 0) {
-          tempPoint[hitPoints[a]]--;
-        } else {
-          tempPoint[hitPoints[a]]++;
-        }
-      }
-      if ((a+2)%2 == 0) {
-        tempPoint[movePoints2[a]]--;
-      } else {
-        tempPoint[movePoints2[a]]++;
-      }
-      movePointLayouts.add(new Layout(tempPoint));
+    if (movePointLayouts == null) {
+      movePointLayouts = new MovePointLayouts(new MoveLayout(this));
     }
-    return movePointLayouts;
-  }
-
-  public List<MoveLayout> getMoveLayouts () {
-
-    if (movePointLayoutsNew == null) {
-      movePointLayoutsNew = new MovePointLayouts(this);
-    }
-    return movePointLayoutsNew.getMoveLayoutsList();
+    return movePointLayouts.getMoveLayoutsList();
   }
 
   public String getMovePointsString() {
@@ -273,7 +239,7 @@ public class MoveLayout extends Layout {
   public void printDice () {
 
     System.out.print("[");
-    for (int d : dice.getDice()) {
+    for (int d : parentMoves.getDice()) {
       System.out.print(d+",");
     }
     System.out.print("]");

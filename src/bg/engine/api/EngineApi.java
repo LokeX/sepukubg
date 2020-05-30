@@ -1,6 +1,7 @@
 package bg.engine.api;
 
-import bg.engine.api.gameState.GameState;
+import bg.engine.api.gamePlay.GameState;
+import bg.engine.api.matchPlay.ActionState;
 import bg.engine.api.matchPlay.MatchCube;
 import bg.engine.api.matchPlay.MatchState;
 import bg.engine.api.score.MatchBoard;
@@ -16,7 +17,7 @@ import static bg.Main.*;
 public class EngineApi {
 
   private HumanInput humanInput = new HumanInput();
-  private GameDataHTML gameDataHTML = new GameDataHTML();
+  private GameInfoHTML gameInfoHTML = new GameInfoHTML();
   public MatchState matchState = new MatchState();
   private ScoreBoard scoreBoard = new ScoreBoard();
 //  private DisplayLayouts displayLayouts = new DisplayLayouts();
@@ -25,6 +26,11 @@ public class EngineApi {
 
     return
       matchState != null;
+  }
+
+  public ActionState getActionState () {
+
+    return matchState.getActionState();
   }
 
   public Game getGame () {
@@ -40,12 +46,12 @@ public class EngineApi {
     return humanInput.getHumanInput(this);
   }
 
-  public GameDataHTML getGameDataHTML () {
+  public GameInfoHTML getGameInfoHTML() {
 
     return
       gameIsPlaying()
-        ? gameDataHTML.getGameDataHTML(
-            getGameState().getGameData()
+        ? gameInfoHTML.getGameDataHTML(
+            getGameState().getGameInfo()
           )
         : null;
   }
@@ -142,9 +148,9 @@ public class EngineApi {
 //        : null;
 //  }
 
-  public Input getInput () {
+  public StateEdit getInput () {
 
-    return new Input();
+    return new StateEdit();
   }
 
   public boolean matchOver () {

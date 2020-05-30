@@ -25,7 +25,7 @@ public class InformationBar extends JLabel implements Timeable {
   private boolean dataAvailable () {
 
     return
-      engineApi.getGameDataHTML() != null;
+      engineApi.getGameInfoHTML() != null;
   }
 
   private boolean engineRunning () {
@@ -38,7 +38,7 @@ public class InformationBar extends JLabel implements Timeable {
   public void timerUpdate() {
 
     if (engineRunning() && dataAvailable()) {
-      setText(engineApi.getGameDataHTML().getHTMLFormattedDataString());
+      setText(engineApi.getGameInfoHTML().getHTMLFormattedDataString());
     }
   }
 

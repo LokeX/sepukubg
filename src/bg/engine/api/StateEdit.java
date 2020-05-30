@@ -10,7 +10,7 @@ import static bg.Main.win;
 import static bg.util.Dialogs.getIntegerInput;
 import static bg.util.Dialogs.showMessage;
 
-public class Input {
+public class StateEdit {
 
   public void inputStatScoreToWin () {
 

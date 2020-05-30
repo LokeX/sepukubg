@@ -44,7 +44,7 @@ public class EndingPointsPainter implements Paintable {
       humanMoveReady()
       && engineApi
         .getHumanInput()
-        .isEndingPoint();
+        .endingPointIsNext();
   }
 
   public void paint (Graphics graphics) {

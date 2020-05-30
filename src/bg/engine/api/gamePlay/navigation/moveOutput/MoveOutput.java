@@ -1,7 +1,7 @@
-package bg.engine.api.gameState.navigation.moveOutput;
+package bg.engine.api.gamePlay.navigation.moveOutput;
 
-import bg.engine.api.gameState.navigation.Navigation;
-import bg.engine.api.gameState.navigation.humanMove.MoveSelector;
+import bg.engine.api.gamePlay.navigation.Navigation;
+import bg.engine.api.gamePlay.navigation.humanMove.MoveSelector;
 import bg.engine.match.moves.Layout;
 
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class MoveOutput {
       new ArrayList<>(
         navigation
           .selectedMove()
-          .getMoveLayouts()
+          .getMovePointLayouts()
       );
   }
 
