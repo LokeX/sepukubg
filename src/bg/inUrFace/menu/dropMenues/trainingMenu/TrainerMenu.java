@@ -3,7 +3,7 @@ package bg.inUrFace.menu.dropMenues.trainingMenu;
 import static bg.Main.engineApi;
 import static bg.Main.trainer;
 
-import bg.engine.trainer.Trainer;
+import bg.engine.coreLogic.trainer.Trainer;
 import bg.util.time.Timeable;
 import bg.util.menus.ListMenu;
 import bg.util.menus.RadioButtonListMenu;

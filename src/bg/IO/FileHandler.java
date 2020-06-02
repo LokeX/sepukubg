@@ -3,8 +3,8 @@ package bg.IO;
 import bg.Main;
 import bg.Settings;
 import bg.engine.api.Scenarios.NamedLayout;
-import bg.engine.trainer.Bot;
-import bg.engine.trainer.Trainer;
+import bg.engine.coreLogic.trainer.Bot;
+import bg.engine.coreLogic.trainer.Trainer;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

@@ -1,7 +1,7 @@
 package bg.engine.api;
 
-import bg.engine.api.gamePlay.navigation.humanMove.HumanMove;
-import bg.engine.api.gamePlay.navigation.humanMove.MoveSelector;
+import bg.engine.api.navigation.moveInput.HumanMove;
+import bg.engine.api.navigation.moveInput.MoveSelector;
 
 import java.util.stream.Stream;
 

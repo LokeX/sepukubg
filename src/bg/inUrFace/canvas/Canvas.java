@@ -1,6 +1,6 @@
 package bg.inUrFace.canvas;
 
-import bg.engine.match.moves.Layout;
+import bg.engine.coreLogic.moves.Layout;
 import bg.Main;
 import java.awt.Dimension;
 import java.awt.Graphics;

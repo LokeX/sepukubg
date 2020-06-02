@@ -1,7 +1,7 @@
 package bg.engine.api.gamePlay;
 
-import bg.engine.api.gamePlay.navigation.Navigation;
-import bg.engine.match.moves.Layout;
+import bg.engine.api.navigation.Navigation;
+import bg.engine.coreLogic.moves.Layout;
 
 public class GameState extends Navigation {
 

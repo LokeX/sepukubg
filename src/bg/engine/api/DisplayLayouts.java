@@ -1,7 +1,7 @@
 package bg.engine.api;
 
-import bg.engine.api.gamePlay.navigation.moveOutput.MoveOutputLayouts;
-import bg.engine.match.moves.Layout;
+import bg.engine.api.navigation.moveOutput.MoveOutputLayouts;
+import bg.engine.coreLogic.moves.Layout;
 
 public class DisplayLayouts {
 

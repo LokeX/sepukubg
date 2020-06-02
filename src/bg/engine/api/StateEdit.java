@@ -1,7 +1,7 @@
 package bg.engine.api;
 
-import bg.engine.match.Dice;
-import bg.engine.trainer.Trainer;
+import bg.engine.coreLogic.Dice;
+import bg.engine.coreLogic.trainer.Trainer;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
 import javax.swing.*;
 

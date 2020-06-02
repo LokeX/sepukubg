@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MenuTimedTasks implements Timeable {
 
-  List<Timeable> timedTasks = new ArrayList();
+  List<Timeable> timedTasks;
 
   public MenuTimedTasks (List<Timeable> timedTasks) {
 
@@ -15,7 +15,7 @@ public class MenuTimedTasks implements Timeable {
 
   public void runTasks () {
 
-    timedTasks.forEach(task -> task.timerUpdate());
+    timedTasks.forEach(Timeable::timerUpdate);
   }
 
   public void addTask (Timeable task) {

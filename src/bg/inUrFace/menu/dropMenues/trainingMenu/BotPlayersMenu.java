@@ -1,6 +1,6 @@
 package bg.inUrFace.menu.dropMenues.trainingMenu;
 
-import bg.engine.trainer.Trainer;
+import bg.engine.coreLogic.trainer.Trainer;
 import bg.util.time.Timeable;
 import bg.util.menus.RadioButtonListMenu;
 

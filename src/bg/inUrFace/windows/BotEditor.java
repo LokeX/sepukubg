@@ -1,6 +1,6 @@
 package bg.inUrFace.windows;
 
-import bg.engine.trainer.Bot;
+import bg.engine.coreLogic.trainer.Bot;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

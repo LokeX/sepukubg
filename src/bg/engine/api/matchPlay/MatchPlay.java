@@ -1,9 +1,9 @@
 package bg.engine.api.matchPlay;
 
 import bg.Main;
-import bg.engine.api.gamePlay.navigation.humanMove.HumanMove;
+import bg.engine.api.navigation.moveInput.HumanMove;
 import bg.engine.api.score.ScoreBoard;
-import bg.engine.match.moves.Layout;
+import bg.engine.coreLogic.moves.Layout;
 
 import static bg.Main.*;
 import static bg.Main.settings;

@@ -1,6 +1,6 @@
 package bg.engine.api.gamePlay;
 
-import bg.engine.match.Turn;
+import bg.engine.coreLogic.Turn;
 import bg.inUrFace.windows.TextDisplay;
 
 import static bg.Main.settings;

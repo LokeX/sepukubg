@@ -1,7 +1,7 @@
 package bg.inUrFace.mouse;
 
-import bg.engine.match.moves.Layout;
-import bg.engine.match.moves.EvaluatedMove;
+import bg.engine.coreLogic.moves.Layout;
+import bg.engine.coreLogic.moves.EvaluatedMove;
 import bg.Main;
 
 import bg.inUrFace.canvas.BoardDim;

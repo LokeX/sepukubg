@@ -1,6 +1,6 @@
 package bg.inUrFace.canvas;
 
-import bg.engine.match.Cube;
+import bg.engine.coreLogic.Cube;
 import bg.util.Batch;
 
 import javax.swing.*;

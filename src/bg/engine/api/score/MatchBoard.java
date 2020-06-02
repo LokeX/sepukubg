@@ -1,7 +1,7 @@
 package bg.engine.api.score;
 
-import bg.engine.match.score.GameScore;
-import bg.engine.match.score.MatchScore;
+import bg.engine.coreLogic.score.GameScore;
+import bg.engine.coreLogic.score.MatchScore;
 
 public class MatchBoard extends MatchScore {
 

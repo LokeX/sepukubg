@@ -6,9 +6,9 @@ import bg.engine.api.matchPlay.MatchCube;
 import bg.engine.api.matchPlay.MatchState;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.api.score.ScoreBoard;
-import bg.engine.match.Game;
-import bg.engine.match.Turn;
-import bg.engine.match.moves.EvaluatedMove;
+import bg.engine.coreLogic.Game;
+import bg.engine.coreLogic.Turn;
+import bg.engine.coreLogic.moves.EvaluatedMove;
 
 import java.util.List;
 

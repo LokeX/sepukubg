@@ -1,6 +1,6 @@
 package bg.engine.api;
 
-import bg.engine.match.moves.Layout;
+import bg.engine.coreLogic.moves.Layout;
 
 import static bg.Main.win;
 import java.io.Serializable;

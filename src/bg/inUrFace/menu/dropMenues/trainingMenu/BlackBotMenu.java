@@ -1,7 +1,7 @@
 package bg.inUrFace.menu.dropMenues.trainingMenu;
 
-import bg.engine.trainer.Bot;
-import bg.engine.trainer.Trainer;
+import bg.engine.coreLogic.trainer.Bot;
+import bg.engine.coreLogic.trainer.Trainer;
 import bg.util.menus.Listable;
 
 import java.util.List;

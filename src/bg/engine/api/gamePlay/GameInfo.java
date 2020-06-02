@@ -1,6 +1,6 @@
 package bg.engine.api.gamePlay;
 
-import bg.engine.api.gamePlay.navigation.humanMove.HumanMove;
+import bg.engine.api.navigation.moveInput.HumanMove;
 
 import static java.util.stream.IntStream.range;
 

@@ -2,7 +2,7 @@ package bg.engine.api.matchPlay;
 
 import bg.engine.api.EngineApi;
 import bg.engine.api.score.MatchBoard;
-import bg.engine.match.Game;
+import bg.engine.coreLogic.Game;
 
 import static bg.Main.settings;
 import static bg.Main.win;

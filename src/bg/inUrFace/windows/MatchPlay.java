@@ -1,7 +1,7 @@
 package bg.inUrFace.windows;
 
 import bg.Main;
-import bg.engine.trainer.Trainer;
+import bg.engine.coreLogic.trainer.Trainer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
