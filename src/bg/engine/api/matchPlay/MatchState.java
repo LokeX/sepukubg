@@ -130,6 +130,9 @@ public class MatchState {
 
     MoveOutput moveOutput = new MoveOutput(engineApi.getSelectedMove());
 
+    System.out.println("Showing move:");
+    moveOutput.printMovePoints();
+    System.out.println();
     moveOutput.writeMove();
     moveOutput.showMove(
       showMoveStartPoint,
@@ -172,8 +175,10 @@ public class MatchState {
 
   private void computerMove () {
 
+    System.out.println("Computer move");
 //    gameState.startComputerMove();
     showMove(0);
+
   }
 
   private void noMove () {

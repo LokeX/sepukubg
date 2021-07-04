@@ -89,13 +89,15 @@ public class MoveInputListener extends MouseAdapter {
       } else {
         moveInput.pointClicked();
       }
-      engineApi
-        .getHumanInput()
-        .pointClicked(
-          rightButtonClicked(mouseEvent)
-            ? -1
-            : clickedPoint()
-        );
+      if (clickedPoint() != -1) {
+        engineApi
+          .getHumanInput()
+          .pointClicked(
+            rightButtonClicked(mouseEvent)
+              ? -1
+              : clickedPoint()
+          );
+      }
     }
   }
 

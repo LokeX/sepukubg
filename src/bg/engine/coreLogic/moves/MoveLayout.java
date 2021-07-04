@@ -55,6 +55,11 @@ public class MoveLayout extends Layout {
 
   }
 
+  public MoveLayout (Layout layout) {
+
+    super(layout);
+  }
+
   public MoveLayout (MoveLayout moveLayout) {
 
     super(moveLayout);

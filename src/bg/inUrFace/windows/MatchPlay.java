@@ -115,8 +115,8 @@ public class MatchPlay extends JFrame {
 
     if (this.isVisible()) {
       setProgressBarString();
-      progressBar.setValue(Trainer.nrOfMatchesPlayed);
-      if (Trainer.nrOfMatchesPlayed == endValue || Trainer.killRun) {
+      progressBar.setValue(Trainer.getNrOfMatchesPlayed());
+      if (Trainer.getNrOfMatchesPlayed() == endValue || Trainer.killRun) {
         endProgressMonitor();
       }
     }
@@ -137,7 +137,7 @@ public class MatchPlay extends JFrame {
 
     progressBar.setString(
       "Playing: "+
-      df.format(Trainer.nrOfMatchesPlayed)+"/"+df.format(endValue)+
+      df.format(Trainer.getNrOfMatchesPlayed())+"/"+df.format(endValue)+
       " matches - ETA: "+(timeRemaining.length() < 15 ? timeRemaining : "")
     );
   }

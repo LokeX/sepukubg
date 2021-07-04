@@ -45,10 +45,10 @@ public class MatchScore {
   protected int highestMatchScore () {
 
     return
-        playerScores[0].matchScore() >
+      Math.max(
+        playerScores[0].matchScore(),
         playerScores[1].matchScore()
-      ? playerScores[0].matchScore()
-      : playerScores[1].matchScore();
+      );
   }
 
   protected void setCrawford () {

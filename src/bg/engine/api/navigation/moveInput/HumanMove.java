@@ -67,6 +67,7 @@ public class HumanMove {
   public void pointClicked (int clickedPoint) {
 
     if (inputReady()) {
+      System.out.println("Received inputPoint: "+clickedPoint);
       moveSelector.input(clickedPoint);
       if (moveSelector.inputIsLegal()) {
         if (moveSelector.isUniqueMove()) {

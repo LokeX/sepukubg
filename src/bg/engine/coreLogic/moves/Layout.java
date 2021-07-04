@@ -234,9 +234,13 @@ public class Layout {
 
   public Moves getNextMoves(int[] dice) {
 
-    return new Moves().generateMoves(
-      new Layout(this, playerID == 0 ? 1 : 0).flipLayout(), dice
-    );
+    return
+      new Moves()
+        .generateMoves(new Layout(
+          this,
+          playerID == 0 ? 1 : 0).flipLayout(),
+          dice
+        );
   }
 
   public List<Moves> getSearchMoves () {

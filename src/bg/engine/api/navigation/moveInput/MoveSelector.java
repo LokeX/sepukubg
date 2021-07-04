@@ -309,14 +309,25 @@ public class MoveSelector extends Moves {
     return position() != lastRecordedInputPosition;
   }
 
+  private void backSpaceAPoint () {
+
+    if (position() > 0) {
+      movePoints[position()-1] = -1;
+    }
+  }
+
   void inputPoint (int point) {
 
     if (!endOfInput() && moveIsLegal()) {
       this.inputPoint = point;
       lastRecordedInputPosition = position();
       printReport();
-      setInputPoint();
-      setAnyUniqueMove();
+      if (point == -1) {
+        backSpaceAPoint();
+      } else {
+        setInputPoint();
+        setAnyUniqueMove();
+      }
       printReport();
     }
   }

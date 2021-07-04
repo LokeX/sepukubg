@@ -15,8 +15,8 @@ public class StateEdit {
   public void inputStatScoreToWin () {
 
     int newScore = getIntegerInput(
-      "Type the scoreBoard required " +
-      "to win a statistical engineApi:",
+      "Type the score required " +
+      "to win a statistical match:",
       win
     );
 
@@ -85,8 +85,8 @@ public class StateEdit {
   public void inputPlayToScore () {
 
     int newScore = getIntegerInput(
-      "Type the scoreBoard required to win the game:" +
-        "\nType 0 (or hit Enter) for moneygame",win
+      "Type the score required to win the game:" +
+        "\nType 0 (or hit Enter) for money-game",win
     );
 
     if (newScore >= 0 && newScore < 100 && newScore % 2 == 1) {
@@ -100,7 +100,7 @@ public class StateEdit {
     String[] titles = new String[] {"White", "Black"};
 
     int newScore = getIntegerInput(
-      "Type "+titles[playerID]+" players scoreBoard:",win
+      "Type "+titles[playerID]+" players score:",win
     );
 
     if (newScore >= 0 && newScore < 100) {

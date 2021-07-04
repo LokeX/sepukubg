@@ -9,6 +9,7 @@ import java.util.List;
 import static bg.Main.*;
 import static bg.util.ThreadUtil.threadSleep;
 import static bg.util.time.Time.getConvertedTime;
+import static java.util.Arrays.stream;
 
 public class Trainer {
 
@@ -21,8 +22,9 @@ public class Trainer {
   static public int selectedScenarioNr = 0;
 
   static public int nrOfMatchesToPlay;
-  static public int nrOfMatchesPlayed;
   static public long startTime;
+
+  static public int[] matchesPlayedByThreads = new int[getNrOfCores()];
 
   static public boolean isBotMember (String name) {
 
@@ -46,12 +48,17 @@ public class Trainer {
     }
   }
 
+  static public int getNrOfMatchesPlayed () {
+
+    return stream(matchesPlayedByThreads).sum();
+  }
+
   public void printReport () {
 
     System.out.println();
     System.out.println("Statistical report");
     System.out.println("Playing to scoreBoard: " + statScoreToWin);
-    System.out.println("Matches played: " + nrOfMatchesPlayed + " / " + nrOfMatchesToPlay);
+    System.out.println("Matches played: " + getNrOfMatchesPlayed() + " / " + nrOfMatchesToPlay);
     System.out.println();
     bots.get(whiteBot).getStats().printStats(bots.get(blackBot));
     bots.get(blackBot).getStats().printStats(bots.get(whiteBot));
@@ -59,7 +66,7 @@ public class Trainer {
     long timeSpend = System.currentTimeMillis() - startTime;
 
     System.out.println("Time in seconds: " + (timeSpend / 1000));
-    if (nrOfMatchesPlayed < nrOfMatchesToPlay) {
+    if (getNrOfMatchesPlayed() < nrOfMatchesToPlay) {
       System.out.println("Estimated time remaining: " + getTimeRemaining());
     }
   }
@@ -85,7 +92,7 @@ public class Trainer {
       "Statistical report"+
       "\nUsed layout: "+getUsedScenarioTitle()+
       "\nPlaying to scoreBoard: " + statScoreToWin+
-      "\nMatches played: " + nrOfMatchesPlayed + " / " + nrOfMatchesToPlay+
+      "\nMatches played: " + getNrOfMatchesPlayed() + " / " + nrOfMatchesToPlay+
       "\n\n"+
       getWhiteBot().getStats().getBotReport(getBlackBot())+
       getBlackBot().getStats().getBotReport(getWhiteBot())+
@@ -102,7 +109,7 @@ public class Trainer {
     return selectedScenarioNr;
   }
 
-  private int getNrOfCores () {
+  private static int getNrOfCores () {
 
     int cores = Runtime.getRuntime().availableProcessors() - 1;
 
@@ -119,8 +126,8 @@ public class Trainer {
   public String getTimeRemaining () {
 
     long timeSpend = System.currentTimeMillis() - startTime;
-    float timePerMatch = (float) timeSpend / (float) nrOfMatchesPlayed;
-    long estimatedTimeRemaining = (long) (timePerMatch * (nrOfMatchesToPlay - nrOfMatchesPlayed));
+    float timePerMatch = (float) timeSpend / (float) getNrOfMatchesPlayed();
+    long estimatedTimeRemaining = (long) (timePerMatch * (nrOfMatchesToPlay - getNrOfMatchesPlayed()));
 
     return getConvertedTime(estimatedTimeRemaining);
   }
@@ -145,7 +152,7 @@ public class Trainer {
 
     startTime = System.currentTimeMillis();
     nrOfMatchesToPlay = nrOfMatches;
-    nrOfMatchesPlayed = 0;
+    matchesPlayedByThreads = new int[getNrOfCores()];
     running = true;
     killRun = false;
 
@@ -154,19 +161,32 @@ public class Trainer {
     int deviation = nrOfMatches-(matchesPerCore*nrOfCores);
     int lastThreadNOM = matchesPerCore+deviation;
 
-    for (int a = 0; a < nrOfCores; a++) {
-      if (a < nrOfCores-1) {
-        playMatchesThread(matchesPerCore,
-          true
+    System.out.println("Deviation: "+deviation);
+    System.out.println("Starting threads: "+nrOfCores);
+    System.out.println("Matches pr thread: "+matchesPerCore);
+    System.out.println("Matches last thread: "+lastThreadNOM);
+
+    for (int threadNr = 0; threadNr < nrOfCores; threadNr++) {
+      if (threadNr < nrOfCores-1) {
+        playMatchesThread(
+          matchesPerCore,
+          threadNr,
+          false
         );
       } else {
-        playMatchesThread(lastThreadNOM, false);
+        playMatchesThread(
+          lastThreadNOM,
+          threadNr,
+          true
+        );
       }
     }
     printInitialReport();
   }
 
-  public void playMatchesThread(int nrOfMatches, boolean lastThread) {
+  public void playMatchesThread(int nrOfMatches, int threadNr, boolean lastThread) {
+
+    System.out.println("Starting thread: "+threadNr+" [matches: "+nrOfMatches+"]");
 
     new Thread(() -> {
 
@@ -189,7 +209,7 @@ public class Trainer {
             1,
             bots.get(whiteBot)
           );
-        nrOfMatchesPlayed++;
+        matchesPlayedByThreads[threadNr]++;
         if (killRun) {
           running = false;
           System.out.println("Statistical run terminated");
@@ -197,12 +217,14 @@ public class Trainer {
         }
       }
       if (lastThread) {
-        while (nrOfMatchesPlayed < nrOfMatchesToPlay) {
+        while (getNrOfMatchesPlayed() < nrOfMatchesToPlay) {
           threadSleep(100);
         }
         printReport();
         running = false;
         System.out.println("Last thread signing out");
+      } else {
+        System.out.println("Thread signing out: "+threadNr);
       }
     }).start();
   }

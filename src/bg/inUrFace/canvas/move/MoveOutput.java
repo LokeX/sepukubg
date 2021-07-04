@@ -70,8 +70,20 @@ public class MoveOutput extends MoveLayout {
 
     new Thread(() -> {
 
-      List<Layout> movePointLayouts = getMovePointLayouts().stream().map(Layout::new).collect(Collectors.toList());
-      int errorCorrectedEndPoint = endPoint < movePointLayouts.size() ? endPoint : movePointLayouts.size()-1;
+      List<Layout> movePointLayouts =
+        evaluatedMove.getMovePointLayouts()
+          .stream()
+          .map(Layout::new)
+          .collect(Collectors.toList());
+      System.out.println("Showing "+movePointLayouts.size()+" layouts:");
+//      if (movePointLayouts.isEmpty()) {
+//        System.out.println("No layouts:");
+//
+//      } else {
+//        movePointLayouts.stream().map(MoveLayout::new).forEach(MoveLayout::printMovePoints);
+//      }
+      int errorCorrectedEndPoint =
+        endPoint < movePointLayouts.size() ? endPoint : movePointLayouts.size()-1;
 
       for (int a = startPoint; a <= errorCorrectedEndPoint; a++) {
 //        for (int a = startPoint; a <= errorCorrectedEndPoint; a++) {

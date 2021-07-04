@@ -8,16 +8,11 @@ public class MovePointLayouts extends MoveLayout {
 
   private List<MoveLayout> movePointLayouts;
   private final int[] originalMovePoints;
-  private int position = 0;
+  private int position;
 
   public MovePointLayouts (MoveLayout moveLayout) {
 
     super(moveLayout);
-    setPoint(
-      parentMoves
-        .getParentMoveLayout()
-        .getPoint()
-    );
     originalMovePoints = movePoints.clone();
     Arrays.fill(movePoints, -1);
   }
@@ -40,12 +35,12 @@ public class MovePointLayouts extends MoveLayout {
 
   private void generateListEntries() {
 
-    movePoints[position] = originalMovePoints[position];
-    paintPosition();
-    movePointLayouts.add(new MoveLayout(this));
-    if (position < movePoints.length-1) {
-      if (originalMovePoints[++position] != -1) {
-          generateListEntries();
+    if (originalMovePoints[position] != -1) {
+      movePoints[position] = originalMovePoints[position];
+      paintPosition();
+      movePointLayouts.add(new MoveLayout(this));
+      if (++position < movePoints.length) {
+        generateListEntries();
       }
     }
   }
@@ -54,13 +49,9 @@ public class MovePointLayouts extends MoveLayout {
 
     if (movePointLayouts == null) {
       movePointLayouts = new ArrayList<>();
-      if (isIllegal()) {
-        movePointLayouts.add(
-          parentMoves.getParentMoveLayout()
-        );
-      } else {
-        generateListEntries();
-      }
+//      movePointLayouts.add(new MoveLayout(parentMoves.getParentMoveLayout()));
+      setPoint(parentMoves.getParentMoveLayout().getPoint());
+      generateListEntries();
     }
     return movePointLayouts;
   }
