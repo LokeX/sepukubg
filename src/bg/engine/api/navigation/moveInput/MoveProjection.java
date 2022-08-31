@@ -13,7 +13,6 @@ public class MoveProjection extends MoveSelector {
   }
 
   private void projectMovePoints (
-
     int terminalPosition,
     List<Integer> endingPoints,
     List<Integer> validEndingPoints) {

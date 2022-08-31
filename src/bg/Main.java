@@ -103,6 +103,8 @@ public class Main {
     trainer = new Trainer();
 
     if (nrOfStatGames == 0) {
+      System.out.println(Window.class.getResource("Icon/AppIcon.gif"));
+
       Window.runWindow();
       mouse = new MouseApi();
       engineApi = new EngineApi();

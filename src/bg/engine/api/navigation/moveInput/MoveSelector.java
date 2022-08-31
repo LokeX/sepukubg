@@ -258,8 +258,7 @@ public class MoveSelector extends Moves {
     System.out.println("endingPointPosition: "+endingPointPosition);
     if (endingPointPosition > position()) {
       System.out.println("Projecting movePoints");
-      movePoints =
-        new MoveProjection(this)
+      movePoints = new MoveProjection(this)
         .projectMovePointsTo(endingPointPosition);
       lastRecordedInputPosition = position()-1;
     } else {

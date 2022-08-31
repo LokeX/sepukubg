@@ -14,7 +14,7 @@ import static bg.Main.win;
 
 public class DoublingCube extends MouseAdapter implements Paintable {
 
-  ImageIcon cubeScab = new ImageIcon(this.getClass().getResource("Cube/double.gif"));
+  ImageIcon cubeScab = new ImageIcon(this.getClass().getResource("cube/double.gif"));
   ImageIcon cubeIcon;
   int height;
   int width;

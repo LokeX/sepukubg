@@ -79,7 +79,7 @@ public class DicePainter implements Paintable {
 
     for (int a = 0; a < dieFaces.length; a++) {
       dieFaces[a] = new ImageIcon(
-        this.getClass().getResource("Dice/" + Integer.toString(a + 1) + ".gif")
+        getClass().getResource("dice/" + Integer.toString(a + 1) + ".gif")
       );
       dieFaceIcons[a] = new ImageIcon(dieFaces[a].getImage());
     }
