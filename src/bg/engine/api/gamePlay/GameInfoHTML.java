@@ -1,6 +1,4 @@
-package bg.engine.api;
-
-import bg.engine.api.gamePlay.GameInfo;
+package bg.engine.api.gamePlay;
 
 import java.util.stream.IntStream;
 
@@ -15,7 +13,7 @@ public class GameInfoHTML {
 
   private String HTMLFormattedDataString;
 
-  GameInfoHTML getGameDataHTML (GameInfo gameInfo) {
+  public GameInfoHTML getGameDataHTML(GameInfo gameInfo) {
 
     if (gameInfo.dataIsUpdated()) {
       labels = gameInfo.labels();

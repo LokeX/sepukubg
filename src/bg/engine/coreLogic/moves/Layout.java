@@ -236,9 +236,12 @@ public class Layout {
 
     return
       new Moves()
-        .generateMoves(new Layout(
-          this,
-          playerID == 0 ? 1 : 0).flipLayout(),
+        .generateMoves(
+          new Layout(
+            this,
+            playerID == 0 ? 1 : 0
+          )
+          .flipLayout(),
           dice
         );
   }

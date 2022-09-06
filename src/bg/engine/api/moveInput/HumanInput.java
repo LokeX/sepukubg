@@ -1,7 +1,6 @@
-package bg.engine.api;
+package bg.engine.api.moveInput;
 
-import bg.engine.api.navigation.moveInput.HumanMove;
-import bg.engine.api.navigation.moveInput.MoveSelector;
+import bg.engine.api.EngineApi;
 
 import java.util.stream.Stream;
 
@@ -23,11 +22,11 @@ public class HumanInput implements HumanInputAPI {
         .getHumanMove();
   }
 
-  private MoveSelector moveSelector () {
+  private MoveSelection moveSelection() {
 
     return
       humanMove()
-        .getMoveSelector();
+        .getMoveSelection();
   }
 
   @Override
@@ -43,7 +42,7 @@ public class HumanInput implements HumanInputAPI {
 
     return
       humanInputActive()
-        ? moveSelector().getPlayerID()
+        ? moveSelection().getPlayerID()
         : -1;
   }
 
@@ -60,8 +59,8 @@ public class HumanInput implements HumanInputAPI {
 
     return
       humanInputActive()
-      && !moveSelector().endOfInput()
-      && moveSelector().positionIsEndingPoint();
+      && !moveSelection().endOfInput()
+      && moveSelection().positionIsEndingPoint();
   }
 
   @Override
@@ -69,7 +68,7 @@ public class HumanInput implements HumanInputAPI {
 
     return
       humanInputActive()
-        ? moveSelector().validEndingPoints()
+        ? moveSelection().validEndingPoints()
         : null;
   }
 

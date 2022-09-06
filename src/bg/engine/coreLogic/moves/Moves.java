@@ -37,7 +37,7 @@ public class Moves {
     if (moveBonuses == null) {
       generateMoveBonuses();
     }
-    return moveBonuses.get(getMoveNr(move));
+    return moveBonuses.get(getLayoutNr(move));
   }
 
   public boolean noLegalMove () {
@@ -79,7 +79,7 @@ public class Moves {
     return searchEvaluation;
   }
 
-  private int getMoveNr (EvaluatedMove evaluatedMove) {
+  private int getLayoutNr(EvaluatedMove evaluatedMove) {
 
     return evaluatedMoves.indexOf(evaluatedMove);
   }
@@ -146,12 +146,12 @@ public class Moves {
     MoveLayout moveLayout) {
 
     evaluatedMoves.set(
-      getMoveNr(moveLayout),
+      getLayoutNr(moveLayout),
       new EvaluatedMove(moveLayout)
     );
   }
 
-  protected int getMoveNr (Layout layout) {
+  protected int getLayoutNr (Layout layout) {
 
     if (layout != null) {
       return

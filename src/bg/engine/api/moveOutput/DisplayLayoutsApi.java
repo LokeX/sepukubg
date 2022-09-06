@@ -1,4 +1,4 @@
-package bg.engine.api;
+package bg.engine.api.moveOutput;
 
 public interface DisplayLayoutsApi {
 

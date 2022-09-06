@@ -3,6 +3,8 @@ package bg.engine.api.score;
 import bg.engine.coreLogic.score.GameScore;
 import bg.engine.coreLogic.score.MatchScore;
 
+import static java.lang.Math.max;
+
 public class MatchBoard extends MatchScore {
 
   private GameScore gameScore;
@@ -51,10 +53,7 @@ public class MatchBoard extends MatchScore {
     int[] matchPlusGameScores = matchPlusGameScores();
 
     return
-        matchPlusGameScores[0] >
-        matchPlusGameScores[1]
-      ? matchPlusGameScores[0]
-      : matchPlusGameScores[1];
+      max(matchPlusGameScores[0], matchPlusGameScores[1]);
   }
 
   int getWhiteMatchScore () {

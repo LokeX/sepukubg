@@ -1,6 +1,7 @@
-package bg.engine.api;
+package bg.engine.api.moveOutput;
 
-import bg.engine.api.navigation.moveOutput.MoveOutputLayouts;
+import bg.engine.api.EngineApi;
+import bg.engine.api.moveOutput.MoveOutputLayouts;
 import bg.engine.coreLogic.moves.Layout;
 
 public class DisplayLayouts {

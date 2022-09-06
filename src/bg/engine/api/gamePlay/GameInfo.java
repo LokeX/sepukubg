@@ -1,6 +1,6 @@
 package bg.engine.api.gamePlay;
 
-import bg.engine.api.navigation.moveInput.HumanMove;
+import bg.engine.api.moveInput.HumanMove;
 
 import static java.util.stream.IntStream.range;
 
@@ -108,7 +108,7 @@ public class GameInfo {
 
     return
       humanMove()
-        .getMoveSelector()
+        .getMoveSelection()
         .getMatchingMoveLayout()
         .getMovePointsString();
   }

@@ -1,4 +1,4 @@
-package bg.engine.api;
+package bg.engine.api.moveInput;
 
 import java.util.stream.Stream;
 

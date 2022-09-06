@@ -21,7 +21,7 @@ public class PaintJobs {
   public EndingPointsPainter endingPointsPainter = new EndingPointsPainter();
   public ChequerPainter chequerPainter = new ChequerPainter();
 
-  private List<Paintable> paintJobs = new ArrayList();
+  private List<Paintable> paintJobs = new ArrayList<>();
 
   public PaintJobs () {
 

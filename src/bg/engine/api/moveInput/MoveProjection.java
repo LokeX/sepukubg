@@ -1,13 +1,13 @@
-package bg.engine.api.navigation.moveInput;
+package bg.engine.api.moveInput;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import static bg.util.StreamsUtil.streamAsList;
 
-public class MoveProjection extends MoveSelector {
+public class MoveProjection extends MoveSelection {
 
-  MoveProjection(MoveSelector moveSelector) {
+  MoveProjection(MoveSelection moveSelector) {
 
     super(moveSelector);
   }
@@ -38,29 +38,20 @@ public class MoveProjection extends MoveSelector {
     return movePoints;
   }
 
-  private Stream<Integer> streamProjectedEndingPoints () {
+  Stream<Integer> projectedEndingPoints () {
 
     List<Integer> projectedEndingPoints = new ArrayList<>();
 
-    projectMovePoints(
-      movePoints.length,
-      new ArrayList<>(),
-      projectedEndingPoints
-    );
-    return projectedEndingPoints.stream();
-  }
-
-  Stream<Integer> projectedEndingPoints () {
-
-    Stream<Integer> validEndingPoints =
-      new ArrayList<Integer>().stream();
-
-    if (position()%2 == 1) {
-      validEndingPoints =
-        streamProjectedEndingPoints()
-          .distinct();
+    if (positionIsEndingPoint()) {
+      projectMovePoints(
+        movePoints.length,
+        new ArrayList<>(),
+        projectedEndingPoints
+      );
     }
-    return validEndingPoints;
+    return projectedEndingPoints
+      .stream()
+      .distinct();
   }
 
 }

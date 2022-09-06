@@ -1,9 +1,11 @@
 package bg.engine.api;
 
+import bg.engine.api.gamePlay.GameInfoHTML;
 import bg.engine.api.gamePlay.GameState;
 import bg.engine.api.matchPlay.ActionState;
 import bg.engine.api.matchPlay.MatchCube;
 import bg.engine.api.matchPlay.MatchState;
+import bg.engine.api.moveInput.HumanInput;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.api.score.ScoreBoard;
 import bg.engine.coreLogic.Game;

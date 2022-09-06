@@ -51,6 +51,7 @@ public class MovePointLayouts extends MoveLayout {
       movePointLayouts = new ArrayList<>();
 //      movePointLayouts.add(new MoveLayout(parentMoves.getParentMoveLayout()));
       setPoint(parentMoves.getParentMoveLayout().getPoint());
+//      movePointLayouts.add(parentMoves.getParentMoveLayout());
       generateListEntries();
     }
     return movePointLayouts;

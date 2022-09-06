@@ -15,21 +15,17 @@ public class ThreadUtil {
     
     final Object notifier = new Object();
     
-    new Thread () {
-      
-      @Override
-      public void run () {
-        
-        try {          
-          synchronized (notifier) {
-            notifier.wait();
-          }
-        } catch (InterruptedException ie) {
-          System.out.println(ie.getMessage());
+    new Thread(() -> {
+
+      try {
+        synchronized (notifier) {
+          notifier.wait();
         }
-        runner.run();        
+      } catch (InterruptedException ie) {
+        System.out.println(ie.getMessage());
       }
-    }.start();
+      runner.run();
+    }).start();
     return notifier;
   }
 }

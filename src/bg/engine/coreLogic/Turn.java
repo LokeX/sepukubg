@@ -1,6 +1,6 @@
 package bg.engine.coreLogic;
 
-import bg.engine.api.navigation.moveInput.MoveSelector;
+import bg.engine.api.moveInput.MoveSelection;
 import bg.engine.coreLogic.moves.*;
 
 public class Turn extends Moves {
@@ -75,9 +75,9 @@ public class Turn extends Moves {
     return getPlayedMove().getPlayerID();
   }
 
-  public MoveSelector getMovePoints() {
+  public MoveSelection getMovePoints() {
 
-    return new MoveSelector(this);
+    return new MoveSelection(this);
   }
 
 }

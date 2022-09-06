@@ -1,7 +1,7 @@
-package bg.engine.api.navigation.moveOutput;
+package bg.engine.api.moveOutput;
 
-import bg.engine.api.navigation.Navigation;
-import bg.engine.api.navigation.moveInput.MoveSelector;
+import bg.engine.api.gamePlay.GameState;
+import bg.engine.api.moveInput.MoveSelection;
 import bg.engine.coreLogic.moves.MoveLayout;
 
 import java.util.ArrayList;
@@ -9,12 +9,12 @@ import java.util.List;
 
 public class MoveOutput {
 
-  private Navigation navigation;
+  private GameState gameState;
   private MoveOutputLayouts moveOutputLayouts;
 
-  public MoveOutput (Navigation navigation) {
+  public MoveOutput (GameState gameState) {
 
-    this.navigation = navigation;
+    this.gameState = gameState;
   }
 
   public MoveOutputLayouts getMoveOutputLayouts() {
@@ -48,17 +48,17 @@ public class MoveOutput {
   private boolean isHumanMove () {
 
     return
-      navigation
+      gameState
         .getHumanMove()
         .inputReady();
   }
 
-  private MoveSelector moveSelector () {
+  private MoveSelection moveSelector () {
 
     return
-      navigation
+      gameState
         .getHumanMove()
-        .getMoveSelector();
+        .getMoveSelection();
   }
 
   private boolean hasHumanOutput() {
@@ -77,7 +77,7 @@ public class MoveOutput {
 
     return
       new ArrayList<>(
-        navigation
+        gameState
           .selectedMove()
           .getMovePointLayouts()
       );

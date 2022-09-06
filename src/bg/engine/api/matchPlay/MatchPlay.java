@@ -1,7 +1,7 @@
 package bg.engine.api.matchPlay;
 
 import bg.Main;
-import bg.engine.api.navigation.moveInput.HumanMove;
+import bg.engine.api.moveInput.HumanMove;
 import bg.engine.api.score.ScoreBoard;
 import bg.engine.coreLogic.moves.Layout;
 

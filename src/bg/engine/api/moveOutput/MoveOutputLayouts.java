@@ -1,4 +1,4 @@
-package bg.engine.api.navigation.moveOutput;
+package bg.engine.api.moveOutput;
 
 import bg.engine.coreLogic.moves.Layout;
 import bg.engine.coreLogic.moves.MoveLayout;

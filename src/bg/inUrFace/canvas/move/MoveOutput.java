@@ -74,7 +74,7 @@ public class MoveOutput extends MoveLayout {
         evaluatedMove.getMovePointLayouts()
           .stream()
           .map(Layout::new)
-          .collect(Collectors.toList());
+          .toList();
       System.out.println("Showing "+movePointLayouts.size()+" layouts:");
 //      if (movePointLayouts.isEmpty()) {
 //        System.out.println("No layouts:");

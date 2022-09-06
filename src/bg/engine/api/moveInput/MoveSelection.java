@@ -1,4 +1,4 @@
-package bg.engine.api.navigation.moveInput;
+package bg.engine.api.moveInput;
 
 import bg.engine.coreLogic.Turn;
 import bg.engine.coreLogic.moves.MoveLayout;
@@ -9,22 +9,21 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static bg.util.StreamsUtil.streamAsList;
-import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
-public class MoveSelector extends Moves {
+public class MoveSelection extends Moves {
 
-  int[] movePoints;
+  public int[] movePoints;
   private int inputPoint;
   private int lastRecordedInputPosition;
 
-  MoveSelector(MoveSelector moveSelector) {
+  protected MoveSelection(MoveSelection moveSelector) {
 
     super(moveSelector);
     this.movePoints = moveSelector.movePoints.clone();
   }
 
-  public MoveSelector(Turn turn) {
+  public MoveSelection(Turn turn) {
 
     super(turn);
     resetMovePoints();
@@ -155,7 +154,7 @@ public class MoveSelector extends Moves {
       position() == 0
         ? getParentMoveLayout()
         : movePointLayouts()
-          .collect(toList())
+          .toList()
           .get(position()-1);
   }
 
@@ -171,8 +170,7 @@ public class MoveSelector extends Moves {
 
   public List<MoveLayout> getMovePointLayouts() {
 
-    List<MoveLayout> moveLayouts =
-      movePointLayouts().collect(toList());
+    List<MoveLayout> moveLayouts = movePointLayouts().toList();
     int lastActualInputPosition = position()-1;
 
     if (lastActualInputPosition > lastRecordedInputPosition) {
@@ -201,30 +199,20 @@ public class MoveSelector extends Moves {
       && pointsIn(position).anyMatch(point -> point == inputPoint);
   }
 
-  private void autoSelect (int max) {
+  void autoSelect () {
 
-    if (position() < max && uniquePointIn(position())) {
-      movePoints[position()] =
-        pointsIn(position())
+    int position = position();
+
+    if (position < movePoints.length && uniquePointIn(position)) {
+      movePoints[position] =
+        pointsIn(position)
           .findFirst()
           .orElse(-1);
-      autoSelect(max);
+      autoSelect();
     }
   }
 
-  void initialSelection() {
-
-    if (position() == 0) {
-      autoSelect(movePoints.length);
-
-      int storedPosition = position();
-
-      resetMovePoints();
-      autoSelect(storedPosition - (storedPosition%2));
-    }
-  }
-
-  boolean isUniqueMove () {
+  public boolean isUniqueMove() {
 
     return
       matchingMoves().count() == 1;
@@ -238,17 +226,9 @@ public class MoveSelector extends Moves {
         : null;
   }
 
-  private void setAnyUniqueMove () {
+  public int getUniqueEvaluatedMoveNr() {
 
-    if (isUniqueMove()) {
-      setEvaluatedMove(uniqueMove());
-      movePoints = uniqueMove().getMovePoints();
-    }
-  }
-
-  int getUniqueEvaluatedMoveNr () {
-
-    return getMoveNr(uniqueMove());
+    return getLayoutNr(uniqueMove());
   }
 
   private void setEndingPoint () {
@@ -269,15 +249,21 @@ public class MoveSelector extends Moves {
   private boolean explicitEndingPoint () {
 
     return
-      isLegalEndingPoint(position())
-      && pointsIn(position()).count() == 1;
+      isEndingPoint(position())
+      && validEndingPoints().count() == 1;
   }
 
   private void setInputPoint () {
 
     if (inputPointIsLegalStartingPoint(position())) {
+      System.out.println("Input is startingPoint:");
       movePoints[position()] = inputPoint;
+      printMovePoints();
+      System.out.println("position: "+position());
+      System.out.println("isLegalEndingPoint: "+isLegalEndingPoint(position()));
+      System.out.println("validEndingPointCount: "+validEndingPoints().count());
       if (explicitEndingPoint()) {
+        System.out.println("Explicit endingPoint in pos: "+position());
         movePoints[position()] = pointsIn(position()).findAny().get();
       }
     } else if (isLegalEndingPoint(inputPoint)) {
@@ -286,11 +272,6 @@ public class MoveSelector extends Moves {
   }
 
   private void deleteLatestInput () {
-
-//    int inputPointNr = position();
-//    if (inputPointNr > 0) {
-//      movePoints[inputPointNr-1] = -1;
-//    }
 
     if (--lastRecordedInputPosition < 0) {
       lastRecordedInputPosition = 0;
@@ -308,13 +289,6 @@ public class MoveSelector extends Moves {
     return position() != lastRecordedInputPosition;
   }
 
-  private void backSpaceAPoint () {
-
-    if (position() > 0) {
-      movePoints[position()-1] = -1;
-    }
-  }
-
   void inputPoint (int point) {
 
     if (!endOfInput() && moveIsLegal()) {
@@ -322,23 +296,12 @@ public class MoveSelector extends Moves {
       lastRecordedInputPosition = position();
       printReport();
       if (point == -1) {
-        backSpaceAPoint();
+        deleteLatestInput();
       } else {
         setInputPoint();
-        setAnyUniqueMove();
       }
       printReport();
     }
-  }
-
-  void input (int input) {
-
-    if (input == -1) {
-      deleteLatestInput();
-    } else {
-      inputPoint(input);
-    }
-
   }
 
   private void printMovePoints () {

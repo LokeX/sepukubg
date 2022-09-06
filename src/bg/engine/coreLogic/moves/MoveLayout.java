@@ -12,10 +12,16 @@ import static java.util.Arrays.*;
 public class MoveLayout extends Layout {
 
   private MovePointLayouts movePointLayouts;
+
   Moves parentMoves;
   int[] hitPoints;
   int[] movePoints;
   int[] movePoints2;
+
+  public MoveLayout getParentMoveLayout () {
+
+    return parentMoves.getParentMoveLayout();
+  }
 
   public int[] getDice() {
 

@@ -1,6 +1,5 @@
 package bg.inUrFace.menu.dropMenues;
 
-import bg.engine.api.DisplayLayouts;
 import bg.inUrFace.canvas.move.LayoutDisplay;
 import bg.inUrFace.canvas.move.MoveOutput;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
@@ -221,9 +220,11 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousPartMove.addActionListener((ActionEvent e) -> {
       if (engineApi.getSelectedTurn() != null) {
-        new LayoutDisplay().displayLayout(engineApi
+        new LayoutDisplay().displayLayout(
+          engineApi
           .getGameState()
-          .selectPreviousPartMove());
+          .selectPreviousPartMove()
+        );
       }
     });
   }
@@ -240,9 +241,11 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextPartMove.addActionListener((ActionEvent e) -> {
-      new LayoutDisplay().displayLayout(engineApi
+      new LayoutDisplay().displayLayout(
+        engineApi
         .getGameState()
-        .selectNextPartMove());
+        .selectNextPartMove()
+      );
     });
   }
 
