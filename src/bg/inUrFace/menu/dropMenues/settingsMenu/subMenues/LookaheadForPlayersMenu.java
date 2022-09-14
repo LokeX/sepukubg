@@ -1,6 +1,7 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -31,22 +32,16 @@ public class LookaheadForPlayersMenu extends JMenu {
   private void setupAllPlayers() {
 
     add(allPlayers);
-    allPlayers.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    allPlayers.addActionListener((ActionEvent e) -> {
         settings.setLookaheadForAllPlayers(true);
-      }
     });
   }
 
   private void setupBotsOnly() {
 
     add(botsOnly);
-    botsOnly.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    botsOnly.addActionListener((ActionEvent e) -> {
         settings.setLookaheadForAllPlayers(false);
-      }
     });
   }
 

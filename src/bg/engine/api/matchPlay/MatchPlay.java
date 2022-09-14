@@ -105,7 +105,7 @@ public class MatchPlay {
     } else if (!matchIsPlaying()) {
       newMatch();
     } else if (gameOver()) {
-      matchState.newGameNew();
+//      matchState.newGameNew();
     } else {
       matchState.newTurn();
     }

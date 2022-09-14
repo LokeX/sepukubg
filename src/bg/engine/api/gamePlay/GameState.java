@@ -1,8 +1,5 @@
 package bg.engine.api.gamePlay;
 
-import bg.engine.api.moveInput.HumanMove;
-import bg.engine.api.moveOutput.MoveOutput;
-import bg.engine.api.moveOutput.MoveOutputLayouts;
 import bg.engine.coreLogic.Game;
 import bg.engine.coreLogic.Turn;
 import bg.engine.coreLogic.moves.EvaluatedMove;
@@ -18,10 +15,6 @@ import static bg.Main.settings;
 
 public class GameState extends Game {
 
-  private Search search;
-  private GameInfo gameInfo;
-  private HumanMove humanMove;
-  private MoveOutput moveOutput;
   protected int turnNr = 0;
   protected int moveNr = 0;
   protected int partMoveNr = -1;
@@ -29,20 +22,6 @@ public class GameState extends Game {
   public GameState (Layout matchLayout) {
 
     super(matchLayout);
-    search = new Search(this);
-    gameInfo = new GameInfo(this);
-    humanMove = new HumanMove(this);
-    moveOutput = new MoveOutput(this);
-  }
-
-  public Search getSearch() {
-
-    return search;
-  }
-
-  public GameInfo getGameInfo() {
-
-    return gameInfo.getGameData();
   }
 
   public boolean playedMoveSelected() {
@@ -77,15 +56,6 @@ public class GameState extends Game {
       !selectedMove().isIllegal();
   }
 
-  public void moveNew () {
-
-    if (moveIsLegal() && playerIsHuman()) {
-      startHumanMove();
-    } else {
-      startComputerMove();
-    }
-  }
-
   public void newTurn () {
 
     if (nrOfTurns() == 0) {
@@ -103,18 +73,6 @@ public class GameState extends Game {
     turnNr = lastTurnNr();
     moveNr = 0;
   }
-  public MoveOutputLayouts getMoveOutputLayouts() {
-
-    return moveOutput.getMoveOutputLayouts();
-  }
-
-  public void startComputerMove () {
-
-    endHumanMove();
-    moveOutput.newMove();
-    System.out.println("Computer move started");
-  }
-
   public int getTurnNr () {
 
     return turnNr;
@@ -128,23 +86,6 @@ public class GameState extends Game {
   public void setMoveNr (int moveNr) {
 
     this.moveNr = moveNr;
-  }
-
-  public HumanMove getHumanMove () {
-
-    return humanMove;
-  }
-
-  public void startHumanMove () {
-
-    System.out.println("Human move started");
-    humanMove.startMoveSelection();
-  }
-
-  public void endHumanMove () {
-
-    System.out.println("Human move ended");
-    humanMove.endMoveSelection();
   }
 
   public Turn selectedTurn () {

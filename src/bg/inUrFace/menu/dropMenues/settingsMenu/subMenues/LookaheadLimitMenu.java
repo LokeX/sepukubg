@@ -1,6 +1,7 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -35,33 +36,24 @@ public class LookaheadLimitMenu extends JMenu {
     private void setupLimit3() {
 
     add(limit3);
-    limit3.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    limit3.addActionListener((ActionEvent e) -> {
         settings.setNrOfMovesToSearch(3);
-      }
     });
   }
 
   private void setupLimit5() {
 
     add(limit5);
-    limit5.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    limit5.addActionListener((ActionEvent e) -> {
         settings.setNrOfMovesToSearch(5);
-      }
     });
   }
 
   private void setupLimit10() {
 
     add(limit10);
-    limit10.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    limit10.addActionListener((ActionEvent e) -> {
         settings.setNrOfMovesToSearch(10);
-      }
     });
   }
 

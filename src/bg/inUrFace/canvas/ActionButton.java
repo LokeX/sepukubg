@@ -111,7 +111,6 @@ public class ActionButton extends TextBatch implements Paintable {
   private void execButtonClick () {
 
     showPleaseWaitButton = true;
-    mouse.getMoveInputListener().setAcceptMoveInput(false);
     Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
     bg.util.ThreadUtil.threadSleep(100);
     engineApi.getMatchState().actionButtonClicked();

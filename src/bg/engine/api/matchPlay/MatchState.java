@@ -1,29 +1,38 @@
 package bg.engine.api.matchPlay;
 
 import bg.Main;
+import bg.engine.api.gamePlay.GameInfo;
 import bg.engine.api.gamePlay.GameState;
+import bg.engine.api.gamePlay.Search;
 import bg.engine.api.moveInput.HumanMove;
+import bg.engine.api.MoveLayoutOutput;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.coreLogic.moves.Layout;
-import bg.inUrFace.canvas.move.MoveOutput;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
-import bg.inUrFace.mouse.MoveInput;
 
 import static bg.Main.*;
 import static bg.util.ThreadUtil.runWhenNotified;
 
 public class MatchState {
 
+  private GameInfo gameInfo;
   private Layout matchLayout;
   private MatchBoard matchBoard;
   private GameState gameState;
   private ActionState actionState;
+  private Search search;
+  private HumanMove humanMove;
+  private MoveLayoutOutput moveOutput;
   private boolean autoCompleteGame = false;
 
   public MatchState() {
 
     matchBoard = new MatchBoard(settings.getScoreToWin());
     actionState = new ActionState(this);
+    search = new Search(this);
+    humanMove = new HumanMove(this);
+    moveOutput = new MoveLayoutOutput();
+    gameInfo = new GameInfo(this);
     new ScenarioOutput(scenarios).outputSelectedScenario();
     getActionButton().setShowPleaseWaitButton(false);
     getActionButton().setText("Start Match");
@@ -35,6 +44,22 @@ public class MatchState {
 
     this.matchLayout = matchLayout;
     matchBoard = new MatchBoard(settings.getScoreToWin());
+  }
+
+  public MoveLayoutOutput getMoveOutput() {
+
+    return
+      moveOutput;
+  }
+
+  public GameInfo getGameInfo() {
+
+    return gameInfo.getGameData();
+  }
+
+  public Search getSearch() {
+
+    return search;
   }
 
   public MatchBoard getMatchBoard() {
@@ -55,9 +80,7 @@ public class MatchState {
   public HumanMove getHumanMove () {
 
     return
-     gameIsPlaying()
-      ? gameState.getHumanMove()
-      : null;
+      humanMove;
   }
 
   public boolean getAutoCompleteGame () {
@@ -120,70 +143,37 @@ public class MatchState {
       autoCompleteGame = false;
       matchBoard.addGameScore(getGameState().getGameScore());
     } else if (settings.isAutomatedEndTurn() || autoCompleteGame) {
-      getMoveInputListener().setAcceptMoveInput(false);
-      gameState.endHumanMove();
+      humanMove.endMove();
       actionButtonClicked();
     }
   }
 
-  public void showMove(int showMoveStartPoint) {
-
-    MoveOutput moveOutput = new MoveOutput(engineApi.getSelectedMove());
-
-    System.out.println("Showing move:");
-    moveOutput.printMovePoints();
-    System.out.println();
-    moveOutput.writeMove();
-    moveOutput.showMove(
-      showMoveStartPoint,
-      engineApi.getSelectedMove().getMovePoints().length-1,
-      runWhenNotified(this::endTurn)
-    );
-  }
-
-  private boolean noMoveAutoCompletion () {
-
-    return
-      !getSettings().isAutoCompleteMoves() &&
-      !getSettings().isAutoCompletePartMoves();
-  }
-
   public void humanMove() {
 
+    System.out.println("In matchState.humanMove");
+    humanMove.startMove();
     getActionButton().setHideActionButton(true);
-    if (engineApi.getSelectedTurn().getNrOfMoves() > 1 || noMoveAutoCompletion()) {
-      System.out.println("Get human inputPoint");
-      getMouse().setMoveInput(new MoveInput());
-      getMouse().setAcceptMoveInput(true);
-      gameState.startHumanMove();
-      if (getSettings().isAutoCompletePartMoves()) {
-
-        //new inputPoint output auto-move
-//        engineApi.humanMove.initialSelection();
-
-        //old inputPoint output auto-move
-        getMouse().getMoveInput().initialAutoMove(runWhenNotified(() -> {
-          if (getMouse().getMoveInput().endOfInputReached()) {
-            endTurn();
-          }
-        }));
-      }
-    } else {
-      showMove(0);
-    }
   }
 
   private void computerMove () {
 
     System.out.println("Computer move");
-//    gameState.startComputerMove();
-    showMove(0);
-
+    moveOutput.setEndOfOutputNotifier(
+      runWhenNotified(this::endTurn)
+    );
+    moveOutput.setOutputLayouts(
+      gameState
+        .selectedMove()
+        .getMovePointLayouts()
+        .stream()
+        .map(Layout::new)
+        .toList()
+    );
   }
 
   private void noMove () {
 
-    new MoveOutput(engineApi.getSelectedMove()).outputMove();
+    System.out.println("No move");
     endTurn();
   }
 
@@ -200,26 +190,18 @@ public class MatchState {
     }
   }
 
-  void newTurn() {
+  public void newTurn() {
 
-    gameState.endHumanMove();
+    if (humanMove.inputReady()) {
+      humanMove.playMove();
+    }
     gameState.newTurn();
     Main.sound.playSoundEffect("wuerfelbecher");
-    getGameState().getSearch().searchRolledMoves();
+    getSearch().searchRolledMoves();
     getActionButton().setHideActionButton(true);
     getActionButton().setShowPleaseWaitButton(false);
     move();
   }
-
-//  void newTurnNew() {
-//
-//    gameState.newTurn();
-//    Main.sound.playSoundEffect("wuerfelbecher");
-//    getGameState().getSearch().searchRolledMoves();
-//    getActionButton().setHideActionButton(true);
-//    getActionButton().setShowPleaseWaitButton(false);
-//    gameState.moveNew();
-//  }
 
   private void initMatch () {
 
@@ -250,14 +232,6 @@ public class MatchState {
       initGame();
     }
     startNewGame ();
-  }
-
-  void newGameNew () {
-
-    matchBoard.mergeScores();
-    win.canvas.setDisplayedLayout(new Layout(matchLayout));
-    gameState = new GameState(matchLayout);
-    newTurn();
   }
 
   private boolean startMatch () {

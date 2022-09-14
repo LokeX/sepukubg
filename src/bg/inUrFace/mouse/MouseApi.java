@@ -23,7 +23,7 @@ public class MouseApi extends MouseAdapter {
 //  public MoveInputController moveInputController = new MoveInputController();
   public MoveInputListener moveInputListener = new MoveInputListener();
   public BonusPainter bonusPainter = getCanvas().getPaintJobs().bonusPainter;
-  private List<MouseListener> listeners = new ArrayList();
+  private List<MouseListener> listeners = new ArrayList<>();
 
   public MouseApi() {
 
@@ -54,21 +54,6 @@ public class MouseApi extends MouseAdapter {
   public DoublingCube getDoublingCube () {
 
     return doublingCube;
-  }
-
-  public MoveInput getMoveInput () {
-
-    return moveInputListener.getMoveInput();
-  }
-
-  public void setMoveInput (MoveInput moveInput) {
-
-    this.moveInputListener.setMoveInput(moveInput);
-  }
-
-  public void setAcceptMoveInput (boolean acceptMoveInput) {
-
-    moveInputListener.setAcceptMoveInput(acceptMoveInput);
   }
 
   private void setupControllersList () {

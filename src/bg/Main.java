@@ -72,11 +72,6 @@ public class Main {
     return settings;
   }
 
-  public static MoveInput getMoveInput () {
-
-    return mouse.getMoveInput();
-  }
-
   public static InformationBar getInformationBar() {
 
     return win.informationBar;

@@ -66,6 +66,8 @@ public class Turn extends Moves {
 
   public void setDice (int[] dice) {
 
+    System.out.println("Setting dice");
+    new Dice(dice).printDice();
     generateMoves(getParentMoveLayout(), dice);
     setPlayedMoveNr(0);
   }

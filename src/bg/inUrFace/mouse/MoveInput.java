@@ -359,7 +359,7 @@ public class MoveInput {
       }
       setMoveInputAsSelectedTurnsSelectedLegalMove();
       if (inputPoint < engineApi.getSelectedMove().getNrOfPartMoves()*2) {
-        engineApi.getMatchState().showMove(inputPoint);
+//        engineApi.getMatchState().showMove(inputPoint);
         inputPoint = engineApi.getSelectedMove().getNrOfPartMoves()*2;
       } else {
         new MoveOutput(engineApi.getSelectedMove()).outputMove();

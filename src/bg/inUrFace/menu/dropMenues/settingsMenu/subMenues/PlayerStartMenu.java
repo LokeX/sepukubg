@@ -2,6 +2,8 @@ package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import bg.Main;
 import static bg.Main.settings;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
@@ -34,33 +36,24 @@ public class PlayerStartMenu extends JMenu {
   private void setupWhitePlayerStart () {
 
     add(whitePlayerStart);
-    whitePlayerStart.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    whitePlayerStart.addActionListener((ActionEvent e) -> {
         Main.settings.setGameStartMode(0);
-      }
     });
   }
 
   private void setupBlackPlayerStart () {
 
     add(blackPlayerStart);
-    blackPlayerStart.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    blackPlayerStart.addActionListener((ActionEvent e) -> {
         Main.settings.setGameStartMode(1);
-      }
     });
   }
 
   private void setupThrowDiceStart () {
 
     add(throwDiceStart);
-    throwDiceStart.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    throwDiceStart.addActionListener((ActionEvent e) -> {
         Main.settings.setGameStartMode(2);
-      }
     });
   }
 

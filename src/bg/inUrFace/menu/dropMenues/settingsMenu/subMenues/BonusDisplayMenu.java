@@ -5,6 +5,8 @@ import bg.inUrFace.canvas.move.MoveOutput;
 
 import static bg.Main.engineApi;
 import static bg.Main.settings;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
@@ -52,52 +54,36 @@ public class BonusDisplayMenu extends JMenu {
     private void setupMovingPlayer () {
 
     add(movingPlayer);
-    movingPlayer.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    movingPlayer.addActionListener((ActionEvent e) ->  {
         Main.settings.setBonusDisplayMode(1);
         new MoveOutput(engineApi.getSelectedMove()).writeMove();
-//        Main.api.getSelectedTurn().getSelectedMove().writeMove();
-      }
     });
   }
 
   private void setupShowOpponent () {
 
     add(showOpponent);
-    showOpponent.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    showOpponent.addActionListener((ActionEvent e) ->  {
         Main.settings.setBonusDisplayMode(2);
         new MoveOutput(engineApi.getSelectedMove()).writeMove();
-//        Main.api.getSelectedTurn().getSelectedMove().writeMove();
-      }
     });
   }
 
   private void setupShowBothPlayers () {
 
     add(showBothPlayers);
-    showBothPlayers.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    showBothPlayers.addActionListener((ActionEvent e) ->  {
         Main.settings.setBonusDisplayMode(0);
         new MoveOutput(engineApi.getSelectedMove()).writeMove();
-//        Main.api.getSelectedTurn().getSelectedMove().writeMove();
-      }
     });
   }
 
   private void setupShowNone () {
 
     add(showNone);
-    showNone.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
-        settings.setBonusDisplayMode(3);
+    showNone.addActionListener((ActionEvent e) ->  {
+        Main.settings.setBonusDisplayMode(3);
         new MoveOutput(engineApi.getSelectedMove()).writeMove();
-//        Main.api.getSelectedTurn().getSelectedMove().writeMove();
-      }
     });
   }
 

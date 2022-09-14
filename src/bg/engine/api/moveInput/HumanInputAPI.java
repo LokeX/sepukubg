@@ -13,4 +13,6 @@ public interface HumanInputAPI {
   boolean endingPointIsNext();
 
   Stream<Integer> getEndingPoints();
+
+  int[] getMovePoints ();
 }

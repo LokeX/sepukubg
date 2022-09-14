@@ -1,6 +1,8 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import static bg.Main.settings;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
@@ -33,33 +35,24 @@ public class MoveCompletionMenu extends JMenu {
   private void setupManualMoves () {
 
     add(manualMoves);
-    manualMoves.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    manualMoves.addActionListener((ActionEvent e) -> {
         settings.setAutoMoves(0);
-      }
     });
   }
 
   private void setupAutomateMoves () {
 
     add(automateMoves);
-    automateMoves.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    automateMoves.addActionListener((ActionEvent e) -> {
         settings.setAutoMoves(1);
-      }
     });
   }
 
   private void setupAutomatePartMoves () {
 
     add(automatePartMoves);
-    automatePartMoves.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    automatePartMoves.addActionListener((ActionEvent e) -> {
         settings.setAutoMoves(2);
-      }
     });
   }
 

@@ -1,6 +1,7 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -39,44 +40,32 @@ public class LookaheadToTurnMenu extends JMenu {
     private void setupSearchIsOff() {
 
     add(searchIsOff);
-    searchIsOff.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    searchIsOff.addActionListener((ActionEvent e) -> {
         settings.setSearchToPly(0);
-      }
     });
   }
 
   private void setupSearchToPly1() {
 
     add(searchToPly1);
-    searchToPly1.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    searchToPly1.addActionListener((ActionEvent e) -> {
         settings.setSearchToPly(1);
-      }
     });
   }
 
   private void setupSearchToPly2() {
 
     add(searchToPly2);
-    searchToPly2.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    searchToPly2.addActionListener((ActionEvent e) -> {
         settings.setSearchToPly(2);
-      }
     });
   }
 
   private void setupSearchToPly3() {
 
     add(searchToPly3);
-    searchToPly3.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    searchToPly3.addActionListener((ActionEvent e) -> {
         settings.setSearchToPly(3);
-      }
     });
   }
 

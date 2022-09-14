@@ -53,7 +53,7 @@ public class EngineApi {
     return
       gameIsPlaying()
         ? gameInfoHTML.getGameDataHTML(
-            getGameState().getGameInfo()
+            getMatchState().getGameInfo()
           )
         : null;
   }
@@ -174,6 +174,14 @@ public class EngineApi {
       matchState
         .gameIsPlaying();
   }
+
+ public MoveLayoutOutput getMoveOutput () {
+
+    return
+      matchState != null
+      ? matchState.getMoveOutput()
+      : null;
+ }
 
   public ScoreBoard getScoreBoard() {
 

@@ -2,6 +2,8 @@ package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import bg.Main;
 import static bg.Main.settings;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
@@ -46,44 +48,32 @@ public class PlayersMenu extends JMenu {
   private void setupWhiteHuman () {
 
     whitePlayerMenu.add(whiteHuman);
-    whiteHuman.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    whiteHuman.addActionListener((ActionEvent e) -> {
         Main.settings.setPlayerStatus(0, 0);
-      }
     });
   }
 
   private void setupWhiteComputer () {
 
     whitePlayerMenu.add(whiteComputer);
-    whiteComputer.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    whiteComputer.addActionListener((ActionEvent e) -> {
         Main.settings.setPlayerStatus(0, 1);
-      }
     });
   }
 
   private void setupBlackHuman () {
 
     blackPlayerMenu.add(blackHuman);
-    blackHuman.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    blackHuman.addActionListener((ActionEvent e) -> {
         Main.settings.setPlayerStatus(1, 0);
-      }
     });
   }
 
   private void setupBlackComputer () {
 
     blackPlayerMenu.add(blackComputer);
-    blackComputer.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    blackComputer.addActionListener((ActionEvent e) -> {
         Main.settings.setPlayerStatus(1, 1);
-      }
     });
   }
 

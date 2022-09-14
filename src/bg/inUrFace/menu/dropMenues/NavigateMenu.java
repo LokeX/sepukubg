@@ -1,7 +1,5 @@
 package bg.inUrFace.menu.dropMenues;
 
-import bg.inUrFace.canvas.move.LayoutDisplay;
-import bg.inUrFace.canvas.move.MoveOutput;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
 import bg.util.time.Timeable;
 import static bg.Main.scenarios;
@@ -56,17 +54,26 @@ public class NavigateMenu extends JMenu implements Timeable {
         KeyStroke
           .getKeyStroke(
             KeyEvent.VK_LEFT,
-            ActionEvent.CTRL_MASK
+            InputEvent.SHIFT_DOWN_MASK
           )
       );
     previousHumanTurn
       .addActionListener((ActionEvent e) -> {
-        new MoveOutput(
-          engineApi
-            .getGameState()
-            .selectPreviousHumanTurn()
-            .getPlayedMove()
-        ).outputMove();
+        engineApi
+          .getMoveOutput()
+          .setOutputLayout(
+            engineApi
+              .getGameState()
+              .selectPreviousHumanTurn()
+              .getPlayedMove()
+          );
+//        new MoveOutput(
+//        ).outputMove();
+//          engineApi
+//            .getGameState()
+//            .selectPreviousHumanTurn()
+//            .getPlayedMove()
+//        ).outputMove();
       });
   }
 
@@ -78,17 +85,25 @@ public class NavigateMenu extends JMenu implements Timeable {
         KeyStroke
           .getKeyStroke(
             KeyEvent.VK_RIGHT,
-            ActionEvent.CTRL_MASK
+            InputEvent.SHIFT_DOWN_MASK
           )
       );
     nextHumanTurn
       .addActionListener((ActionEvent e) -> {
-        new MoveOutput(
-          engineApi
-            .getGameState()
-            .selectNextHumanTurn()
-            .getPlayedMove()
-        ).outputMove();
+        engineApi
+          .getMoveOutput()
+          .setOutputLayout(
+            engineApi
+              .getGameState()
+              .selectNextHumanTurn()
+              .getPlayedMove()
+          );
+//        new MoveOutput(
+//          engineApi
+//            .getGameState()
+//            .selectNextHumanTurn()
+//            .getPlayedMove()
+//        ).outputMove();
       });
   }
 
@@ -105,12 +120,20 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     latestHumanTurn
       .addActionListener((ActionEvent e) -> {
-        new MoveOutput(
-          engineApi
-            .getGameState()
-            .selectLatestHumanTurn()
-            .getPlayedMove()
-        ).outputMove();
+        engineApi
+          .getMoveOutput()
+          .setOutputLayout(
+            engineApi
+              .getGameState()
+              .selectLatestHumanTurn()
+              .getPlayedMove()
+          );
+//        new MoveOutput(
+//          engineApi
+//            .getGameState()
+//            .selectLatestHumanTurn()
+//            .getPlayedMove()
+//        ).outputMove();
       });
   }
 
@@ -119,7 +142,7 @@ public class NavigateMenu extends JMenu implements Timeable {
     add(navigateMenuSeparator);
   }
 
-  private void setupPreviousTurn () {
+  private void setupNextTurn () {
 
     add(nextTurn);
     nextTurn
@@ -127,22 +150,30 @@ public class NavigateMenu extends JMenu implements Timeable {
         KeyStroke
           .getKeyStroke(
             KeyEvent.VK_RIGHT,
-            0
+            InputEvent.CTRL_DOWN_MASK
           )
       );
     nextTurn.addActionListener((ActionEvent e) -> {
       if (engineApi.getSelectedTurn() != null) {
-        new MoveOutput(
-          engineApi
-            .getGameState()
-            .selectNextTurn()
-            .getPlayedMove()
-        ).outputMove();
+        engineApi
+          .getMoveOutput()
+          .setOutputLayout(
+            engineApi
+              .getGameState()
+              .selectNextTurn()
+              .getPlayedMove()
+          );
+//        new MoveOutput(
+//          engineApi
+//            .getGameState()
+//            .selectNextTurn()
+//            .getPlayedMove()
+//        ).outputMove();
       }
     });
   }
 
-  private void setupNextTurn () {
+  private void setupPreviousTurn () {
 
     add(previousTurn);
     previousTurn
@@ -150,17 +181,25 @@ public class NavigateMenu extends JMenu implements Timeable {
         KeyStroke
           .getKeyStroke(
             KeyEvent.VK_LEFT,
-            0
+            InputEvent.CTRL_DOWN_MASK
           )
       );
     previousTurn.addActionListener((ActionEvent e) -> {
       if (engineApi.getSelectedTurn() != null) {
-        new MoveOutput(
-          engineApi
-            .getGameState()
-            .selectPreviousTurn()
-            .getPlayedMove()
-        ).outputMove();
+        engineApi
+          .getMoveOutput()
+          .setOutputLayout(
+            engineApi
+              .getGameState()
+              .selectPreviousTurn()
+              .getPlayedMove()
+          );
+//        new MoveOutput(
+//          engineApi
+//            .getGameState()
+//            .selectPreviousTurn()
+//            .getPlayedMove()
+//        ).outputMove();
       }
     });
   }
@@ -178,11 +217,18 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousMove.addActionListener((ActionEvent e) -> {
       if (engineApi.getSelectedTurn() != null) {
-        new MoveOutput(
-          engineApi
-            .getGameState()
-            .selectPreviousMove()
-        ).outputMove();
+        engineApi
+          .getMoveOutput()
+          .setOutputLayout(
+            engineApi
+              .getGameState()
+              .selectPreviousMove()
+          );
+//        new MoveOutput(
+//          engineApi
+//            .getGameState()
+//            .selectPreviousMove()
+//        ).outputMove();
       }
     });
   }
@@ -199,11 +245,18 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextMove.addActionListener((ActionEvent e) -> {
-      new MoveOutput(
         engineApi
-          .getGameState()
-          .selectNextMove()
-      ).outputMove();
+          .getMoveOutput()
+          .setOutputLayout(
+            engineApi
+              .getGameState()
+              .selectNextMove()
+          );
+//      new MoveOutput(
+//        engineApi
+//          .getGameState()
+//          .selectNextMove()
+//      ).outputMove();
     });
   }
 
@@ -215,16 +268,23 @@ public class NavigateMenu extends JMenu implements Timeable {
         KeyStroke
           .getKeyStroke(
             KeyEvent.VK_LEFT,
-            InputEvent.SHIFT_DOWN_MASK
+            0
           )
       );
     previousPartMove.addActionListener((ActionEvent e) -> {
       if (engineApi.getSelectedTurn() != null) {
-        new LayoutDisplay().displayLayout(
-          engineApi
-          .getGameState()
-          .selectPreviousPartMove()
-        );
+        engineApi
+          .getMoveOutput()
+          .setOutputLayout(
+            engineApi
+              .getGameState()
+              .selectPreviousPartMove()
+          );
+//        new LayoutDisplay().displayLayout(
+//          engineApi
+//          .getGameState()
+//          .selectPreviousPartMove()
+//        );
       }
     });
   }
@@ -237,15 +297,22 @@ public class NavigateMenu extends JMenu implements Timeable {
         KeyStroke
           .getKeyStroke(
             KeyEvent.VK_RIGHT,
-            InputEvent.SHIFT_DOWN_MASK
+            0
           )
       );
     nextPartMove.addActionListener((ActionEvent e) -> {
-      new LayoutDisplay().displayLayout(
         engineApi
-        .getGameState()
-        .selectNextPartMove()
-      );
+          .getMoveOutput()
+          .setOutputLayout(
+            engineApi
+              .getGameState()
+              .selectNextPartMove()
+          );
+//      new LayoutDisplay().displayLayout(
+//        engineApi
+//        .getGameState()
+//        .selectNextPartMove()
+//      );
     });
   }
 
@@ -303,8 +370,10 @@ public class NavigateMenu extends JMenu implements Timeable {
     previousMove.setVisible(previousMove.isEnabled());
     nextMove.setEnabled(previousMove.isEnabled());
     nextMove.setVisible(nextMove.isEnabled());
-    nextPartMove.setEnabled(previousMove.isEnabled());
-    previousPartMove.setVisible(nextMove.isEnabled());
+    nextPartMove.setEnabled(nextMove.isEnabled());
+    nextPartMove.setVisible(nextPartMove.isEnabled());
+    previousPartMove.setEnabled(nextPartMove.isEnabled());
+    previousPartMove.setVisible(previousPartMove.isEnabled());
 
     previousScenario.setEnabled(engineApi == null || engineApi.getSelectedTurn() == null);
     previousScenario.setVisible(previousScenario.isEnabled());

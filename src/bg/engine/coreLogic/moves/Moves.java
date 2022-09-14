@@ -141,7 +141,7 @@ public class Moves {
     return dice.getDice();
   }
 
-  protected void setEvaluatedMove (
+  public void setEvaluatedMove (
 
     MoveLayout moveLayout) {
 
@@ -186,15 +186,6 @@ public class Moves {
       move.printMovePoints();
       System.out.println();
     });
-  }
-
-  public void printDice (int[] dice) {
-
-    System.out.print("Dice: ");
-    for (int d : dice) {
-      System.out.print(d+",");
-    }
-    System.out.println();
   }
 
   private void partMove (
@@ -314,6 +305,7 @@ public class Moves {
 
   protected Moves generateMoves (Layout layout, int[] diceToMove) {
 
+    nrOfLegalPartMoves = 0;
     dice = new Dice(diceToMove);
     parentMoveLayout = new MoveLayout(this, layout);
     legalMoves = new ArrayList<>(100);

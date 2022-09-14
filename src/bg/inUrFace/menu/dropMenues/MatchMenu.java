@@ -37,8 +37,7 @@ public class MatchMenu extends JMenu implements Timeable {
     add(newMatch);
     newMatch.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
     newMatch.addActionListener((ActionEvent e) -> {
-      if (confirmed("Start a new EngineApi?",win)) {
-        mouse.getMoveInputListener().setAcceptMoveInput(false);
+      if (confirmed("Start a new match?",win)) {
         engineApi = new EngineApi();
       }
     });

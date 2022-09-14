@@ -1,6 +1,8 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import static bg.Main.settings;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
@@ -30,22 +32,16 @@ public class TurnProgressionMenu extends JMenu {
   private void setupAutomateEndTurn () {
 
     add(automateEndTurn);
-    automateEndTurn.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    automateEndTurn.addActionListener((ActionEvent e) -> {
         settings.setAutomateEndTurn(true);
-      }
     });
   }
 
   private void setupManualEndTurn () {
 
     add(manualEndTurn);
-    manualEndTurn.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    manualEndTurn.addActionListener((ActionEvent e) -> {
         settings.setAutomateEndTurn(false);
-      }
     });
   }
 

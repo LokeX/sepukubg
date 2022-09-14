@@ -7,15 +7,16 @@ import static bg.util.StreamsUtil.streamAsList;
 
 public class MoveProjection extends MoveSelection {
 
+  private List<Integer> endingPoints = new ArrayList<>();
+  private List<Integer> validEndingPoints = new ArrayList<>();
+  private int terminalPosition;
+
   MoveProjection(MoveSelection moveSelector) {
 
     super(moveSelector);
   }
 
-  private void projectMovePoints (
-    int terminalPosition,
-    List<Integer> endingPoints,
-    List<Integer> validEndingPoints) {
+  public void projectMovePoints() {
 
     if (positionIsEndingPoint()) {
       endingPoints = streamAsList(endingPointsIn(position()));
@@ -23,35 +24,27 @@ public class MoveProjection extends MoveSelection {
     }
     if (endingPoints.size() > 0 && position() <= terminalPosition && !endOfInput()) {
       movePoints[position()] = endingPoints.get(0);
-      projectMovePoints(terminalPosition, endingPoints, validEndingPoints);
+      projectMovePoints();
     }
   }
 
-  int[] projectMovePointsTo (int terminalPosition) {
+  public Stream<Integer> projectedEndingPoints  () {
 
-    System.out.println("Projecting movePoints to position: "+terminalPosition);
-    projectMovePoints(
-      terminalPosition,
-      new ArrayList<>(),
-      new ArrayList<>()
-    );
+    terminalPosition = movePoints.length;
+    projectMovePoints();
+
+    return
+      validEndingPoints
+        .stream()
+        .distinct();
+  }
+
+  public int[] projectMovePointsTo (int terminalPosition) {
+
+    this.terminalPosition = terminalPosition;
+    projectMovePoints();
+
     return movePoints;
-  }
-
-  Stream<Integer> projectedEndingPoints () {
-
-    List<Integer> projectedEndingPoints = new ArrayList<>();
-
-    if (positionIsEndingPoint()) {
-      projectMovePoints(
-        movePoints.length,
-        new ArrayList<>(),
-        projectedEndingPoints
-      );
-    }
-    return projectedEndingPoints
-      .stream()
-      .distinct();
   }
 
 }

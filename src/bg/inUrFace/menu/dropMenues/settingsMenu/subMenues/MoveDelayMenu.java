@@ -1,6 +1,8 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import static bg.Main.settings;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
@@ -36,44 +38,32 @@ public class MoveDelayMenu extends JMenu {
     private void setupMilli500 () {
 
     add(milli500);
-    milli500.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    milli500.addActionListener((ActionEvent e) -> {
         settings.setShowMoveDelay(500);
-      }
     });
   }
 
   private void setupMilli300 () {
 
     add(milli300);
-    milli300.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    milli300.addActionListener((ActionEvent e) -> {
         settings.setShowMoveDelay(300);
-      }
     });
   }
 
   private void setupMilli150 () {
 
     add(milli150);
-    milli150.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    milli150.addActionListener((ActionEvent e) -> {
         settings.setShowMoveDelay(150);
-      }
     });
   }
 
   private void setupMilli0 () {
 
     add(milli0);
-    milli0.addMouseListener(new MouseAdapter() {
-      @Override
-      public void mousePressed(MouseEvent e) {
+    milli0.addActionListener((ActionEvent e) -> {
         settings.setShowMoveDelay(0);
-      }
     });
   }
 

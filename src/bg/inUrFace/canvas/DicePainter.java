@@ -105,15 +105,15 @@ public class DicePainter implements Paintable {
 
       boolean pointsAreInput =
         engineApi
-          .humanTurnSelected()
-          && mouse.getMoveInputListener().acceptInput();
+          .getHumanInput()
+          .humanInputActive();
       int nrOfLegalPartMoves = engineApi.getSelectedMove().getNrOfPartMoves();
       int nrOfPartMoves = 0;
       int[] shades = new int[dice.length];
       int[] legalMovePoints = engineApi.getSelectedMove().getMovePoints();
       int[] movePoints = !pointsAreInput ? legalMovePoints :
               dice.length == 2 && nrOfLegalPartMoves == 1 ? legalMovePoints :
-              mouse.getMoveInputListener().getMoveInput().getMovePoints();
+              engineApi.getHumanInput().getMovePoints();
 
       if (movePoints.length != dice.length * 2) {
         movePoints = new int[dice.length*2];

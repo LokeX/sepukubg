@@ -63,7 +63,7 @@ public class StateEdit {
     if (engineApi.getLatestTurn() != null) {
 
       String diceInput = JOptionPane.showInputDialog(win,
-        "Input dice values with no seperation" +
+        "Input dice values with no separation" +
           "\nfor doubles type only one value"
       );
 
@@ -72,10 +72,16 @@ public class StateEdit {
         Dice dice = new Dice(diceInput);
 
         if (dice.diceAreValid()) {
+          dice.printDice();
+          System.out.println("Input dice are valid");
           engineApi.getSelectedTurn().setDice(dice.getDice());
+//          System.out.println("Input dice set");
           engineApi.getGame().truncateTurns(engineApi.getGameState().getTurnNr());
+          System.out.println("Truncated from turn: "+engineApi.getGameState().getTurnNr());
           engineApi.getGameState().setMoveNr(engineApi.getPlayedMoveNr());
-          engineApi.getMatchState().getGameState().getSearch().searchRolledMoves();
+          System.out.println("moveNr set: "+engineApi.getPlayedMoveNr());
+          engineApi.getMatchState().getSearch().searchRolledMoves();
+          System.out.println("Moves searched");
           engineApi.getMatchState().move();
         }
       }

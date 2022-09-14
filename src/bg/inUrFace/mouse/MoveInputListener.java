@@ -10,8 +10,6 @@ import static bg.Main.*;
 
 public class MoveInputListener extends MouseAdapter {
 
-  private MoveInput moveInput;
-
   public Batch[] getClickPoints() {
 
     BoardDim d = win.canvas.getDimensions();
@@ -80,56 +78,34 @@ public class MoveInputListener extends MouseAdapter {
   @Override
   public void mouseClicked (MouseEvent mouseEvent) {
 
+    System.out.println();
     System.out.println("Mouse clicked");
-    if (acceptInput()) {
+    if (humanIsMoving()) {
+      inputPoint(mouseEvent);
       System.out.println("Accepted inputPoint");
-      if (mouseEvent.getButton() == MouseEvent.BUTTON3) {
-        getActionButton().setHideActionButton(true);
-        moveInput.undoPointSelection();
-      } else {
-        moveInput.pointClicked();
-      }
-      if (clickedPoint() != -1) {
-        engineApi
-          .getHumanInput()
-          .pointClicked(
-            rightButtonClicked(mouseEvent)
-              ? -1
-              : clickedPoint()
-          );
-      }
     }
   }
 
-  public MoveInput getMoveInput () {
+  private void inputPoint (MouseEvent mouseEvent) {
 
-    return moveInput;
-  }
-
-  void setMoveInput (MoveInput moveInput) {
-
-    this.moveInput = moveInput;
-  }
-
-  public void setAcceptMoveInput (boolean acceptMoveInput) {
-
-    //Old code begin:
-    if (acceptMoveInput) {
-      moveInput = new MoveInput();
-    } else {
-      moveInput = null;
+    if (clickedPoint() != -1 || rightButtonClicked(mouseEvent)) {
+      engineApi
+        .getHumanInput()
+        .pointClicked(
+          rightButtonClicked(mouseEvent)
+            ? -1
+            : clickedPoint()
+        );
     }
-    //:Old code end
-
   }
 
-  public boolean acceptInput() {
+  private boolean humanIsMoving() {
 
     return
-      moveInput != null
-        && engineApi != null
-//        && engineApi.getHumanMove() != null
-        && engineApi.getHumanInput().humanInputActive();
+      engineApi != null
+      && engineApi
+          .getHumanInput()
+          .humanInputActive();
   }
 
 }

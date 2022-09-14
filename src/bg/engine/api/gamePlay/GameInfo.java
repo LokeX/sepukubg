@@ -1,29 +1,40 @@
 package bg.engine.api.gamePlay;
 
+import bg.engine.api.matchPlay.MatchState;
 import bg.engine.api.moveInput.HumanMove;
 
-import static java.util.stream.IntStream.range;
+import java.util.Arrays;
+
+import static java.util.stream.Collectors.joining;
 
 public class GameInfo {
 
-  private GameState gameState;
+  private MatchState matchState;
   private String[] dataItems;
+  private String movePoints = "";
   private boolean dataUpdate = false;
   private int selectedTurnNr;
   private int selectedMoveNr;
 
-  GameInfo(GameState gameState) {
+  public GameInfo(MatchState matchState) {
 
-    this.gameState = gameState;
+    this.matchState = matchState;
   }
 
-  GameInfo getGameData () {
+  private GameState gameState () {
+
+    return
+      matchState.getGameState();
+  }
+
+  public GameInfo getGameData () {
 
     dataUpdate = updateRequired();
     if (dataUpdate) {
       dataItems = dataItems();
-      selectedMoveNr = gameState.getMoveNr();
-      selectedTurnNr = gameState.getTurnNr();
+      selectedMoveNr = gameState().getMoveNr();
+      selectedTurnNr = gameState().getTurnNr();
+      movePoints = movePoints();
     }
     return this;
   }
@@ -37,15 +48,16 @@ public class GameInfo {
 
     return
       dataItems == null
-      || selectedTurnNr != gameState.getTurnNr()
-      || selectedMoveNr != gameState.getMoveNr();
+      || !movePoints.equals(movePoints())
+      || selectedTurnNr != gameState().getTurnNr()
+      || selectedMoveNr != gameState().getMoveNr();
   }
 
   private String moveNr () {
 
     return
       Integer.toString(
-        gameState.getMoveNr()+1
+        gameState().getMoveNr()+1
       );
   }
 
@@ -53,8 +65,8 @@ public class GameInfo {
 
     return
       Integer.toString(
-        gameState
-          .getTurnByNr(gameState.getTurnNr())
+        gameState()
+          .getTurnByNr(gameState().getTurnNr())
           .getNrOfMoves()
       );
   }
@@ -63,60 +75,62 @@ public class GameInfo {
 
     return
       Integer.toString(
-          gameState.nrOfTurns()
+          gameState().nrOfTurns()
         );
   }
 
   private String turnNr () {
 
     return
-      Integer.toString(gameState.getTurnNr()+1);
+      Integer.toString(gameState().getTurnNr()+1);
   }
 
   private String playerDescription () {
 
     return
-      gameState
+      gameState()
         .selectedTurn()
-        .getPlayerTitle()
-        + (gameState.humanTurnSelected()
-        ? "[Human]"
-        : "[Computer]");
-  }
-
-  private String dieWithComma (int[] dice, int dieNr) {
-
-    return dice[dieNr]+(dieNr == dice.length-1 ? "" : ",");
-  }
-
-  private String dice (int[] dice) {
-
-    return range(0, dice.length)
-      .mapToObj(dieNr -> dieWithComma(dice, dieNr))
-      .reduce(String::concat)
-      .orElse("N/A");
+        .getPlayerTitle() +
+          (gameState().humanTurnSelected()
+            ? "[Human]"
+            : "[Computer]");
   }
 
   private HumanMove humanMove () {
 
     return
-      gameState
+      matchState
         .getHumanMove();
   }
 
-  private String humanMovePointsString () {
+  private String commaSeparated (int[] temp) {
 
     return
-      humanMove()
-        .getMoveSelection()
-        .getMatchingMoveLayout()
-        .getMovePointsString();
+      Arrays.stream(temp)
+        .mapToObj(Integer::toString)
+        .collect(joining(","));
+  }
+
+  private String dice (int[] dice) {
+
+    return
+      commaSeparated(dice);
+  }
+
+  private String humanMovePoints() {
+
+    return
+      commaSeparated(
+        humanMove()
+          .getMoveSelection()
+          .getMovePoints()
+      );
   }
 
   private String selectedMovePointsString () {
 
     return
-      gameState
+      gameState()
         .selectedMove()
         .getMovePointsString();
   }
@@ -125,19 +139,20 @@ public class GameInfo {
 
     return
       humanMove().inputReady()
-        ? humanMovePointsString()
+        ? humanMovePoints()
         : selectedMovePointsString();
   }
 
   private String[] dataItems () {
 
-    return new String[] {
-      playerDescription(),
-      turnNr()+"/"+nrOfTurns(),
-      dice(gameState.selectedTurn().getDice()),
-      moveNr()+"/"+nrOfMoves(),
-      movePoints()
-    };
+    return
+      new String[] {
+        playerDescription(),
+        turnNr()+"/"+nrOfTurns(),
+        dice(gameState().selectedTurn().getDice()),
+        moveNr()+"/"+nrOfMoves(),
+        movePoints()
+      };
   }
 
   public String[] labels () {

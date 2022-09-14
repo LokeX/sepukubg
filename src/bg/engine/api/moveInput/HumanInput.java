@@ -72,4 +72,12 @@ public class HumanInput implements HumanInputAPI {
         : null;
   }
 
+  public int[] getMovePoints () {
+
+    return
+      humanInputActive()
+        ? moveSelection().getMovePoints()
+        : null;
+  }
+
 }

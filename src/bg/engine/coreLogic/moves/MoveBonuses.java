@@ -126,12 +126,15 @@ public class MoveBonuses {
     final int FOE_BONUSES = 2;
 
     this.format = format;
-    switch (format) {
-      case BOTH_BONUSES    : return bothPlayersBonusesList();
-      case ON_ROLL_BONUSES : return onRollBonusesList();
-      case FOE_BONUSES     : return foeBonusesList();
-    }
-    return new ArrayList<>(); //Display no bonuses
+
+    return
+      switch (format) {
+        case BOTH_BONUSES -> bothPlayersBonusesList();
+        case ON_ROLL_BONUSES -> onRollBonusesList();
+        case FOE_BONUSES -> foeBonusesList();
+        default -> new ArrayList<>();
+      };
+    //Display no bonuses
   }
 
 }
