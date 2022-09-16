@@ -2,6 +2,7 @@ package bg.engine.coreLogic;
 
 import bg.util.NumberUtil;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Dice {
@@ -44,7 +45,6 @@ public class Dice {
     }
   }
 
-
   public void setDice (int[] diceToSet) {
 
     dice = diceToSet.clone();
@@ -64,18 +64,17 @@ public class Dice {
     do {
       rollDice();
     } while (dice.length == 4);
+
     return this;
   }
 
   private int[] expandDouble (int[] dice) {
 
-    int[] diceT;
+    int[] diceTemp = new int[4];
 
-    diceT = new int[4];
-    for (int a = 0; a < diceT.length; a++) {
-      diceT[a] = dice[0];
-    }
-    return diceT;
+    Arrays.fill(diceTemp, dice[0]);
+
+    return diceTemp;
   }
 
   private int[] makePair (int pseudoPair) {
@@ -85,27 +84,54 @@ public class Dice {
 
     intPair[0] = Integer.parseInt(strPair.substring(0,1));
     intPair[1] = Integer.parseInt(strPair.substring(1));
-    if (intPair[0] == intPair[1]) {
-      intPair = expandDouble(intPair);
-    }
+
     return intPair;
+  }
+
+  public boolean isExpandablePair (int[] pseudoPair) {
+
+    return
+      pseudoPair.length == 1
+      && pseudoPair[0] > 9
+      && pseudoPair[0] < 67;
   }
 
   public Dice expandDice() {
 
-    if (dice.length == 1) {
-      if (dice[0] > 9) {
-      	dice = makePair(dice[0]);
-      } else {
-      	dice = expandDouble(dice);
-      }
+    if (isExpandablePair(dice)) {
+      dice = makePair(dice[0]);
+    }
+    if (isExpandableDouble(dice)) {
+      dice = expandDouble(dice);
     }
     return this;
   }
 
-  public boolean areDouble() {
+  public boolean areDouble () {
 
-    return dice.length == 4 || dice[0] == dice[1] || (dice.length == 1 && dice[0] < 7);
+    return
+      dice.length == 4;
+  }
+
+  public int distinctDieCount (int[] dice) {
+
+    return (int)
+      Arrays
+        .stream(dice)
+        .distinct()
+        .count();
+  }
+
+  public boolean areDoubleValues (int[] dice) {
+
+    return
+      distinctDieCount(dice) == 1;
+  }
+
+  public boolean arePairValues (int[] dice) {
+
+    return
+      distinctDieCount(dice) == 2;
   }
 
   public Dice rollDice() {
@@ -116,7 +142,7 @@ public class Dice {
     for (int a = 0; a < dice.length; a++) {
       dice[a] = random.nextInt(6)+1;
     }
-    if (areDouble()) {
+    if (isExpandableDouble(dice)) {
       dice = expandDouble(dice);
     }
     return this;
@@ -124,10 +150,29 @@ public class Dice {
 
   public Dice initFullSpread () {
 
-    dice = new int[2];
-    dice[0] = 1;
-    dice[1] = 1;
+    dice = new int[4];
+
+    Arrays.fill(dice,1);
+
     return this;
+  }
+
+  public boolean isExpandableDouble (int[] dice) {
+
+    return
+      dice.length == 1 && dice[0] > 0 && dice[0] < 7
+      || dice.length == 2 && dice[0] == dice[1];
+  }
+
+  public int[] shrinkNoneDouble (int[] dice) {
+
+    int[] tempDice = new int[2];
+
+    tempDice[0] = dice[0];
+    tempDice[1] = dice[1];
+
+    return
+      tempDice;
   }
 
   public Dice setNextSpread () {
@@ -137,6 +182,11 @@ public class Dice {
     } else if (dice[1] < 6) {
       dice[1]++;
       dice[0] = dice[1];
+    }
+    if (dice.length == 2 && dice[0] == dice[1]) {
+      dice = expandDouble(dice);
+    } else if (dice.length == 4 && dice[0] != dice[1]) {
+      dice = shrinkNoneDouble(dice);
     }
     return this;
   }
@@ -162,21 +212,40 @@ public class Dice {
     }
   }
 
-  private boolean diceValuesOK () {
+  public void printSpread () {
 
-    for (int a = 0; a < dice.length; a++) {
-      if (dice[a] < 1 || dice[a] > 6) {
-        return false;
-      }
+    initFullSpread().printDice();
+    while (!endOfSpread()) {
+      setNextSpread().printDice();
     }
-    return true;
+  }
+
+  public boolean dieInScope (int die) {
+
+    return
+      die > 0 && die < 7;
+  }
+
+  public boolean diceValuesOK (int[] dice) {
+
+    return
+      Arrays.stream(dice).allMatch(die -> die > 0 && die < 7);
+  }
+
+  public boolean diceCountOK (int[] dice) {
+
+    return
+      dice.length == 2 || dice.length == 4;
   }
 
   public boolean diceAreValid () {
 
     expandDice();
-    return (dice.length != 3 && dice.length < 5 &&
-      dice.length != 0 && diceValuesOK());
+    return
+      diceCountOK(dice)
+      && diceValuesOK(dice)
+      && areDoubleValues(dice)
+      || arePairValues(dice);
   }
 
   public int[] getDice () {

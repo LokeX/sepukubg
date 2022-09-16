@@ -131,7 +131,7 @@ public class Moves {
     return nrOfLegalPartMoves;
   }
 
-  Dice getDiceObj () {
+  protected Dice getDiceObj () {
 
     return dice;
   }

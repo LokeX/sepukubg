@@ -90,7 +90,10 @@ public class GameState extends Game {
 
   public Turn selectedTurn () {
 
-    return getTurnByNr(turnNr);
+    return
+      nrOfTurns() > 0
+      ? getTurnByNr(turnNr)
+      : null;
   }
 
   protected int playedMoveNr () {

@@ -163,9 +163,7 @@ public class HumanMove {
       if (clickedPoint != -1 && autoSelectPartMoves()) {
         autoSelectPoints();
       }
-//      if (moveSelection.hasMoveLayouts()) {
-        outputMoveLayouts();
-//      }
+      outputMoveLayouts();
     }
   }
 

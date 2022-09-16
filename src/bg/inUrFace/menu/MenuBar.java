@@ -31,8 +31,8 @@ public class MenuBar extends JMenuBar {
 
   private void setupBarMenu() {
 
-    List<JMenu> menuList = new ArrayList();
-    List<Timeable> timedTaskList = new ArrayList();
+    List<JMenu> menuList = new ArrayList<>();
+    List<Timeable> timedTaskList = new ArrayList<>();
 
     getFieldsList(this, menuList);
     menuList.forEach((menu) -> {

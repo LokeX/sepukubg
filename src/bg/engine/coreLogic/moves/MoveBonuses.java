@@ -59,8 +59,8 @@ public class MoveBonuses {
     return range(0, move.getBonusTexts().size())
       .mapToObj(index ->
         onRollBonus(index)
-          + " / "
-          + bonus(move.getFoeValues().get(index))
+        + " / "
+        + bonus(move.getFoeValues().get(index))
       );
   }
 

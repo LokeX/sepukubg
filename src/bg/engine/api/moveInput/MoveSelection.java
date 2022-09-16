@@ -6,8 +6,6 @@ import bg.engine.coreLogic.moves.Moves;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static bg.util.StreamsUtil.streamAsList;
@@ -155,6 +153,33 @@ public class MoveSelection extends Moves {
       && position % 2 == 0;
   }
 
+  private boolean inputPointIsLegalStartingPoint (int position) {
+
+    return
+      isStartingPoint(position)
+      && pointsIn(position).anyMatch(point -> point == inputPoint);
+  }
+
+  private int getPointIn (int position) {
+
+    return
+      pointsIn(position)
+        .findFirst()
+        .orElse(-1);
+  }
+
+  private boolean singlePointIn(int position) {
+
+    return
+      pointsIn(position).count() == 1;
+  }
+  private boolean explicitEndingPoint (int position) {
+
+    return
+      isEndingPoint(position)
+      && validEndingPoints().count() == 1;
+  }
+
   public List<Layout> getMovePointLayouts() {
 
     System.out.println("Generating moveOutputLayouts: ");
@@ -177,38 +202,26 @@ public class MoveSelection extends Moves {
       : List.of(getParentMoveLayout());
   }
 
-  private boolean inputPointIsLegalStartingPoint (int position) {
+
+  private boolean positionIsAutoCompletable () {
 
     return
-      isStartingPoint(position)
-      && pointsIn(position).anyMatch(point -> point == inputPoint);
-  }
+      isStartingPoint(position())
+      && singlePointIn(position())
+      || explicitEndingPoint(position());
 
-  private int getPointIn (int position) {
-
-    return
-      pointsIn(position)
-        .findFirst()
-        .orElse(-1);
-  }
-
-  private boolean singlePointIn(int position) {
-
-    return
-      pointsIn(position).count() == 1;
   }
 
   public void autoSelectPoints () {
 
-    while (!endOfInput() && singlePointIn(position())) {
+    while (!endOfInput() && positionIsAutoCompletable()) {
       movePoints[position()] = getPointIn(position());
     }
-    if (positionIsEndingPoint()) {
+    if (position() > endPos && positionIsEndingPoint()) {
       movePoints[position()-1] = -1;
     }
     endPos = position();
   }
-
 
   public boolean isUniqueMove() {
 
@@ -232,6 +245,54 @@ public class MoveSelection extends Moves {
       : -1;
   }
 
+  private int[] doubleDicePattern () {
+
+    int usedDice = position()/2;
+    int[] dicePattern = new int[4];
+
+    if (usedDice > 0) {
+      Arrays.fill(dicePattern,0,usedDice,1);
+    }
+
+    return dicePattern;
+  }
+
+  private int usedDie () {
+
+    return
+      getPlayerID() == 0
+      ? movePoints[0] - movePoints[1]
+      : (movePoints[0] - movePoints[1])*-1;
+  }
+
+  private int diePos (int die) {
+
+    return
+      getDice()[0] == die ? 0 : 1;
+  }
+
+  private int[] normalDiePattern () {
+
+    int[] dicePattern = new int[2];
+
+    if (position() == 4) {
+      Arrays.fill(dicePattern,1);
+    } else if (position() > 1) {
+      dicePattern[diePos(usedDie())] = 1;
+    }
+
+    return
+      dicePattern;
+  }
+
+  public int[] diePattern () {
+
+    return
+      getDiceObj().areDouble()
+      ? doubleDicePattern()
+      : normalDiePattern();
+  }
+
   private void setEndingPoint () {
 
     int endingPointPosition = endingPointPosition(inputPoint);
@@ -244,13 +305,6 @@ public class MoveSelection extends Moves {
     } else {
       movePoints[endingPointPosition] = inputPoint;
     }
-  }
-
-  private boolean explicitEndingPoint (int position) {
-
-    return
-      isEndingPoint(position)
-      && validEndingPoints().count() == 1;
   }
 
   private void setInputPoint () {

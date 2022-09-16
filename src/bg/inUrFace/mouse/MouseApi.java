@@ -20,7 +20,6 @@ public class MouseApi extends MouseAdapter {
   public ScenarioEditor scenarioEditor = getCanvas().getPaintJobs().scenarioEditor;
   public ActionButton actionButton = getCanvas().getPaintJobs().actionButton;
   public DoublingCube doublingCube = getCanvas().getPaintJobs().doublingCube;
-//  public MoveInputController moveInputController = new MoveInputController();
   public MoveInputListener moveInputListener = new MoveInputListener();
   public BonusPainter bonusPainter = getCanvas().getPaintJobs().bonusPainter;
   private List<MouseListener> listeners = new ArrayList<>();

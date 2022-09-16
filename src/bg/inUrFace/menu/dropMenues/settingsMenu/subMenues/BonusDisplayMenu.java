@@ -1,14 +1,10 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import bg.Main;
-import bg.inUrFace.canvas.move.MoveOutput;
 
-import static bg.Main.engineApi;
 import static bg.Main.settings;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
@@ -56,7 +52,6 @@ public class BonusDisplayMenu extends JMenu {
     add(movingPlayer);
     movingPlayer.addActionListener((ActionEvent e) ->  {
         Main.settings.setBonusDisplayMode(1);
-        new MoveOutput(engineApi.getSelectedMove()).writeMove();
     });
   }
 
@@ -65,7 +60,6 @@ public class BonusDisplayMenu extends JMenu {
     add(showOpponent);
     showOpponent.addActionListener((ActionEvent e) ->  {
         Main.settings.setBonusDisplayMode(2);
-        new MoveOutput(engineApi.getSelectedMove()).writeMove();
     });
   }
 
@@ -74,7 +68,6 @@ public class BonusDisplayMenu extends JMenu {
     add(showBothPlayers);
     showBothPlayers.addActionListener((ActionEvent e) ->  {
         Main.settings.setBonusDisplayMode(0);
-        new MoveOutput(engineApi.getSelectedMove()).writeMove();
     });
   }
 
@@ -83,7 +76,6 @@ public class BonusDisplayMenu extends JMenu {
     add(showNone);
     showNone.addActionListener((ActionEvent e) ->  {
         Main.settings.setBonusDisplayMode(3);
-        new MoveOutput(engineApi.getSelectedMove()).writeMove();
     });
   }
 

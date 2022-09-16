@@ -10,6 +10,8 @@ import bg.engine.api.score.MatchBoard;
 import bg.engine.coreLogic.moves.Layout;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
 
+import java.util.Arrays;
+
 import static bg.Main.*;
 import static bg.util.ThreadUtil.runWhenNotified;
 
@@ -98,6 +100,25 @@ public class MatchState {
     return
       gameState != null
       && gameState.nrOfTurns() > 0;
+  }
+
+  public int[] getUsedDicePattern () {
+
+    return
+      playerIsHuman() && humanMove.getMoveSelection() != null
+      ? humanMove.getMoveSelection().diePattern()
+      : computerUsedDicePattern();
+  }
+
+  private int[] computerUsedDicePattern () {
+
+    int[] dicePattern = null;
+
+    if (gameState != null && gameState.selectedTurn() != null) {
+      dicePattern = new int[gameState.selectedTurn().getDice().length];
+      Arrays.fill(dicePattern,1);
+    }
+    return dicePattern;
   }
 
   public boolean playerIsHuman () {

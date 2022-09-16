@@ -103,60 +103,8 @@ public class DicePainter implements Paintable {
     if (engineApi != null && engineApi.getSelectedTurn() != null) {
       makeDice();
 
-      boolean pointsAreInput =
-        engineApi
-          .getHumanInput()
-          .humanInputActive();
-      int nrOfLegalPartMoves = engineApi.getSelectedMove().getNrOfPartMoves();
-      int nrOfPartMoves = 0;
-      int[] shades = new int[dice.length];
-      int[] legalMovePoints = engineApi.getSelectedMove().getMovePoints();
-      int[] movePoints = !pointsAreInput ? legalMovePoints :
-              dice.length == 2 && nrOfLegalPartMoves == 1 ? legalMovePoints :
-              engineApi.getHumanInput().getMovePoints();
+      int[] shades = engineApi.getUsedDicePattern();
 
-      if (movePoints.length != dice.length * 2) {
-        movePoints = new int[dice.length*2];
-      }
-      for (int a = 0; a < movePoints.length; a += 2) {
-        if (movePoints[a] >= 0 && movePoints[a+1] >= 0) {
-          nrOfPartMoves++;
-          if (engineApi.getSelectedTurn().getPlayerOnRollsID() == 0) {
-            shades[a/2] = movePoints[a] - movePoints[a+1];
-          } else {
-            shades[a/2] = movePoints[a+1] - movePoints[a];
-          }
-        } else if (engineApi.getSelectedMove().isIllegal()) {
-          shades[a/2] = 1;
-        }
-      }
-      if (!engineApi.getSelectedMove().isIllegal()) {
-        if (dice.length == 4) {
-          for (int a = 0; a < nrOfPartMoves-(shades.length-nrOfLegalPartMoves); a++) {
-            shades[a] = 1;
-          }
-        } else if (nrOfPartMoves == 1) {
-
-          int usedDie = shades[0] > 0 ? 0 : 1;
-          int otherDie = usedDie == 0 ? 1 : 0;
-
-          if (shades[usedDie] != dice[usedDie] && shades[usedDie] <= dice[otherDie]) {
-            shades[otherDie] = shades[usedDie];
-            shades[usedDie] = 0;
-          }
-          if (nrOfLegalPartMoves == 1) {
-            if (pointsAreInput) {
-
-              int temp = shades[0];
-
-              shades[0] = shades[1];
-              shades[1] = temp;
-            } else for (int a = 0; a < shades.length; a++) {
-              shades[a] = 1;
-            }
-          }
-        }
-      }
       g.setColor(new Color(0,0,0,125));
       for (int a = 0; a < dice.length; a++) {
         dieIcons[a].paintDie(g);

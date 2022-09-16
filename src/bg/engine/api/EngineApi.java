@@ -22,7 +22,6 @@ public class EngineApi {
   private GameInfoHTML gameInfoHTML = new GameInfoHTML();
   public MatchState matchState = new MatchState();
   private ScoreBoard scoreBoard = new ScoreBoard();
-//  private DisplayLayouts displayLayouts = new DisplayLayouts();
 
   public boolean matchIsPlaying () {
 
@@ -33,6 +32,14 @@ public class EngineApi {
   public ActionState getActionState () {
 
     return matchState.getActionState();
+  }
+
+  public int[] getUsedDicePattern () {
+
+    return
+      matchState != null
+      ? matchState.getUsedDicePattern()
+      : null;
   }
 
   public Game getGame () {
