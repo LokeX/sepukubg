@@ -61,7 +61,7 @@ public class ChequerPainter implements Paintable {
     return
       engineApi != null
       && engineApi.getHumanInput().humanInputActive()
-      && engineApi.getMatchState().playerIsHuman()
+      && engineApi.getMatchPlay().playerIsHuman()
       && engineApi.getHumanInput().endingPointIsNext()
       && mousePosition() != null;
   }

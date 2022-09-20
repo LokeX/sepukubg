@@ -1,9 +1,5 @@
 package bg.inUrFace.canvas;
 
-import static bg.Main.getCanvas;
-import static bg.Main.mouse;
-import static bg.Main.win;
-
 import bg.Main;
 import bg.engine.coreLogic.moves.Layout;
 import bg.util.Batch;
@@ -12,33 +8,24 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import static bg.Main.*;
+
 public class ScenarioEditor extends MouseAdapter implements Paintable {
 
-  private Layout layout;
   private Batch[] clickPoints = new Batch[28];
   private int player = 0;
-  private boolean showEditor = false;
 
   @Override
   public void paint(Graphics g) {
 
-    if (mouse != null && mouse.scenarioEditor != null && showEditor()) {
+    if (mouse != null && mouse.scenarioEditor != null && isEditing()) {
+      generateClickPoints();
       for (Batch clickPoint : clickPoints) {
         if (clickPoint != null) {
           clickPoint.drawBatch(g);
         }
       }
     }
-  }
-
-  public boolean showEditor () {
-
-    return showEditor;
-  }
-
-  public void setShowEditor (boolean show) {
-
-    showEditor = show;
   }
 
   private int getClickedPoint() {
@@ -53,15 +40,22 @@ public class ScenarioEditor extends MouseAdapter implements Paintable {
     return -1;
   }
 
+  private boolean isEditing () {
+
+    return
+      engineApi != null
+      && engineApi.getScenarios().isEditing();
+  }
+
   @Override
   public void mouseClicked (MouseEvent e) {
 
-    if (bg.Main.win.canvas.getPaintJobs().scenarioEditor.showEditor()) {
+    if (isEditing()) {
 
       int clickedPoint = getClickedPoint();
       int button;
 
-      layout = Main.win.canvas.getDisplayedLayout();
+      Layout layout = Main.win.canvas.getDisplayedLayout();
       if (clickedPoint >= 0) {
         if (clickedPoint == 0 || clickedPoint < 25 && layout.point[clickedPoint] > 0 && layout.point[clickedPoint + 26] == 0) {
           clickPoints[0].setBackgroundColor(Color.yellow);
@@ -98,19 +92,8 @@ public class ScenarioEditor extends MouseAdapter implements Paintable {
           }
         }
       }
+      engineApi.getScenarios().setEditedScenario(new Layout(layout));
     }
-  }
-
-  public void endEdit() {
-
-    getCanvas().getPaintJobs().scenarioEditor.setShowEditor(false);
-  }
-
-  public void startEditor() {
-
-    generateClickPoints();
-    layout = getCanvas().getDisplayedLayout();
-    getCanvas().getPaintJobs().scenarioEditor.setShowEditor(true);
   }
 
   final public void generateClickPoints () {
@@ -162,21 +145,6 @@ public class ScenarioEditor extends MouseAdapter implements Paintable {
         a == 27 ? (player == 26 ? Color.red : Color.black) : backgroundColor
       );
     }
-  }
-
-  public Batch[] getClickPoints () {
-
-    return clickPoints;
-  }
-
-  public void setLayout(Layout layout) {
-
-    this.layout = layout;
-  }
-
-  public Layout getLayout() {
-
-    return layout;
   }
 
 }

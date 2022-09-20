@@ -18,7 +18,7 @@ public class HumanInput implements HumanInputAPI {
 
     return
       engineApi
-        .getMatchState()
+        .getMatchPlay()
         .getHumanMove();
   }
 

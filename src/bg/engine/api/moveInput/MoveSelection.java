@@ -4,6 +4,7 @@ import bg.engine.coreLogic.moves.Layout;
 import bg.engine.coreLogic.moves.MoveLayout;
 import bg.engine.coreLogic.moves.Moves;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,12 +18,6 @@ public class MoveSelection extends Moves {
   private int inputPoint;
   private int startPos;
   private int endPos;
-
-  protected MoveSelection(MoveSelection moveSelection) {
-
-    super(moveSelection);
-    this.movePoints = moveSelection.movePoints.clone();
-  }
 
   public MoveSelection(Moves moves) {
 
@@ -45,7 +40,7 @@ public class MoveSelection extends Moves {
   public boolean endOfInput (int position) {
 
     return
-      position >= movePoints.length;
+      position >= getNrOfLegalPartMoves()*2;
   }
 
   public int[] getMovePoints () {
@@ -53,7 +48,7 @@ public class MoveSelection extends Moves {
     return movePoints;
   }
 
-  int position () {
+  private int position () {
 
     return (int)
       Arrays.stream(movePoints)
@@ -90,7 +85,7 @@ public class MoveSelection extends Moves {
         );
   }
 
-  Stream<Integer> endingPointsIn (int position) {
+  private Stream<Integer> endingPointsIn (int position) {
 
     return
       position != 3
@@ -110,9 +105,13 @@ public class MoveSelection extends Moves {
 
   public Stream<Integer> validEndingPoints () {
 
+    int[] tempPoints = movePoints.clone();
+    Stream<Integer> validEndingPoints = projectMovePoints();
+
+    movePoints = tempPoints;
+
     return
-      new MoveProjection(this)
-        .projectedEndingPoints();
+      validEndingPoints;
   }
 
   private boolean isEndingPoint (int position) {
@@ -202,7 +201,6 @@ public class MoveSelection extends Moves {
       : List.of(getParentMoveLayout());
   }
 
-
   private boolean positionIsAutoCompletable () {
 
     return
@@ -265,32 +263,51 @@ public class MoveSelection extends Moves {
       : (movePoints[0] - movePoints[1])*-1;
   }
 
-  private int diePos (int die) {
+  private int diePosOf(int die) {
 
     return
       getDice()[0] == die ? 0 : 1;
   }
 
-  private int[] normalDiePattern () {
+  private int[] regularDicePattern () {
 
     int[] dicePattern = new int[2];
 
     if (position() == 4) {
       Arrays.fill(dicePattern,1);
     } else if (position() > 1) {
-      dicePattern[diePos(usedDie())] = 1;
+      dicePattern[diePosOf(usedDie())] = 1;
     }
 
     return
       dicePattern;
   }
 
-  public int[] diePattern () {
+  public int[] dicePattern () {
 
     return
       getDiceObj().areDouble()
       ? doubleDicePattern()
-      : normalDiePattern();
+      : regularDicePattern();
+  }
+
+  private Stream<Integer> projectMovePoints () {
+
+    List<Integer> validEndingPoints = new ArrayList<>();
+    List<Integer> endingPoints = new ArrayList<>();
+
+    do {
+      if (positionIsEndingPoint()) {
+        endingPoints = endingPointsIn(position()).toList();
+        validEndingPoints.addAll(endingPoints);
+      }
+      if (endingPoints.size() > 0) {
+        movePoints[position()] = endingPoints.get(0);
+      }
+    } while (endingPoints.size() > 0 && !endOfInput());
+
+    return
+      validEndingPoints.stream().distinct();
   }
 
   private void setEndingPoint () {
@@ -300,8 +317,7 @@ public class MoveSelection extends Moves {
     System.out.println("endingPointPosition: "+endingPointPosition);
     if (endingPointPosition > position()) {
       System.out.println("Projecting movePoints");
-      movePoints = new MoveProjection(this)
-        .projectMovePointsTo(endingPointPosition);
+      projectMovePoints();
     } else {
       movePoints[endingPointPosition] = inputPoint;
     }
@@ -345,7 +361,7 @@ public class MoveSelection extends Moves {
     return !noLegalMove();
   }
 
-  void inputPoint (int point) {
+  public void inputPoint (int point) {
 
     if (moveIsLegal()) {
       inputPoint = point;

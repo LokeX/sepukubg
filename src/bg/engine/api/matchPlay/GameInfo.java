@@ -1,6 +1,5 @@
-package bg.engine.api.gamePlay;
+package bg.engine.api.matchPlay;
 
-import bg.engine.api.matchPlay.MatchState;
 import bg.engine.api.moveInput.HumanMove;
 
 import java.util.Arrays;
@@ -9,14 +8,14 @@ import static java.util.stream.Collectors.joining;
 
 public class GameInfo {
 
-  private MatchState matchState;
+  private MatchPlay matchState;
   private String[] dataItems;
   private String movePoints = "";
   private boolean dataUpdate = false;
   private int selectedTurnNr;
   private int selectedMoveNr;
 
-  public GameInfo(MatchState matchState) {
+  public GameInfo(MatchPlay matchState) {
 
     this.matchState = matchState;
   }

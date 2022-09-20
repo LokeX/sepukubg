@@ -2,7 +2,6 @@ package bg.engine.api;
 
 import bg.engine.coreLogic.moves.Layout;
 
-import static bg.Main.win;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +9,10 @@ import java.util.stream.Collectors;
 
 public class Scenarios {
 
-  private static List<NamedLayout> namedLayouts = new ArrayList();
+  private static List<NamedLayout> namedLayouts = new ArrayList<>();
+  private Layout editedScenario;
   private int selectedScenario = 0;
+  private boolean isEditing = true;
 
   static public class NamedLayout implements Serializable {
 
@@ -58,9 +59,32 @@ public class Scenarios {
     }
   }
 
+  public Layout getMatchLayout () {
+
+    return
+      editedScenario != null
+      ? editedScenario
+      : namedLayouts.get(selectedScenario).getLayout();
+  }
+
+  public void setEditedScenario (Layout scenario) {
+
+    editedScenario = scenario;
+  }
+
+  public boolean isEditing () {
+
+    return isEditing;
+  }
+
+  public void setEditing (boolean editing) {
+
+    isEditing = editing;
+  }
+
   public Scenarios (Scenarios scenarios) {
 
-    namedLayouts = new ArrayList(scenarios.getScenarios());
+    namedLayouts = new ArrayList<>(scenarios.getScenarios());
     selectedScenario = scenarios.getSelectedScenariosNr();
   }
 
@@ -70,11 +94,6 @@ public class Scenarios {
       namedLayouts.stream()
         .map(NamedLayout::getName)
         .collect(Collectors.toList());
-  }
-
-  public Layout getStartGameLayout () {
-
-    return new Layout (namedLayouts.get(0).getLayout());
   }
 
   public void setSelectedScenariosName (String name) {
@@ -99,14 +118,9 @@ public class Scenarios {
       anyMatch(name -> name.equals(layoutName));
   }
 
-  public void addNamedLayout (String name, int[] point) {
+  public void addNamedLayout(String name, Layout layout) {
 
-      namedLayouts.add(new NamedLayout(name, point));
-  }
-
-  public void addDisplayedLayout(String name) {
-
-    namedLayouts.add(new NamedLayout(name, win.canvas.getDisplayedLayout().point));
+    namedLayouts.add(new NamedLayout(name, layout.getClone().point));
     selectedScenario = namedLayouts.size()-1;
   }
 
@@ -114,6 +128,7 @@ public class Scenarios {
 
     if (++selectedScenario > namedLayouts.size()-1) {
       selectedScenario = 0;
+      editedScenario = null;
     }
   }
 
@@ -121,6 +136,7 @@ public class Scenarios {
 
     if (--selectedScenario < 0) {
       selectedScenario = namedLayouts.size()-1;
+      editedScenario = null;
     }
   }
 

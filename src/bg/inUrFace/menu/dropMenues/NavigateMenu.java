@@ -1,6 +1,6 @@
 package bg.inUrFace.menu.dropMenues;
 
-import bg.inUrFace.canvas.scenario.ScenarioOutput;
+import bg.Main;
 import bg.util.time.Timeable;
 import static bg.Main.scenarios;
 import static bg.Main.settings;
@@ -67,13 +67,6 @@ public class NavigateMenu extends JMenu implements Timeable {
               .selectPreviousHumanTurn()
               .getPlayedMove()
           );
-//        new MoveOutput(
-//        ).outputMove();
-//          engineApi
-//            .getGameState()
-//            .selectPreviousHumanTurn()
-//            .getPlayedMove()
-//        ).outputMove();
       });
   }
 
@@ -98,12 +91,6 @@ public class NavigateMenu extends JMenu implements Timeable {
               .selectNextHumanTurn()
               .getPlayedMove()
           );
-//        new MoveOutput(
-//          engineApi
-//            .getGameState()
-//            .selectNextHumanTurn()
-//            .getPlayedMove()
-//        ).outputMove();
       });
   }
 
@@ -128,12 +115,6 @@ public class NavigateMenu extends JMenu implements Timeable {
               .selectLatestHumanTurn()
               .getPlayedMove()
           );
-//        new MoveOutput(
-//          engineApi
-//            .getGameState()
-//            .selectLatestHumanTurn()
-//            .getPlayedMove()
-//        ).outputMove();
       });
   }
 
@@ -163,12 +144,6 @@ public class NavigateMenu extends JMenu implements Timeable {
               .selectNextTurn()
               .getPlayedMove()
           );
-//        new MoveOutput(
-//          engineApi
-//            .getGameState()
-//            .selectNextTurn()
-//            .getPlayedMove()
-//        ).outputMove();
       }
     });
   }
@@ -194,12 +169,6 @@ public class NavigateMenu extends JMenu implements Timeable {
               .selectPreviousTurn()
               .getPlayedMove()
           );
-//        new MoveOutput(
-//          engineApi
-//            .getGameState()
-//            .selectPreviousTurn()
-//            .getPlayedMove()
-//        ).outputMove();
       }
     });
   }
@@ -224,11 +193,6 @@ public class NavigateMenu extends JMenu implements Timeable {
               .getGameState()
               .selectPreviousMove()
           );
-//        new MoveOutput(
-//          engineApi
-//            .getGameState()
-//            .selectPreviousMove()
-//        ).outputMove();
       }
     });
   }
@@ -252,11 +216,6 @@ public class NavigateMenu extends JMenu implements Timeable {
               .getGameState()
               .selectNextMove()
           );
-//      new MoveOutput(
-//        engineApi
-//          .getGameState()
-//          .selectNextMove()
-//      ).outputMove();
     });
   }
 
@@ -280,11 +239,6 @@ public class NavigateMenu extends JMenu implements Timeable {
               .getGameState()
               .selectPreviousPartMove()
           );
-//        new LayoutDisplay().displayLayout(
-//          engineApi
-//          .getGameState()
-//          .selectPreviousPartMove()
-//        );
       }
     });
   }
@@ -308,11 +262,6 @@ public class NavigateMenu extends JMenu implements Timeable {
               .getGameState()
               .selectNextPartMove()
           );
-//      new LayoutDisplay().displayLayout(
-//        engineApi
-//        .getGameState()
-//        .selectNextPartMove()
-//      );
     });
   }
 
@@ -328,8 +277,11 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     previousScenario.addActionListener((ActionEvent e) -> {
-      scenarios.selectPreviousScenario();
-      new ScenarioOutput(scenarios).outputSelectedScenario();
+      engineApi.getScenarios().selectPreviousScenario();
+      Main.getCanvas().setDisplayedLayout(
+        engineApi.getScenarios().getSelectedScenariosLayout()
+      );
+//      new ScenarioOutput(scenarios).outputSelectedScenario();
     });
   }
 
@@ -345,8 +297,11 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextScenario.addActionListener((ActionEvent e) -> {
-      scenarios.selectNextScenario();
-      new ScenarioOutput(scenarios).outputSelectedScenario();
+      engineApi.getScenarios().selectNextScenario();
+      Main.getCanvas().setDisplayedLayout(
+        engineApi.getScenarios().getSelectedScenariosLayout()
+      );
+//      new ScenarioOutput(scenarios).outputSelectedScenario();
     });
   }
 

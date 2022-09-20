@@ -3,18 +3,14 @@ package bg;
 import bg.IO.FileHandler;
 import bg.IO.Sound;
 import bg.engine.api.EngineApi;
-import bg.engine.coreLogic.Dice;
 import bg.engine.coreLogic.moves.Layout;
 import bg.engine.coreLogic.trainer.Trainer;
 import bg.engine.api.Scenarios;
 import bg.inUrFace.canvas.Canvas;
-import bg.inUrFace.canvas.DoublingCube;
 import bg.inUrFace.canvas.ActionButton;
 import bg.inUrFace.canvas.ScenarioEditor;
 import bg.inUrFace.canvas.BonusPainter;
 import bg.inUrFace.mouse.MouseApi;
-import bg.inUrFace.mouse.MoveInputListener;
-import bg.inUrFace.windows.InformationBar;
 import bg.util.time.TimedTasks;
 import bg.inUrFace.windows.Window;
 
@@ -57,11 +53,6 @@ public class Main {
     return getMouse().getActionButton();
   }
 
-  public static DoublingCube getDoublingCube () {
-
-    return getMouse().getDoublingCube();
-  }
-
   public static ScenarioEditor getLayoutEditor () {
 
     return getMouse().getLayoutEditor();
@@ -70,16 +61,6 @@ public class Main {
   public static Settings getSettings () {
 
     return settings;
-  }
-
-  public static InformationBar getInformationBar() {
-
-    return win.informationBar;
-  }
-
-  public static MoveInputListener getMoveInputListener() {
-
-    return mouse.getMoveInputListener();
   }
 
   public static BonusPainter getTextArea () {

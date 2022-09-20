@@ -1,8 +1,8 @@
 package bg.engine.api.moveInput;
 
 import bg.engine.api.MoveLayoutOutput;
-import bg.engine.api.gamePlay.GameState;
-import bg.engine.api.matchPlay.MatchState;
+import bg.engine.api.matchPlay.GameState;
+import bg.engine.api.matchPlay.MatchPlay;
 import bg.engine.coreLogic.moves.Layout;
 import bg.engine.coreLogic.moves.MoveLayout;
 
@@ -11,10 +11,10 @@ import static bg.util.ThreadUtil.runWhenNotified;
 
 public class HumanMove {
 
-  private MatchState matchState;
+  private MatchPlay matchState;
   private MoveSelection moveSelection;
 
-  public HumanMove (MatchState matchState) {
+  public HumanMove (MatchPlay matchState) {
 
     this.matchState = matchState;
   }

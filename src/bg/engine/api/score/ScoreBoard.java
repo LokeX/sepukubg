@@ -1,18 +1,17 @@
 package bg.engine.api.score;
 
-import bg.engine.api.gamePlay.GameState;
-import bg.engine.api.matchPlay.MatchState;
+import bg.engine.api.matchPlay.GameState;
+import bg.engine.api.matchPlay.MatchPlay;
 
 public class ScoreBoard {
 
   private MatchBoard matchBoard;
   private GameState gameState;
 
-  public ScoreBoard getScoreBoard (MatchState matchState) {
+  public ScoreBoard (MatchPlay matchPlay) {
 
-    matchBoard = matchState.getMatchBoard();
-    gameState = matchState.getGameState();
-    return this;
+    matchBoard = matchPlay.getMatchBoard();
+    gameState = matchPlay.getGameState();
   }
 
   public boolean gameOver () {

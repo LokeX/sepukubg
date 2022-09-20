@@ -1,6 +1,5 @@
-package bg.engine.api.gamePlay;
+package bg.engine.api.matchPlay;
 
-import bg.engine.api.matchPlay.MatchState;
 import bg.engine.coreLogic.Turn;
 import bg.inUrFace.windows.TextDisplay;
 
@@ -8,10 +7,10 @@ import static bg.Main.settings;
 
 public class Search {
 
-  private MatchState matchState;
+  private MatchPlay matchState;
   private boolean searching = false;
 
-  public Search (MatchState matchState) {
+  public Search (MatchPlay matchState) {
 
     this.matchState = matchState;
   }

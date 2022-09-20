@@ -1,10 +1,10 @@
 package bg.engine.api;
 
-import bg.engine.api.gamePlay.GameInfoHTML;
-import bg.engine.api.gamePlay.GameState;
+import bg.Main;
+import bg.engine.api.matchPlay.GameState;
 import bg.engine.api.matchPlay.ActionState;
 import bg.engine.api.matchPlay.MatchCube;
-import bg.engine.api.matchPlay.MatchState;
+import bg.engine.api.matchPlay.MatchPlay;
 import bg.engine.api.moveInput.HumanInput;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.api.score.ScoreBoard;
@@ -18,34 +18,34 @@ import static bg.Main.*;
 
 public class EngineApi {
 
+  private Scenarios scenarios = Main.scenarios;
   private HumanInput humanInput = new HumanInput();
   private GameInfoHTML gameInfoHTML = new GameInfoHTML();
-  public MatchState matchState = new MatchState();
-  private ScoreBoard scoreBoard = new ScoreBoard();
+  public MatchPlay matchPlay = new MatchPlay(this);
+  private ActionState actionState =  new ActionState(this);
 
-  public boolean matchIsPlaying () {
+  public Scenarios getScenarios () {
 
-    return
-      matchState != null;
+    return scenarios;
   }
 
   public ActionState getActionState () {
 
-    return matchState.getActionState();
+    return actionState;
   }
 
   public int[] getUsedDicePattern () {
 
     return
-      matchState != null
-      ? matchState.getUsedDicePattern()
+      matchPlay != null
+      ? matchPlay.getUsedDicePattern()
       : null;
   }
 
   public Game getGame () {
 
-    if (matchState != null && matchState.getGameState() != null) {
-      return matchState.getGameState();
+    if (matchPlay != null && matchPlay.getGameState() != null) {
+      return matchPlay.getGameState();
     }
     return null;
   }
@@ -60,19 +60,19 @@ public class EngineApi {
     return
       gameIsPlaying()
         ? gameInfoHTML.getGameDataHTML(
-            getMatchState().getGameInfo()
+            getMatchPlay().getGameInfo()
           )
         : null;
   }
 
-  public MatchState getMatchState() {
+  public MatchPlay getMatchPlay() {
 
-    return matchState;
+    return matchPlay;
   }
 
   public GameState getGameState () {
 
-    return matchState.getGameState();
+    return matchPlay.getGameState();
   }
 
   int getPlayedMoveNr () {
@@ -83,48 +83,29 @@ public class EngineApi {
   public int getNrOfTurns () {
 
     return
-      matchState.getGameState() != null
-        ? matchState.getGameState().nrOfTurns()
+      matchPlay.getGameState() != null
+        ? matchPlay.getGameState().nrOfTurns()
         : 0;
   }
 
   public Turn getSelectedTurn() {
 
     return getNrOfTurns() > 0
-      ? matchState.getGameState().selectedTurn()
+      ? matchPlay.getGameState().selectedTurn()
       : null;
   }
 
   public Turn getLatestTurn () {
 
     return
-      matchState.getGameState() != null
-        ? matchState.getGameState().lastTurn()
+      matchPlay.getGameState() != null
+        ? matchPlay.getGameState().lastTurn()
         : null;
-  }
-  public int getSelectedTurnNr () {
-
-    return getGameState().getTurnNr();
-  }
-
-  public int getLatestTurnNr () {
-
-    return getLatestTurn().getTurnNr();
   }
 
   public EvaluatedMove getSelectedMove() {
 
     return getSelectedTurn().getMoveByNr(getGameState().getMoveNr());
-  }
-
-  public void setSelectedMove (int moveNr) {
-
-    getGameState().setMoveNr(moveNr);
-  }
-
-  public int getSelectedMoveNr () {
-
-    return getGameState().getMoveNr();
   }
 
   public int getPlayerOnRollsID () {
@@ -134,7 +115,7 @@ public class EngineApi {
 
   public MatchCube getMatchCube () {
 
-    return new MatchCube(this);
+    return matchPlay.getMatchCube();
   }
 
   public List<String> getMoveBonuses () {
@@ -149,28 +130,15 @@ public class EngineApi {
         : null;
   }
 
-//  public HumanMoveApi getHumanMove () {
-//
-//    return
-//      matchState != null && matchState.gameIsPlaying()
-//        ? matchState.getGameState().getHumanMove()
-//        : null;
-//  }
-
   public StateEdit getInput () {
 
     return new StateEdit();
   }
 
-  public boolean matchOver () {
-
-    return matchState.getMatchBoard().matchOver();
-  }
-
   public boolean humanTurnSelected() {
 
     return
-      matchState
+      matchPlay
         .getGameState()
         .humanTurnSelected();
   }
@@ -178,43 +146,45 @@ public class EngineApi {
   public boolean gameIsPlaying () {
 
     return
-      matchState
+      matchPlay
         .gameIsPlaying();
   }
 
  public MoveLayoutOutput getMoveOutput () {
 
     return
-      matchState != null
-      ? matchState.getMoveOutput()
+      matchPlay != null
+      ? matchPlay.getMoveOutput()
       : null;
  }
 
   public ScoreBoard getScoreBoard() {
 
-    return scoreBoard.getScoreBoard(matchState);
+    return
+      matchPlay.getScoreBoard();
+//      scoreBoard.getScoreBoard(matchPlay);
   }
 
   public MatchBoard getMatchBoard() {
 
-    return matchState.getMatchBoard();
+    return matchPlay.getMatchBoard();
   }
 
   public boolean getAutoCompleteGame () {
 
-    return matchState.getAutoCompleteGame();
+    return matchPlay.getAutoCompleteGame();
   }
 
   public void setAutoCompleteGame (boolean autoComplete) {
 
-    matchState.setAutoCompleteGame(autoComplete);
+    matchPlay.setAutoCompleteGame(autoComplete);
   }
 
   public boolean gameOver () {
 
     return
-      matchState.getGameState() == null
-      || matchState.getGameState().gameOver();
+      matchPlay.getGameState() == null
+      || matchPlay.getGameState().gameOver();
   }
 
 }

@@ -66,7 +66,7 @@ public class MatchMenu extends JMenu implements Timeable {
         autoCompleteGame.setText("Stop auto complete");
         engineApi.setAutoCompleteGame(true);
         new Thread(() ->
-          engineApi.getMatchState().actionButtonClicked()
+          engineApi.getMatchPlay().actionButtonClicked()
         ).start();
       }
     });
@@ -78,7 +78,7 @@ public class MatchMenu extends JMenu implements Timeable {
     nextAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
     nextAction.addActionListener((ActionEvent e) ->
       new Thread(() ->
-        engineApi.getMatchState().actionButtonClicked()
+        engineApi.getMatchPlay().actionButtonClicked()
       ).start()
     );
   }

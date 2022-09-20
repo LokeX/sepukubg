@@ -2,6 +2,7 @@ package bg.inUrFace.menu.dropMenues;
 
 import static bg.Main.scenarios;
 
+import bg.Main;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
 import bg.util.time.Timeable;
 
@@ -32,7 +33,7 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(saveScenario);
     saveScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
     saveScenario.addActionListener((ActionEvent e) -> {
-      engineApi.getInput().saveLayout();
+      engineApi.getInput().saveLayout(Main.getCanvas().getDisplayedLayout());
     });
   }
 

@@ -90,6 +90,12 @@ public class MoveLayoutOutput {
       : null;
   }
 
+  public boolean isBusy () {
+
+    return
+      outputLayouts.size() > 0;
+  }
+
   public void setEndOfOutputNotifier (Object notifier) {
 
     if (outputLayouts.size() == 0) {

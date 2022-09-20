@@ -1,4 +1,6 @@
-package bg.engine.api.gamePlay;
+package bg.engine.api;
+
+import bg.engine.api.matchPlay.GameInfo;
 
 import java.util.stream.IntStream;
 

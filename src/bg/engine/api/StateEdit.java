@@ -1,6 +1,7 @@
 package bg.engine.api;
 
 import bg.engine.coreLogic.Dice;
+import bg.engine.coreLogic.moves.Layout;
 import bg.engine.coreLogic.trainer.Trainer;
 import bg.inUrFace.canvas.scenario.ScenarioOutput;
 import javax.swing.*;
@@ -37,12 +38,12 @@ public class StateEdit {
     return name;
   }
 
-  public void saveLayout () {
+  public void saveLayout (Layout layout) {
 
     String name = inputLayoutName();
 
     if (name != null && name.length() > 0) {
-      scenarios.addDisplayedLayout(name);
+      scenarios.addNamedLayout(name, layout);
       if (engineApi.getLatestTurn() == null) {
         new ScenarioOutput().outputSelectedScenario();
       }
@@ -80,9 +81,9 @@ public class StateEdit {
           System.out.println("Truncated from turn: "+engineApi.getGameState().getTurnNr());
           engineApi.getGameState().setMoveNr(engineApi.getPlayedMoveNr());
           System.out.println("moveNr set: "+engineApi.getPlayedMoveNr());
-          engineApi.getMatchState().getSearch().searchRolledMoves();
+          engineApi.getMatchPlay().getSearch().searchRolledMoves();
           System.out.println("Moves searched");
-          engineApi.getMatchState().move();
+          engineApi.getMatchPlay().move();
         }
       }
     }

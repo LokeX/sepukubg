@@ -13,52 +13,20 @@ public class ActionButton extends TextBatch implements Paintable {
   private boolean init = true;
   private boolean hideActionButton = false;
   private boolean showPleaseWaitButton = false;
-  private Color backgroundColor = new Color(255, 0, 255, 75);
+  private Color readyBackgroundColor = new Color(255, 0, 255, 75);
+  private Color notReadyBackgroundColor = new Color(108,13,13);
 
   public ActionButton() {
 
     super(470, 250, 125, 65);
-  }
-
-  private void setupButton () {
-
-    setComponent(win.canvas);
     setMargins(25, 25, 7, 5);
-    setBackgroundColor(backgroundColor);
+    setBackgroundColor(readyBackgroundColor);
     setFrameColor(new Color(255, 255, 255, 15));
     setDrawFrame(true);
     setShadow(true);
     setRaised(true);
     setTextColor(new Color(200, 200, 200, 200));
     setFont(new Font("Ariel", Font.BOLD, 18));
-  }
-
-  private boolean okToSetText() {
-
-    return
-      engineApi != null
-        && engineApi.gameIsPlaying()
-        && engineApi.getLatestTurn() != null;
-  }
-
-  private boolean selectedTurnIsLatestTurn () {
-
-    return
-      engineApi.getSelectedTurnNr() == engineApi.getLatestTurnNr();
-  }
-
-  private boolean selectedTurnsPlayerIsHuman () {
-
-    return
-      engineApi.humanTurnSelected();
-  }
-
-  private boolean playedMoveIsSelected () {
-
-    return
-      engineApi
-        .getSelectedTurn()
-        .getPlayedMoveNr() == engineApi.getSelectedMoveNr();
   }
 
   private boolean buttonClicked (MouseEvent e) {
@@ -70,12 +38,12 @@ public class ActionButton extends TextBatch implements Paintable {
         && showButton();
   }
 
-  public void paint(Graphics g) {
+  public void paint (Graphics g) {
 
-    if (showButton()) {
+    if (engineApi.getActionState().nextPlayReady()) {
 
       if (init) {
-        setupButton();
+        setComponent(win.canvas);
         init = false;
       }
 
@@ -83,15 +51,10 @@ public class ActionButton extends TextBatch implements Paintable {
 
       if (showPleaseWaitButton) {
         setButtonText("Please wait");
-        setBackgroundColor(new Color(108,13,13));
-      } else if (okToSetText()) {
-        setBackgroundColor(backgroundColor);
-//        setButtonText(engineApi.getActionState().nextPlay());
-        setButtonText(
-          engineApi.matchOver() && selectedTurnIsLatestTurn() ? "New Match" :
-            engineApi.gameOver() && selectedTurnIsLatestTurn() ? "New game" :
-              selectedTurnsPlayerIsHuman() ? "Play move" : "Roll dice"
-        );
+        setBackgroundColor(notReadyBackgroundColor);
+      } else {
+        setBackgroundColor(readyBackgroundColor);
+        setButtonText(engineApi.getActionState().nextPlayTitle());
       }
       setMargins(
         (int)(25*d.factor),
@@ -113,7 +76,7 @@ public class ActionButton extends TextBatch implements Paintable {
     showPleaseWaitButton = true;
     Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
     bg.util.ThreadUtil.threadSleep(100);
-    engineApi.getMatchState().actionButtonClicked();
+    engineApi.getMatchPlay().actionButtonClicked();
   }
 
   @Override
@@ -156,19 +119,9 @@ public class ActionButton extends TextBatch implements Paintable {
 
   public boolean showButton() {
 
-    boolean showButton = false;
-
-    if (okToSetText()) {
-      if (selectedTurnIsLatestTurn()) {
-        showButton = !hideActionButton;
-      } else if (!playedMoveIsSelected()) {
-        showButton = true;
-      } else {
-        showButton = false;
-      }
-    }
-    return showButton || !engineApi.gameIsPlaying() ||
-      engineApi.gameOver() && selectedTurnIsLatestTurn();
+    return
+      engineApi.getActionState().nextPlayReady()
+      && !hideActionButton;
   }
 
 }

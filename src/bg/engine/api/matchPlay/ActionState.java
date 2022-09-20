@@ -1,92 +1,136 @@
 package bg.engine.api.matchPlay;
 
+import bg.engine.api.EngineApi;
+import bg.engine.api.moveInput.HumanMove;
+
 public class ActionState {
 
-  private MatchState matchState;
+  private EngineApi engineApi;
+  private String[] playTitles =
+    new String[] {
+      "Start match",
+      "New match",
+      "New game",
+      "Play move",
+      "Roll dice",
+      ""
+    };
 
-  ActionState (MatchState matchState) {
+  public ActionState (EngineApi engineApi) {
 
-    this.matchState = matchState;
+    this.engineApi = engineApi;
   }
 
-  private MatchState matchState () {
+  private MatchPlay matchState () {
 
-    return matchState;
+    return engineApi.getMatchPlay();
   }
 
   private boolean lastTurnSelected () {
 
     return
-      matchState.gameIsPlaying()
+      matchState().gameIsPlaying()
       && matchState().lastTurnSelected();
   }
 
   private boolean playerIsHuman () {
 
     return
-      matchState.gameIsPlaying()
+      matchState().gameIsPlaying()
       && matchState().playerIsHuman();
   }
 
   private boolean newMatchPlay() {
 
     return
-      matchState.gameIsPlaying()
-      && matchState.matchOver();
+      matchState().gameIsPlaying()
+      && matchState().matchOver()
+      && lastTurnSelected();
   }
 
   private boolean newGamePlay() {
 
     return
-      matchState.gameOver();
+      matchState().gameOver()
+      && lastTurnSelected();
   }
 
   private boolean playedMoveSelected () {
 
     return
-      matchState.gameIsPlaying()
-        && matchState().playedMoveSelected();
+      matchState().gameIsPlaying()
+      && matchState().playedMoveSelected();
+  }
+
+  private HumanMove humanMove () {
+
+    return
+      matchState()
+        .getHumanMove();
+  }
+
+  private boolean humanInputComplete () {
+
+    return
+      humanMove().inputReady()
+      &&
+      matchState()
+        .getHumanMove()
+        .getMoveSelection()
+        .endOfInput();
   }
 
   private boolean playHumanMove () {
 
     return
-      playMove() && playerIsHuman();
+      playerIsHuman()
+      && playMove();
   }
 
   private boolean playMove () {
 
     return
-      !matchState.matchOver()
-        && !matchState.gameOver()
-        && (lastTurnSelected() || !playedMoveSelected());
+      !matchState().matchOver()
+      && !matchState().gameOver()
+      && !matchState().getMoveOutput().isBusy()
+      && (lastTurnSelected() || !playedMoveSelected())
+      && (!playerIsHuman() || humanInputComplete());
   }
 
   private boolean scenarioEdit () {
 
-    return matchState() == null;
+    return
+      engineApi.getScenarios().isEditing();
+//      matchState() == null;
+//      !matchState().gameIsPlaying();
   }
 
-  public boolean nextPlayAvailable () {
+  public boolean nextPlayReady () {
 
     return
-      nextPlay().length() == 0;
+      playTitles[nextPlayTitleNr()].length() != 0;
   }
 
-  public String nextPlay() {
+  public String nextPlayTitle () {
+
+    return
+      playTitles[nextPlayTitleNr()];
+  }
+
+  public int nextPlayTitleNr() {
 
     return
         scenarioEdit()
-      ? "Start match"
+      ? 0
       : newMatchPlay()
-      ? "New match"
+      ? 1
       : newGamePlay()
-      ? "New game"
+      ? 2
       : playHumanMove()
-      ? "Play move"
+      ? 3
       : playMove()
-      ? "Roll dice"
-      : "";
+      ? 4
+      : 5;
   }
 
 }

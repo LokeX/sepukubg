@@ -14,7 +14,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Objects;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -32,12 +31,10 @@ public class Window extends JFrame {
 
   public Window() {
 
-    super("Sepuku Backgammon - pre-alpha: 0.33/2022.09.14");
+    super("Sepuku Backgammon - alpha ver. 2022.09.20");
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
-//    System.out.println(getClass().getResource("Icon/AppIcon.gif"));
     setIconImage(new ImageIcon(getClass().getResource("Icon/AppIcon.gif")).getImage());
-//    setIconImage(new ImageIcon("/Icon/AppIcon.gif").getImage());
     canvas.getPaintJobs().bonusPainter.setComponent(canvas);
     setJMenuBar(menu);
     setLayout(new BorderLayout());
@@ -94,9 +91,6 @@ public class Window extends JFrame {
       if (mouse != null && mouse.scenarioEditor != null) {
         mouse.scenarioEditor.generateClickPoints();
       }
-//      if (mouse != null && mouse.getMoveInputListener().startHumanMove() != null) {
-//        mouse.getMoveInputListener().moveInput.calculatePoints();
-//      }
       if (!settings.getWinMaximized()) {
         settings.setCanvasWidth(canvas.getWidth());
         settings.setCanvasHeight(canvas.getHeight());
@@ -133,10 +127,5 @@ public class Window extends JFrame {
 
     return canvas;
   }
-
-//  public BonusPainter getBonusPainter () {
-//
-//    return text;
-//  }
 
 }

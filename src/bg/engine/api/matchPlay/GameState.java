@@ -1,4 +1,4 @@
-package bg.engine.api.gamePlay;
+package bg.engine.api.matchPlay;
 
 import bg.engine.coreLogic.Game;
 import bg.engine.coreLogic.Turn;
@@ -15,9 +15,9 @@ import static bg.Main.settings;
 
 public class GameState extends Game {
 
-  protected int turnNr = 0;
-  protected int moveNr = 0;
-  protected int partMoveNr = -1;
+  private int turnNr = 0;
+  private int moveNr = 0;
+  private int partMoveNr = -1;
 
   public GameState (Layout matchLayout) {
 

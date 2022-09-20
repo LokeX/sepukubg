@@ -25,7 +25,7 @@ public class MatchCube {
 
   private MatchBoard getMatchBoard () {
 
-    return engineApi.getMatchState().getMatchBoard();
+    return engineApi.getMatchPlay().getMatchBoard();
   }
 
   private boolean turnsPlayerIsHuman () {
@@ -98,7 +98,7 @@ public class MatchCube {
         }
       }
       if (getGame().getGameCube().cubeWasRejected()) {
-        engineApi.getMatchState().endTurn();
+        engineApi.getMatchPlay().endTurn();
       }
     }
   }
