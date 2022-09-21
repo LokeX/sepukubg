@@ -95,10 +95,10 @@ public class MatchMenu extends JMenu implements Timeable {
       nextAction.setText(mouse.actionButton.getButtonText());
       nextAction.setEnabled(
         engineApi != null &&
-          !getActionButton().buttonIsHidden() &&
+//          !getActionButton().buttonIsHidden() &&
           mouse.actionButton.showButton() &&
           !engineApi.getAutoCompleteGame() &&
-          !getActionButton().showPleaseWaitButton()
+          !getActionButton().showWaitText()
       );
       nextAction.setVisible(nextAction.isEnabled());
     }

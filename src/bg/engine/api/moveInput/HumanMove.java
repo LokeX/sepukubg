@@ -3,8 +3,6 @@ package bg.engine.api.moveInput;
 import bg.engine.api.MoveLayoutOutput;
 import bg.engine.api.matchPlay.GameState;
 import bg.engine.api.matchPlay.MatchPlay;
-import bg.engine.coreLogic.moves.Layout;
-import bg.engine.coreLogic.moves.MoveLayout;
 
 import static bg.Main.getSettings;
 import static bg.util.ThreadUtil.runWhenNotified;
@@ -19,33 +17,50 @@ public class HumanMove {
     this.matchState = matchState;
   }
 
+  public void setPlayedMoveToSelectedMove() {
+
+    gameState()
+      .selectedTurn()
+      .setPlayedMoveNr(getSelectedMoveNr());
+  }
+
+  private void setMovePoints () {
+
+    gameState()
+      .selectedTurn()
+      .getMoveByNr(getSelectedMoveNr())
+      .setMovePoints(moveSelection.getMovePoints());
+  }
+
+  private void setSelectedMove () {
+
+    gameState().setMoveNr(getSelectedMoveNr());
+  }
+
   public void playMove () {
 
-    if (getSelectedMove() != null) {
-      gameState().setMoveNr(
-        getSelectedMoveNr()
-      );
-      gameState()
-        .selectedTurn()
-        .getMoveByNr(getSelectedMoveNr())
-        .setMovePoints(moveSelection.getMovePoints());
+    if (hasSelectedMove()) {
+      setSelectedMove();
+      setPlayedMoveToSelectedMove();
+      setMovePoints();
       endMove();
+      System.out.println("Played selected move: "+matchState.getGameState().getMoveNr());
     }
   }
 
-  public MoveLayout getSelectedMove () {
+  private boolean hasSelectedMove () {
 
     return
-      moveSelection != null && getSelectedMoveNr() != -1
-      ? moveSelection.getMoveLayout(getSelectedMoveNr())
-      : null;
+      moveSelection != null
+      && moveSelection.isUniqueMove();
   }
 
   public int getSelectedMoveNr () {
 
     return
-      moveSelection != null && moveSelection.isUniqueMove()
-      ? moveSelection.getUniqueEvaluatedMoveNr()
+      hasSelectedMove()
+      ? moveSelection
+        .getUniqueEvaluatedMoveNr()
       : -1;
   }
 
@@ -80,17 +95,6 @@ public class HumanMove {
         .getMoveOutput();
   }
 
-  private void setInitialOutputLayout() {
-
-    moveOutput()
-      .setOutputLayout(
-        new Layout(
-          moveSelection
-            .getParentMoveLayout()
-        )
-      );
-  }
-
   private void startMoveSelection () {
 
     moveSelection = new MoveSelection(
@@ -102,7 +106,6 @@ public class HumanMove {
 
     System.out.println("Starting human move:");
     startMoveSelection();
-//    setInitialOutputLayout();
     System.out.println("Human movePoints:");
     moveSelection.printMovePoints();
     if (moveSelection.noLegalMove()) {

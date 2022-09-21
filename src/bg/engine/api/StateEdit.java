@@ -3,7 +3,7 @@ package bg.engine.api;
 import bg.engine.coreLogic.Dice;
 import bg.engine.coreLogic.moves.Layout;
 import bg.engine.coreLogic.trainer.Trainer;
-import bg.inUrFace.canvas.scenario.ScenarioOutput;
+
 import javax.swing.*;
 
 import static bg.Main.*;
@@ -44,9 +44,6 @@ public class StateEdit {
 
     if (name != null && name.length() > 0) {
       scenarios.addNamedLayout(name, layout);
-      if (engineApi.getLatestTurn() == null) {
-        new ScenarioOutput().outputSelectedScenario();
-      }
     }
   }
 

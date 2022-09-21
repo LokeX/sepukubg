@@ -37,8 +37,6 @@ public class MatchPlay {
     humanMove = new HumanMove(this);
     moveOutput = new MoveLayoutOutput();
     gameInfo = new GameInfo(this);
-    getActionButton().setShowPleaseWaitButton(false);
-    getActionButton().setHideActionButton(false);
   }
 
   public MoveLayoutOutput getMoveOutput() {
@@ -156,8 +154,9 @@ public class MatchPlay {
 
   public void endTurn () {
 
-    getActionButton().setShowPleaseWaitButton(false);
-    getActionButton().setHideActionButton(false);
+    if (playerIsHuman()) {
+      humanMove.setPlayedMoveToSelectedMove();
+    }
     if (gameOver()) {
       autoCompleteGame = false;
       matchBoard.addGameScore(getGameState().getGameScore());
@@ -171,7 +170,6 @@ public class MatchPlay {
 
     System.out.println("In matchState.humanMove");
     humanMove.startMove();
-    getActionButton().setHideActionButton(true);
   }
 
   private void computerMove () {
@@ -217,8 +215,6 @@ public class MatchPlay {
     gameState.newTurn();
     Main.sound.playSoundEffect("wuerfelbecher");
     getSearch().searchRolledMoves();
-    getActionButton().setHideActionButton(true);
-    getActionButton().setShowPleaseWaitButton(false);
     move();
   }
 

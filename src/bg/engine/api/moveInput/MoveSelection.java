@@ -106,7 +106,8 @@ public class MoveSelection extends Moves {
   public Stream<Integer> validEndingPoints () {
 
     int[] tempPoints = movePoints.clone();
-    Stream<Integer> validEndingPoints = projectMovePoints();
+    Stream<Integer> validEndingPoints =
+      projectMovePointsTo(movePoints.length);
 
     movePoints = tempPoints;
 
@@ -291,7 +292,7 @@ public class MoveSelection extends Moves {
       : regularDicePattern();
   }
 
-  private Stream<Integer> projectMovePoints () {
+  private Stream<Integer> projectMovePointsTo (int terminalPosition) {
 
     List<Integer> validEndingPoints = new ArrayList<>();
     List<Integer> endingPoints = new ArrayList<>();
@@ -299,13 +300,16 @@ public class MoveSelection extends Moves {
     do {
       if (positionIsEndingPoint()) {
         endingPoints = endingPointsIn(position()).toList();
-        validEndingPoints.addAll(endingPoints);
       }
       if (endingPoints.size() > 0) {
+        validEndingPoints.addAll(endingPoints);
         movePoints[position()] = endingPoints.get(0);
       }
-    } while (endingPoints.size() > 0 && !endOfInput());
-
+    } while (
+      endingPoints.size() > 0
+      && !endOfInput()
+      && position() <= terminalPosition
+    );
     return
       validEndingPoints.stream().distinct();
   }
@@ -317,7 +321,7 @@ public class MoveSelection extends Moves {
     System.out.println("endingPointPosition: "+endingPointPosition);
     if (endingPointPosition > position()) {
       System.out.println("Projecting movePoints");
-      projectMovePoints();
+      projectMovePointsTo(endingPointPosition);
     } else {
       movePoints[endingPointPosition] = inputPoint;
     }

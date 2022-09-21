@@ -11,8 +11,6 @@ import static bg.Main.*;
 public class ActionButton extends TextBatch implements Paintable {
 
   private boolean init = true;
-  private boolean hideActionButton = false;
-  private boolean showPleaseWaitButton = false;
   private Color readyBackgroundColor = new Color(255, 0, 255, 75);
   private Color notReadyBackgroundColor = new Color(108,13,13);
 
@@ -29,18 +27,24 @@ public class ActionButton extends TextBatch implements Paintable {
     setFont(new Font("Ariel", Font.BOLD, 18));
   }
 
+  public boolean showWaitText () {
+
+    return
+      engineApi.getActionState().isShowWaitText();
+  }
+
   private boolean buttonClicked (MouseEvent e) {
 
     return
       e.getButton() == MouseEvent.BUTTON1
-        && !showPleaseWaitButton
+        && !showWaitText()
         && mouseOnBatch()
         && showButton();
   }
 
   public void paint (Graphics g) {
 
-    if (engineApi.getActionState().nextPlayReady()) {
+    if (showButton()) {
 
       if (init) {
         setComponent(win.canvas);
@@ -49,7 +53,7 @@ public class ActionButton extends TextBatch implements Paintable {
 
       BoardDim d = win.canvas.getDimensions();
 
-      if (showPleaseWaitButton) {
+      if (showWaitText()) {
         setButtonText("Please wait");
         setBackgroundColor(notReadyBackgroundColor);
       } else {
@@ -73,7 +77,6 @@ public class ActionButton extends TextBatch implements Paintable {
 
   private void execButtonClick () {
 
-    showPleaseWaitButton = true;
     Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
     bg.util.ThreadUtil.threadSleep(100);
     engineApi.getMatchPlay().actionButtonClicked();
@@ -87,11 +90,6 @@ public class ActionButton extends TextBatch implements Paintable {
     }
   }
 
-  public boolean showPleaseWaitButton () {
-
-    return showPleaseWaitButton;
-  }
-
   public String getButtonText () {
 
     return getFirstLine();
@@ -102,26 +100,11 @@ public class ActionButton extends TextBatch implements Paintable {
     setText(s);
   }
 
-  public void setShowPleaseWaitButton(boolean show) {
-
-    showPleaseWaitButton = show;
-  }
-
-  public void setHideActionButton(boolean hide) {
-
-    hideActionButton = hide;
-  }
-
-  public boolean buttonIsHidden () {
-
-    return hideActionButton;
-  }
-
   public boolean showButton() {
 
     return
       engineApi.getActionState().nextPlayReady()
-      && !hideActionButton;
+      || showWaitText();
   }
 
 }

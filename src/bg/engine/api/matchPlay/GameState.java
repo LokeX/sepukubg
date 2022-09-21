@@ -44,18 +44,6 @@ public class GameState extends Game {
       turnNr == lastTurnNr();
   }
 
-  private boolean playerIsHuman () {
-
-    return
-      isHumanTurn(selectedTurn());
-  }
-
-  private boolean moveIsLegal () {
-
-    return
-      !selectedMove().isIllegal();
-  }
-
   public void newTurn () {
 
     if (nrOfTurns() == 0) {
@@ -118,7 +106,7 @@ public class GameState extends Game {
   public Turn selectNextTurn () {
 
     partMoveNr = -1;
-    getActionButton().setHideActionButton(false);
+//    getActionButton().setHideActionButton(false);
     if (++turnNr == nrOfTurns()) {
       return getTurnByNr(--turnNr);
     } else {
@@ -130,7 +118,7 @@ public class GameState extends Game {
   public Turn selectPreviousTurn () {
 
     partMoveNr = -1;
-    getActionButton().setHideActionButton(false);
+//    getActionButton().setHideActionButton(false);
     if (--turnNr == -1) {
       return getTurnByNr(++turnNr);
     } else {
@@ -144,7 +132,7 @@ public class GameState extends Game {
     int turnCount = turnNr;
 
     partMoveNr = -1;
-    getActionButton().setHideActionButton(false);
+//    getActionButton().setHideActionButton(false);
     while (++turnCount < nrOfTurns()) {
       if (isHumanTurn(getTurnByNr(turnCount))) {
         turnNr = turnCount;
@@ -159,7 +147,7 @@ public class GameState extends Game {
     int turnCount = turnNr;
 
     partMoveNr = -1;
-    getActionButton().setHideActionButton(false);
+//    getActionButton().setHideActionButton(false);
     while (--turnCount >= 0) {
       if (isHumanTurn(getTurnByNr(turnCount))) {
         turnNr = turnCount;
@@ -172,7 +160,7 @@ public class GameState extends Game {
   public Turn selectLatestHumanTurn() {
 
     partMoveNr = -1;
-    getActionButton().setHideActionButton(false);
+//    getActionButton().setHideActionButton(false);
     if (nrOfTurns() > 1) {
       if (isHumanTurn(lastTurn())) {
         turnNr = lastTurnNr();
@@ -188,7 +176,7 @@ public class GameState extends Game {
   public EvaluatedMove selectNextMove () {
 
     partMoveNr = -1;
-    getActionButton().setHideActionButton(false);
+//    getActionButton().setHideActionButton(false);
     if (++moveNr >= selectedTurn().getNrOfMoves()) {
       moveNr = 0;
     }
@@ -198,7 +186,7 @@ public class GameState extends Game {
   public EvaluatedMove selectPreviousMove () {
 
     partMoveNr = -1;
-    getActionButton().setHideActionButton(false);
+//    getActionButton().setHideActionButton(false);
     if (--moveNr < 0) {
       moveNr = selectedTurn().getNrOfMoves() - 1;
     }
@@ -233,7 +221,7 @@ public class GameState extends Game {
     System.out.println("selectNextPartMove");
     System.out.println("nrOfPartMoveLayouts = "+partMoveLayoutList.size());
     System.out.println("selectedPartMovePosition = "+ partMoveNr);
-    getActionButton().setHideActionButton(false);
+//    getActionButton().setHideActionButton(false);
     if (partMoveNr == -1 || ++partMoveNr > partMoveLayoutList.size()-1) {
       partMoveNr = partMoveLayoutList.size()-1;
     }
@@ -248,7 +236,7 @@ public class GameState extends Game {
     System.out.println("selectPreviousPartMove");
     System.out.println("nrOfPartMoveLayouts = "+partMoveLayoutList.size());
     System.out.println("partMovePosition = "+ partMoveNr);
-    getActionButton().setHideActionButton(false);
+//    getActionButton().setHideActionButton(false);
     if (partMoveNr == -1) {
       partMoveNr = partMoveLayoutList.size()-2;
     } else if (--partMoveNr < 0) {

@@ -6,15 +6,26 @@ import bg.engine.api.moveInput.HumanMove;
 public class ActionState {
 
   private EngineApi engineApi;
-  private String[] playTitles =
-    new String[] {
-      "Start match",
-      "New match",
-      "New game",
-      "Play move",
-      "Roll dice",
-      ""
-    };
+  private boolean autoComplete = false;
+  private String[] playTitles = new String[] {
+    "Start match",
+    "New match",
+    "New game",
+    "Play move",
+    "Roll dice",
+    ""
+  };
+
+  public boolean isShowWaitText () {
+
+    return
+      engineApi.getMatchPlay().getSearch().isSearching();
+  }
+
+  void setAutoComplete (boolean complete) {
+
+    autoComplete = complete;
+  }
 
   public ActionState (EngineApi engineApi) {
 
@@ -101,8 +112,6 @@ public class ActionState {
 
     return
       engineApi.getScenarios().isEditing();
-//      matchState() == null;
-//      !matchState().gameIsPlaying();
   }
 
   public boolean nextPlayReady () {

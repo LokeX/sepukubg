@@ -3,7 +3,6 @@ package bg.inUrFace.menu.dropMenues;
 import static bg.Main.scenarios;
 
 import bg.Main;
-import bg.inUrFace.canvas.scenario.ScenarioOutput;
 import bg.util.time.Timeable;
 
 import java.awt.event.ActionEvent;
@@ -54,7 +53,6 @@ public class ScenarioMenu extends JMenu implements Timeable {
       if (scenarios.getSelectedScenariosNr() > 0 ) {
         if (bg.util.Dialogs.confirmed("Really delete scenario?", win)) {
           scenarios.deleteSelectedScenario();
-          new ScenarioOutput().outputSelectedScenario();
         }
       }
     });
