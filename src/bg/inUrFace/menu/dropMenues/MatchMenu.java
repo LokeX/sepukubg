@@ -1,5 +1,6 @@
 package bg.inUrFace.menu.dropMenues;
 
+import bg.Main;
 import bg.engine.api.EngineApi;
 import bg.util.time.Timeable;
 
@@ -39,20 +40,13 @@ public class MatchMenu extends JMenu implements Timeable {
     newMatch.addActionListener((ActionEvent e) -> {
       if (confirmed("Start a new match?",win)) {
         engineApi = new EngineApi();
+        Main.win.canvas.setDisplayedLayout(
+          engineApi.getScenarios().getSelectedScenariosLayout()
+        );
+        engineApi.getScenarios().setEditing(true);
       }
     });
   }
-
-//  private void setupResignGame () {
-//
-//    add(resignGame);
-//    resignGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R,0));
-//    resignGame.addActionListener((ActionEvent e) -> {
-//      if (api.confirmResignation()) {
-//        api.newGame();
-//      }
-//    });
-//  }
 
   private void setupAutoCompleteGame () {
 

@@ -37,6 +37,7 @@ public class MatchPlay {
     humanMove = new HumanMove(this);
     moveOutput = new MoveLayoutOutput();
     gameInfo = new GameInfo(this);
+//    scenario = engineApi.getScenarios().getSelectedScenariosLayout();
   }
   
   public Settings settings () {
@@ -228,7 +229,8 @@ public class MatchPlay {
 
     System.out.println("gameStartMode: "+settings().getGameStartMode());
     System.out.println("gameStartMode: "+Main.settings.getGameStartMode());
-    scenario = new Layout(engineApi.getScenarios().getSelectedScenariosLayout());
+    
+    scenario = new Layout(engineApi.getScenarios().getMatchLayout());
     scenario.setPlayerID(settings().getGameStartMode());
     scenario.setUseWhiteBot(settings().getWhiteBotOpponent());
     scenario.setUseBlackBot(settings().getBlackBotOpponent());

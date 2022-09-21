@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Scenarios {
 
   private static List<NamedLayout> namedLayouts = new ArrayList<>();
-  private Layout editedScenario;
+  private Layout editedScenario = null;
   private int selectedScenario = 0;
   private boolean isEditing = true;
 
@@ -80,6 +80,7 @@ public class Scenarios {
   public void setEditing (boolean editing) {
 
     isEditing = editing;
+    editedScenario = null;
   }
 
   public Scenarios (Scenarios scenarios) {
