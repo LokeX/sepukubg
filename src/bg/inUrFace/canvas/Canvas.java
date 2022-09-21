@@ -12,6 +12,7 @@ import static bg.Main.settings;
 
 public class Canvas extends JPanel implements Displayable {
 
+//  private Layout displayedLayout = engineApi.getScenarios().getSelectedScenariosLayout();
   private Layout displayedLayout = Main.scenarios.getSelectedScenariosLayout();
   private BoardDim dimensions = new BoardDim();
   private PaintJobs paintJobs = new PaintJobs();
@@ -30,30 +31,7 @@ public class Canvas extends JPanel implements Displayable {
   protected void paintComponent(Graphics g) {
 
     super.paintComponent(g);
-    showMove();
     paintJobs.paint(g);
-  }
-
-  private boolean hasMoveOutput () {
-
-    return
-      engineApi != null
-      && engineApi.getMoveOutput() != null
-      && engineApi.getMoveOutput().hasOutput();
-  }
-
-  private void showMove () {
-
-    if (hasMoveOutput()) {
-      setDisplayedLayout(
-        engineApi
-          .getMoveOutput()
-          .getMovePointLayout()
-      );
-      Main.sound.playSoundEffect(
-        "Blop-Mark_DiAngelo"
-      );
-    }
   }
 
   public BoardDim getDimensions() {

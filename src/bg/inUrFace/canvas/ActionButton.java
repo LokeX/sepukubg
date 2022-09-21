@@ -10,7 +10,6 @@ import static bg.Main.*;
 
 public class ActionButton extends TextBatch implements Paintable {
 
-  private boolean init = true;
   private Color readyBackgroundColor = new Color(255, 0, 255, 75);
   private Color notReadyBackgroundColor = new Color(108,13,13);
 
@@ -27,17 +26,17 @@ public class ActionButton extends TextBatch implements Paintable {
     setFont(new Font("Ariel", Font.BOLD, 18));
   }
 
-  public boolean showWaitText () {
+  public boolean showWaitBackground () {
 
     return
-      engineApi.getActionState().isShowWaitText();
+      engineApi.getActionState().isSearching();
   }
 
   private boolean buttonClicked (MouseEvent e) {
 
     return
       e.getButton() == MouseEvent.BUTTON1
-        && !showWaitText()
+        && !showWaitBackground()
         && mouseOnBatch()
         && showButton();
   }
@@ -46,20 +45,16 @@ public class ActionButton extends TextBatch implements Paintable {
 
     if (showButton()) {
 
-      if (init) {
-        setComponent(win.canvas);
-        init = false;
-      }
-
       BoardDim d = win.canvas.getDimensions();
 
-      if (showWaitText()) {
+      if (showWaitBackground()) {
         setButtonText("Please wait");
         setBackgroundColor(notReadyBackgroundColor);
       } else {
         setBackgroundColor(readyBackgroundColor);
         setButtonText(engineApi.getActionState().nextPlayTitle());
       }
+      setComponent(win.canvas);
       setMargins(
         (int)(25*d.factor),
         (int)(25*d.factor),
@@ -104,7 +99,7 @@ public class ActionButton extends TextBatch implements Paintable {
 
     return
       engineApi.getActionState().nextPlayReady()
-      || showWaitText();
+      || showWaitBackground();
   }
 
 }

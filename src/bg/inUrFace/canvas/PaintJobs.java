@@ -2,6 +2,7 @@ package bg.inUrFace.canvas;
 
 import bg.inUrFace.canvas.move.ChequerPainter;
 import bg.inUrFace.canvas.move.EndingPointsPainter;
+import bg.inUrFace.canvas.move.MovePainter;
 
 import static bg.util.Reflection.getFieldsList;
 import java.awt.Graphics;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class PaintJobs {
 
+  public MovePainter movePainter = new MovePainter();
   public BoardPainter boardPainter = new BoardPainter();
   public LayoutPainter layoutPainter = new LayoutPainter();
   public ScenarioEditor scenarioEditor = new ScenarioEditor();

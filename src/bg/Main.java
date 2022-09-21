@@ -7,8 +7,6 @@ import bg.engine.coreLogic.moves.Layout;
 import bg.engine.coreLogic.trainer.Trainer;
 import bg.engine.api.Scenarios;
 import bg.inUrFace.canvas.Canvas;
-import bg.inUrFace.canvas.ActionButton;
-import bg.inUrFace.canvas.ScenarioEditor;
 import bg.inUrFace.canvas.BonusPainter;
 import bg.inUrFace.mouse.MouseApi;
 import bg.util.time.TimedTasks;
@@ -43,32 +41,11 @@ public class Main {
     return getWin().getCanvas();
   }
 
-  public static MouseApi getMouse () {
-
-    return mouse;
-  }
-
-  public static ActionButton getActionButton() {
-
-    return getMouse().getActionButton();
-  }
-
-  public static ScenarioEditor getLayoutEditor () {
-
-    return getMouse().getLayoutEditor();
-  }
-
-  public static Settings getSettings () {
-
-    return settings;
-  }
-
   public static BonusPainter getTextArea () {
 
     return win.getCanvas().getPaintJobs().bonusPainter;
   }
-
-
+  
   public static void main (String[] args) {
 
     timedTasks = new TimedTasks();

@@ -16,7 +16,7 @@ public class ActionState {
     ""
   };
 
-  public boolean isShowWaitText () {
+  public boolean isSearching () {
 
     return
       engineApi.getMatchPlay().getSearch().isSearching();
@@ -129,7 +129,7 @@ public class ActionState {
   public int nextPlayTitleNr() {
 
     return
-        scenarioEdit()
+      scenarioEdit()
       ? 0
       : newMatchPlay()
       ? 1

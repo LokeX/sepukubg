@@ -1,20 +1,20 @@
 package bg.engine.api.moveInput;
 
+import bg.Settings;
 import bg.engine.api.MoveLayoutOutput;
 import bg.engine.api.matchPlay.GameState;
 import bg.engine.api.matchPlay.MatchPlay;
 
-import static bg.Main.getSettings;
 import static bg.util.ThreadUtil.runWhenNotified;
 
 public class HumanMove {
 
-  private MatchPlay matchState;
+  private MatchPlay matchPlay;
   private MoveSelection moveSelection;
 
-  public HumanMove (MatchPlay matchState) {
+  public HumanMove (MatchPlay matchPlay) {
 
-    this.matchState = matchState;
+    this.matchPlay = matchPlay;
   }
 
   public void setPlayedMoveToSelectedMove() {
@@ -44,7 +44,7 @@ public class HumanMove {
       setPlayedMoveToSelectedMove();
       setMovePoints();
       endMove();
-      System.out.println("Played selected move: "+matchState.getGameState().getMoveNr());
+      System.out.println("Played selected move: "+ matchPlay.getGameState().getMoveNr());
     }
   }
 
@@ -68,30 +68,36 @@ public class HumanMove {
 
     return moveSelection;
   }
+  
+  private Settings settings () {
+    
+    return
+      matchPlay.settings();
+  }
 
   private boolean autoCompleteMove () {
 
     return
       moveSelection.getNrOfMoves() == 1
-      && getSettings().isAutoCompleteMoves();
+      && settings().isAutoCompleteMoves();
   }
 
   private boolean autoSelectPartMoves() {
 
     return
-      getSettings().isAutoCompletePartMoves();
+      settings().isAutoCompletePartMoves();
   }
 
   private GameState gameState () {
 
     return
-      matchState.getGameState();
+      matchPlay.getGameState();
   }
 
   private MoveLayoutOutput moveOutput () {
 
     return
-      matchState
+      matchPlay
         .getMoveOutput();
   }
 
@@ -127,7 +133,7 @@ public class HumanMove {
 
     return
       moveSelection != null
-      && !matchState
+      && !matchPlay
           .getMoveOutput()
           .hasOutput();
   }
@@ -135,13 +141,13 @@ public class HumanMove {
   private void outputMoveLayouts () {
 
     if (moveSelection.endOfInput()) {
-      matchState
+      matchPlay
         .getMoveOutput()
         .setEndOfOutputNotifier(
-          runWhenNotified(matchState::endTurn)
+          runWhenNotified(matchPlay::endTurn)
         );
     }
-    matchState
+    matchPlay
       .getMoveOutput()
       .setOutputLayouts(
         moveSelection.getMovePointLayouts()

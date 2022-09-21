@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static bg.Main.getActionButton;
 import static bg.Main.settings;
 
 public class GameState extends Game {

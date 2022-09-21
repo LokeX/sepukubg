@@ -23,7 +23,7 @@ public class LayoutPainter implements Paintable {
     int chequerBottomOffsetY = d.boardOffsetY+d.boardHeight-d.frameHeight-d.chequerSize;
     Color colorRed = new Color (178,18,18);
     Color colorYellow = new Color (220,213,34);
-    Layout layout = new Layout(getDisplayedLayout());
+    Layout layout = getDisplayedLayout();
     int[] point = layout.point;
     Integer whitePip;
     Integer blackPip;

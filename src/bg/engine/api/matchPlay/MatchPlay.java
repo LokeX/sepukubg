@@ -1,6 +1,7 @@
 package bg.engine.api.matchPlay;
 
 import bg.Main;
+import bg.Settings;
 import bg.engine.api.EngineApi;
 import bg.engine.api.moveInput.HumanMove;
 import bg.engine.api.MoveLayoutOutput;
@@ -10,7 +11,6 @@ import bg.engine.coreLogic.moves.Layout;
 
 import java.util.Arrays;
 
-import static bg.Main.*;
 import static bg.util.ThreadUtil.runWhenNotified;
 
 public class MatchPlay {
@@ -31,12 +31,18 @@ public class MatchPlay {
 
     this.engineApi = engineApi;
     matchCube = new MatchCube(engineApi);
-    matchBoard = new MatchBoard(settings.getScoreToWin());
+    matchBoard = new MatchBoard(settings().getScoreToWin());
     scoreBoard = new ScoreBoard(this);
     search = new Search(this);
     humanMove = new HumanMove(this);
     moveOutput = new MoveLayoutOutput();
     gameInfo = new GameInfo(this);
+  }
+  
+  public Settings settings () {
+    
+    return
+      engineApi.getSettings();
   }
 
   public MoveLayoutOutput getMoveOutput() {
@@ -160,7 +166,7 @@ public class MatchPlay {
     if (gameOver()) {
       autoCompleteGame = false;
       matchBoard.addGameScore(getGameState().getGameScore());
-    } else if (settings.isAutomatedEndTurn() || autoCompleteGame) {
+    } else if (settings().isAutomatedEndTurn() || autoCompleteGame) {
       humanMove.endMove();
       actionButtonClicked();
     }
@@ -220,10 +226,12 @@ public class MatchPlay {
 
   private void initScenario () {
 
-    scenario = new Layout(engineApi.getScenarios().getMatchLayout());
-    scenario.setPlayerID(settings.getGameStartMode());
-    scenario.setUseWhiteBot(settings.getWhiteBotOpponent());
-    scenario.setUseBlackBot(settings.getBlackBotOpponent());
+    System.out.println("gameStartMode: "+settings().getGameStartMode());
+    System.out.println("gameStartMode: "+Main.settings.getGameStartMode());
+    scenario = new Layout(engineApi.getScenarios().getSelectedScenariosLayout());
+    scenario.setPlayerID(settings().getGameStartMode());
+    scenario.setUseWhiteBot(settings().getWhiteBotOpponent());
+    scenario.setUseBlackBot(settings().getBlackBotOpponent());
   }
 
   private void startGame() {
@@ -233,6 +241,7 @@ public class MatchPlay {
       matchBoard.mergeScores();
     }
     initScenario();
+    getMoveOutput().setOutputLayout(scenario);
     engineApi.getScenarios().setEditing(false);
     gameState = new GameState(scenario);
     newTurn();

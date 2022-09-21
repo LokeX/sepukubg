@@ -1,6 +1,7 @@
 package bg.engine.api;
 
 import bg.Main;
+import bg.Settings;
 import bg.engine.api.matchPlay.GameState;
 import bg.engine.api.matchPlay.ActionState;
 import bg.engine.api.matchPlay.MatchCube;
@@ -18,6 +19,7 @@ import static bg.Main.*;
 
 public class EngineApi {
 
+  private Settings settings = Main.settings;
   private Scenarios scenarios = Main.scenarios;
   private HumanInput humanInput = new HumanInput();
   private GameInfoHTML gameInfoHTML = new GameInfoHTML();
@@ -27,6 +29,11 @@ public class EngineApi {
   public Scenarios getScenarios () {
 
     return scenarios;
+  }
+  
+  public Settings getSettings () {
+    
+    return settings;
   }
 
   public ActionState getActionState () {
