@@ -224,12 +224,18 @@ public class MoveSelection extends Moves {
 
   public boolean isUniqueMove() {
 
+    System.out.println("matchingMovesCount: "+ matchingMoves().count());
+    matchingMoves().forEach(MoveLayout::printMovePoints);
+    printLegalMoves();
+    
     return
-      matchingMoves().count() == 1;
+      endOfInput();
+//      matchingMoves().count() == 1;
   }
 
   private MoveLayout uniqueMove () {
 
+    
     return
       isUniqueMove()
         ? matchingMoves().findAny().get()
@@ -330,6 +336,7 @@ public class MoveSelection extends Moves {
   private void setInputPoint () {
 
     startPos = position();
+    System.out.println("nrOfPoints in position: "+pointsIn(position()).count());
     if (inputPointIsLegalStartingPoint(position())) {
       System.out.println("Input is startingPoint:");
       movePoints[position()] = inputPoint;

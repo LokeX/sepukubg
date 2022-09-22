@@ -1,6 +1,6 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -11,9 +11,22 @@ import javax.swing.JRadioButtonMenuItem;
 
 public class MoveCompletionMenu extends JMenu {
 
-  JRadioButtonMenuItem manualMoves = new JRadioButtonMenuItem("Manual completion",!settings.isAutoCompleteMoves() && !settings.isAutoCompletePartMoves());
-  JRadioButtonMenuItem automateMoves = new JRadioButtonMenuItem("Auto complete forced moves", settings.isAutoCompleteMoves());
-  JRadioButtonMenuItem automatePartMoves = new JRadioButtonMenuItem("Auto complete forced partmoves (In test)", settings.isAutoCompletePartMoves());
+  JRadioButtonMenuItem manualMoves =
+    new JRadioButtonMenuItem(
+      "Manual completion",
+      !engineApi.getSettings().isAutoCompleteMoves()
+          && !engineApi.getSettings().isAutoCompletePartMoves()
+    );
+  JRadioButtonMenuItem automateMoves =
+    new JRadioButtonMenuItem(
+      "Auto complete forced moves",
+      engineApi.getSettings().isAutoCompleteMoves()
+    );
+  JRadioButtonMenuItem automatePartMoves =
+    new JRadioButtonMenuItem(
+      "Auto complete forced partmoves",
+      engineApi.getSettings().isAutoCompletePartMoves()
+    );
   ButtonGroup moveCompletionChoices = new ButtonGroup();
 
   public MoveCompletionMenu () {
@@ -36,7 +49,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(manualMoves);
     manualMoves.addActionListener((ActionEvent e) -> {
-        settings.setAutoMoves(0);
+        engineApi.getSettings().setAutoMoves(0);
     });
   }
 
@@ -44,7 +57,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(automateMoves);
     automateMoves.addActionListener((ActionEvent e) -> {
-        settings.setAutoMoves(1);
+        engineApi.getSettings().setAutoMoves(1);
     });
   }
 
@@ -52,7 +65,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(automatePartMoves);
     automatePartMoves.addActionListener((ActionEvent e) -> {
-        settings.setAutoMoves(2);
+        engineApi.getSettings().setAutoMoves(2);
     });
   }
 

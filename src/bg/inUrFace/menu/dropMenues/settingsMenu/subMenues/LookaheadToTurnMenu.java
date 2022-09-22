@@ -5,18 +5,30 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
 
 public class LookaheadToTurnMenu extends JMenu {
 
   JRadioButtonMenuItem searchIsOff =
-    new JRadioButtonMenuItem("None", settings.getSearchToPly() == 0);
+    new JRadioButtonMenuItem(
+      "None",
+      engineApi.getSettings().getSearchToPly() == 0
+    );
   JRadioButtonMenuItem searchToPly1 =
-    new JRadioButtonMenuItem("1 turn", settings.getSearchToPly() == 1);
+    new JRadioButtonMenuItem(
+      "1 turn",
+      engineApi.getSettings().getSearchToPly() == 1
+    );
   JRadioButtonMenuItem searchToPly2 =
-    new JRadioButtonMenuItem("2 turns", settings.getSearchToPly() == 2);
+    new JRadioButtonMenuItem(
+      "2 turns",
+      engineApi.getSettings().getSearchToPly() == 2
+    );
   JRadioButtonMenuItem searchToPly3 =
-    new JRadioButtonMenuItem("3 turns", settings.getSearchToPly() == 3);
+    new JRadioButtonMenuItem(
+      "3 turns",
+      engineApi.getSettings().getSearchToPly() == 3
+    );
   ButtonGroup searchToPlyChoices = new ButtonGroup();
 
   public LookaheadToTurnMenu() {
@@ -41,7 +53,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchIsOff);
     searchIsOff.addActionListener((ActionEvent e) -> {
-        settings.setSearchToPly(0);
+        engineApi.getSettings().setSearchToPly(0);
     });
   }
 
@@ -49,7 +61,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly1);
     searchToPly1.addActionListener((ActionEvent e) -> {
-        settings.setSearchToPly(1);
+        engineApi.getSettings().setSearchToPly(1);
     });
   }
 
@@ -57,7 +69,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly2);
     searchToPly2.addActionListener((ActionEvent e) -> {
-        settings.setSearchToPly(2);
+        engineApi.getSettings().setSearchToPly(2);
     });
   }
 
@@ -65,7 +77,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly3);
     searchToPly3.addActionListener((ActionEvent e) -> {
-        settings.setSearchToPly(3);
+        engineApi.getSettings().setSearchToPly(3);
     });
   }
 

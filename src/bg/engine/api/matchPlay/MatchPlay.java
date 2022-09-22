@@ -10,7 +10,9 @@ import bg.engine.api.score.ScoreBoard;
 import bg.engine.coreLogic.moves.Layout;
 
 import java.util.Arrays;
+import java.util.List;
 
+import static bg.Main.win;
 import static bg.util.ThreadUtil.runWhenNotified;
 
 public class MatchPlay {
@@ -161,10 +163,12 @@ public class MatchPlay {
 
   public void endTurn () {
 
+    System.out.println("Ending turn");
     if (playerIsHuman()) {
       humanMove.setPlayedMoveToSelectedMove();
     }
     if (gameOver()) {
+      System.out.println("Game Over: adding gameScore");
       autoCompleteGame = false;
       matchBoard.addGameScore(getGameState().getGameScore());
     } else if (settings().isAutomatedEndTurn() || autoCompleteGame) {
@@ -224,12 +228,20 @@ public class MatchPlay {
     getSearch().searchRolledMoves();
     move();
   }
+  
+  public void startScenarioSelection () {
+  
+    engineApi.matchPlay = new MatchPlay(engineApi);
+    System.out.println("Setting scenario: "+engineApi.getScenarios().getSelectedScenariosTitle());
+    engineApi.getScenarios().setEditing(false);
+    moveOutput.setOutputLayout(engineApi.getScenarios().getSelectedScenariosLayout());
+    System.out.println("hasOutput after scenario init: "+moveOutput.hasOutput());
+    
+//    moveOutput.setOutputLayout(engineApi.getScenarios().getMatchLayout());
+  }
 
   private void initScenario () {
 
-    System.out.println("gameStartMode: "+settings().getGameStartMode());
-    System.out.println("gameStartMode: "+Main.settings.getGameStartMode());
-    
     scenario = new Layout(engineApi.getScenarios().getMatchLayout());
     scenario.setPlayerID(settings().getGameStartMode());
     scenario.setUseWhiteBot(settings().getWhiteBotOpponent());
@@ -249,7 +261,7 @@ public class MatchPlay {
     newTurn();
   }
 
-  private boolean newMatch () {
+  private boolean isNewMatch () {
 
     return
       engineApi
@@ -267,9 +279,8 @@ public class MatchPlay {
         return;
       }
     }
-    if (newMatch()) {
-      engineApi.getScenarios().setEditing(true);
-      engineApi.matchPlay = new MatchPlay(engineApi);
+    if (isNewMatch()) {
+      startScenarioSelection();
     } else if (!gameIsPlaying() || gameOver()) {
       startGame();
     } else {

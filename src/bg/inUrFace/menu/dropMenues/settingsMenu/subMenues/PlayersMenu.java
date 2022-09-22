@@ -1,11 +1,8 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import bg.Main;
-import static bg.Main.settings;
+import static bg.Main.engineApi;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
@@ -13,12 +10,28 @@ import javax.swing.JRadioButtonMenuItem;
 public class PlayersMenu extends JMenu {
 
   JMenu whitePlayerMenu = new JMenu("White player");
-  JRadioButtonMenuItem whiteHuman = new JRadioButtonMenuItem("Human", settings.playerStatus[0] == 0);
-  JRadioButtonMenuItem whiteComputer = new JRadioButtonMenuItem("Computer", settings.playerStatus[0] == 1);
+  JRadioButtonMenuItem whiteHuman =
+    new JRadioButtonMenuItem(
+      "Human",
+      engineApi.getSettings().playerStatus[0] == 0
+    );
+  JRadioButtonMenuItem whiteComputer =
+    new JRadioButtonMenuItem(
+      "Computer",
+      engineApi.getSettings().playerStatus[0] == 1
+    );
   ButtonGroup whitePlayer = new ButtonGroup();
   JMenu blackPlayerMenu = new JMenu("Black player");
-  JRadioButtonMenuItem blackHuman = new JRadioButtonMenuItem("Human", settings.playerStatus[1] == 0);
-  JRadioButtonMenuItem blackComputer = new JRadioButtonMenuItem("Computer", settings.playerStatus[1] == 1);
+  JRadioButtonMenuItem blackHuman =
+    new JRadioButtonMenuItem(
+      "Human",
+      engineApi.getSettings().playerStatus[1] == 0
+    );
+  JRadioButtonMenuItem blackComputer =
+    new JRadioButtonMenuItem(
+      "Computer",
+      engineApi.getSettings().playerStatus[1] == 1
+    );
   ButtonGroup blackPlayer = new ButtonGroup();
 
   public PlayersMenu () {
@@ -49,7 +62,7 @@ public class PlayersMenu extends JMenu {
 
     whitePlayerMenu.add(whiteHuman);
     whiteHuman.addActionListener((ActionEvent e) -> {
-        Main.settings.setPlayerStatus(0, 0);
+        engineApi.getSettings().setPlayerStatus(0, 0);
     });
   }
 
@@ -57,7 +70,7 @@ public class PlayersMenu extends JMenu {
 
     whitePlayerMenu.add(whiteComputer);
     whiteComputer.addActionListener((ActionEvent e) -> {
-        Main.settings.setPlayerStatus(0, 1);
+        engineApi.getSettings().setPlayerStatus(0, 1);
     });
   }
 
@@ -65,7 +78,7 @@ public class PlayersMenu extends JMenu {
 
     blackPlayerMenu.add(blackHuman);
     blackHuman.addActionListener((ActionEvent e) -> {
-        Main.settings.setPlayerStatus(1, 0);
+        engineApi.getSettings().setPlayerStatus(1, 0);
     });
   }
 
@@ -73,7 +86,7 @@ public class PlayersMenu extends JMenu {
 
     blackPlayerMenu.add(blackComputer);
     blackComputer.addActionListener((ActionEvent e) -> {
-        Main.settings.setPlayerStatus(1, 1);
+        engineApi.getSettings().setPlayerStatus(1, 1);
     });
   }
 

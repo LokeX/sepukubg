@@ -5,16 +5,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
 
 public class LookaheadLimitMenu extends JMenu {
 
   JRadioButtonMenuItem limit3 =
-    new JRadioButtonMenuItem("3 best moves", settings.getNrOfMovesToSearch() == 3);
+    new JRadioButtonMenuItem(
+      "3 best moves",
+      engineApi.getSettings().getNrOfMovesToSearch() == 3
+    );
   JRadioButtonMenuItem limit5 =
-    new JRadioButtonMenuItem("5 best moves", settings.getNrOfMovesToSearch() == 5);
+    new JRadioButtonMenuItem(
+      "5 best moves",
+      engineApi.getSettings().getNrOfMovesToSearch() == 5
+    );
   JRadioButtonMenuItem limit10 =
-    new JRadioButtonMenuItem("10 best moves", settings.getNrOfMovesToSearch() == 10);
+    new JRadioButtonMenuItem(
+      "10 best moves",
+      engineApi.getSettings().getNrOfMovesToSearch() == 10
+    );
   ButtonGroup limitChoices = new ButtonGroup();
 
   public LookaheadLimitMenu() {
@@ -37,7 +46,7 @@ public class LookaheadLimitMenu extends JMenu {
 
     add(limit3);
     limit3.addActionListener((ActionEvent e) -> {
-        settings.setNrOfMovesToSearch(3);
+        engineApi.getSettings().setNrOfMovesToSearch(3);
     });
   }
 
@@ -45,7 +54,7 @@ public class LookaheadLimitMenu extends JMenu {
 
     add(limit5);
     limit5.addActionListener((ActionEvent e) -> {
-        settings.setNrOfMovesToSearch(5);
+        engineApi.getSettings().setNrOfMovesToSearch(5);
     });
   }
 
@@ -53,7 +62,7 @@ public class LookaheadLimitMenu extends JMenu {
 
     add(limit10);
     limit10.addActionListener((ActionEvent e) -> {
-        settings.setNrOfMovesToSearch(10);
+        engineApi.getSettings().setNrOfMovesToSearch(10);
     });
   }
 

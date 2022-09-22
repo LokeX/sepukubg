@@ -3,12 +3,20 @@ package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
 
 public class LookaheadReportMenu extends JMenu {
 
-  JRadioButtonMenuItem reportOn = new JRadioButtonMenuItem("On", settings.isSearchReportOn());
-  JRadioButtonMenuItem reportOff = new JRadioButtonMenuItem("Off", !settings.isSearchReportOn());
+  JRadioButtonMenuItem reportOn =
+    new JRadioButtonMenuItem(
+      "On",
+      engineApi.getSettings().isSearchReportOn()
+    );
+  JRadioButtonMenuItem reportOff =
+    new JRadioButtonMenuItem(
+      "Off",
+      !engineApi.getSettings().isSearchReportOn()
+    );
   ButtonGroup buttonGroup = new ButtonGroup();
 
   public LookaheadReportMenu() {
@@ -28,13 +36,17 @@ public class LookaheadReportMenu extends JMenu {
   public void setupReportOn () {
 
     add(reportOn);
-    reportOn.addActionListener((ActionEvent e) -> settings.setSearchReportOn(true));
+    reportOn.addActionListener(
+      (ActionEvent e) -> engineApi.getSettings().setSearchReportOn(true)
+    );
   }
 
   public void setupReportOff () {
 
     add(reportOff);
-    reportOff.addActionListener((ActionEvent e) -> settings.setSearchReportOn(false));
+    reportOff.addActionListener(
+      (ActionEvent e) -> engineApi.getSettings().setSearchReportOn(false)
+    );
   }
 
 }

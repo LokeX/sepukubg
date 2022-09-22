@@ -31,7 +31,7 @@ public class Window extends JFrame {
 
   public Window() {
 
-    super("Sepuku Backgammon - alpha ver. 2022.09.21");
+    super("Sepuku Backgammon - alpha ver. 2022.09.22");
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
     setIconImage(new ImageIcon(getClass().getResource("Icon/AppIcon.gif")).getImage());
@@ -46,7 +46,7 @@ public class Window extends JFrame {
     pack();
     setWindowLocation();
     timedTasks.addTimedTask(this::repaint);
-    if (settings.getWinMaximized()) {
+    if (engineApi.getSettings().getWinMaximized()) {
       setExtendedState(MAXIMIZED_BOTH);
     }
     setVisible(true);
@@ -74,7 +74,7 @@ public class Window extends JFrame {
     @Override
     public void windowStateChanged (WindowEvent e) {
 
-      settings.setWinMaximized(
+      engineApi.getSettings().setWinMaximized(
         e.getOldState() == JFrame.NORMAL &&
         e.getNewState() == JFrame.MAXIMIZED_BOTH
       );
@@ -91,9 +91,9 @@ public class Window extends JFrame {
       if (mouse != null && mouse.scenarioEditor != null) {
         mouse.scenarioEditor.generateClickPoints();
       }
-      if (!settings.getWinMaximized()) {
-        settings.setCanvasWidth(canvas.getWidth());
-        settings.setCanvasHeight(canvas.getHeight());
+      if (!engineApi.getSettings().getWinMaximized()) {
+        engineApi.getSettings().setCanvasWidth(canvas.getWidth());
+        engineApi.getSettings().setCanvasHeight(canvas.getHeight());
       }
     }
 
@@ -104,8 +104,8 @@ public class Window extends JFrame {
 
         Point p = getLocationOnScreen();
 
-        settings.setFrameX((int) p.getX());
-        settings.setFrameY((int) p.getY());
+        engineApi.getSettings().setFrameX((int) p.getX());
+        engineApi.getSettings().setFrameY((int) p.getY());
       } catch (IllegalComponentStateException icse) {
         System.out.println("JFrame: win.getLocation(), error: " + icse.getMessage());
         System.out.println("Severity: none");
@@ -116,8 +116,8 @@ public class Window extends JFrame {
 
   private void setWindowLocation () {
 
-    if (settings.getFrameX() > -1 && settings.getFrameY() > -1) {
-      setLocation(settings.getFrameX(), settings.getFrameY());
+    if (engineApi.getSettings().getFrameX() > -1 && engineApi.getSettings().getFrameY() > -1) {
+      setLocation(engineApi.getSettings().getFrameX(), engineApi.getSettings().getFrameY());
     } else {
       setLocationRelativeTo(null);
     }

@@ -2,8 +2,6 @@ package bg.inUrFace.menu.dropMenues;
 
 import bg.Main;
 import bg.util.time.Timeable;
-import static bg.Main.scenarios;
-import static bg.Main.settings;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
@@ -308,7 +306,11 @@ public class NavigateMenu extends JMenu implements Timeable {
   @Override
   public void timerUpdate() {
 
-    previousHumanTurn.setEnabled(engineApi != null && engineApi.getSelectedTurn() != null && settings.humanPlayerExists());
+    previousHumanTurn.setEnabled(
+      engineApi != null
+      && engineApi.getSelectedTurn() != null
+      && engineApi.getSettings().humanPlayerExists()
+    );
     previousHumanTurn.setVisible(previousHumanTurn.isEnabled());
     nextHumanTurn.setEnabled(previousHumanTurn.isEnabled());
     nextHumanTurn.setVisible(nextHumanTurn.isEnabled());

@@ -40,11 +40,11 @@ public class Trainer {
       bots.add(new Bot("Default bot"));
       blackBot = 0;
       whiteBot = 0;
-      settings.setBlackBotOpponent(0);
-      settings.setWhiteBotOpponent(0);
+      engineApi.getSettings().setBlackBotOpponent(0);
+      engineApi.getSettings().setWhiteBotOpponent(0);
     } else {
-      blackBot = settings.getTrainerBlackBot();
-      whiteBot = settings.getTrainerWhiteBot();
+      blackBot = engineApi.getSettings().getTrainerBlackBot();
+      whiteBot = engineApi.getSettings().getTrainerWhiteBot();
     }
   }
 
@@ -83,7 +83,7 @@ public class Trainer {
 
   public String getUsedScenarioTitle () {
 
-    return scenarios.getScenarios().get(selectedScenarioNr).getName();
+    return engineApi.getScenarios().getScenarios().get(selectedScenarioNr).getName();
   }
 
   public String getFinalReport () {
@@ -135,7 +135,7 @@ public class Trainer {
   public String getInitialReport () {
 
     return
-      "Using scenario: "+scenarios.getScenarios().get(selectedScenarioNr).getName()+
+      "Using scenario: "+engineApi.getScenarios().getScenarios().get(selectedScenarioNr).getName()+
       "\nPlaying to matchScore: "+statScoreToWin+
       "\nUsing Nr of cores: "+getNrOfCores();
   }
@@ -144,7 +144,7 @@ public class Trainer {
 
     System.out.println("Running "+nrOfMatchesToPlay+" matches");
     System.out.println("Playing to matchScore: "+statScoreToWin);
-    System.out.println("Using scenario: "+scenarios.getScenarios().get(selectedScenarioNr).getName());
+    System.out.println("Using scenario: "+engineApi.getScenarios().getScenarios().get(selectedScenarioNr).getName());
     System.out.println("Using Nr of cores: "+getNrOfCores());
   }
 
@@ -191,7 +191,7 @@ public class Trainer {
     new Thread(() -> {
 
       Match match;
-      Layout layout = scenarios.getLayoutByNr(selectedScenarioNr);
+      Layout layout = engineApi.getScenarios().getLayoutByNr(selectedScenarioNr);
 
       for (int a = 0; a < nrOfMatches; a++) {
         match = new Match(layout, statScoreToWin).getMatch();

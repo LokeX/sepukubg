@@ -20,7 +20,11 @@ public class MovePainter implements Paintable {
   
   public void paint (Graphics g) {
     
+//    System.out.println("hasMoveOutput: "+hasMoveOutput());
+//    System.out.println("hasOutput: "+engineApi.getMoveOutput().hasOutput());
+    
     if (hasMoveOutput()) {
+      System.out.println("Got moveLayout");
       win.canvas.setDisplayedLayout(
         engineApi
           .getMoveOutput()

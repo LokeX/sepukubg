@@ -1,6 +1,5 @@
 package bg.inUrFace.menu.dropMenues;
 
-import static bg.Main.scenarios;
 
 import bg.Main;
 import bg.util.time.Timeable;
@@ -50,9 +49,9 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(removeScenario);
     removeScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
     removeScenario.addActionListener((ActionEvent e) -> {
-      if (scenarios.getSelectedScenariosNr() > 0 ) {
+      if (engineApi.getScenarios().getSelectedScenariosNr() > 0 ) {
         if (bg.util.Dialogs.confirmed("Really delete scenario?", win)) {
-          scenarios.deleteSelectedScenario();
+          engineApi.getScenarios().deleteSelectedScenario();
         }
       }
     });
@@ -64,13 +63,13 @@ public class ScenarioMenu extends JMenu implements Timeable {
     removeScenario.setEnabled(
       engineApi != null &&
         engineApi.getSelectedTurn() == null &&
-        scenarios.getSelectedScenariosNr() > 0
+        engineApi.getScenarios().getSelectedScenariosNr() > 0
     );
     removeScenario.setVisible(removeScenario.isEnabled());
     renameScenario.setEnabled(
       engineApi != null &&
         engineApi.getSelectedTurn() == null &&
-        scenarios.getSelectedScenariosNr() > 0
+        engineApi.getScenarios().getSelectedScenariosNr() > 0
     );
     renameScenario.setVisible(renameScenario.isEnabled());
   }

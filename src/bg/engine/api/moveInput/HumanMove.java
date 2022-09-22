@@ -106,6 +106,12 @@ public class HumanMove {
     moveSelection = new MoveSelection(
       gameState().selectedTurn()
     );
+    matchPlay
+      .getMoveOutput()
+      .setOutputLayout(
+        moveSelection
+          .getParentMoveLayout()
+      );
   }
 
   public void startMove () {
@@ -141,6 +147,7 @@ public class HumanMove {
   private void outputMoveLayouts () {
 
     if (moveSelection.endOfInput()) {
+      System.out.println("Setting notifier");
       matchPlay
         .getMoveOutput()
         .setEndOfOutputNotifier(

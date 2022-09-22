@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import static bg.Main.engineApi;
-import static bg.Main.settings;
 import static bg.Main.win;
 
 public class DoublingCube extends MouseAdapter implements Paintable {
@@ -24,7 +23,7 @@ public class DoublingCube extends MouseAdapter implements Paintable {
     return
       engineApi != null &&
       !engineApi.getMatchBoard().isCrawfordGame() &&
-      settings.getScoreToWin() > 1 &&
+      engineApi.getSettings().getScoreToWin() > 1 &&
       engineApi.getLatestTurn() != null;
   }
 

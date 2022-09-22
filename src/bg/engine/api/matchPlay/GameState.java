@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
+
 
 public class GameState extends Game {
 
@@ -91,7 +92,7 @@ public class GameState extends Game {
   protected boolean isHumanTurn (Turn turn) {
 
     return
-      settings
+      engineApi.getSettings()
         .playerIsHuman(
           turn.getPlayerOnRollsID()
         );

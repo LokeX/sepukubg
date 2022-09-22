@@ -1,18 +1,24 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
 public class TurnProgressionMenu extends JMenu {
 
-  JRadioButtonMenuItem automateEndTurn = new JRadioButtonMenuItem("Automatic", settings.isAutomatedEndTurn());
-  JRadioButtonMenuItem manualEndTurn = new JRadioButtonMenuItem("Manual", !settings.isAutomatedEndTurn());
+  JRadioButtonMenuItem automateEndTurn =
+    new JRadioButtonMenuItem(
+      "Automatic",
+      engineApi.getSettings().isAutomatedEndTurn()
+    );
+  JRadioButtonMenuItem manualEndTurn =
+    new JRadioButtonMenuItem(
+      "Manual",
+      !engineApi.getSettings().isAutomatedEndTurn()
+    );
   ButtonGroup endTurnChoices = new ButtonGroup();
 
   public TurnProgressionMenu () {
@@ -33,7 +39,7 @@ public class TurnProgressionMenu extends JMenu {
 
     add(automateEndTurn);
     automateEndTurn.addActionListener((ActionEvent e) -> {
-        settings.setAutomateEndTurn(true);
+        engineApi.getSettings().setAutomateEndTurn(true);
     });
   }
 
@@ -41,7 +47,7 @@ public class TurnProgressionMenu extends JMenu {
 
     add(manualEndTurn);
     manualEndTurn.addActionListener((ActionEvent e) -> {
-        settings.setAutomateEndTurn(false);
+        engineApi.getSettings().setAutomateEndTurn(false);
     });
   }
 

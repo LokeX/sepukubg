@@ -7,7 +7,8 @@ import bg.util.menus.Listable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
+
 
 public class WhiteBotMenu implements Listable {
 
@@ -18,7 +19,7 @@ public class WhiteBotMenu implements Listable {
 
     this.selectedItemNr = selectedItemNr;
     Trainer.whiteBot = selectedItemNr;
-    settings.setTrainerWhiteBot(selectedItemNr);
+    engineApi.getSettings().setTrainerWhiteBot(selectedItemNr);
   }
 
   @Override

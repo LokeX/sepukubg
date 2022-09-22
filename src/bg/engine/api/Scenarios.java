@@ -80,7 +80,6 @@ public class Scenarios {
   public void setEditing (boolean editing) {
 
     isEditing = editing;
-    editedScenario = null;
   }
 
   public Scenarios (Scenarios scenarios) {

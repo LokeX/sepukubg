@@ -1,7 +1,8 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import bg.Main;
-import static bg.Main.settings;
+
+import static bg.Main.engineApi;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -12,9 +13,21 @@ import javax.swing.JRadioButtonMenuItem;
 
 public class PlayerStartMenu extends JMenu {
 
-  JRadioButtonMenuItem whitePlayerStart = new JRadioButtonMenuItem("White player starts", settings.getGameStartMode() == 0);
-  JRadioButtonMenuItem blackPlayerStart = new JRadioButtonMenuItem("Black player starts", settings.getGameStartMode() == 1);
-  JRadioButtonMenuItem throwDiceStart = new JRadioButtonMenuItem("Throw dice", settings.getGameStartMode() == 2);
+  JRadioButtonMenuItem whitePlayerStart =
+    new JRadioButtonMenuItem(
+      "White player starts",
+      engineApi.getSettings().getGameStartMode() == 0
+    );
+  JRadioButtonMenuItem blackPlayerStart =
+    new JRadioButtonMenuItem(
+      "Black player starts",
+      engineApi.getSettings().getGameStartMode() == 1
+    );
+  JRadioButtonMenuItem throwDiceStart =
+    new JRadioButtonMenuItem(
+      "Throw dice",
+      engineApi.getSettings().getGameStartMode() == 2
+    );
   ButtonGroup startMethods = new ButtonGroup();
 
   public PlayerStartMenu () {
@@ -37,7 +50,7 @@ public class PlayerStartMenu extends JMenu {
 
     add(whitePlayerStart);
     whitePlayerStart.addActionListener((ActionEvent e) -> {
-        Main.settings.setGameStartMode(0);
+        engineApi.getSettings().setGameStartMode(0);
     });
   }
 
@@ -45,7 +58,7 @@ public class PlayerStartMenu extends JMenu {
 
     add(blackPlayerStart);
     blackPlayerStart.addActionListener((ActionEvent e) -> {
-        Main.settings.setGameStartMode(1);
+        engineApi.getSettings().setGameStartMode(1);
     });
   }
 
@@ -53,7 +66,7 @@ public class PlayerStartMenu extends JMenu {
 
     add(throwDiceStart);
     throwDiceStart.addActionListener((ActionEvent e) -> {
-        Main.settings.setGameStartMode(2);
+        engineApi.getSettings().setGameStartMode(2);
     });
   }
 

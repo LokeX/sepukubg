@@ -31,7 +31,7 @@ public class StateEdit {
     String name = JOptionPane.
       showInputDialog(win, "Input scenario name:");
 
-    if (name != null && scenarios.isMember(name)) {
+    if (name != null && engineApi.getScenarios().isMember(name)) {
       name = null;
       showMessage("Name is already in use!", win);
     }
@@ -43,7 +43,7 @@ public class StateEdit {
     String name = inputLayoutName();
 
     if (name != null && name.length() > 0) {
-      scenarios.addNamedLayout(name, layout);
+      engineApi.getScenarios().addNamedLayout(name, layout);
     }
   }
 
@@ -51,8 +51,8 @@ public class StateEdit {
 
     String name = inputLayoutName();
 
-    if (name != null && !scenarios.isMember(name)) {
-      scenarios.setSelectedScenariosName(name);
+    if (name != null && !engineApi.getScenarios().isMember(name)) {
+      engineApi.getScenarios().setSelectedScenariosName(name);
     }
   }
 
@@ -95,7 +95,7 @@ public class StateEdit {
 
     if (newScore >= 0 && newScore < 100 && newScore % 2 == 1) {
       engineApi.getMatchBoard().setPlayToScore(newScore);
-      settings.setScoreToWin(newScore);
+      engineApi.getSettings().setScoreToWin(newScore);
     }
   }
 

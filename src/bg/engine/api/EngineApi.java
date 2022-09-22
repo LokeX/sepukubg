@@ -19,13 +19,22 @@ import static bg.Main.*;
 
 public class EngineApi {
 
-  private Settings settings = Main.settings;
-  private Scenarios scenarios = Main.scenarios;
+  private Settings settings = new Settings();
+  private Scenarios scenarios = new Scenarios();
   private HumanInput humanInput = new HumanInput();
   private GameInfoHTML gameInfoHTML = new GameInfoHTML();
   public MatchPlay matchPlay = new MatchPlay(this);
   private ActionState actionState =  new ActionState(this);
 
+  public void newMatch () {
+  
+    matchPlay = new MatchPlay(this);
+    engineApi.getScenarios().setEditing(false);
+    matchPlay.getMoveOutput().setOutputLayout(
+      engineApi.getScenarios().getSelectedScenariosLayout()
+    );
+  }
+  
   public Scenarios getScenarios () {
 
     return scenarios;
@@ -34,6 +43,11 @@ public class EngineApi {
   public Settings getSettings () {
     
     return settings;
+  }
+  
+  public void setSettings (Settings settings) {
+    
+    this.settings = settings;
   }
 
   public ActionState getActionState () {

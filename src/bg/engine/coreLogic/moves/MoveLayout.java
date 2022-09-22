@@ -5,9 +5,11 @@ import bg.engine.coreLogic.Dice;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.*;
+import static java.util.stream.Collectors.joining;
 
 public class MoveLayout extends Layout {
 
@@ -179,17 +181,32 @@ public class MoveLayout extends Layout {
     }
     return false;
   }
+  
+  public void printMovePointsArray (int[] movePoints) {
+    
+    System.out.println(
+      Arrays.stream(movePoints)
+        .mapToObj(Integer::toString)
+        .collect(Collectors.joining(","))
+    );
+  }
 
   public boolean movePointsMatch (int[] pointsToMatch) {
 
+//    System.out.println("Comparing pointsToMatch: ");
+//    printMovePointsArray(pointsToMatch);
+//    System.out.println("and movePoints: ");
+//    printMovePointsArray(movePoints);
     int nrOfMatchesRequired =
       (int) Arrays.stream(pointsToMatch)
         .filter(point -> point != -1)
         .count();
+//    System.out.println("nrOfMatchesRequired: "+nrOfMatchesRequired);
     int nrOfMatches =
-      (int) IntStream.range(0, pointsToMatch.length)
+      (int) IntStream.range(0, nrOfMatchesRequired)
         .filter(position -> pointsToMatch[position] == movePoints[position])
         .count();
+//    System.out.println("nrOfMatches: "+nrOfMatches);
 
     return nrOfMatches == nrOfMatchesRequired;
   }

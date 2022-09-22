@@ -7,7 +7,8 @@ import bg.util.menus.Listable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
+
 
 public class BlackBotMenu implements Listable {
 
@@ -17,7 +18,7 @@ public class BlackBotMenu implements Listable {
   public void itemSelectedAction(int selectedItemNr) {
 
     this.selectedItemNr = selectedItemNr;
-    settings.setBlackBotOpponent(selectedItemNr);
+    engineApi.getSettings().setBlackBotOpponent(selectedItemNr);
   }
 
   @Override

@@ -4,6 +4,8 @@ import bg.Main;
 import bg.util.menus.Listable;
 import java.util.List;
 
+import static bg.Main.engineApi;
+
 public class ScenarioMenu implements Listable {
 
   private int selectedItemNr = 0;
@@ -30,7 +32,7 @@ public class ScenarioMenu implements Listable {
   @Override
   public List<String> getElementTitles() {
 
-    return Main.scenarios.getLayoutTitles();
+    return engineApi.getScenarios().getLayoutTitles();
   }
 
 }

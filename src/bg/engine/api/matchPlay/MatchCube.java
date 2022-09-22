@@ -4,7 +4,6 @@ import bg.engine.api.EngineApi;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.coreLogic.Game;
 
-import static bg.Main.settings;
 import static bg.Main.win;
 import static bg.util.Dialogs.confirmed;
 import static bg.util.Dialogs.showMessage;
@@ -106,7 +105,7 @@ public class MatchCube {
   private boolean nextPlayerIsComputer () {
 
     return
-      settings
+      engineApi.getSettings()
         .playerIsComputer(
           engineApi.getPlayerOnRollsID() == 0 ? 1 : 0
         );

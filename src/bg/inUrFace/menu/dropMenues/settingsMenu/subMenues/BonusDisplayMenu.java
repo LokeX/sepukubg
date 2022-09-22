@@ -2,7 +2,7 @@ package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import bg.Main;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
 
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
@@ -13,19 +13,23 @@ public class BonusDisplayMenu extends JMenu {
 
   JRadioButtonMenuItem movingPlayer =
     new JRadioButtonMenuItem(
-      "Show moving player", settings.getBonusDisplayMode() == 1
+      "Show moving player",
+      engineApi.getSettings().getBonusDisplayMode() == 1
     );
   JRadioButtonMenuItem showOpponent =
     new JRadioButtonMenuItem(
-      "Show opponent", settings.getBonusDisplayMode() == 2
+      "Show opponent",
+      engineApi.getSettings().getBonusDisplayMode() == 2
     );
   JRadioButtonMenuItem showBothPlayers =
     new JRadioButtonMenuItem(
-      "Show both players", settings.getBonusDisplayMode() == 0
+      "Show both players",
+      engineApi.getSettings().getBonusDisplayMode() == 0
     );
   JRadioButtonMenuItem showNone =
     new JRadioButtonMenuItem(
-      "Show none", settings.getBonusDisplayMode() == 3
+      "Show none",
+      engineApi.getSettings().getBonusDisplayMode() == 3
     );
   ButtonGroup showBonusChoices = new ButtonGroup();
 
@@ -51,7 +55,7 @@ public class BonusDisplayMenu extends JMenu {
 
     add(movingPlayer);
     movingPlayer.addActionListener((ActionEvent e) ->  {
-        Main.settings.setBonusDisplayMode(1);
+        engineApi.getSettings().setBonusDisplayMode(1);
     });
   }
 
@@ -59,7 +63,7 @@ public class BonusDisplayMenu extends JMenu {
 
     add(showOpponent);
     showOpponent.addActionListener((ActionEvent e) ->  {
-        Main.settings.setBonusDisplayMode(2);
+        engineApi.getSettings().setBonusDisplayMode(2);
     });
   }
 
@@ -67,7 +71,7 @@ public class BonusDisplayMenu extends JMenu {
 
     add(showBothPlayers);
     showBothPlayers.addActionListener((ActionEvent e) ->  {
-        Main.settings.setBonusDisplayMode(0);
+        engineApi.getSettings().setBonusDisplayMode(0);
     });
   }
 
@@ -75,7 +79,7 @@ public class BonusDisplayMenu extends JMenu {
 
     add(showNone);
     showNone.addActionListener((ActionEvent e) ->  {
-        Main.settings.setBonusDisplayMode(3);
+        engineApi.getSettings().setBonusDisplayMode(3);
     });
   }
 

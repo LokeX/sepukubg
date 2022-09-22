@@ -16,8 +16,8 @@ public class Main {
 
   static public TimedTasks timedTasks;
   static public FileHandler files;
-  static public Scenarios scenarios;
-  static public Settings settings;
+//  static public Scenarios scenarios;
+//  static public Settings settings;
   static public Window win;
   static public MouseApi mouse;
   static public EngineApi engineApi;
@@ -49,18 +49,16 @@ public class Main {
   public static void main (String[] args) {
 
     timedTasks = new TimedTasks();
-    settings = new Settings();
     sound = new Sound();
-    scenarios = new Scenarios();
+//    settings = new Settings();
+//    scenarios = new Scenarios();
+    engineApi = new EngineApi();
     files = new FileHandler();
     trainer = new Trainer();
 
     if (nrOfStatGames == 0) {
-      System.out.println(Window.class.getResource("Icon/AppIcon.gif"));
-
       Window.runWindow();
       mouse = new MouseApi();
-      engineApi = new EngineApi();
     } else {
       trainer.playMatches(nrOfStatGames);
     }

@@ -48,7 +48,8 @@ public class EditMenu extends JMenu implements Timeable {
     add(editMove);
     editMove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0));
     editMove.addActionListener((ActionEvent e) -> {
-      engineApi.getMatchPlay().humanMove();
+      engineApi.matchPlay.getHumanMove().startMove();
+//      engineApi.getMatchPlay().humanMove();
     });
   }
 

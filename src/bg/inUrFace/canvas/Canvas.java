@@ -8,12 +8,11 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import static bg.Main.engineApi;
-import static bg.Main.settings;
 
 public class Canvas extends JPanel implements Displayable {
 
 //  private Layout displayedLayout = engineApi.getScenarios().getSelectedScenariosLayout();
-  private Layout displayedLayout = Main.scenarios.getSelectedScenariosLayout();
+  private Layout displayedLayout = engineApi.getScenarios().getSelectedScenariosLayout();
   private BoardDim dimensions = new BoardDim();
   private PaintJobs paintJobs = new PaintJobs();
 
@@ -21,8 +20,8 @@ public class Canvas extends JPanel implements Displayable {
 
     setPreferredSize(
       new Dimension(
-        settings.getCanvasWidth(),
-        settings.getCanvasHeight()
+        engineApi.getSettings().getCanvasWidth(),
+        engineApi.getSettings().getCanvasHeight()
       )
     );
   }

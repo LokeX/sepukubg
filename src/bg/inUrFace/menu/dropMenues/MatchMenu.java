@@ -39,11 +39,15 @@ public class MatchMenu extends JMenu implements Timeable {
     newMatch.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
     newMatch.addActionListener((ActionEvent e) -> {
       if (confirmed("Start a new match?",win)) {
-        engineApi = new EngineApi();
-        Main.win.canvas.setDisplayedLayout(
-          engineApi.getScenarios().getSelectedScenariosLayout()
-        );
-        engineApi.getScenarios().setEditing(true);
+        engineApi.newMatch();
+        System.out.println("menu, hasOutput: "+engineApi.getMoveOutput().hasOutput());
+//        engineApi.matchPlay.startScenarioSelection();
+//        win.canvas.setDisplayedLayout(engineApi.getScenarios().getMatchLayout());
+//        engineApi = new EngineApi();
+//        Main.win.canvas.setDisplayedLayout(
+//          engineApi.getScenarios().getSelectedScenariosLayout()
+//        );
+//        engineApi.getScenarios().setEditing(true);
       }
     });
   }

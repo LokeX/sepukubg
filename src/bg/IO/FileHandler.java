@@ -20,6 +20,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
+import static bg.Main.engineApi;
 import static bg.Main.timedTasks;
 
 public class FileHandler extends WindowAdapter {
@@ -51,7 +52,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        out.writeObject(Main.scenarios.getScenarios());
+        out.writeObject(engineApi.getScenarios().getScenarios());
         out.close();
       } catch (IOException e) {
         System.out.println("Error writing file ["+path+"]: "+e.getMessage());
@@ -71,7 +72,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        Main.scenarios.setScenarios((List<NamedLayout>)in.readObject());
+        engineApi.getScenarios().setScenarios((List<NamedLayout>)in.readObject());
         in.close();
       } catch (IOException e) {
         System.out.println(e.getMessage());
@@ -135,7 +136,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        out.writeObject(Main.settings);
+        out.writeObject(engineApi.getSettings());
         out.close();
       } catch (IOException e) {
         System.out.println("Error writing file ["+path+"]: "+e.getMessage());
@@ -155,7 +156,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        Main.settings = (Settings) in.readObject();
+        engineApi.setSettings((Settings) in.readObject());
         in.close();
       } catch (IOException e) {
         System.out.println("Error reading file: "+e.getMessage());

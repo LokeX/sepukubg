@@ -5,7 +5,8 @@ import bg.engine.coreLogic.moves.Layout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
+
 
 public class MoveLayoutOutput {
 
@@ -14,6 +15,10 @@ public class MoveLayoutOutput {
   private boolean firstLayout;
   private Object notifier;
   private Displayable layoutDisplay;
+  
+  public MoveLayoutOutput () {
+    System.out.println("MoveLayoutOutput constructed");
+  }
 
   public void setDisplayLayout (Layout displayLayout) {
 
@@ -37,38 +42,54 @@ public class MoveLayoutOutput {
 
   public void setOutputLayouts (List<Layout> layouts) {
 
-    if (!hasOutput()) {
+      System.out.println("received "+layouts.size()+" layouts");
+//    if (!hasOutput()) {
       outputLayouts.addAll(layouts);
       initOutput();
-    }
+//    }
   }
 
   public void setOutputLayout (Layout layouts) {
 
-    if (!hasOutput()) {
+//    if (!hasOutput()) {
       outputLayouts.add(layouts);
+      System.out.println("Layout set to output");
+      System.out.println("hasOutput: "+hasOutput());
+      System.out.println("nrOfLayouts left: "+outputLayouts.size());
+      
       initOutput();
-    }
+      System.out.println("nrOfLayouts left after initOutput: "+outputLayouts.size());
+      System.out.println("and hasOutput: "+hasOutput());
+//    }
   }
 
   public boolean hasOutput () {
-
+    
+//    System.out.println("checked for output");
+//    System.out.println("hasOutput = "+(outputLayouts.size() > 0 && timeDelayElapsed()));
+//    System.out.println("nrOfLayouts = "+outputLayouts.size());
+//    System.out.println("timeDelayElapsed = "+timeDelayElapsed());
     return
       outputLayouts.size() > 0 && timeDelayElapsed();
   }
 
   private Layout takeLayout () {
 
+    System.out.println("Taking layout");
     Layout layout = outputLayouts.remove(0);
 
-    if (notifier != null && !hasOutput()) {
+    
+    if (notifier != null && outputLayouts.size() == 0) {
+      System.out.println("Notifying endOfOutput");
       synchronized (notifier) {
         notifier.notifyAll();
       }
-      notifier = null;
+      this.notifier = null;
     }
     startTime = System.currentTimeMillis();
     firstLayout = false;
+    System.out.println("Layout taken");
+    System.out.println("nrOfLayouts left: "+outputLayouts.size());
 
     return
       playerAdjustedLayout(layout);
@@ -84,6 +105,7 @@ public class MoveLayoutOutput {
 
   public Layout getMovePointLayout () {
 
+    System.out.println("Layout Requested");
     return
       hasOutput()
       ? takeLayout()
@@ -98,9 +120,7 @@ public class MoveLayoutOutput {
 
   public void setEndOfOutputNotifier (Object notifier) {
 
-    if (outputLayouts.size() == 0) {
       this.notifier = notifier;
-    }
   }
 
   private long elapsedTime () {
@@ -112,7 +132,7 @@ public class MoveLayoutOutput {
   private boolean timeDelayElapsed () {
 
     return
-       firstLayout || elapsedTime() > settings.getShowMoveDelay();
+       firstLayout || elapsedTime() > engineApi.getSettings().getShowMoveDelay();
   }
 
 }

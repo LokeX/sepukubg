@@ -6,7 +6,7 @@ import bg.util.menus.Listable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static bg.Main.settings;
+import static bg.Main.engineApi;
 import static bg.util.Dialogs.confirmed;
 import static bg.Main.win;
 
@@ -25,11 +25,11 @@ public class DeleteBotMenu implements Listable {
       if (Trainer.blackBot >= selectedItemNr) {
         Trainer.blackBot = 0;
       }
-      if (settings.getWhiteBotOpponent() >= selectedItemNr) {
-        settings.setWhiteBotOpponent(0);
+      if (engineApi.getSettings().getWhiteBotOpponent() >= selectedItemNr) {
+        engineApi.getSettings().setWhiteBotOpponent(0);
       }
-      if (settings.getBlackBotOpponent() >= selectedItemNr) {
-        settings.setBlackBotOpponent(0);
+      if (engineApi.getSettings().getBlackBotOpponent() >= selectedItemNr) {
+        engineApi.getSettings().setBlackBotOpponent(0);
       }
     }
   }
