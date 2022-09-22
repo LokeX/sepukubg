@@ -1,17 +1,13 @@
 package bg.inUrFace.canvas;
 
-import bg.engine.api.Displayable;
 import bg.engine.coreLogic.moves.Layout;
-import bg.Main;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
 import static bg.Main.engineApi;
 
-public class Canvas extends JPanel implements Displayable {
+public class Canvas extends JPanel {
 
-//  private Layout displayedLayout = engineApi.getScenarios().getSelectedScenariosLayout();
   private Layout displayedLayout = engineApi.getScenarios().getSelectedScenariosLayout();
   private BoardDim dimensions = new BoardDim();
   private PaintJobs paintJobs = new PaintJobs();

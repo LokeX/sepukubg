@@ -1,7 +1,6 @@
 package bg.engine.api;
 
-import bg.Settings;
-import bg.engine.api.matchPlay.ActionState;
+import bg.engine.api.matchPlay.PlayState;
 import bg.engine.api.matchPlay.GameState;
 import bg.engine.api.matchPlay.MatchCube;
 import bg.engine.api.matchPlay.MatchPlay;
@@ -11,10 +10,7 @@ import bg.engine.api.score.ScoreBoard;
 import bg.engine.coreLogic.Game;
 import bg.engine.coreLogic.Turn;
 import bg.engine.coreLogic.moves.EvaluatedMove;
-
 import java.util.List;
-
-import static bg.Main.engineApi;
 
 public class EngineApi {
 
@@ -23,17 +19,8 @@ public class EngineApi {
   private HumanInput humanInput = new HumanInput();
   private GameInfoHTML gameInfoHTML = new GameInfoHTML();
   public MatchPlay matchPlay = new MatchPlay(this);
-  private ActionState actionState =  new ActionState(this);
+  private PlayState playState =  new PlayState(this);
 
-  public void newMatch () {
-  
-    matchPlay = new MatchPlay(this);
-    engineApi.getScenarios().setEditing(false);
-    matchPlay.getMoveOutput().setOutputLayout(
-      engineApi.getScenarios().getSelectedScenariosLayout()
-    );
-  }
-  
   public Scenarios getScenarios () {
 
     return scenarios;
@@ -49,9 +36,9 @@ public class EngineApi {
     this.settings = settings;
   }
 
-  public ActionState getActionState () {
+  public PlayState getPlayState() {
 
-    return actionState;
+    return playState;
   }
 
   public int[] getUsedDicePattern () {
@@ -64,10 +51,11 @@ public class EngineApi {
 
   public Game getGame () {
 
-    if (matchPlay != null && matchPlay.getGameState() != null) {
-      return matchPlay.getGameState();
-    }
-    return null;
+    return
+      matchPlay.gameIsPlaying()
+      ? matchPlay.getGameState()
+      : null;
+    
   }
 
   public HumanInput getHumanInput () {
@@ -142,12 +130,12 @@ public class EngineApi {
 
     return
       getNrOfTurns() > 0
-        ? getSelectedTurn()
-            .getMoveBonuses(getSelectedMove())
-            .getMoveBonusList(
-              settings.getBonusDisplayMode()
-            )
-        : null;
+      ? getSelectedTurn()
+          .getMoveBonuses(getSelectedMove())
+          .getMoveBonusList(
+            settings.getBonusDisplayMode()
+          )
+      : null;
   }
 
   public StateEdit getInput () {
@@ -170,7 +158,7 @@ public class EngineApi {
         .gameIsPlaying();
   }
 
- public MoveLayoutOutput getMoveOutput () {
+ public MoveOutput getMoveOutput () {
 
     return
       matchPlay != null
@@ -182,7 +170,6 @@ public class EngineApi {
 
     return
       matchPlay.getScoreBoard();
-//      scoreBoard.getScoreBoard(matchPlay);
   }
 
   public MatchBoard getMatchBoard() {
@@ -203,8 +190,42 @@ public class EngineApi {
   public boolean gameOver () {
 
     return
-      matchPlay.getGameState() == null
-      || matchPlay.getGameState().gameOver();
+      matchPlay.gameOver();
   }
 
+  private boolean isNewMatch () {
+    
+    return
+      getPlayState()
+        .nextPlayTitle()
+        .equals("New match");
+  }
+  
+  public void newMatch () {
+    
+    matchPlay = new MatchPlay(this);
+    getScenarios().setEditing(true);
+    matchPlay.getMoveOutput().setOutputLayout(
+      getScenarios().getSelectedScenariosLayout()
+    );
+  }
+  
+  private void nextPlay () {
+    
+    if (!matchPlay.cubeWasRejected()) {
+      if (isNewMatch()) {
+        newMatch();
+      } else if (!gameIsPlaying() || gameOver()) {
+        matchPlay.startGame();
+      } else {
+        matchPlay.newTurn();
+      }
+    }
+  }
+  
+  public void execNextPlay () {
+    
+    new Thread(this::nextPlay).start();
+  }
+  
 }

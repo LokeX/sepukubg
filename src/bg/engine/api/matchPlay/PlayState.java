@@ -3,7 +3,7 @@ package bg.engine.api.matchPlay;
 import bg.engine.api.EngineApi;
 import bg.engine.api.moveInput.HumanMove;
 
-public class ActionState {
+public class PlayState {
 
   private EngineApi engineApi;
   private boolean autoComplete = false;
@@ -27,7 +27,7 @@ public class ActionState {
     autoComplete = complete;
   }
 
-  public ActionState (EngineApi engineApi) {
+  public PlayState(EngineApi engineApi) {
 
     this.engineApi = engineApi;
   }

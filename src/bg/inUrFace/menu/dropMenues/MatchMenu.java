@@ -75,18 +75,15 @@ public class MatchMenu extends JMenu implements Timeable {
     resignGame.setVisible(resignGame.isEnabled());
     newMatch.setEnabled(resignGame.isEnabled());
     newMatch.setVisible(resignGame.isEnabled());
-    autoCompleteGame.setEnabled(engineApi != null && engineApi.getGame() != null && !engineApi.gameOver());
+    autoCompleteGame.setEnabled(engineApi.gameIsPlaying() && !engineApi.gameOver());
     autoCompleteGame.setVisible(autoCompleteGame.isEnabled());
-    if (mouse != null && mouse.actionButton != null) {
-      nextAction.setText(mouse.actionButton.getButtonText());
-      nextAction.setEnabled(
-        engineApi != null
-        && engineApi.getActionState().nextPlayReady()
-        && !engineApi.getAutoCompleteGame()
-        && !engineApi.getActionState().isSearching()
-      );
-      nextAction.setVisible(nextAction.isEnabled());
-    }
+    nextAction.setText(engineApi.getPlayState().nextPlayTitle());
+    nextAction.setEnabled(
+      engineApi.getPlayState().nextPlayReady()
+      && !engineApi.getAutoCompleteGame()
+      && !engineApi.getPlayState().isSearching()
+    );
+    nextAction.setVisible(nextAction.isEnabled());
   }
 
 }

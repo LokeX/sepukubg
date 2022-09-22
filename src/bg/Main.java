@@ -5,7 +5,6 @@ import bg.IO.Sound;
 import bg.engine.api.EngineApi;
 import bg.engine.coreLogic.moves.Layout;
 import bg.engine.coreLogic.trainer.Trainer;
-import bg.engine.api.Scenarios;
 import bg.inUrFace.canvas.Canvas;
 import bg.inUrFace.canvas.BonusPainter;
 import bg.inUrFace.mouse.MouseApi;
@@ -16,8 +15,6 @@ public class Main {
 
   static public TimedTasks timedTasks;
   static public FileHandler files;
-//  static public Scenarios scenarios;
-//  static public Settings settings;
   static public Window win;
   static public MouseApi mouse;
   static public EngineApi engineApi;
@@ -50,8 +47,6 @@ public class Main {
 
     timedTasks = new TimedTasks();
     sound = new Sound();
-//    settings = new Settings();
-//    scenarios = new Scenarios();
     engineApi = new EngineApi();
     files = new FileHandler();
     trainer = new Trainer();

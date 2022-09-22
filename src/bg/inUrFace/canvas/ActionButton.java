@@ -2,7 +2,6 @@ package bg.inUrFace.canvas;
 
 import bg.Main;
 import bg.util.TextBatch;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
@@ -29,7 +28,7 @@ public class ActionButton extends TextBatch implements Paintable {
   public boolean showWaitBackground () {
 
     return
-      engineApi.getActionState().isSearching();
+      engineApi.getPlayState().isSearching();
   }
 
   private boolean buttonClicked (MouseEvent e) {
@@ -48,11 +47,11 @@ public class ActionButton extends TextBatch implements Paintable {
       BoardDim d = win.canvas.getDimensions();
 
       if (showWaitBackground()) {
-        setButtonText("Please wait");
+        setText("Please wait");
         setBackgroundColor(notReadyBackgroundColor);
       } else {
         setBackgroundColor(readyBackgroundColor);
-        setButtonText(engineApi.getActionState().nextPlayTitle());
+        setText(engineApi.getPlayState().nextPlayTitle());
       }
       setComponent(win.canvas);
       setMargins(
@@ -70,35 +69,19 @@ public class ActionButton extends TextBatch implements Paintable {
     }
   }
 
-  private void execButtonClick () {
-
-    Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
-    bg.util.ThreadUtil.threadSleep(100);
-    engineApi.getMatchPlay().actionButtonClicked();
-  }
-
   @Override
   public void mouseClicked (MouseEvent e) {
 
     if (buttonClicked(e)) {
-      new Thread(this::execButtonClick).start();
+      Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
+      engineApi.execNextPlay();
     }
-  }
-
-  public String getButtonText () {
-
-    return getFirstLine();
-  }
-
-  public void setButtonText(String s) {
-
-    setText(s);
   }
 
   public boolean showButton() {
 
     return
-      engineApi.getActionState().nextPlayReady()
+      engineApi.getPlayState().nextPlayReady()
       || showWaitBackground();
   }
 

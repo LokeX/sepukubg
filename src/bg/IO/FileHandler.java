@@ -1,7 +1,7 @@
 package bg.IO;
 
 import bg.Main;
-import bg.Settings;
+import bg.engine.api.Settings;
 import bg.engine.api.Scenarios.NamedLayout;
 import bg.engine.coreLogic.trainer.Bot;
 import bg.engine.coreLogic.trainer.Trainer;

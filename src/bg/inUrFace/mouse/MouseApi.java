@@ -35,26 +35,6 @@ public class MouseApi extends MouseAdapter {
     return moveInputListener;
   }
 
-  public ScenarioEditor getLayoutEditor() {
-
-    return scenarioEditor;
-  }
-
-  public BonusPainter getBonusPainter() {
-
-    return bonusPainter;
-  }
-
-  public ActionButton getActionButton() {
-
-    return actionButton;
-  }
-
-  public DoublingCube getDoublingCube () {
-
-    return doublingCube;
-  }
-
   private void setupControllersList () {
 
     getFieldsList(this, listeners);
@@ -65,20 +45,6 @@ public class MouseApi extends MouseAdapter {
 
     synchronized (this) {
       listeners.forEach(listener -> listener.mouseClicked(e));
-    }
-  }
-
-  public void addController (MouseAdapter controller) {
-
-    synchronized (this) {
-      listeners.add(controller);
-    }
-  }
-
-  public void removeController (MouseAdapter controller) {
-
-    synchronized (this) {
-      listeners.remove(controller);
     }
   }
 

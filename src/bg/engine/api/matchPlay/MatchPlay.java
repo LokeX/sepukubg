@@ -1,9 +1,9 @@
 package bg.engine.api.matchPlay;
 
 import bg.Main;
-import bg.Settings;
+import bg.engine.api.Settings;
 import bg.engine.api.EngineApi;
-import bg.engine.api.MoveLayoutOutput;
+import bg.engine.api.MoveOutput;
 import bg.engine.api.moveInput.HumanMove;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.api.score.ScoreBoard;
@@ -23,7 +23,7 @@ public class MatchPlay {
   private GameState gameState;
   private Search search;
   private HumanMove humanMove;
-  private MoveLayoutOutput moveOutput;
+  private MoveOutput moveOutput;
   private boolean autoCompleteGame = false;
 
   public MatchPlay(EngineApi engineApi) {
@@ -34,7 +34,7 @@ public class MatchPlay {
     scoreBoard = new ScoreBoard(this);
     search = new Search(this);
     humanMove = new HumanMove(this);
-    moveOutput = new MoveLayoutOutput();
+    moveOutput = new MoveOutput();
     gameInfo = new GameInfo(this);
   }
   
@@ -44,7 +44,7 @@ public class MatchPlay {
       engineApi.getSettings();
   }
 
-  public MoveLayoutOutput getMoveOutput() {
+  public MoveOutput getMoveOutput() {
 
     return
       moveOutput;
@@ -143,7 +143,7 @@ public class MatchPlay {
       || engineApi.getMatchCube().cubeWasRejected();
   }
 
-  boolean gameOver () {
+  public boolean gameOver () {
 
     return
       gameIsPlaying()
@@ -233,7 +233,7 @@ public class MatchPlay {
     scenario.setUseBlackBot(settings().getBlackBotOpponent());
   }
 
-  private void startGame() {
+  public void startGame() {
 
     System.out.println("Starting game");
     if (gameIsPlaying()) {
@@ -250,9 +250,22 @@ public class MatchPlay {
 
     return
       engineApi
-        .getActionState()
+        .getPlayState()
         .nextPlayTitle()
         .equals("New match");
+  }
+  
+  public boolean cubeWasRejected () {
+  
+    if (gameIsPlaying()) {
+      matchCube.computerHandlesCube();
+      if (matchCube.cubeWasRejected()) {
+        endTurn();
+        return true;
+      }
+    }
+    
+    return false;
   }
 
   public void actionButtonClicked () {

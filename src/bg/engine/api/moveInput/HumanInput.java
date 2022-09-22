@@ -4,7 +4,7 @@ import bg.engine.api.EngineApi;
 
 import java.util.stream.Stream;
 
-public class HumanInput implements HumanInputAPI {
+public class HumanInput {
 
   private EngineApi engineApi;
 
@@ -29,7 +29,6 @@ public class HumanInput implements HumanInputAPI {
         .getMoveSelection();
   }
 
-  @Override
   public void pointClicked(int clickedPoint) {
 
     if (humanInputActive()) {
@@ -37,7 +36,6 @@ public class HumanInput implements HumanInputAPI {
     }
   }
 
-  @Override
   public int getPlayerID() {
 
     return
@@ -46,7 +44,6 @@ public class HumanInput implements HumanInputAPI {
         : -1;
   }
 
-  @Override
   public boolean humanInputActive() {
 
     return
@@ -54,7 +51,6 @@ public class HumanInput implements HumanInputAPI {
       && humanMove().inputReady();
   }
 
-  @Override
   public boolean endingPointIsNext() {
 
     return
@@ -63,7 +59,6 @@ public class HumanInput implements HumanInputAPI {
       && moveSelection().positionIsEndingPoint();
   }
 
-  @Override
   public Stream<Integer> getEndingPoints() {
 
     return

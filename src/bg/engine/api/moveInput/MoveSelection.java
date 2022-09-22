@@ -182,10 +182,6 @@ public class MoveSelection extends Moves {
 
   public List<Layout> getMovePointLayouts() {
 
-    System.out.println("Generating moveOutputLayouts: ");
-    System.out.println("startPos: "+startPos);
-    System.out.println("endPos: "+endPos);
-
     return
       startPos != endPos
       ?  matchingMoves()
@@ -224,17 +220,11 @@ public class MoveSelection extends Moves {
 
   public boolean isUniqueMove() {
 
-    System.out.println("matchingMovesCount: "+ matchingMoves().count());
-    matchingMoves().forEach(MoveLayout::printMovePoints);
-    printLegalMoves();
-    
     return
       endOfInput();
-//      matchingMoves().count() == 1;
   }
 
   private MoveLayout uniqueMove () {
-
     
     return
       isUniqueMove()
@@ -324,30 +314,26 @@ public class MoveSelection extends Moves {
 
     int endingPointPosition = endingPointPosition(inputPoint);
 
-    System.out.println("endingPointPosition: "+endingPointPosition);
     if (endingPointPosition > position()) {
-      System.out.println("Projecting movePoints");
       projectMovePointsTo(endingPointPosition);
     } else {
       movePoints[endingPointPosition] = inputPoint;
+    }
+  }
+  
+  private void setStartingPoint () {
+    
+    movePoints[position()] = inputPoint;
+    if (explicitEndingPoint(position())) {
+      movePoints[position()] = getPointIn(position());
     }
   }
 
   private void setInputPoint () {
 
     startPos = position();
-    System.out.println("nrOfPoints in position: "+pointsIn(position()).count());
     if (inputPointIsLegalStartingPoint(position())) {
-      System.out.println("Input is startingPoint:");
-      movePoints[position()] = inputPoint;
-      printMovePoints();
-      System.out.println("position: "+position());
-      System.out.println("isLegalEndingPoint: "+isLegalEndingPoint(position()));
-      System.out.println("validEndingPointCount: "+validEndingPoints().count());
-      if (explicitEndingPoint(position())) {
-        System.out.println("Explicit endingPoint in pos: "+position());
-        movePoints[position()] = getPointIn(position());
-      }
+      setStartingPoint();
     } else if (isLegalEndingPoint(inputPoint)) {
       setEndingPoint();
     }
@@ -363,8 +349,6 @@ public class MoveSelection extends Moves {
     movePoints[startPos == 0 ? 0 : startPos-1] = -1;
     endPos = position();
     startPos = endPos > 0 ? endPos-1 : 0;
-    System.out.println("startPos = "+startPos);
-    System.out.println("endPos = "+endPos);
   }
 
   private boolean moveIsLegal () {
@@ -376,16 +360,11 @@ public class MoveSelection extends Moves {
 
     if (moveIsLegal()) {
       inputPoint = point;
-      System.out.println();
-      System.out.println("Start report:");
-      printReport();
       if (point == -1) {
         pointBackSpace();
       } else if (!endOfInput()) {
         setInputPoint();
       }
-      System.out.println();
-      System.out.println("End report:");
       printReport();
     }
   }

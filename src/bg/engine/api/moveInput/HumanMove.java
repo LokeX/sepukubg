@@ -1,7 +1,7 @@
 package bg.engine.api.moveInput;
 
-import bg.Settings;
-import bg.engine.api.MoveLayoutOutput;
+import bg.engine.api.Settings;
+import bg.engine.api.MoveOutput;
 import bg.engine.api.matchPlay.GameState;
 import bg.engine.api.matchPlay.MatchPlay;
 
@@ -94,7 +94,7 @@ public class HumanMove {
       matchPlay.getGameState();
   }
 
-  private MoveLayoutOutput moveOutput () {
+  private MoveOutput moveOutput () {
 
     return
       matchPlay
@@ -116,15 +116,11 @@ public class HumanMove {
 
   public void startMove () {
 
-    System.out.println("Starting human move:");
     startMoveSelection();
-    System.out.println("Human movePoints:");
     moveSelection.printMovePoints();
     if (moveSelection.noLegalMove()) {
-      System.out.println("Human move is illegal:");
       moveSelection = null;
     } else if (autoSelectPartMoves()){
-      System.out.println("AutoSelecting partMoves:");
       autoSelectPoints();
       outputMoveLayouts();
     }
@@ -147,7 +143,6 @@ public class HumanMove {
   private void outputMoveLayouts () {
 
     if (moveSelection.endOfInput()) {
-      System.out.println("Setting notifier");
       matchPlay
         .getMoveOutput()
         .setEndOfOutputNotifier(
@@ -163,11 +158,7 @@ public class HumanMove {
 
   private void autoSelectPoints() {
 
-    System.out.println("movePoints before autoSelect: ");
-    moveSelection.printMovePoints();
     moveSelection.autoSelectPoints();
-    System.out.println("movePoints after autoSelect: ");
-    moveSelection.printMovePoints();
   }
 
   public void pointClicked (int clickedPoint) {

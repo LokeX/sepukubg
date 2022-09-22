@@ -1,4 +1,4 @@
-package bg;
+package bg.engine.api;
 
 import java.io.Serializable;
 
@@ -131,14 +131,12 @@ public class Settings implements Serializable {
 
     public int getSearchToPly () {
 
-//      System.out.println("Settings return search ply: "+searchToPly);
       return searchToPly;
     }
 
     public void setSearchToPly (int ply) {
 
       searchToPly = ply;
-//      System.out.println("Settings now set to search ply: "+searchToPly);
     }
 
     public boolean searchIsOff () {
