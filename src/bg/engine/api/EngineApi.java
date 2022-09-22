@@ -1,9 +1,8 @@
 package bg.engine.api;
 
-import bg.Main;
 import bg.Settings;
-import bg.engine.api.matchPlay.GameState;
 import bg.engine.api.matchPlay.ActionState;
+import bg.engine.api.matchPlay.GameState;
 import bg.engine.api.matchPlay.MatchCube;
 import bg.engine.api.matchPlay.MatchPlay;
 import bg.engine.api.moveInput.HumanInput;
@@ -15,7 +14,7 @@ import bg.engine.coreLogic.moves.EvaluatedMove;
 
 import java.util.List;
 
-import static bg.Main.*;
+import static bg.Main.engineApi;
 
 public class EngineApi {
 

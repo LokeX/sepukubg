@@ -3,16 +3,13 @@ package bg.engine.api.matchPlay;
 import bg.Main;
 import bg.Settings;
 import bg.engine.api.EngineApi;
-import bg.engine.api.moveInput.HumanMove;
 import bg.engine.api.MoveLayoutOutput;
+import bg.engine.api.moveInput.HumanMove;
 import bg.engine.api.score.MatchBoard;
 import bg.engine.api.score.ScoreBoard;
 import bg.engine.coreLogic.moves.Layout;
-
 import java.util.Arrays;
-import java.util.List;
 
-import static bg.Main.win;
 import static bg.util.ThreadUtil.runWhenNotified;
 
 public class MatchPlay {
@@ -39,7 +36,6 @@ public class MatchPlay {
     humanMove = new HumanMove(this);
     moveOutput = new MoveLayoutOutput();
     gameInfo = new GameInfo(this);
-//    scenario = engineApi.getScenarios().getSelectedScenariosLayout();
   }
   
   public Settings settings () {
@@ -229,17 +225,6 @@ public class MatchPlay {
     move();
   }
   
-  public void startScenarioSelection () {
-  
-    engineApi.matchPlay = new MatchPlay(engineApi);
-    System.out.println("Setting scenario: "+engineApi.getScenarios().getSelectedScenariosTitle());
-    engineApi.getScenarios().setEditing(false);
-    moveOutput.setOutputLayout(engineApi.getScenarios().getSelectedScenariosLayout());
-    System.out.println("hasOutput after scenario init: "+moveOutput.hasOutput());
-    
-//    moveOutput.setOutputLayout(engineApi.getScenarios().getMatchLayout());
-  }
-
   private void initScenario () {
 
     scenario = new Layout(engineApi.getScenarios().getMatchLayout());
@@ -280,7 +265,7 @@ public class MatchPlay {
       }
     }
     if (isNewMatch()) {
-      startScenarioSelection();
+      engineApi.newMatch();
     } else if (!gameIsPlaying() || gameOver()) {
       startGame();
     } else {

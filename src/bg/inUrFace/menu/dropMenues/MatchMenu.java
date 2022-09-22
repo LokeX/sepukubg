@@ -1,16 +1,13 @@
 package bg.inUrFace.menu.dropMenues;
 
-import bg.Main;
-import bg.engine.api.EngineApi;
 import bg.util.time.Timeable;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import static bg.Main.*;
 import static bg.util.Dialogs.confirmed;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
 
 public class MatchMenu extends JMenu implements Timeable {
 
@@ -29,7 +26,6 @@ public class MatchMenu extends JMenu implements Timeable {
 
     setupNewMatch();
     setupAutoCompleteGame();
-//    setupResignGame();
     setupNextAction();
   }
 
@@ -40,14 +36,6 @@ public class MatchMenu extends JMenu implements Timeable {
     newMatch.addActionListener((ActionEvent e) -> {
       if (confirmed("Start a new match?",win)) {
         engineApi.newMatch();
-        System.out.println("menu, hasOutput: "+engineApi.getMoveOutput().hasOutput());
-//        engineApi.matchPlay.startScenarioSelection();
-//        win.canvas.setDisplayedLayout(engineApi.getScenarios().getMatchLayout());
-//        engineApi = new EngineApi();
-//        Main.win.canvas.setDisplayedLayout(
-//          engineApi.getScenarios().getSelectedScenariosLayout()
-//        );
-//        engineApi.getScenarios().setEditing(true);
       }
     });
   }
