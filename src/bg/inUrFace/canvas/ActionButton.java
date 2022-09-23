@@ -28,7 +28,7 @@ public class ActionButton extends TextBatch implements Paintable {
   public boolean showWaitBackground () {
 
     return
-      engineApi.getPlayState().isSearching();
+      sepuku.getPlayState().isSearching();
   }
 
   private boolean buttonClicked (MouseEvent e) {
@@ -51,7 +51,7 @@ public class ActionButton extends TextBatch implements Paintable {
         setBackgroundColor(notReadyBackgroundColor);
       } else {
         setBackgroundColor(readyBackgroundColor);
-        setText(engineApi.getPlayState().nextPlayTitle());
+        setText(nextPlayTitle());
       }
       setComponent(win.canvas);
       setMargins(
@@ -73,15 +73,25 @@ public class ActionButton extends TextBatch implements Paintable {
   public void mouseClicked (MouseEvent e) {
 
     if (buttonClicked(e)) {
-      Main.sound.playSoundEffect("Blop-Mark_DiAngelo");
-      engineApi.execNextPlay();
+      if (!nextPlayTitle().equals("New match")) {
+        Main.sound.playSoundEffect("wuerfelbecher");
+      }
+      sepuku.execNextPlay();
     }
   }
-
+  
+  private String nextPlayTitle () {
+    
+    return
+      sepuku
+        .getPlayState()
+        .nextPlayTitle();
+  }
+  
   public boolean showButton() {
 
     return
-      engineApi.getPlayState().nextPlayReady()
+      sepuku.getPlayState().nextPlayReady()
       || showWaitBackground();
   }
 

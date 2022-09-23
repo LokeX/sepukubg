@@ -1,12 +1,12 @@
 package bg.inUrFace.menu.dropMenues.trainingMenu;
 
-import bg.engine.coreLogic.trainer.Bot;
-import bg.engine.coreLogic.trainer.Trainer;
+import bg.engine.core.trainer.Bot;
+import bg.engine.core.trainer.Trainer;
 import bg.util.menus.Listable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 import static bg.util.Dialogs.confirmed;
 import static bg.Main.win;
 
@@ -25,11 +25,11 @@ public class DeleteBotMenu implements Listable {
       if (Trainer.blackBot >= selectedItemNr) {
         Trainer.blackBot = 0;
       }
-      if (engineApi.getSettings().getWhiteBotOpponent() >= selectedItemNr) {
-        engineApi.getSettings().setWhiteBotOpponent(0);
+      if (sepuku.getSettings().getWhiteBotOpponent() >= selectedItemNr) {
+        sepuku.getSettings().setWhiteBotOpponent(0);
       }
-      if (engineApi.getSettings().getBlackBotOpponent() >= selectedItemNr) {
-        engineApi.getSettings().setBlackBotOpponent(0);
+      if (sepuku.getSettings().getBlackBotOpponent() >= selectedItemNr) {
+        sepuku.getSettings().setBlackBotOpponent(0);
       }
     }
   }

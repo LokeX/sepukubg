@@ -1,6 +1,6 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
@@ -12,12 +12,12 @@ public class TurnProgressionMenu extends JMenu {
   JRadioButtonMenuItem automateEndTurn =
     new JRadioButtonMenuItem(
       "Automatic",
-      engineApi.getSettings().isAutomatedEndTurn()
+      sepuku.getSettings().isAutomatedEndTurn()
     );
   JRadioButtonMenuItem manualEndTurn =
     new JRadioButtonMenuItem(
       "Manual",
-      !engineApi.getSettings().isAutomatedEndTurn()
+      !sepuku.getSettings().isAutomatedEndTurn()
     );
   ButtonGroup endTurnChoices = new ButtonGroup();
 
@@ -39,7 +39,7 @@ public class TurnProgressionMenu extends JMenu {
 
     add(automateEndTurn);
     automateEndTurn.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setAutomateEndTurn(true);
+        sepuku.getSettings().setAutomateEndTurn(true);
     });
   }
 
@@ -47,7 +47,7 @@ public class TurnProgressionMenu extends JMenu {
 
     add(manualEndTurn);
     manualEndTurn.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setAutomateEndTurn(false);
+        sepuku.getSettings().setAutomateEndTurn(false);
     });
   }
 

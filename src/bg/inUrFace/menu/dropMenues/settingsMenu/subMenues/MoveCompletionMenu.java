@@ -1,10 +1,8 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
@@ -14,18 +12,18 @@ public class MoveCompletionMenu extends JMenu {
   JRadioButtonMenuItem manualMoves =
     new JRadioButtonMenuItem(
       "Manual completion",
-      !engineApi.getSettings().isAutoCompleteMoves()
-          && !engineApi.getSettings().isAutoCompletePartMoves()
+      !sepuku.getSettings().isAutoCompleteMoves()
+          && !sepuku.getSettings().isAutoCompletePartMoves()
     );
   JRadioButtonMenuItem automateMoves =
     new JRadioButtonMenuItem(
       "Auto complete forced moves",
-      engineApi.getSettings().isAutoCompleteMoves()
+      sepuku.getSettings().isAutoCompleteMoves()
     );
   JRadioButtonMenuItem automatePartMoves =
     new JRadioButtonMenuItem(
       "Auto complete forced partmoves",
-      engineApi.getSettings().isAutoCompletePartMoves()
+      sepuku.getSettings().isAutoCompletePartMoves()
     );
   ButtonGroup moveCompletionChoices = new ButtonGroup();
 
@@ -49,7 +47,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(manualMoves);
     manualMoves.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setAutoMoves(0);
+        sepuku.getSettings().setAutoMoves(0);
     });
   }
 
@@ -57,7 +55,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(automateMoves);
     automateMoves.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setAutoMoves(1);
+        sepuku.getSettings().setAutoMoves(1);
     });
   }
 
@@ -65,7 +63,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(automatePartMoves);
     automatePartMoves.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setAutoMoves(2);
+        sepuku.getSettings().setAutoMoves(2);
     });
   }
 

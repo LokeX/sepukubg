@@ -1,10 +1,8 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
@@ -14,22 +12,22 @@ public class MoveDelayMenu extends JMenu {
   JRadioButtonMenuItem milli500 =
     new JRadioButtonMenuItem(
       "500 milliseconds",
-      engineApi.getSettings().getShowMoveDelay() == 500
+      sepuku.getSettings().getShowMoveDelay() == 500
     );
   JRadioButtonMenuItem milli300 =
     new JRadioButtonMenuItem(
       "300 milliseconds",
-      engineApi.getSettings().getShowMoveDelay() == 300
+      sepuku.getSettings().getShowMoveDelay() == 300
     );
   JRadioButtonMenuItem milli150 =
     new JRadioButtonMenuItem(
       "150 milliseconds",
-      engineApi.getSettings().getShowMoveDelay() == 150
+      sepuku.getSettings().getShowMoveDelay() == 150
     );
   JRadioButtonMenuItem milli0 =
     new JRadioButtonMenuItem(
       "Show move immediately",
-      engineApi.getSettings().getShowMoveDelay() == 0
+      sepuku.getSettings().getShowMoveDelay() == 0
     );
   ButtonGroup showMoveChoices = new ButtonGroup();
 
@@ -55,7 +53,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli500);
     milli500.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setShowMoveDelay(500);
+        sepuku.getSettings().setShowMoveDelay(500);
     });
   }
 
@@ -63,7 +61,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli300);
     milli300.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setShowMoveDelay(300);
+        sepuku.getSettings().setShowMoveDelay(300);
     });
   }
 
@@ -71,7 +69,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli150);
     milli150.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setShowMoveDelay(150);
+        sepuku.getSettings().setShowMoveDelay(150);
     });
   }
 
@@ -79,7 +77,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli0);
     milli0.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setShowMoveDelay(0);
+        sepuku.getSettings().setShowMoveDelay(0);
     });
   }
 

@@ -2,32 +2,30 @@ package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 
 public class LookaheadToTurnMenu extends JMenu {
 
   JRadioButtonMenuItem searchIsOff =
     new JRadioButtonMenuItem(
       "None",
-      engineApi.getSettings().getSearchToPly() == 0
+      sepuku.getSettings().getSearchToPly() == 0
     );
   JRadioButtonMenuItem searchToPly1 =
     new JRadioButtonMenuItem(
       "1 turn",
-      engineApi.getSettings().getSearchToPly() == 1
+      sepuku.getSettings().getSearchToPly() == 1
     );
   JRadioButtonMenuItem searchToPly2 =
     new JRadioButtonMenuItem(
       "2 turns",
-      engineApi.getSettings().getSearchToPly() == 2
+      sepuku.getSettings().getSearchToPly() == 2
     );
   JRadioButtonMenuItem searchToPly3 =
     new JRadioButtonMenuItem(
       "3 turns",
-      engineApi.getSettings().getSearchToPly() == 3
+      sepuku.getSettings().getSearchToPly() == 3
     );
   ButtonGroup searchToPlyChoices = new ButtonGroup();
 
@@ -53,7 +51,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchIsOff);
     searchIsOff.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setSearchToPly(0);
+        sepuku.getSettings().setSearchToPly(0);
     });
   }
 
@@ -61,7 +59,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly1);
     searchToPly1.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setSearchToPly(1);
+        sepuku.getSettings().setSearchToPly(1);
     });
   }
 
@@ -69,7 +67,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly2);
     searchToPly2.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setSearchToPly(2);
+        sepuku.getSettings().setSearchToPly(2);
     });
   }
 
@@ -77,7 +75,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly3);
     searchToPly3.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setSearchToPly(3);
+        sepuku.getSettings().setSearchToPly(3);
     });
   }
 

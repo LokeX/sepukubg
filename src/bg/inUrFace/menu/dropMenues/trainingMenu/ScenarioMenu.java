@@ -4,7 +4,7 @@ import bg.Main;
 import bg.util.menus.Listable;
 import java.util.List;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 
 public class ScenarioMenu implements Listable {
 
@@ -32,7 +32,7 @@ public class ScenarioMenu implements Listable {
   @Override
   public List<String> getElementTitles() {
 
-    return engineApi.getScenarios().getLayoutTitles();
+    return sepuku.getScenarios().getLayoutTitles();
   }
 
 }

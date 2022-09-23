@@ -1,9 +1,9 @@
 package bg.inUrFace.menu.dropMenues.trainingMenu;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 import static bg.Main.trainer;
 
-import bg.engine.coreLogic.trainer.Trainer;
+import bg.engine.core.trainer.Trainer;
 import bg.util.time.Timeable;
 import bg.util.menus.ListMenu;
 import bg.util.menus.RadioButtonListMenu;
@@ -70,7 +70,7 @@ public class TrainerMenu extends JMenu implements Timeable {
     add(setScoreToWin);
     setScoreToWin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
     setScoreToWin.addActionListener((ActionEvent e) -> {
-      engineApi.getInput().inputStatScoreToWin();
+      sepuku.getInput().inputStatScoreToWin();
     });
   }
 

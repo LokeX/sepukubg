@@ -10,7 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JPopupMenu.Separator;
 import javax.swing.KeyStroke;
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 
 public class NavigateMenu extends JMenu implements Timeable {
 
@@ -57,10 +57,10 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousHumanTurn
       .addActionListener((ActionEvent e) -> {
-        engineApi
+        sepuku
           .getMoveOutput()
           .setOutputLayout(
-            engineApi
+            sepuku
               .getGameState()
               .selectPreviousHumanTurn()
               .getPlayedMove()
@@ -81,10 +81,10 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     nextHumanTurn
       .addActionListener((ActionEvent e) -> {
-        engineApi
+        sepuku
           .getMoveOutput()
           .setOutputLayout(
-            engineApi
+            sepuku
               .getGameState()
               .selectNextHumanTurn()
               .getPlayedMove()
@@ -105,10 +105,10 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     latestHumanTurn
       .addActionListener((ActionEvent e) -> {
-        engineApi
+        sepuku
           .getMoveOutput()
           .setOutputLayout(
-            engineApi
+            sepuku
               .getGameState()
               .selectLatestHumanTurn()
               .getPlayedMove()
@@ -133,11 +133,11 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextTurn.addActionListener((ActionEvent e) -> {
-      if (engineApi.getSelectedTurn() != null) {
-        engineApi
+      if (sepuku.gameIsPlaying()) {
+        sepuku
           .getMoveOutput()
           .setOutputLayout(
-            engineApi
+            sepuku
               .getGameState()
               .selectNextTurn()
               .getPlayedMove()
@@ -158,11 +158,11 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     previousTurn.addActionListener((ActionEvent e) -> {
-      if (engineApi.getSelectedTurn() != null) {
-        engineApi
+      if (sepuku.gameIsPlaying()) {
+        sepuku
           .getMoveOutput()
           .setOutputLayout(
-            engineApi
+            sepuku
               .getGameState()
               .selectPreviousTurn()
               .getPlayedMove()
@@ -183,11 +183,11 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     previousMove.addActionListener((ActionEvent e) -> {
-      if (engineApi.getSelectedTurn() != null) {
-        engineApi
+      if (sepuku.gameIsPlaying()) {
+        sepuku
           .getMoveOutput()
           .setOutputLayout(
-            engineApi
+            sepuku
               .getGameState()
               .selectPreviousMove()
           );
@@ -207,10 +207,10 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextMove.addActionListener((ActionEvent e) -> {
-        engineApi
+        sepuku
           .getMoveOutput()
           .setOutputLayout(
-            engineApi
+            sepuku
               .getGameState()
               .selectNextMove()
           );
@@ -229,11 +229,11 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     previousPartMove.addActionListener((ActionEvent e) -> {
-      if (engineApi.getSelectedTurn() != null) {
-        engineApi
+      if (sepuku.gameIsPlaying()) {
+        sepuku
           .getMoveOutput()
           .setOutputLayout(
-            engineApi
+            sepuku
               .getGameState()
               .selectPreviousPartMove()
           );
@@ -253,10 +253,10 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextPartMove.addActionListener((ActionEvent e) -> {
-        engineApi
+        sepuku
           .getMoveOutput()
           .setOutputLayout(
-            engineApi
+            sepuku
               .getGameState()
               .selectNextPartMove()
           );
@@ -275,9 +275,9 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     previousScenario.addActionListener((ActionEvent e) -> {
-      engineApi.getScenarios().selectPreviousScenario();
+      sepuku.getScenarios().selectPreviousScenario();
       Main.getCanvas().setDisplayedLayout(
-        engineApi.getScenarios().getSelectedScenariosLayout()
+        sepuku.getScenarios().getSelectedScenariosLayout()
       );
 //      new ScenarioOutput(scenarios).outputSelectedScenario();
     });
@@ -295,9 +295,9 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextScenario.addActionListener((ActionEvent e) -> {
-      engineApi.getScenarios().selectNextScenario();
+      sepuku.getScenarios().selectNextScenario();
       Main.getCanvas().setDisplayedLayout(
-        engineApi.getScenarios().getSelectedScenariosLayout()
+        sepuku.getScenarios().getSelectedScenariosLayout()
       );
 //      new ScenarioOutput(scenarios).outputSelectedScenario();
     });
@@ -307,9 +307,9 @@ public class NavigateMenu extends JMenu implements Timeable {
   public void timerUpdate() {
 
     previousHumanTurn.setEnabled(
-      engineApi != null
-      && engineApi.getSelectedTurn() != null
-      && engineApi.getSettings().humanPlayerExists()
+      sepuku != null
+      && sepuku.gameIsPlaying()
+      && sepuku.getSettings().humanPlayerExists()
     );
     previousHumanTurn.setVisible(previousHumanTurn.isEnabled());
     nextHumanTurn.setEnabled(previousHumanTurn.isEnabled());
@@ -319,7 +319,7 @@ public class NavigateMenu extends JMenu implements Timeable {
 
     navigateMenuSeparator.setVisible(latestHumanTurn.isEnabled());
 
-    previousTurn.setEnabled(engineApi != null && engineApi.getSelectedTurn() != null);
+    previousTurn.setEnabled(sepuku != null && sepuku.gameIsPlaying());
     previousTurn.setVisible(previousTurn.isEnabled());
     nextTurn.setEnabled(previousTurn.isEnabled());
     nextTurn.setVisible(nextTurn.isEnabled());
@@ -332,7 +332,7 @@ public class NavigateMenu extends JMenu implements Timeable {
     previousPartMove.setEnabled(nextPartMove.isEnabled());
     previousPartMove.setVisible(previousPartMove.isEnabled());
 
-    previousScenario.setEnabled(engineApi == null || engineApi.getSelectedTurn() == null);
+    previousScenario.setEnabled(sepuku.getPlayState().nextPlayTitle().equals("Start match"));
     previousScenario.setVisible(previousScenario.isEnabled());
     nextScenario.setEnabled(previousScenario.isEnabled());
     nextScenario.setVisible(nextScenario.isEnabled());

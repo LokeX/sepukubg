@@ -1,13 +1,13 @@
 package bg.inUrFace.menu.dropMenues.trainingMenu;
 
-import bg.engine.coreLogic.trainer.Bot;
-import bg.engine.coreLogic.trainer.Trainer;
+import bg.engine.core.trainer.Bot;
+import bg.engine.core.trainer.Trainer;
 import bg.util.menus.Listable;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 
 
 public class WhiteBotMenu implements Listable {
@@ -19,7 +19,7 @@ public class WhiteBotMenu implements Listable {
 
     this.selectedItemNr = selectedItemNr;
     Trainer.whiteBot = selectedItemNr;
-    engineApi.getSettings().setTrainerWhiteBot(selectedItemNr);
+    sepuku.getSettings().setTrainerWhiteBot(selectedItemNr);
   }
 
   @Override

@@ -1,7 +1,7 @@
 package bg.inUrFace.canvas;
 
 import bg.Main;
-import bg.engine.coreLogic.moves.Layout;
+import bg.engine.core.moves.Layout;
 import bg.util.Batch;
 
 import java.awt.*;
@@ -43,8 +43,8 @@ public class ScenarioEditor extends MouseAdapter implements Paintable {
   private boolean isEditing () {
 
     return
-      engineApi != null
-      && engineApi.getScenarios().isEditing();
+      sepuku != null
+      && sepuku.getScenarios().isEditing();
   }
 
   @Override
@@ -92,7 +92,7 @@ public class ScenarioEditor extends MouseAdapter implements Paintable {
           }
         }
       }
-      engineApi.getScenarios().setEditedScenario(new Layout(layout));
+      sepuku.getScenarios().setEditedScenario(new Layout(layout));
     }
   }
 

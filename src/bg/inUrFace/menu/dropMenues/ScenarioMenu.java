@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 import static bg.Main.win;
 
 public class ScenarioMenu extends JMenu implements Timeable {
@@ -31,7 +31,7 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(saveScenario);
     saveScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
     saveScenario.addActionListener((ActionEvent e) -> {
-      engineApi.getInput().saveLayout(Main.getCanvas().getDisplayedLayout());
+      sepuku.getInput().saveLayout(Main.getCanvas().getDisplayedLayout());
     });
   }
 
@@ -40,7 +40,7 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(renameScenario);
     renameScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
     renameScenario.addActionListener((ActionEvent e) -> {
-      engineApi.getInput().renameSelectedLayout();
+      sepuku.getInput().renameSelectedLayout();
     });
   }
 
@@ -49,9 +49,9 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(removeScenario);
     removeScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
     removeScenario.addActionListener((ActionEvent e) -> {
-      if (engineApi.getScenarios().getSelectedScenariosNr() > 0 ) {
+      if (sepuku.getScenarios().getSelectedScenariosNr() > 0 ) {
         if (bg.util.Dialogs.confirmed("Really delete scenario?", win)) {
-          engineApi.getScenarios().deleteSelectedScenario();
+          sepuku.getScenarios().deleteSelectedScenario();
         }
       }
     });
@@ -61,15 +61,15 @@ public class ScenarioMenu extends JMenu implements Timeable {
   public void timerUpdate () {
 
     removeScenario.setEnabled(
-      engineApi != null &&
-        engineApi.getSelectedTurn() == null &&
-        engineApi.getScenarios().getSelectedScenariosNr() > 0
+      sepuku != null &&
+        sepuku.gameIsPlaying() &&
+        sepuku.getScenarios().getSelectedScenariosNr() > 0
     );
     removeScenario.setVisible(removeScenario.isEnabled());
     renameScenario.setEnabled(
-      engineApi != null &&
-        engineApi.getSelectedTurn() == null &&
-        engineApi.getScenarios().getSelectedScenariosNr() > 0
+      sepuku != null &&
+        sepuku.gameIsPlaying() &&
+        sepuku.getScenarios().getSelectedScenariosNr() > 0
     );
     renameScenario.setVisible(renameScenario.isEnabled());
   }

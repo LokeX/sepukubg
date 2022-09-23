@@ -1,6 +1,6 @@
 package bg.inUrFace.canvas;
 
-import bg.engine.coreLogic.Cube;
+import bg.engine.core.Cube;
 import bg.util.Batch;
 
 import javax.swing.*;
@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 import static bg.Main.win;
 
 public class DoublingCube extends MouseAdapter implements Paintable {
@@ -21,10 +21,10 @@ public class DoublingCube extends MouseAdapter implements Paintable {
   public boolean isVisible () {
 
     return
-      engineApi != null &&
-      !engineApi.getMatchBoard().isCrawfordGame() &&
-      engineApi.getSettings().getScoreToWin() > 1 &&
-      engineApi.getLatestTurn() != null;
+      sepuku != null
+      && sepuku.gameIsPlaying()
+      && !sepuku.getMatchBoard().isCrawfordGame()
+      && sepuku.getSettings().getScoreToWin() > 1;
   }
 
   private Batch[] getClickPoints () {
@@ -64,19 +64,12 @@ public class DoublingCube extends MouseAdapter implements Paintable {
     }
     return -1;
   }
-
+  
   public void paint(Graphics g) {
-
-    Cube cube;
-
-    if (engineApi != null && engineApi.getSelectedTurn() != null) {
-      if (engineApi.getSelectedTurn() != engineApi.getGame().lastTurn()) {
-        cube = engineApi.getGame().getGameCube();
-      } else {
-        cube = engineApi.getSelectedTurn().getTurnCube();
-      }
+    
       if (isVisible()) {
 
+        Cube cube = sepuku.getMatchPlay().getSelectedTurn().getTurnCube();
         BoardDim d = win.canvas.getDimensions();
         int offsetX = (int)(d.topLeftBearOffOffsetX*1.05);
         int offsetY;
@@ -99,7 +92,13 @@ public class DoublingCube extends MouseAdapter implements Paintable {
         if (cubeIcon == null || newWidth != width || newHeight != height) {
           height = newHeight;
           width = newWidth;
-          cubeIcon = new ImageIcon(cubeScab.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+          cubeIcon = new ImageIcon(
+            cubeScab.getImage().getScaledInstance(
+              width,
+              height,
+              Image.SCALE_SMOOTH
+            )
+          );
         }
         g.drawImage(cubeIcon.getImage(), offsetX, offsetY, null);
         g.setColor(Color.red);
@@ -110,14 +109,13 @@ public class DoublingCube extends MouseAdapter implements Paintable {
         g.drawString(s, (int)(offsetX*(1.31-(0.095*(s.length()-1)))), textOffsetY);
       }
     }
-  }
 
   @Override
   public void mouseClicked (MouseEvent e) {
 
-    if (engineApi != null && engineApi.getGame() != null && !engineApi.getGame().gameOver() && getClickedPoint(e) >= 0) {
+    if (sepuku != null && sepuku.getGame() != null && !sepuku.getGame().gameOver() && getClickedPoint(e) >= 0) {
       System.out.println("DoublingCube clicked");
-      engineApi.getMatchCube().humanHandlesCube();
+      sepuku.getMatchCube().humanHandlesCube();
     }
   }
 

@@ -1,6 +1,6 @@
 package bg.engine.api;
 
-import bg.engine.coreLogic.moves.Layout;
+import bg.engine.core.moves.Layout;
 
 import java.io.Serializable;
 import java.util.ArrayList;

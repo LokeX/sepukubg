@@ -6,7 +6,7 @@ import bg.util.Batch;
 import java.awt.*;
 import java.util.stream.Stream;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 import static bg.Main.mouse;
 
 public class EndingPointsPainter implements Paintable {
@@ -15,8 +15,8 @@ public class EndingPointsPainter implements Paintable {
 
     return
       mouse != null
-        && engineApi.getHumanInput() != null
-        && engineApi.getHumanInput().humanInputActive();
+        && sepuku.getHumanMove() != null
+        && sepuku.getHumanMove().humanInputActive();
   }
 
   private Batch[] clickPoints () {
@@ -32,8 +32,8 @@ public class EndingPointsPainter implements Paintable {
     Batch[] clickPoints = clickPoints();
 
     return
-      engineApi
-        .getHumanInput()
+      sepuku
+        .getHumanMove()
         .getEndingPoints()
         .map(endingPoint -> clickPoints[endingPoint]);
   }
@@ -42,8 +42,8 @@ public class EndingPointsPainter implements Paintable {
 
     return
       humanMoveReady()
-      && engineApi
-        .getHumanInput()
+      && sepuku
+        .getHumanMove()
         .endingPointIsNext();
   }
 

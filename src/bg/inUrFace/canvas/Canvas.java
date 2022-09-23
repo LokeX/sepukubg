@@ -1,14 +1,14 @@
 package bg.inUrFace.canvas;
 
-import bg.engine.coreLogic.moves.Layout;
+import bg.engine.core.moves.Layout;
 import javax.swing.*;
 import java.awt.*;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 
 public class Canvas extends JPanel {
 
-  private Layout displayedLayout = engineApi.getScenarios().getSelectedScenariosLayout();
+  private Layout displayedLayout = sepuku.getScenarios().getSelectedScenariosLayout();
   private BoardDim dimensions = new BoardDim();
   private PaintJobs paintJobs = new PaintJobs();
 
@@ -16,8 +16,8 @@ public class Canvas extends JPanel {
 
     setPreferredSize(
       new Dimension(
-        engineApi.getSettings().getCanvasWidth(),
-        engineApi.getSettings().getCanvasHeight()
+        sepuku.getSettings().getCanvasWidth(),
+        sepuku.getSettings().getCanvasHeight()
       )
     );
   }

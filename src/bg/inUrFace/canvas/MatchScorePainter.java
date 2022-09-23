@@ -5,26 +5,26 @@ import static bg.Main.win;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 
 public class MatchScorePainter implements Paintable {
 
   private boolean latestTurnSelected () {
 
     return
-      engineApi.getGame() != null &&
-      engineApi.getSelectedTurn() == engineApi.getGame().lastTurn();
+      sepuku.getGame() != null &&
+      sepuku.getMatchPlay().getSelectedTurn() == sepuku.getGame().lastTurn();
   }
 
   @Override
   public void paint(Graphics g) {
 
-    if (engineApi != null) {
+    if (sepuku != null) {
 
       BoardDim d = win.canvas.getDimensions();
-      String toScore = Integer.toString(engineApi.getScoreBoard().getPlayToScore());
-      String whiteScore = engineApi.getScoreBoard().getWhiteMatchScore();
-      String blackScore = engineApi.getScoreBoard().getBlackMatchScore();
+      String toScore = Integer.toString(sepuku.getScoreBoard().getPlayToScore());
+      String whiteScore = sepuku.getScoreBoard().getWhiteMatchScore();
+      String blackScore = sepuku.getScoreBoard().getBlackMatchScore();
 
       g.setFont(new Font("Ariel", Font.BOLD, (int)(26*d.factor)));
 

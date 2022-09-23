@@ -1,6 +1,6 @@
 package bg.inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
@@ -13,24 +13,24 @@ public class PlayersMenu extends JMenu {
   JRadioButtonMenuItem whiteHuman =
     new JRadioButtonMenuItem(
       "Human",
-      engineApi.getSettings().playerStatus[0] == 0
+      sepuku.getSettings().playerStatus[0] == 0
     );
   JRadioButtonMenuItem whiteComputer =
     new JRadioButtonMenuItem(
       "Computer",
-      engineApi.getSettings().playerStatus[0] == 1
+      sepuku.getSettings().playerStatus[0] == 1
     );
   ButtonGroup whitePlayer = new ButtonGroup();
   JMenu blackPlayerMenu = new JMenu("Black player");
   JRadioButtonMenuItem blackHuman =
     new JRadioButtonMenuItem(
       "Human",
-      engineApi.getSettings().playerStatus[1] == 0
+      sepuku.getSettings().playerStatus[1] == 0
     );
   JRadioButtonMenuItem blackComputer =
     new JRadioButtonMenuItem(
       "Computer",
-      engineApi.getSettings().playerStatus[1] == 1
+      sepuku.getSettings().playerStatus[1] == 1
     );
   ButtonGroup blackPlayer = new ButtonGroup();
 
@@ -62,7 +62,7 @@ public class PlayersMenu extends JMenu {
 
     whitePlayerMenu.add(whiteHuman);
     whiteHuman.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setPlayerStatus(0, 0);
+        sepuku.getSettings().setPlayerStatus(0, 0);
     });
   }
 
@@ -70,7 +70,7 @@ public class PlayersMenu extends JMenu {
 
     whitePlayerMenu.add(whiteComputer);
     whiteComputer.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setPlayerStatus(0, 1);
+        sepuku.getSettings().setPlayerStatus(0, 1);
     });
   }
 
@@ -78,7 +78,7 @@ public class PlayersMenu extends JMenu {
 
     blackPlayerMenu.add(blackHuman);
     blackHuman.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setPlayerStatus(1, 0);
+        sepuku.getSettings().setPlayerStatus(1, 0);
     });
   }
 
@@ -86,7 +86,7 @@ public class PlayersMenu extends JMenu {
 
     blackPlayerMenu.add(blackComputer);
     blackComputer.addActionListener((ActionEvent e) -> {
-        engineApi.getSettings().setPlayerStatus(1, 1);
+        sepuku.getSettings().setPlayerStatus(1, 1);
     });
   }
 

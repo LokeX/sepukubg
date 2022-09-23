@@ -9,7 +9,7 @@ package bg.inUrFace.canvas;
 import static bg.Main.getDisplayedLayout;
 import static bg.Main.win;
 
-import bg.engine.coreLogic.moves.Layout;
+import bg.engine.core.moves.Layout;
 
 import java.awt.*;
 
@@ -25,21 +25,21 @@ public class LayoutPainter implements Paintable {
     Color colorYellow = new Color (220,213,34);
     Layout layout = getDisplayedLayout();
     int[] point = layout.point;
-    Integer whitePip;
-    Integer blackPip;
+    int whitePip;
+    int blackPip;
     int x,y;
 
     whitePip = layout.calcPip().getPip();
     blackPip = layout.getOpponentPip();
     g.setColor(Color.RED);
     g.drawString(
-      blackPip.toString(),
+      Integer.toString(blackPip),
       d.topRightBearOffOffsetX,
       d.topRightBearOffOffsetY - (int) (d.chequerSize * 0.72)
     );
     g.setColor(Color.YELLOW);
     g.drawString(
-      whitePip.toString(),
+      Integer.toString(whitePip),
       d.topRightBearOffOffsetX,
       d.topRightBearOffOffsetY + d.boardHeight + (int) (d.chequerSize * 1.10) - (d.frameHeight * 2)
     );

@@ -4,7 +4,7 @@ import bg.inUrFace.canvas.Paintable;
 
 import java.awt.*;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 import static bg.Main.getCanvas;
 
 public class ChequerPainter implements Paintable {
@@ -12,8 +12,8 @@ public class ChequerPainter implements Paintable {
   private int playerID () {
 
     return
-      engineApi
-        .getHumanInput()
+      sepuku
+        .getHumanMove()
         .getPlayerID();
   }
 
@@ -59,19 +59,15 @@ public class ChequerPainter implements Paintable {
   private boolean mustPaint () {
 
     return
-      engineApi != null
-      && engineApi.getHumanInput().humanInputActive()
-      && engineApi.getMatchPlay().playerIsHuman()
-      && engineApi.getHumanInput().endingPointIsNext()
+      sepuku != null
+      && sepuku.getHumanMove().humanInputActive()
+      && sepuku.getMatchPlay().playerIsHuman()
+      && sepuku.getHumanMove().endingPointIsNext()
       && mousePosition() != null;
   }
 
   public void paint (Graphics graphics) {
 
-//    System.out.println("mustPaint = "+mustPaint());
-//    System.out.println("humanInputActive = "+engineApi.getHumanInput().humanInputActive());
-//    System.out.println("playerIsHuman = "+engineApi.getMatchState().playerIsHuman());
-//    System.out.println("endingPointIsNext = "+engineApi.getHumanInput().endingPointIsNext());
     if (mustPaint()) {
       drawChequer(graphics, mousePosition());
     }

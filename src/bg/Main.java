@@ -2,12 +2,12 @@ package bg;
 
 import bg.IO.FileHandler;
 import bg.IO.Sound;
-import bg.engine.api.EngineApi;
-import bg.engine.coreLogic.moves.Layout;
-import bg.engine.coreLogic.trainer.Trainer;
+import bg.engine.api.Sepuku;
+import bg.engine.core.moves.Layout;
+import bg.engine.core.trainer.Trainer;
 import bg.inUrFace.canvas.Canvas;
 import bg.inUrFace.canvas.BonusPainter;
-import bg.inUrFace.mouse.MouseApi;
+import bg.inUrFace.canvas.MouseListeners;
 import bg.util.time.TimedTasks;
 import bg.inUrFace.windows.Window;
 
@@ -16,8 +16,8 @@ public class Main {
   static public TimedTasks timedTasks;
   static public FileHandler files;
   static public Window win;
-  static public MouseApi mouse;
-  static public EngineApi engineApi;
+  static public MouseListeners mouse;
+  static public Sepuku sepuku;
   static public Trainer trainer;
   static public Sound sound;
 
@@ -47,13 +47,13 @@ public class Main {
 
     timedTasks = new TimedTasks();
     sound = new Sound();
-    engineApi = new EngineApi();
+    sepuku = new Sepuku();
     files = new FileHandler();
     trainer = new Trainer();
 
     if (nrOfStatGames == 0) {
       Window.runWindow();
-      mouse = new MouseApi();
+      mouse = new MouseListeners();
     } else {
       trainer.playMatches(nrOfStatGames);
     }

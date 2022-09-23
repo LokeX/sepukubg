@@ -3,8 +3,8 @@ package bg.IO;
 import bg.Main;
 import bg.engine.api.Settings;
 import bg.engine.api.Scenarios.NamedLayout;
-import bg.engine.coreLogic.trainer.Bot;
-import bg.engine.coreLogic.trainer.Trainer;
+import bg.engine.core.trainer.Bot;
+import bg.engine.core.trainer.Trainer;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -20,7 +20,7 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 import static bg.Main.timedTasks;
 
 public class FileHandler extends WindowAdapter {
@@ -52,7 +52,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        out.writeObject(engineApi.getScenarios().getScenarios());
+        out.writeObject(sepuku.getScenarios().getScenarios());
         out.close();
       } catch (IOException e) {
         System.out.println("Error writing file ["+path+"]: "+e.getMessage());
@@ -72,7 +72,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        engineApi.getScenarios().setScenarios((List<NamedLayout>)in.readObject());
+        sepuku.getScenarios().setScenarios((List<NamedLayout>)in.readObject());
         in.close();
       } catch (IOException e) {
         System.out.println(e.getMessage());
@@ -136,7 +136,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        out.writeObject(engineApi.getSettings());
+        out.writeObject(sepuku.getSettings());
         out.close();
       } catch (IOException e) {
         System.out.println("Error writing file ["+path+"]: "+e.getMessage());
@@ -156,7 +156,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        engineApi.setSettings((Settings) in.readObject());
+        sepuku.setSettings((Settings) in.readObject());
         in.close();
       } catch (IOException e) {
         System.out.println("Error reading file: "+e.getMessage());

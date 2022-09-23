@@ -1,7 +1,6 @@
 package bg.inUrFace.canvas;
 
-import static bg.Main.engineApi;
-import static bg.Main.mouse;
+import static bg.Main.sepuku;
 import static bg.Main.win;
 
 import java.awt.*;
@@ -87,7 +86,7 @@ public class DicePainter implements Paintable {
 
   private void makeDice () {
 
-    dice = engineApi.getSelectedTurn().getDice();
+    dice = sepuku.getMatchPlay().getSelectedTurn().getDice();
     for (int a = 0; a < dice.length; a++) {
       if (dieIcons[a] == null) {
         dieIcons[a] = new DieIcon();
@@ -100,10 +99,10 @@ public class DicePainter implements Paintable {
   @Override
   public void paint (Graphics g) {
 
-    if (engineApi != null && engineApi.getSelectedTurn() != null) {
+    if (sepuku != null && sepuku.getMatchPlay().getSelectedTurn() != null) {
       makeDice();
 
-      int[] shades = engineApi.getUsedDicePattern();
+      int[] shades = sepuku.getUsedDicePattern();
 
       g.setColor(new Color(0,0,0,125));
       for (int a = 0; a < dice.length; a++) {

@@ -8,7 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 import static bg.Main.mouse;
 
 public class EditMenu extends JMenu implements Timeable {
@@ -48,8 +48,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editMove);
     editMove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0));
     editMove.addActionListener((ActionEvent e) -> {
-      engineApi.matchPlay.getHumanMove().startMove();
-//      engineApi.getMatchPlay().humanMove();
+      sepuku.getHumanMove().startMove();
     });
   }
 
@@ -58,7 +57,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editDice);
     editDice.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.ALT_MASK));
     editDice.addActionListener((ActionEvent e) -> {
-      engineApi.getInput().inputNewDice();
+      sepuku.getInput().inputNewDice();
     });
   }
 
@@ -67,7 +66,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editPlayToScore);
     editPlayToScore.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.ALT_MASK));
     editPlayToScore.addActionListener((ActionEvent e) -> {
-      engineApi.getInput().inputPlayToScore();
+      sepuku.getInput().inputPlayToScore();
     });
   }
 
@@ -81,7 +80,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editCubeValue);
     editCubeValue.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
     editCubeValue.addActionListener((ActionEvent e) -> {
-      engineApi.getInput().inputCubeValue();
+      sepuku.getInput().inputCubeValue();
     });
   }
 
@@ -98,7 +97,7 @@ public class EditMenu extends JMenu implements Timeable {
 //    add(editCubeOwner);
     editCubeOwner.add(noOwner);
     noOwner.addActionListener((ActionEvent e) -> {
-      engineApi.getGame().getGameCube().setOwner(-1);
+      sepuku.getGame().getGameCube().setOwner(-1);
     });
   }
 
@@ -106,7 +105,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editCubeOwner.add(whitePlayerOwner);
     whitePlayerOwner.addActionListener((ActionEvent e) -> {
-      engineApi.getGame().getGameCube().setOwner(0);
+      sepuku.getGame().getGameCube().setOwner(0);
     });
   }
 
@@ -114,7 +113,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editCubeOwner.add(blackPlayerOwner);
     blackPlayerOwner.addActionListener((ActionEvent e) -> {
-      engineApi.getGame().getGameCube().setOwner(1);
+      sepuku.getGame().getGameCube().setOwner(1);
     });
   }
 
@@ -129,7 +128,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editPlayerScore.add(whitePlayerScore);
     whitePlayerScore.addActionListener((ActionEvent e) -> {
-      engineApi.getInput().inputPlayerMatchScore(0);
+      sepuku.getInput().inputPlayerMatchScore(0);
     });
   }
 
@@ -137,16 +136,16 @@ public class EditMenu extends JMenu implements Timeable {
 
     editPlayerScore.add(blackPlayerScore);
     blackPlayerScore.addActionListener((ActionEvent e) -> {
-      engineApi.getInput().inputPlayerMatchScore(1);
+      sepuku.getInput().inputPlayerMatchScore(1);
     });
   }
 
   @Override
   public void timerUpdate() {
 
-    editDice.setEnabled(engineApi != null && engineApi.getGame() != null && engineApi.getSelectedTurn() != null);
+    editDice.setEnabled(sepuku != null && sepuku.getGame() != null && sepuku.gameIsPlaying());
     editDice.setVisible(editDice.isEnabled());
-    editMove.setEnabled(engineApi != null && engineApi.getSelectedTurn() != null);
+    editMove.setEnabled(sepuku != null && sepuku.gameIsPlaying());
     editMove.setVisible(editMove.isEnabled());
     editPlayerScore.setEnabled(editMove.isEnabled());
     editPlayerScore.setVisible(editPlayerScore.isEnabled());

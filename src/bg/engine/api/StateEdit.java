@@ -1,17 +1,22 @@
 package bg.engine.api;
 
-import bg.engine.coreLogic.Dice;
-import bg.engine.coreLogic.moves.Layout;
-import bg.engine.coreLogic.trainer.Trainer;
-
+import bg.engine.core.Dice;
+import bg.engine.core.moves.Layout;
+import bg.engine.core.trainer.Trainer;
 import javax.swing.*;
 
-import static bg.Main.*;
 import static bg.Main.win;
 import static bg.util.Dialogs.getIntegerInput;
 import static bg.util.Dialogs.showMessage;
 
 public class StateEdit {
+  
+  private Sepuku engineApi;
+  
+  public StateEdit (Sepuku engineApi) {
+    
+    this.engineApi = engineApi;
+  }
 
   public void inputStatScoreToWin () {
 
@@ -21,7 +26,7 @@ public class StateEdit {
       win
     );
 
-    if (newScore > 0 && newScore < 100 && newScore % 2 == 1) {
+    if (newScore < 100 && newScore % 2 == 1) {
       Trainer.statScoreToWin = newScore;
     }
   }
@@ -58,7 +63,7 @@ public class StateEdit {
 
   public void inputNewDice () {
 
-    if (engineApi.getLatestTurn() != null) {
+    if (engineApi.gameIsPlaying()) {
 
       String diceInput = JOptionPane.showInputDialog(win,
         "Input dice values with no separation" +
@@ -71,15 +76,10 @@ public class StateEdit {
 
         if (dice.diceAreValid()) {
           dice.printDice();
-          System.out.println("Input dice are valid");
-          engineApi.getSelectedTurn().setDice(dice.getDice());
-//          System.out.println("Input dice set");
+          engineApi.getMatchPlay().getSelectedTurn().setDice(dice.getDice());
           engineApi.getGame().truncateTurns(engineApi.getGameState().getTurnNr());
-          System.out.println("Truncated from turn: "+engineApi.getGameState().getTurnNr());
-          engineApi.getGameState().setMoveNr(engineApi.getPlayedMoveNr());
-          System.out.println("moveNr set: "+engineApi.getPlayedMoveNr());
+          engineApi.getGameState().setMoveNr(engineApi.getMatchPlay().getPlayedMoveNr());
           engineApi.getMatchPlay().getSearch().searchRolledMoves();
-          System.out.println("Moves searched");
           engineApi.getMatchPlay().move();
         }
       }
@@ -93,7 +93,7 @@ public class StateEdit {
         "\nType 0 (or hit Enter) for money-game",win
     );
 
-    if (newScore >= 0 && newScore < 100 && newScore % 2 == 1) {
+    if (newScore < 100 && newScore % 2 == 1) {
       engineApi.getMatchBoard().setPlayToScore(newScore);
       engineApi.getSettings().setScoreToWin(newScore);
     }

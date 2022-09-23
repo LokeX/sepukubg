@@ -35,7 +35,7 @@ public class MatchMenu extends JMenu implements Timeable {
     newMatch.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
     newMatch.addActionListener((ActionEvent e) -> {
       if (confirmed("Start a new match?",win)) {
-        engineApi.newMatch();
+        sepuku.newMatch();
       }
     });
   }
@@ -45,14 +45,14 @@ public class MatchMenu extends JMenu implements Timeable {
     add(autoCompleteGame);
     autoCompleteGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
     autoCompleteGame.addActionListener((ActionEvent e) -> {
-      if (engineApi.getAutoCompleteGame()) {
+      if (sepuku.getAutoCompleteGame()) {
         autoCompleteGame.setText("Auto complete game");
-        engineApi.setAutoCompleteGame(false);
+        sepuku.setAutoCompleteGame(false);
       } else {
         autoCompleteGame.setText("Stop auto complete");
-        engineApi.setAutoCompleteGame(true);
+        sepuku.setAutoCompleteGame(true);
         new Thread(() ->
-          engineApi.getMatchPlay().actionButtonClicked()
+          sepuku.execNextPlay()
         ).start();
       }
     });
@@ -64,24 +64,24 @@ public class MatchMenu extends JMenu implements Timeable {
     nextAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
     nextAction.addActionListener((ActionEvent e) ->
       new Thread(() ->
-        engineApi.getMatchPlay().actionButtonClicked()
+        sepuku.execNextPlay()
       ).start()
     );
   }
 
   public void timerUpdate () {
 
-    resignGame.setEnabled(engineApi != null && engineApi.getNrOfTurns() > 0);
+    resignGame.setEnabled(sepuku != null && sepuku.getMatchPlay().getNrOfTurns() > 0);
     resignGame.setVisible(resignGame.isEnabled());
     newMatch.setEnabled(resignGame.isEnabled());
     newMatch.setVisible(resignGame.isEnabled());
-    autoCompleteGame.setEnabled(engineApi.gameIsPlaying() && !engineApi.gameOver());
+    autoCompleteGame.setEnabled(sepuku.gameIsPlaying() && !sepuku.gameOver());
     autoCompleteGame.setVisible(autoCompleteGame.isEnabled());
-    nextAction.setText(engineApi.getPlayState().nextPlayTitle());
+    nextAction.setText(sepuku.getPlayState().nextPlayTitle());
     nextAction.setEnabled(
-      engineApi.getPlayState().nextPlayReady()
-      && !engineApi.getAutoCompleteGame()
-      && !engineApi.getPlayState().isSearching()
+      sepuku.getPlayState().nextPlayReady()
+      && !sepuku.getAutoCompleteGame()
+      && !sepuku.getPlayState().isSearching()
     );
     nextAction.setVisible(nextAction.isEnabled());
   }

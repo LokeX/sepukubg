@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-import static bg.Main.engineApi;
+import static bg.Main.sepuku;
 import static bg.Main.timedTasks;
 
 public class InformationBar extends JLabel implements Timeable {
@@ -25,20 +25,20 @@ public class InformationBar extends JLabel implements Timeable {
   private boolean dataAvailable () {
 
     return
-      engineApi.getGameInfoHTML() != null;
+      sepuku.getGameInfoHTML() != null;
   }
 
   private boolean engineRunning () {
 
     return
-      engineApi != null;
+      sepuku != null;
   }
 
   @Override
   public void timerUpdate() {
 
     if (engineRunning() && dataAvailable()) {
-      setText(engineApi.getGameInfoHTML().getHTMLFormattedDataString());
+      setText(sepuku.getGameInfoHTML().getHTMLFormattedDataString());
     }
   }
 
