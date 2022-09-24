@@ -1,6 +1,5 @@
 package bg.engine.play;
 
-import bg.engine.api.Settings;
 import bg.engine.core.Game;
 import bg.engine.core.Turn;
 import bg.engine.core.moves.EvaluatedMove;
@@ -12,7 +11,7 @@ import java.util.stream.IntStream;
 
 public class GameState extends Game {
 
-  private Settings settings;
+  private MatchPlay matchPlay;
   private int turnNr = 0;
   private int moveNr = 0;
   private int partMoveNr = -1;
@@ -20,7 +19,7 @@ public class GameState extends Game {
   public GameState (MatchPlay matchPlay) {
 
     super(matchPlay.getScenario());
-    settings = matchPlay.settings();
+    this.matchPlay = matchPlay;
   }
 
   public boolean playedMoveSelected() {
@@ -91,7 +90,7 @@ public class GameState extends Game {
   protected boolean isHumanTurn (Turn turn) {
 
     return
-      settings
+      matchPlay.settings()
         .playerIsHuman(
           turn.getPlayerOnRollsID()
         );

@@ -22,24 +22,25 @@ public class InformationBar extends JLabel implements Timeable {
     timedTasks.addTimedTask(this);
   }
 
-  private boolean dataAvailable () {
+  private boolean gameInfoAvailable () {
 
     return
-      sepuku.getGameInfoHTML() != null;
+      sepuku.getGameInfoHTML() != null
+      && !sepuku.getScenarios().isEditing();
   }
-
-  private boolean engineRunning () {
-
+  
+  private String getDataHTML () {
+    
     return
-      sepuku != null;
+      gameInfoAvailable()
+      ? sepuku.getGameInfoHTML().getHTMLFormattedDataString()
+      : sepuku.getScenarioInfoHTML().getHTMLFormattedDataString();
   }
 
   @Override
   public void timerUpdate() {
 
-    if (engineRunning() && dataAvailable()) {
-      setText(sepuku.getGameInfoHTML().getHTMLFormattedDataString());
-    }
+    setText(getDataHTML());
   }
 
 }

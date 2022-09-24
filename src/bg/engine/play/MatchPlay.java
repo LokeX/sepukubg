@@ -189,7 +189,7 @@ public class MatchPlay {
 
     if (gameIsPlaying()) {
       dicePattern = new int[gameState.selectedTurn().getDice().length];
-      Arrays.fill(dicePattern,1);
+        Arrays.fill(dicePattern,1);
     }
     return dicePattern;
   }
@@ -305,7 +305,6 @@ public class MatchPlay {
       humanMove.playMove();
     }
     gameState.newTurn();
-//    Main.sound.playSoundEffect("wuerfelbecher");
     getSearch().searchRolledMoves();
     move();
   }

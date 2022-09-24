@@ -170,18 +170,6 @@ public class MoveLayout extends Layout {
         .noneMatch(point -> point != -1);
   }
 
-  public boolean containsThesePartMoves (int[] partMove) {
-
-    for (int a = 0; a < movePoints.length; a += 2) {
-      for (int b = 0; b < partMove.length; b += 2) {
-        if (movePoints[a] == partMove[b] && movePoints[a+1] == partMove[b+1]) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-  
   public void printMovePointsArray (int[] movePoints) {
     
     System.out.println(
@@ -193,20 +181,14 @@ public class MoveLayout extends Layout {
 
   public boolean movePointsMatch (int[] pointsToMatch) {
 
-//    System.out.println("Comparing pointsToMatch: ");
-//    printMovePointsArray(pointsToMatch);
-//    System.out.println("and movePoints: ");
-//    printMovePointsArray(movePoints);
     int nrOfMatchesRequired =
       (int) Arrays.stream(pointsToMatch)
         .filter(point -> point != -1)
         .count();
-//    System.out.println("nrOfMatchesRequired: "+nrOfMatchesRequired);
     int nrOfMatches =
       (int) IntStream.range(0, nrOfMatchesRequired)
         .filter(position -> pointsToMatch[position] == movePoints[position])
         .count();
-//    System.out.println("nrOfMatches: "+nrOfMatches);
 
     return nrOfMatches == nrOfMatchesRequired;
   }

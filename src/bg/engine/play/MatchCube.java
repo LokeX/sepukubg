@@ -72,36 +72,11 @@ public class MatchCube {
 
   public void computerHandlesCube () {
 
-    System.out.println("Computer handles cube:");
-    System.out.println("Next player is computer: "+!playerIsHuman());
-    System.out.println("Is Crawford game: "+getMatchBoard().isCrawfordGame());
-    System.out.println("Cube was rejected: "+cubeWasRejected());
-    System.out.println("Computer can offer cube: "+getGame().playerCanOfferCube());
-    System.out.println("Computer should double: "+matchPlay.getSelectedMove().shouldDouble());
-
-    if (nextPlayerIsComputer() && mayOfferCube() && shouldDouble()) {
+    if (playerIsComputer() && mayOfferCube() && shouldDouble()) {
       resolveCubeHandling();
     }
   }
   
-//  void computerHandlesCube () {
-//
-//    System.out.println("Computer handles cube:");
-//    System.out.println("Next player is computer: "+!playerIsHuman());
-//    System.out.println("Is Crawford game: "+getMatchBoard().isCrawfordGame());
-//    System.out.println("Cube was rejected: "+cubeWasRejected());
-//    System.out.println("Computer can offer cube: "+getGame().playerCanOfferCube());
-//    System.out.println("Computer should double: "+matchPlay.getSelectedMove().shouldDouble());
-//    if (!playerIsHuman()) {
-//      if (!getMatchBoard().isCrawfordGame() && !cubeWasRejected()) {
-//        if (getGame().playerCanOfferCube() && matchPlay.getSelectedMove().shouldDouble()) {
-//
-//          resolveCubeHandling();
-//        }
-//      }
-//    }
-//  }
-//
   private boolean mayOfferCube () {
     
     return
@@ -112,7 +87,7 @@ public class MatchCube {
   
   public void humanHandlesCube () {
 
-    if (!nextPlayerIsComputer() && mayOfferCube()) {
+    if (!playerIsComputer() && mayOfferCube()) {
       resolveCubeHandling();
       if (cubeWasRejected()) {
         showMessage(
@@ -124,28 +99,8 @@ public class MatchCube {
       }
     }
   }
-//  public void humanHandlesCube () {
-//
-//    if (playerIsHuman()) {
-//      if (!getMatchBoard().isCrawfordGame() && matchPlay.getNrOfTurns() > 0) {
-//        if (getGame().playerCanOfferCube() || getGame().getGameCube().getOwner() > 0) {
-//          resolveCubeHandling();
-//          if (cubeWasRejected()) {
-//            showMessage(
-//              "Opponent rejects the double"
-//                + "\nand resigns!",
-//              win
-//            );
-//          }
-//        }
-//      }
-//      if (getGame().getGameCube().cubeWasRejected()) {
-//        matchPlay.endTurn();
-//      }
-//    }
-//  }
 
-  private boolean nextPlayerIsComputer () {
+  private boolean playerIsComputer() {
 
     return
       matchPlay.settings()

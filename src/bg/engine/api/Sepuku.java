@@ -10,12 +10,19 @@ public class Sepuku {
 
   private Settings settings = new Settings();
   private Scenarios scenarios = new Scenarios();
+  private ScenarioInfoHTML scenarioInfoHTML = new ScenarioInfoHTML(this);
   private GameInfoHTML gameInfoHTML = new GameInfoHTML();
   private MatchPlay matchPlay = new MatchPlay(this);
   private PlayState playState =  new PlayState(this);
   private StateEdit stateEdit = new StateEdit(this);
 
- public HumanMove getHumanMove () {
+  public ScenarioInfoHTML getScenarioInfoHTML () {
+    
+    return
+      scenarioInfoHTML;
+  }
+  
+  public HumanMove getHumanMove () {
    
    return
      matchPlay.getHumanMove();

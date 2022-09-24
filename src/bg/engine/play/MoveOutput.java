@@ -23,12 +23,14 @@ public class MoveOutput {
 
   public void setOutputLayouts (List<Layout> layouts) {
 
-      outputLayouts.addAll(layouts);
-      initOutput();
+//    System.out.println("received "+layouts.size()+" layouts (stack size): "+outputLayouts.size());
+    outputLayouts.addAll(layouts);
+    initOutput();
   }
 
   public void setOutputLayout (Layout layouts) {
 
+//    System.out.println("received a layout (stack size): "+outputLayouts.size());
     outputLayouts.add(layouts);
     initOutput();
   }
@@ -77,6 +79,13 @@ public class MoveOutput {
 
     return
       outputLayouts.size() > 0;
+  }
+  
+  public int nrOfOutputLayouts () {
+    
+//    System.out.println("nrOfOutputLayouts: "+outputLayouts.size());
+    return
+      outputLayouts.size();
   }
 
   public void setEndOfOutputNotifier (Object notifier) {

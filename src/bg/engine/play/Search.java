@@ -57,11 +57,6 @@ public class Search {
 
   private boolean okToSearch () {
 
-    System.out.println("gameIsPlaying: "+matchPlay.gameIsPlaying());
-    System.out.println("nrOfTurns: "+gameState().nrOfTurns());
-    System.out.println("searchIsOff: "+settings().searchIsOff());
-    System.out.println("playerLooksAhead: "+playerLooksAhead());
-
     return
       matchPlay.gameIsPlaying()
       && gameState().nrOfTurns() > 0
@@ -71,11 +66,7 @@ public class Search {
 
   public void searchRolledMoves () {
     
-    System.out.println();
-    System.out.println("Search:");
-    System.out.println("Search to ply: "+settings().getSearchToPly());
     if (okToSearch()) {
-      System.out.println("okToSearch");
       searching = true;
       searchTurn(gameState().lastTurn());
       searching = false;

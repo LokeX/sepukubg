@@ -31,7 +31,7 @@ public class Window extends JFrame {
 
   public Window() {
 
-    super("Sepuku Backgammon - alpha ver. 2022.09.23");
+    super("Sepuku Backgammon - alpha ver. 2022.09.24");
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
     setIconImage(new ImageIcon(getClass().getResource("Icon/AppIcon.gif")).getImage());
