@@ -1,7 +1,7 @@
 package bg.inUrFace.menu.dropMenues.trainingMenu;
 
-import static bg.Main.sepuku;
-import static bg.Main.trainer;
+import static bg.Main.*;
+import static bg.util.Dialogs.getIntegerInput;
 
 import bg.engine.core.trainer.Trainer;
 import bg.util.time.Timeable;
@@ -70,7 +70,13 @@ public class TrainerMenu extends JMenu implements Timeable {
     add(setScoreToWin);
     setScoreToWin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
     setScoreToWin.addActionListener((ActionEvent e) -> {
-      sepuku.getInput().inputStatScoreToWin();
+      sepuku.getInput().inputStatScoreToWin(
+        getIntegerInput(
+          "Type the score required " +
+            "to win a statistical match:",
+          win
+        )
+      );
     });
   }
 

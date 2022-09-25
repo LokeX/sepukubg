@@ -4,12 +4,10 @@ import bg.Main;
 import bg.util.time.Timeable;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.KeyStroke;
-import static bg.Main.sepuku;
-import static bg.Main.mouse;
+import javax.swing.*;
+
+import static bg.Main.*;
+import static bg.util.Dialogs.getIntegerInput;
 
 public class EditMenu extends JMenu implements Timeable {
 
@@ -57,7 +55,12 @@ public class EditMenu extends JMenu implements Timeable {
     add(editDice);
     editDice.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.ALT_MASK));
     editDice.addActionListener((ActionEvent e) -> {
-      sepuku.getInput().inputNewDice();
+      sepuku.getInput().inputNewDice(
+        JOptionPane.showInputDialog(win,
+          "Input dice values with no separation" +
+            "\nfor doubles type only one value"
+        )
+      );
     });
   }
 
@@ -66,7 +69,12 @@ public class EditMenu extends JMenu implements Timeable {
     add(editPlayToScore);
     editPlayToScore.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.ALT_MASK));
     editPlayToScore.addActionListener((ActionEvent e) -> {
-      sepuku.getInput().inputPlayToScore();
+      sepuku.getInput().inputPlayToScore(
+        getIntegerInput(
+          "Type the score required to win the game:" +
+            "\nType 0 (or hit Enter) for money-game",win
+        )
+      );
     });
   }
 
@@ -80,7 +88,11 @@ public class EditMenu extends JMenu implements Timeable {
     add(editCubeValue);
     editCubeValue.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
     editCubeValue.addActionListener((ActionEvent e) -> {
-      sepuku.getInput().inputCubeValue();
+      sepuku.getInput().inputCubeValue(
+        getIntegerInput(
+          "Type the new doublingCube value:",win
+        )
+      );
     });
   }
 
@@ -123,12 +135,19 @@ public class EditMenu extends JMenu implements Timeable {
     setupEditWhitePlayerScore();
     setupEditBlackPlayerScore();
   }
-
+  
+  private int inputScore (int playerID) {
+    
+    return getIntegerInput(
+      "Type "+(playerID == 0 ? "White" : "Black")+" players score:",win
+    );
+  }
+  
   private void setupEditWhitePlayerScore () {
 
     editPlayerScore.add(whitePlayerScore);
     whitePlayerScore.addActionListener((ActionEvent e) -> {
-      sepuku.getInput().inputPlayerMatchScore(0);
+      sepuku.getInput().inputPlayerMatchScore(0, inputScore(0));
     });
   }
 
@@ -136,16 +155,16 @@ public class EditMenu extends JMenu implements Timeable {
 
     editPlayerScore.add(blackPlayerScore);
     blackPlayerScore.addActionListener((ActionEvent e) -> {
-      sepuku.getInput().inputPlayerMatchScore(1);
+      sepuku.getInput().inputPlayerMatchScore(1, inputScore(1));
     });
   }
 
   @Override
   public void timerUpdate() {
 
-    editDice.setEnabled(sepuku != null && sepuku.getGame() != null && sepuku.gameIsPlaying());
+    editDice.setEnabled(sepuku.gameIsPlaying());
     editDice.setVisible(editDice.isEnabled());
-    editMove.setEnabled(sepuku != null && sepuku.gameIsPlaying());
+    editMove.setEnabled(sepuku.gameIsPlaying());
     editMove.setVisible(editMove.isEnabled());
     editPlayerScore.setEnabled(editMove.isEnabled());
     editPlayerScore.setVisible(editPlayerScore.isEnabled());

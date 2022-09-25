@@ -126,15 +126,10 @@ public class EvaluatedMove extends BonusElements {
 
     return foeValues;
   }
-//  EngineApi engineApi;
-
-//    int layoutStrength = 10000-Main.round.getTurnByNr(Main.round.lastTurn().getTurnNr()-1).getSelectedMove().getLayoutStrength();
-
-
 
   protected List<String> getFieldNamesAndSetPositions () {
 
-    List<String> names = new ArrayList();
+    List<String> names = new ArrayList<>();
     Field[] fields = this.getClass().getDeclaredFields();
     String name;
 
@@ -159,7 +154,7 @@ public class EvaluatedMove extends BonusElements {
   private List<Integer> getFieldValues () {
 
     Field[] fields = this.getClass().getDeclaredFields();
-    List<Integer> values = new ArrayList();
+    List<Integer> values = new ArrayList<>();
 
     try {
       for (int a = start; a < end; a++) {

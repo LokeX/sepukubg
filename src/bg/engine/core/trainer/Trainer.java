@@ -25,6 +25,7 @@ public class Trainer {
   static public long startTime;
 
   static public int[] matchesPlayedByThreads = new int[getNrOfCores()];
+  static public List<List<Match>> threadMatches = new ArrayList<>();
 
   static public boolean isBotMember (String name) {
 
@@ -183,32 +184,36 @@ public class Trainer {
     }
     printInitialReport();
   }
-
+  
+  private void addMatchStatsToBotStats (Match match) {
+  
+    bots.get(whiteBot)
+      .getStats()
+      .addScore(
+        match.getMatchScore(),
+        0,
+        bots.get(blackBot)
+      );
+    bots.get(blackBot)
+      .getStats()
+      .addScore(
+        match.getMatchScore(),
+        1,
+        bots.get(whiteBot)
+      );
+  }
+  
   public void playMatchesThread(int nrOfMatches, int threadNr, boolean lastThread) {
 
     System.out.println("Starting thread: "+threadNr+" [matches: "+nrOfMatches+"]");
 
-    new Thread(() -> {
+    new  Thread(() -> {
 
-      Match match;
       Layout layout = sepuku.getScenarios().getLayoutByNr(selectedScenarioNr);
+      List<Match> matches = new ArrayList<>();
 
       for (int a = 0; a < nrOfMatches; a++) {
-        match = new Match(layout, statScoreToWin).getMatch();
-        bots.get(whiteBot)
-          .getStats()
-          .addScore(
-            match.getMatchScore(),
-            0,
-            bots.get(blackBot)
-          );
-        bots.get(blackBot)
-          .getStats()
-          .addScore(
-            match.getMatchScore(),
-            1,
-            bots.get(whiteBot)
-          );
+        matches.add(new Match(layout, statScoreToWin).getMatch());
         matchesPlayedByThreads[threadNr]++;
         if (killRun) {
           running = false;
@@ -216,10 +221,16 @@ public class Trainer {
           break;
         }
       }
+      threadMatches.add(matches);
       if (lastThread) {
         while (getNrOfMatchesPlayed() < nrOfMatchesToPlay) {
           threadSleep(100);
         }
+        threadMatches.forEach(
+          matchList -> matchList.forEach(
+            this::addMatchStatsToBotStats
+          )
+        );
         printReport();
         running = false;
         System.out.println("Last thread signing out");

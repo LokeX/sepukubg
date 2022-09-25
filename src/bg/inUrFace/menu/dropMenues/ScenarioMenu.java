@@ -6,9 +6,8 @@ import bg.util.time.Timeable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
+import javax.swing.*;
+
 import static bg.Main.sepuku;
 import static bg.Main.win;
 
@@ -25,13 +24,22 @@ public class ScenarioMenu extends JMenu implements Timeable {
     setupRenameScenarioMenu();
     setupRemoveScenarioMenu();
   }
-
+  
+  public String inputLayoutName () {
+    
+    return JOptionPane.
+      showInputDialog(win, "Input scenario name:");
+  }
+  
   private void setupSaveScenarioMenu() {
 
     add(saveScenario);
     saveScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
     saveScenario.addActionListener((ActionEvent e) -> {
-      sepuku.getInput().saveLayout(Main.getCanvas().getDisplayedLayout());
+      sepuku.getInput().saveLayout(
+        inputLayoutName(),
+        Main.getCanvas().getDisplayedLayout()
+      );
     });
   }
 
@@ -40,7 +48,7 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(renameScenario);
     renameScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
     renameScenario.addActionListener((ActionEvent e) -> {
-      sepuku.getInput().renameSelectedLayout();
+      sepuku.getInput().renameSelectedLayout(inputLayoutName());
     });
   }
 
