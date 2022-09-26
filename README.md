@@ -1,9 +1,12 @@
 # sepukubg
 Backgammon Java engine: move-generation, evaluation, search (to ply 3) and training.
+
 Backgammon Java Swing UI
 
 Intellij project, JDK 18:
+
 Download code as ZIP, unpack, open as project and run.
+
 Artifact builds to sepukubg.jar.
 
 Released as free software under GNU 3.0 Licence.
