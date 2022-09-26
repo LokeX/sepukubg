@@ -13,14 +13,14 @@ public class PaintJobs {
 
   public MovePainter movePainter = new MovePainter();
   public BoardPainter boardPainter = new BoardPainter();
-  public LayoutPainter layoutPainter = new LayoutPainter();
+  public EndingPointsPainter endingPointsPainter = new EndingPointsPainter();
   public ScenarioEditor scenarioEditor = new ScenarioEditor();
   public MatchScorePainter matchScorePainter = new MatchScorePainter();
   public BonusPainter bonusPainter = new BonusPainter();
   public ActionButton actionButton = new ActionButton();
   public DicePainter dicePainter = new DicePainter();
   public DoublingCube doublingCube = new DoublingCube();
-  public EndingPointsPainter endingPointsPainter = new EndingPointsPainter();
+  public LayoutPainter layoutPainter = new LayoutPainter();
   public ChequerPainter chequerPainter = new ChequerPainter();
 
   private List<Paintable> paintJobs = new ArrayList<>();

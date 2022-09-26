@@ -88,12 +88,12 @@ public class MoveSelection extends Moves {
   private Stream<Integer> endingPointsIn (int position) {
 
     return
-      getDiceObj().areDouble() || position != 3
-        ? pointsIn(position)
-        : pointsIn(position)
-            .filter(endingPoint ->
-              !isOptionalHit(endingPoint)
-            );
+      getDiceObj().areDouble() || position() > 1
+      ? pointsIn(position)
+      : pointsIn(position)
+          .filter(endingPoint ->
+            !isOptionalHit(endingPoint)
+          );
   }
 
   private boolean endingPointIsInPosition (int endingPoint, int position) {
@@ -173,6 +173,7 @@ public class MoveSelection extends Moves {
     return
       pointsIn(position).count() == 1;
   }
+  
   private boolean explicitEndingPoint (int position) {
 
     return
@@ -239,17 +240,18 @@ public class MoveSelection extends Moves {
       ? getLayoutNr(uniqueMove())
       : -1;
   }
-
+  
   private int[] doubleDicePattern () {
 
-    int usedDice = position()/2;
     int[] dicePattern = new int[4];
+    int nrOfUsedDice =
+      (position()/2)+((movePoints.length/2)-getNrOfLegalPartMoves());
 
-    if (usedDice > 0) {
-      Arrays.fill(dicePattern,0,usedDice,1);
+    if (nrOfUsedDice > 0) {
+      Arrays.fill(dicePattern,0,nrOfUsedDice,1);
     }
-
-    return dicePattern;
+    return
+      dicePattern;
   }
 
   private int usedDie () {
@@ -270,12 +272,13 @@ public class MoveSelection extends Moves {
 
     int[] dicePattern = new int[2];
 
-    if (position() == 4) {
+    if (endOfInput()) {
       Arrays.fill(dicePattern,1);
+    } else if (position() < 2 && getNrOfLegalPartMoves() == 1) {
+      dicePattern[diePosOf(usedDie()) == 0 ? 1 : 0] = 1;
     } else if (position() > 1) {
       dicePattern[diePosOf(usedDie())] = 1;
     }
-
     return
       dicePattern;
   }

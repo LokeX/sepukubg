@@ -20,9 +20,8 @@ public class MovePointLayouts extends MoveLayout {
   private void paintPosition () {
 
     if (hitPoints[position] >= 0) {
-      if (position%2 == 0) {
-        point[hitPoints[position]]--;
-      } else {
+      if (position%2 == 1) {
+        point[hitPoints[position-1]]--;
         point[hitPoints[position]]++;
       }
     }
