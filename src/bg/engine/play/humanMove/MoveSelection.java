@@ -76,23 +76,23 @@ public class MoveSelection extends Moves {
         .distinct();
   }
 
-  private boolean pointIsHitpoint(int endingPoint) {
+  private boolean isOptionalHit(int endingPoint) {
 
     return
       matchingMoves()
         .anyMatch(move ->
-          move.isHitpoint(endingPoint)
+          move.hasFirstEndingPointHit(endingPoint)
         );
   }
 
   private Stream<Integer> endingPointsIn (int position) {
 
     return
-      position != 3
+      getDiceObj().areDouble() || position != 3
         ? pointsIn(position)
         : pointsIn(position)
             .filter(endingPoint ->
-              !pointIsHitpoint (endingPoint)
+              !isOptionalHit(endingPoint)
             );
   }
 

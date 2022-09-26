@@ -157,14 +157,14 @@ public class Sepuku {
   
   private void nextPlay () {
     
-    if (!matchPlay.cubeWasRejected()) {
-      if (isNewMatch()) {
-        newMatch();
-      } else if (!gameIsPlaying() || gameOver()) {
-        matchPlay.startGame();
-      } else {
-        matchPlay.newTurn();
-      }
+    if (isNewMatch()) {
+      newMatch();
+    } else if (!gameIsPlaying() || gameOver()) {
+      matchPlay.startGame();
+    } else if (!matchPlay.cubeWasRejected()){
+      matchPlay.newTurn();
+    } else {
+      matchPlay.endTurn();
     }
   }
   

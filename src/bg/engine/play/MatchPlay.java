@@ -212,8 +212,7 @@ public class MatchPlay {
   public boolean matchOver () {
 
     return
-      matchBoard.matchOver()
-      || sepuku.getMatchCube().cubeWasRejected();
+      matchBoard.matchOver();
   }
 
   public boolean gameOver () {
@@ -234,10 +233,7 @@ public class MatchPlay {
     
     if (gameIsPlaying()) {
       matchCube.computerHandlesCube();
-      if (matchCube.cubeWasRejected()) {
-        endTurn();
-        return true;
-      }
+      return matchCube.cubeWasRejected();
     }
     return false;
   }

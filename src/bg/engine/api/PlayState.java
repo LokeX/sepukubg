@@ -5,7 +5,7 @@ import bg.engine.play.humanMove.HumanMove;
 
 public class PlayState {
 
-  private Sepuku engineApi;
+  private Sepuku sepuku;
   private boolean autoComplete = false;
   private String[] playTitles = new String[] {
     "Start match",
@@ -19,7 +19,7 @@ public class PlayState {
   public boolean isSearching () {
 
     return
-      engineApi.getMatchPlay().getSearch().isSearching();
+      sepuku.getMatchPlay().getSearch().isSearching();
   }
 
   void setAutoComplete (boolean complete) {
@@ -29,54 +29,54 @@ public class PlayState {
 
   public PlayState(Sepuku engineApi) {
 
-    this.engineApi = engineApi;
+    this.sepuku = engineApi;
   }
 
-  private MatchPlay matchState () {
+  private MatchPlay matchPlay () {
 
-    return engineApi.getMatchPlay();
+    return sepuku.getMatchPlay();
   }
 
   private boolean lastTurnSelected () {
 
     return
-      matchState().gameIsPlaying()
-      && matchState().lastTurnSelected();
+      matchPlay().gameIsPlaying()
+      && matchPlay().lastTurnSelected();
   }
 
   private boolean playerIsHuman () {
 
     return
-      matchState().gameIsPlaying()
-      && matchState().playerIsHuman();
+      matchPlay().gameIsPlaying()
+      && matchPlay().playerIsHuman();
   }
 
   private boolean newMatchPlay() {
 
     return
-      matchState().gameIsPlaying()
-      && matchState().matchOver()
+      matchPlay().gameIsPlaying()
+      && matchPlay().matchOver()
       && lastTurnSelected();
   }
 
   private boolean newGamePlay() {
 
     return
-      matchState().gameOver()
+      matchPlay().gameOver()
       && lastTurnSelected();
   }
 
   private boolean playedMoveSelected () {
 
     return
-      matchState().gameIsPlaying()
-      && matchState().playedMoveSelected();
+      matchPlay().gameIsPlaying()
+      && matchPlay().playedMoveSelected();
   }
 
   private HumanMove humanMove () {
 
     return
-      matchState()
+      matchPlay()
         .getHumanMove();
   }
 
@@ -85,7 +85,7 @@ public class PlayState {
     return
       humanMove().inputReady()
       &&
-      matchState()
+      matchPlay()
         .getHumanMove()
         .getMoveSelection()
         .endOfInput();
@@ -101,9 +101,9 @@ public class PlayState {
   private boolean playMove () {
 
     return
-      !matchState().matchOver()
-      && !matchState().gameOver()
-      && !matchState().getMoveOutput().isBusy()
+      !matchPlay().matchOver()
+      && !matchPlay().gameOver()
+      && !matchPlay().getMoveOutput().isBusy()
       && (lastTurnSelected() || !playedMoveSelected())
       && (!playerIsHuman() || humanInputComplete());
   }
@@ -111,7 +111,7 @@ public class PlayState {
   private boolean scenarioEdit () {
 
     return
-      engineApi.getScenarios().isEditing();
+      sepuku.getScenarios().isEditing();
   }
 
   public boolean nextPlayReady () {
