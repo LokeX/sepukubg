@@ -208,7 +208,7 @@ public class MoveLayout extends Layout {
     return rearPos == 0;
   }
 
-  public boolean endingPointIsAmbiguous(int endingPoint) {
+  public boolean isHitpoint(int endingPoint) {
 
     return
       !parentMoves.getDiceObj().areDouble() &&

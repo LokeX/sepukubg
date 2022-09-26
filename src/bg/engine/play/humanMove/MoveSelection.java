@@ -76,12 +76,12 @@ public class MoveSelection extends Moves {
         .distinct();
   }
 
-  private boolean isAmbiguous (int endingPoint) {
+  private boolean pointIsHitpoint(int endingPoint) {
 
     return
       matchingMoves()
         .anyMatch(move ->
-          move.endingPointIsAmbiguous(endingPoint)
+          move.isHitpoint(endingPoint)
         );
   }
 
@@ -92,7 +92,7 @@ public class MoveSelection extends Moves {
         ? pointsIn(position)
         : pointsIn(position)
             .filter(endingPoint ->
-              !isAmbiguous(endingPoint)
+              !pointIsHitpoint (endingPoint)
             );
   }
 
@@ -296,9 +296,9 @@ public class MoveSelection extends Moves {
     do {
       if (positionIsEndingPoint()) {
         endingPoints = endingPointsIn(position()).toList();
+        validEndingPoints.addAll(endingPoints);
       }
       if (endingPoints.size() > 0) {
-        validEndingPoints.addAll(endingPoints);
         movePoints[position()] = endingPoints.get(0);
       }
     } while (

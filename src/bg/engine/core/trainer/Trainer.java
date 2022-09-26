@@ -207,7 +207,7 @@ public class Trainer {
 
     System.out.println("Starting thread: "+threadNr+" [matches: "+nrOfMatches+"]");
 
-    new  Thread(() -> {
+    new Thread(() -> {
 
       Layout layout = sepuku.getScenarios().getLayoutByNr(selectedScenarioNr);
       List<Match> matches = new ArrayList<>();

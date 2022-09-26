@@ -16,10 +16,10 @@ import static bg.util.Reflection.getFieldsList;
 
 public class MouseListeners extends MouseAdapter {
 
-  public ScenarioEditor scenarioEditor = getCanvas().getPaintJobs().scenarioEditor;
-  public ActionButton actionButton = getCanvas().getPaintJobs().actionButton;
-  public DoublingCube doublingCube = getCanvas().getPaintJobs().doublingCube;
   public MoveInputListener moveInputListener = new MoveInputListener();
+  public ActionButton actionButton = getCanvas().getPaintJobs().actionButton;
+  public ScenarioEditor scenarioEditor = getCanvas().getPaintJobs().scenarioEditor;
+  public DoublingCube doublingCube = getCanvas().getPaintJobs().doublingCube;
   public BonusPainter bonusPainter = getCanvas().getPaintJobs().bonusPainter;
   private List<MouseListener> listeners = new ArrayList<>();
 
@@ -42,9 +42,9 @@ public class MouseListeners extends MouseAdapter {
   @Override
   public void mouseClicked (MouseEvent e) {
 
-    synchronized (this) {
+//    synchronized (this) {
       listeners.forEach(listener -> listener.mouseClicked(e));
-    }
+//    }
   }
 
   public Batch[] getRegularClickPoints () {

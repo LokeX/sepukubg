@@ -78,11 +78,8 @@ public class MoveInputListener extends MouseAdapter {
   @Override
   public void mouseClicked (MouseEvent mouseEvent) {
 
-    System.out.println();
-    System.out.println("Mouse clicked");
     if (humanIsMoving()) {
       inputPoint(mouseEvent);
-      System.out.println("Accepted inputPoint");
     }
   }
 
