@@ -23,14 +23,12 @@ public class MoveOutput {
 
   public void setOutputLayouts (List<Layout> layouts) {
 
-//    System.out.println("received "+layouts.size()+" layouts (stack size): "+outputLayouts.size());
     outputLayouts.addAll(layouts);
     initOutput();
   }
 
   public void setOutputLayout (Layout layouts) {
 
-//    System.out.println("received a layout (stack size): "+outputLayouts.size());
     outputLayouts.add(layouts);
     initOutput();
   }
@@ -45,7 +43,6 @@ public class MoveOutput {
 
     Layout layout = outputLayouts.remove(0);
 
-    
     if (notifier != null && outputLayouts.size() == 0) {
       synchronized (notifier) {
         notifier.notifyAll();
@@ -56,7 +53,7 @@ public class MoveOutput {
     firstLayout = false;
 
     return
-      playerAdjustedLayout(layout);
+      layout;
   }
 
   private Layout playerAdjustedLayout (Layout layout) {
@@ -83,7 +80,6 @@ public class MoveOutput {
   
   public int nrOfOutputLayouts () {
     
-//    System.out.println("nrOfOutputLayouts: "+outputLayouts.size());
     return
       outputLayouts.size();
   }

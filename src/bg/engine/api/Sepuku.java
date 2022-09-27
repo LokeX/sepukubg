@@ -150,7 +150,7 @@ public class Sepuku {
     
     matchPlay = new MatchPlay(this);
     getScenarios().setEditing(true);
-    matchPlay.getMoveOutput().setOutputLayout(
+    getMoveOutput().setOutputLayout(
       getScenarios().getSelectedScenariosLayout()
     );
   }

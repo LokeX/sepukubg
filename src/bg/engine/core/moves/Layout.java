@@ -12,6 +12,7 @@ public class Layout {
   protected int hash = 0;
   protected int searchEvaluation;
   private int pip = -1;
+  private int opponentPip = -1;
   protected int rearPos = -1;
   protected int useBlackBot = 0;
   protected int useWhiteBot = 0;
@@ -37,7 +38,6 @@ public class Layout {
   public Layout (int[] point) {
 
     this.point = point.clone();
-    playerID = 2;
   }
 
   public int getHash () {
@@ -73,28 +73,74 @@ public class Layout {
   }
 
   public int getWhitePip () {
-
-    return getPlayerPip(0);
+    
+    if(playerID == 0) {
+      return getPip();
+    } else {
+      return getOpponentPip();
+    }
   }
-
+  
   public int getBlackPip () {
-
-    return getPlayerPip(1);
+    
+    if(playerID == 1) {
+      return getPip();
+    } else {
+      return getOpponentPip();
+    }
   }
-
-  public int getPlayerPip (int playerID) {
+  
+  public int getOpponentPip () {
+    
+    if (opponentPip < 0) {
+      flipLayout().calcPip();
+      opponentPip = getPip();
+      flipLayout().calcPip();
+    }
 
     return
-      playerID == this.playerID ?
-        calcPip().getPip() :
-        getFlippedLayout().calcPip().getPip();
+      opponentPip;
   }
-
-  public int getOpponentPip () {
-
-    return this.getFlippedLayout().calcPip().getPip();
+  
+  public int[] getWhitePoints () {
+    
+    return
+      getPlayerPoints(0);
   }
-
+  
+  public int[] getBlackPoints () {
+    
+    return
+      getPlayerPoints(1);
+  }
+  
+  public int[] getPlayerPoints (int pID) {
+    
+    int[] playerPoints;
+    
+    if (playerID == 1) {
+      flipLayout();
+      if (pID == 1) {
+        playerPoints = Arrays
+          .copyOfRange(point,point.length/2,point.length);
+      } else {
+        playerPoints = Arrays
+          .copyOfRange(point,0,point.length/2);
+      }
+      flipLayout();
+    } else {
+      if (pID == 1) {
+        playerPoints = Arrays
+          .copyOfRange(point,point.length/2,point.length);
+      } else {
+        playerPoints = Arrays
+          .copyOfRange(point,0,point.length/2);
+      }
+    }
+    return
+      playerPoints;
+  }
+  
   public int getSearchEvaluation() {
 
     return searchEvaluation;

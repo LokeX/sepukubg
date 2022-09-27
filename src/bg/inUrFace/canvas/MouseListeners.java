@@ -42,11 +42,10 @@ public class MouseListeners extends MouseAdapter {
   @Override
   public void mouseClicked (MouseEvent e) {
 
-//    synchronized (this) {
-      listeners.forEach(listener -> listener.mouseClicked(e));
-//    }
+    listeners.forEach(listener -> listener.mouseClicked(e));
+    getCanvas().repaint();
   }
-
+  
   public Batch[] getRegularClickPoints () {
 
     Batch[] points = new Batch[24];

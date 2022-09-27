@@ -211,7 +211,6 @@ public class MoveLayout extends Layout {
   public boolean hasFirstEndingPointHit(int endingPoint) {
 
     return
-//      !parentMoves.getDiceObj().areDouble() &&
       movePoints[3] == endingPoint &&
       hitPoints[1] != -1 &&
       movePoints[1] == movePoints[2];
