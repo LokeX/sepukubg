@@ -209,13 +209,9 @@ public class GameState extends Game {
 
     List<MoveLayout> partMoveLayoutList = getPartMoveLayoutList();
 
-    System.out.println("selectNextPartMove");
-    System.out.println("nrOfPartMoveLayouts = "+partMoveLayoutList.size());
-    System.out.println("selectedPartMovePosition = "+ partMoveNr);
     if (partMoveNr == -1 || ++partMoveNr > partMoveLayoutList.size()-1) {
       partMoveNr = partMoveLayoutList.size()-1;
     }
-    System.out.println("New selectedPartMovePosition = "+ partMoveNr);
     return partMoveLayoutList.get(partMoveNr);
   }
 
@@ -223,15 +219,11 @@ public class GameState extends Game {
 
     List<MoveLayout> partMoveLayoutList = getPartMoveLayoutList();
 
-    System.out.println("selectPreviousPartMove");
-    System.out.println("nrOfPartMoveLayouts = "+partMoveLayoutList.size());
-    System.out.println("partMovePosition = "+ partMoveNr);
     if (partMoveNr == -1) {
       partMoveNr = partMoveLayoutList.size()-2;
     } else if (--partMoveNr < 0) {
       partMoveNr = 0;
     }
-    System.out.println("New partMovePosition = "+ partMoveNr);
     return partMoveLayoutList.get(partMoveNr);
   }
 

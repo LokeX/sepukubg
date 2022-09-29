@@ -1,11 +1,8 @@
 package bg.engine.core.moves;
 
-import bg.engine.core.Dice;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.*;
@@ -14,11 +11,10 @@ import static java.util.stream.Collectors.joining;
 public class MoveLayout extends Layout {
 
   private MovePointLayouts movePointLayouts;
-
-  Moves parentMoves;
-  int[] hitPoints;
-  int[] movePoints;
-  int[] movePoints2;
+  protected Moves parentMoves;
+  protected int[] hitPoints;
+  protected int[] movePoints;
+  protected int[] movePoints2;
 
   public MoveLayout getParentMoveLayout () {
 
@@ -28,11 +24,6 @@ public class MoveLayout extends Layout {
   public int[] getDice() {
 
     return parentMoves.getDice();
-  }
-
-  public Dice getDiceObj () {
-
-    return new Dice(parentMoves.getDice());
   }
 
   public int[] getMovePoints() {
@@ -61,11 +52,6 @@ public class MoveLayout extends Layout {
 
   protected MoveLayout () {
 
-  }
-
-  public MoveLayout (Layout layout) {
-
-    super(layout);
   }
 
   public MoveLayout (MoveLayout moveLayout) {
@@ -170,15 +156,6 @@ public class MoveLayout extends Layout {
         .noneMatch(point -> point != -1);
   }
 
-  public void printMovePointsArray (int[] movePoints) {
-    
-    System.out.println(
-      Arrays.stream(movePoints)
-        .mapToObj(Integer::toString)
-        .collect(Collectors.joining(","))
-    );
-  }
-
   public boolean movePointsMatch (int[] pointsToMatch) {
 
     int nrOfMatchesRequired =
@@ -196,11 +173,6 @@ public class MoveLayout extends Layout {
   public void setMovePoints(int[] newMovePoints) {
 
     movePoints = newMovePoints.clone();
-  }
-
-  final public int getNrOfPartMoves() {
-
-    return parentMoves.getNrOfLegalPartMoves();
   }
 
   boolean isWinningMove () {
@@ -226,32 +198,120 @@ public class MoveLayout extends Layout {
 
   public String getMovePointsString() {
 
-    String movePointsString = "";
-
-    for (int a = 0; a < movePoints.length; a++) {
-      movePointsString += Integer.toString(
-        movePoints[a]) + (a == movePoints.length-1 ? "" : ","
-      );
-    }
-    return "["+movePointsString+"]";
+    return
+      stream(movePoints)
+        .mapToObj(Integer::toString)
+        .collect(joining(","));
   }
-
+  
+  private String pointNotation (int position) {
+    
+    int duble =
+      !parentMoves.getDiceObj().areDouble() || position%2 != 1 ? 0 :
+        (int) IntStream.range(0,parentMoves.getNrOfLegalPartMoves()*2)
+          .filter(pos -> pos%2 == 1)
+          .filter(pos -> movePoints[pos] == movePoints[position])
+          .count();
+    String dubleStr = duble > 1 ? "("+duble+")" : "";
+    
+    return
+        movePoints[position] == 0 ||
+        movePoints[position] == 26
+      ? "/off"+dubleStr
+      : movePoints[position] == 25 ||
+        movePoints[position] == 51
+      ? "bar/"
+      : position%2 == 1 &&
+        hitPoints[position] != -1
+      ? "/"+movePoints[position]+"*"+dubleStr
+      : position%2 == 0
+      ? movePoints[position]+"/"
+      : movePoints[position]+dubleStr;
+  }
+  
+  public String moveAnnotation () {
+    
+    String dice = parentMoves.getDiceObj().getDiceInt()+": ";
+    List<String> partMoves = new ArrayList<>();
+    List<String> convertedPoints =
+      IntStream.range(0,parentMoves.getNrOfLegalPartMoves()*2)
+        .mapToObj(this::pointNotation).toList();
+  
+    for (int a = 0; a <= convertedPoints.size()/2; a+=2) {
+      partMoves.add(convertedPoints.get(a)+convertedPoints.get(a+1));
+    }
+    
+    return
+      dice+partMoves.stream().distinct().collect(joining(" "));
+  }
+  
+  public int getNrOfLegalPartMoves () {
+    
+    return
+      parentMoves.getNrOfLegalPartMoves();
+  }
+  
+  private int position () {
+    
+    return (int)
+      Arrays.stream(movePoints)
+        .filter(point -> point != -1)
+        .count();
+  }
+  
+  private int[] doubleDicePattern () {
+    
+    int[] dicePattern = new int[4];
+    int nrOfUsedDice =
+      (position()/2)+((movePoints.length/2)-getNrOfLegalPartMoves());
+    
+    if (nrOfUsedDice > 0) {
+      Arrays.fill(dicePattern,0,nrOfUsedDice,1);
+    }
+    return
+      dicePattern;
+  }
+  
+  private int usedDie () {
+    
+    return
+      getPlayerID() == 0
+        ? movePoints[0] - movePoints[1]
+        : (movePoints[0] - movePoints[1])*-1;
+  }
+  
+  private int diePosOf(int die) {
+    
+    return
+      getDice()[0] == die ? 0 : 1;
+  }
+  
+  private int[] regularDicePattern () {
+    
+    int[] dicePattern = new int[2];
+    
+    if (position() == getNrOfLegalPartMoves()*2) {
+      Arrays.fill(dicePattern,1);
+    } else if (position() < 2 && getNrOfLegalPartMoves() == 1) {
+      dicePattern[diePosOf(usedDie()) == 0 ? 1 : 0] = 1;
+    } else if (position() > 1) {
+      dicePattern[diePosOf(usedDie())] = 1;
+    }
+    return
+      dicePattern;
+  }
+  
+  public int[] dicePattern () {
+    
+    return
+      parentMoves.getDiceObj().areDouble()
+        ? doubleDicePattern()
+        : regularDicePattern();
+  }
+  
   public void printMovePoints () {
 
-    System.out.print("[");
-    for (int mp : movePoints) {
-      System.out.print(mp+",");
-    }
-    System.out.print("]");
+    System.out.println("["+getMovePointsString()+"]");
   }
-
-  public void printDice () {
-
-    System.out.print("[");
-    for (int d : parentMoves.getDice()) {
-      System.out.print(d+",");
-    }
-    System.out.print("]");
-  }
-
+  
 }

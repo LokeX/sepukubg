@@ -121,21 +121,23 @@ public class Layout {
     if (playerID == 1) {
       flipLayout();
       if (pID == 1) {
-        playerPoints = Arrays
-          .copyOfRange(point,point.length/2,point.length);
+        playerPoints = Arrays.copyOfRange(
+          point,point.length/2,point.length
+        );
       } else {
-        playerPoints = Arrays
-          .copyOfRange(point,0,point.length/2);
+        playerPoints = Arrays.copyOfRange(
+          point,0,point.length/2
+        );
       }
       flipLayout();
+    } else if (pID == 1) {
+      playerPoints = Arrays.copyOfRange(
+        point,point.length/2,point.length
+      );
     } else {
-      if (pID == 1) {
-        playerPoints = Arrays
-          .copyOfRange(point,point.length/2,point.length);
-      } else {
-        playerPoints = Arrays
-          .copyOfRange(point,0,point.length/2);
-      }
+      playerPoints = Arrays.copyOfRange(
+        point,0,point.length/2
+      );
     }
     return
       playerPoints;

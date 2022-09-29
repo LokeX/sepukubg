@@ -106,6 +106,14 @@ public class Dice {
     }
     return this;
   }
+  
+  public int getDiceInt () {
+    
+    return
+      areDouble()
+      ? dice[0]
+      : Integer.parseInt(dice[0]+""+ dice[1]);
+  }
 
   public boolean areDouble () {
 

@@ -56,14 +56,6 @@ public class MoveOutput {
       layout;
   }
 
-  private Layout playerAdjustedLayout (Layout layout) {
-
-    return
-      layout.getPlayerID() == 0
-        ? layout
-        : layout.getFlippedLayout();
-  }
-
   public Layout getMovePointLayout () {
 
     return

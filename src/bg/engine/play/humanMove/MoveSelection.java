@@ -241,56 +241,28 @@ public class MoveSelection extends Moves {
       : -1;
   }
   
-  private int[] doubleDicePattern () {
-
-    int[] dicePattern = new int[4];
-    int nrOfUsedDice =
-      (position()/2)+((movePoints.length/2)-getNrOfLegalPartMoves());
-
-    if (nrOfUsedDice > 0) {
-      Arrays.fill(dicePattern,0,nrOfUsedDice,1);
-    }
+  private int[] noUsedDicePattern () {
+    
+    int[] pattern = getDice().clone();
+    
+    Arrays.fill(pattern,0);
     return
-      dicePattern;
-  }
-
-  private int usedDie () {
-
-    return
-      getPlayerID() == 0
-      ? movePoints[0] - movePoints[1]
-      : (movePoints[0] - movePoints[1])*-1;
-  }
-
-  private int diePosOf(int die) {
-
-    return
-      getDice()[0] == die ? 0 : 1;
-  }
-
-  private int[] regularDicePattern () {
-
-    int[] dicePattern = new int[2];
-
-    if (endOfInput()) {
-      Arrays.fill(dicePattern,1);
-    } else if (position() < 2 && getNrOfLegalPartMoves() == 1) {
-      dicePattern[diePosOf(usedDie()) == 0 ? 1 : 0] = 1;
-    } else if (position() > 1) {
-      dicePattern[diePosOf(usedDie())] = 1;
-    }
-    return
-      dicePattern;
+      pattern;
   }
 
   public int[] dicePattern () {
 
     return
-      getDiceObj().areDouble()
-      ? doubleDicePattern()
-      : regularDicePattern();
+      position() == 0
+      ? noUsedDicePattern()
+      : matchingMoves()
+        .findAny()
+        .get()
+        .getMovePointLayouts()
+        .get(position()-1)
+        .dicePattern();
   }
-
+  
   private Stream<Integer> projectMovePointsTo (int terminalPosition) {
 
     List<Integer> validEndingPoints = new ArrayList<>();

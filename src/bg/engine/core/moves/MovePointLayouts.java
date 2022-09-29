@@ -37,7 +37,9 @@ public class MovePointLayouts extends MoveLayout {
     if (originalMovePoints[position] != -1) {
       movePoints[position] = originalMovePoints[position];
       paintPosition();
-      movePointLayouts.add(new MoveLayout(this));
+      MoveLayout moveLayout = new MoveLayout(this);
+      moveLayout.printMovePoints();
+      movePointLayouts.add(moveLayout);
       if (++position < movePoints.length) {
         generateListEntries();
       }
@@ -48,9 +50,7 @@ public class MovePointLayouts extends MoveLayout {
 
     if (movePointLayouts == null) {
       movePointLayouts = new ArrayList<>();
-//      movePointLayouts.add(new MoveLayout(parentMoves.getParentMoveLayout()));
       setPoint(parentMoves.getParentMoveLayout().getPoint());
-//      movePointLayouts.add(parentMoves.getParentMoveLayout());
       generateListEntries();
     }
     return movePointLayouts;

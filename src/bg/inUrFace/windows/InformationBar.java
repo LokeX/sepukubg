@@ -18,7 +18,7 @@ public class InformationBar extends JLabel implements Timeable {
     setBackground(new Color(20,20,20));
     setForeground(new Color(250, 173, 7));
     setBorder(new EmptyBorder(0,10,0,0));
-    setFont(new Font("Arial", Font.BOLD, 18));
+    setFont(new Font("Arial", Font.BOLD, 16));
     timedTasks.addTimedTask(this);
   }
 
