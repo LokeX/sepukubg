@@ -122,16 +122,6 @@ public class MoveSelection extends Moves {
       && position % 2 == 1;
   }
 
-  private int endingPointPosition (int endingPoint) {
-
-    return
-      range(position(), movePoints.length)
-        .filter(this::isEndingPoint)
-        .filter(position -> endingPointIsInPosition(endingPoint, position))
-        .findAny()
-        .orElse(-1);
-  }
-
   public boolean positionIsEndingPoint () {
 
     return
@@ -284,13 +274,38 @@ public class MoveSelection extends Moves {
     return
       validEndingPoints.stream().distinct();
   }
-
+  
+  private int endingPointPosition (int endingPoint) {
+    
+    return
+      range(position(), movePoints.length)
+        .filter(this::isEndingPoint)
+        .filter(position -> endingPointIsInPosition(endingPoint, position))
+        .findAny()
+        .orElse(-1);
+  }
+  
+  private int doubleEndingPointPosition (int endingPoint) {
+    
+    int pointDistance;
+    
+    pointDistance = movePoints[position()-1] - endingPoint;
+    pointDistance *= pointDistance < 0 ? -1 : 1;
+    
+    return
+      ((pointDistance/getDice()[0])*2)-1;
+  }
+  
   private void setEndingPoint () {
 
     int endingPointPosition = endingPointPosition(inputPoint);
 
     if (endingPointPosition > position()) {
-      projectMovePointsTo(endingPointPosition);
+      if (getDiceObj().areDouble()) {
+        projectMovePointsTo(doubleEndingPointPosition(inputPoint));
+      } else {
+        projectMovePointsTo(endingPointPosition);
+      }
     } else {
       movePoints[endingPointPosition] = inputPoint;
     }

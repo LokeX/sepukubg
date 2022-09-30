@@ -79,13 +79,19 @@ public class PlayState {
       matchPlay()
         .getHumanMove();
   }
+  
+  private boolean illegalMove () {
+    
+    return
+      matchPlay().getSelectedMove().isIllegal();
+  }
 
   private boolean humanInputComplete () {
 
     return
-      humanMove().inputReady()
-      &&
-      matchPlay()
+      illegalMove()
+      || humanMove().inputReady()
+      && matchPlay()
         .getHumanMove()
         .getMoveSelection()
         .endOfInput();

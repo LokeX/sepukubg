@@ -35,6 +35,7 @@ public class Turn extends Moves {
 
   public Turn setPlayedMoveNr (int moveNr) {
 
+    System.out.println("playedMoveNr set to: "+moveNr);
     playedMoveNr = moveNr;
     return this;
   }

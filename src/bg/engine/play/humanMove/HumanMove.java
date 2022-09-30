@@ -52,9 +52,11 @@ public class HumanMove {
   
   public void setPlayedMoveToSelectedMove() {
 
-    gameState()
-      .selectedTurn()
-      .setPlayedMoveNr(getSelectedMoveNr());
+    if (getSelectedMoveNr() != -1) {
+      gameState()
+        .selectedTurn()
+        .setPlayedMoveNr(getSelectedMoveNr());
+    }
   }
 
   private void setMovePoints () {
@@ -72,12 +74,12 @@ public class HumanMove {
 
   public void playMove () {
 
-    if (hasSelectedMove()) {
+    if (hasSelectedMove() && getSelectedMoveNr() != -1) {
+      System.out.println("Played selected move: "+ matchPlay.getGameState().getMoveNr());
       setSelectedMove();
       setPlayedMoveToSelectedMove();
       setMovePoints();
       endMove();
-      System.out.println("Played selected move: "+ matchPlay.getGameState().getMoveNr());
     }
   }
 
@@ -149,13 +151,15 @@ public class HumanMove {
 
   public void startMove () {
 
-    startMoveSelection();
-    moveSelection.printMovePoints();
-    if (moveSelection.noLegalMove()) {
+    if (matchPlay.getSelectedMove().isIllegal()) {
       moveSelection = null;
-    } else if (autoSelectPartMoves()){
-      autoSelectPoints();
-      outputMoveLayouts();
+      matchPlay.endTurn();
+    } else {
+      startMoveSelection();
+      if (autoSelectPartMoves()) {
+        autoSelectPoints();
+        outputMoveLayouts();
+      }
     }
   }
 

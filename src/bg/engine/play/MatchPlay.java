@@ -178,9 +178,11 @@ public class MatchPlay {
   public int[] getUsedDicePattern () {
 
     return
-      playerIsHuman() && humanMove.getMoveSelection() != null
-      ? humanMove.getMoveSelection().dicePattern()
-      : computerUsedDicePattern();
+      playerIsHuman()
+      && humanMove.getMoveSelection() != null
+      && !getSelectedMove().isIllegal()
+        ? humanMove.getMoveSelection().dicePattern()
+        : computerUsedDicePattern();
   }
 
   private int[] computerUsedDicePattern () {
@@ -241,7 +243,7 @@ public class MatchPlay {
   public void endTurn () {
 
     System.out.println("Ending turn");
-    if (playerIsHuman()) {
+    if (playerIsHuman() && !getSelectedMove().isIllegal()) {
       humanMove.setPlayedMoveToSelectedMove();
     }
     if (gameOver()) {
@@ -297,7 +299,8 @@ public class MatchPlay {
 
   public void newTurn() {
 
-    if (humanMove.inputReady()) {
+    if (humanMove.inputReady() && !getSelectedMove().isIllegal()) {
+      System.out.println("Playing HumanMove");
       humanMove.playMove();
     }
     gameState.newTurn();
