@@ -93,30 +93,59 @@ public class LayoutPainter implements Paintable {
     for (int player = 0; player < 2; player++) {
       g.setColor(colors[player]);
       for (int a = 0; a < (Math.min(playerPoints[player][25], 6)); a++) {
-        g.fillOval(
-          d.leftPlayAreaOffsetX+d.leftPlayAreaWidth+5,
-          d.frameOffsetY+(int)(d.boardInnerHeight/2.5)-(a*d.chequerSize),
-          d.chequerSize,
-          d.chequerSize
-        );
-        if (a == 0 && playerPoints[player][25] > 6) {
-          g.setColor(Color.black);
-          g.drawString(
-            Integer.toString(playerPoints[player][25]),
-            (int)((d.leftPlayAreaOffsetX+d.leftPlayAreaWidth+(d.barWidth/2))*0.989),
-            (int)((d.frameOffsetY+(d.boardInnerHeight/2))*0.945)
+        if (player == 0) {
+          g.fillOval(
+            d.leftPlayAreaOffsetX+d.leftPlayAreaWidth+5,
+            d.frameOffsetY+(int)(d.boardInnerHeight/2.5)-(a*d.chequerSize),
+            d.chequerSize,
+            d.chequerSize
           );
-          g.setColor(Color.yellow);
+          if (a == 0 && playerPoints[player][25] > 6) {
+            g.setColor(Color.black);
+            g.drawString(
+              Integer.toString(playerPoints[player][25]),
+              (int)((d.leftPlayAreaOffsetX+d.leftPlayAreaWidth+(d.barWidth/2))*0.989),
+              (int)((d.frameOffsetY+(d.boardInnerHeight/2))*0.945)
+            );
+            g.setColor(Color.yellow);
+          }
+        } else {
+          g.fillOval(
+            d.leftPlayAreaOffsetX+d.leftPlayAreaWidth+5,
+            d.frameOffsetY+(d.boardInnerHeight/2) + (a * d.chequerSize),
+            d.chequerSize,
+            d.chequerSize
+          );
+          if (a == 0 && playerPoints[player][25] > 6) {
+            g.setColor(Color.black);
+            g.drawString(
+              Integer.toString(playerPoints[player][25]),
+              (int)((d.leftPlayAreaOffsetX+d.leftPlayAreaWidth + (d.barWidth/2))*0.989),
+              (int)(((d.frameOffsetY+(d.boardInnerHeight/2)))*1.09)
+            );
+            g.setColor(Color.red);
+          }
         }
       }
       for (int a = 0; a < playerPoints[player][0]; a++) {
-        g.fill3DRect(
-          d.bottomRightBearOffOffsetX + 3,
-          d.bottomRightBearOffOffsetY + (a * (int) (11.3 * d.factor)),
-          (int) (30.0 * d.factor),
-          (int) (9 * d.factor), true
-        );
+        if (player == 0) {
+          g.fill3DRect(
+            d.bottomRightBearOffOffsetX + 3,
+            d.bottomRightBearOffOffsetY + (a * (int) (11.3 * d.factor)),
+            (int) (30.0 * d.factor),
+            (int) (9 * d.factor), true
+          );
+        } else {
+          g.fill3DRect(
+            d.topRightBearOffOffsetX +3,
+            d.topRightBearOffOffsetY + (a * (int)(11.3*d.factor)),
+            (int)(30.0*d.factor),
+            (int)(9.0*d.factor),
+            true
+          );
+        }
       }
+  
     }
   }
 

@@ -114,6 +114,14 @@ public class Layout {
       getPlayerPoints(1);
   }
   
+  private void switchBarAndBearOff (int[] playerPoints) {
+    
+    int temp = playerPoints[0];
+    
+    playerPoints[0] = playerPoints[25];
+    playerPoints[25] = temp;
+  }
+  
   public int[] getPlayerPoints (int pID) {
     
     int[] playerPoints;
@@ -124,6 +132,7 @@ public class Layout {
         playerPoints = Arrays.copyOfRange(
           point,point.length/2,point.length
         );
+        switchBarAndBearOff(playerPoints);
       } else {
         playerPoints = Arrays.copyOfRange(
           point,0,point.length/2
@@ -134,6 +143,7 @@ public class Layout {
       playerPoints = Arrays.copyOfRange(
         point,point.length/2,point.length
       );
+      switchBarAndBearOff(playerPoints);
     } else {
       playerPoints = Arrays.copyOfRange(
         point,0,point.length/2
