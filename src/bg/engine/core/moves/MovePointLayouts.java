@@ -37,9 +37,7 @@ public class MovePointLayouts extends MoveLayout {
     if (originalMovePoints[position] != -1) {
       movePoints[position] = originalMovePoints[position];
       paintPosition();
-      MoveLayout moveLayout = new MoveLayout(this);
-      moveLayout.printMovePoints();
-      movePointLayouts.add(moveLayout);
+      movePointLayouts.add(new MoveLayout(this));
       if (++position < movePoints.length) {
         generateListEntries();
       }

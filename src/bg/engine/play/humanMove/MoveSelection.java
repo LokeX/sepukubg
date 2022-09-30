@@ -132,8 +132,7 @@ public class MoveSelection extends Moves {
 
     return
       positionIsEndingPoint()
-      && validEndingPoints()
-        .anyMatch(point -> point == endingPoint);
+      && validEndingPoints().anyMatch(point -> point == endingPoint);
   }
 
   private boolean isStartingPoint (int position) {
@@ -275,37 +274,34 @@ public class MoveSelection extends Moves {
       validEndingPoints.stream().distinct();
   }
   
-  private int inputPosition (int endingPoint) {
+  private int inputPosition () {
     
     return
       range(position(), movePoints.length)
         .filter(this::isEndingPoint)
-        .filter(position -> endingPointIsInPosition(endingPoint, position))
+        .filter(position -> endingPointIsInPosition(inputPoint, position))
         .findAny()
         .orElse(-1);
   }
   
-  private int doublesInputPosition(int endingPoint) {
+  private int doubleDiceInputPosition() {
     
-    int pointDistance;
+    int startingPointPosition = position()-1;
+    int pointDistance = movePoints[startingPointPosition] - inputPoint;
     
-    pointDistance = movePoints[position()-1] - endingPoint;
     pointDistance *= pointDistance < 0 ? -1 : 1;
-    
     return
-      ((pointDistance/getDice()[0])*2)-1;
+      startingPointPosition+((pointDistance/getDice()[0])*2)-1;
   }
   
   private void setEndingPoint () {
 
-    int inputPosition = inputPosition(inputPoint);
+    int inputPosition = inputPosition();
 
-    if (inputPosition > position()) {
-      if (getDiceObj().areDouble()) {
-        projectMovePointsTo(doublesInputPosition (inputPoint));
-      } else {
-        projectMovePointsTo(inputPosition);
-      }
+    if (getDiceObj().areDouble()) {
+      projectMovePointsTo(doubleDiceInputPosition());
+    } else if (inputPosition > position()) {
+      projectMovePointsTo(inputPosition);
     } else {
       movePoints[inputPosition] = inputPoint;
     }
@@ -345,14 +341,21 @@ public class MoveSelection extends Moves {
 
     return !noLegalMove();
   }
+  
+  private boolean legalInputPoint() {
+    
+    return
+      inputPointIsLegalStartingPoint(position())
+      || isLegalEndingPoint(inputPoint);
+  }
 
   public void inputPoint (int point) {
 
     if (moveIsLegal()) {
       inputPoint = point;
-      if (point == -1) {
+      if (point == -1 && position() > 0) {
         pointBackSpace();
-      } else if (!endOfInput()) {
+      } else if (!endOfInput() && legalInputPoint()) {
         setInputPoint();
       }
     }

@@ -229,15 +229,14 @@ public class MoveLayout extends Layout {
       : movePoints[position]+dubleStr;
   }
   
-  private List<String> listPartMoves (List<String> convertedPoints) {
+  private List<String> listPartMoves (List<String> notedPoints) {
     
     List<String> partMoves = new ArrayList<>();
     
-    if (!isIllegal() && convertedPoints.size() >= 2) {
-      for (int a = 0; a <= convertedPoints.size()/2; a+=2) {
-        partMoves.add(convertedPoints.get(a)+convertedPoints.get(a+1));
-      }
+    for (int a = 0; a < notedPoints.size()/2; a+=2) {
+      partMoves.add(notedPoints.get(a)+notedPoints.get(a+1));
     }
+
     return
       partMoves;
   }
