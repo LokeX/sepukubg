@@ -229,20 +229,42 @@ public class MoveLayout extends Layout {
       : movePoints[position]+dubleStr;
   }
   
-  public String moveAnnotation () {
+  private List<String> listPartMoves (List<String> convertedPoints) {
+    
+    List<String> partMoves = new ArrayList<>();
+    
+    if (!isIllegal() && convertedPoints.size() >= 2) {
+      for (int a = 0; a <= convertedPoints.size()/2; a+=2) {
+        partMoves.add(convertedPoints.get(a)+convertedPoints.get(a+1));
+      }
+    }
+    return
+      partMoves;
+  }
+  
+  private String partMoves (List<String> partMovesList) {
+    
+    return partMovesList
+      .stream()
+      .distinct()
+      .collect(
+        joining(" ")
+      );
+  }
+  
+  public String notation () {
     
     String dice = parentMoves.getDiceObj().getDiceInt()+": ";
-    List<String> partMoves = new ArrayList<>();
-    List<String> convertedPoints =
-      IntStream.range(0,parentMoves.getNrOfLegalPartMoves()*2)
-        .mapToObj(this::pointNotation).toList();
-  
-    for (int a = 0; a <= convertedPoints.size()/2; a+=2) {
-      partMoves.add(convertedPoints.get(a)+convertedPoints.get(a+1));
-    }
-    
+    List<String> partMovesList = listPartMoves(
+      IntStream
+        .range(0,parentMoves.getNrOfLegalPartMoves()*2)
+        .mapToObj(this::pointNotation)
+        .toList()
+    );
     return
-      dice+partMoves.stream().distinct().collect(joining(" "));
+      partMovesList.isEmpty()
+      ? dice+"N/A"
+      : dice+partMoves(partMovesList);
   }
   
   public int getNrOfLegalPartMoves () {

@@ -75,7 +75,6 @@ public class HumanMove {
   public void playMove () {
 
     if (hasSelectedMove() && getSelectedMoveNr() != -1) {
-      System.out.println("Played selected move: "+ matchPlay.getGameState().getMoveNr());
       setSelectedMove();
       setPlayedMoveToSelectedMove();
       setMovePoints();
@@ -152,7 +151,7 @@ public class HumanMove {
   public void startMove () {
 
     if (matchPlay.getSelectedMove().isIllegal()) {
-      moveSelection = null;
+      endMove();
       matchPlay.endTurn();
     } else {
       startMoveSelection();

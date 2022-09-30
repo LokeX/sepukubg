@@ -275,7 +275,7 @@ public class MoveSelection extends Moves {
       validEndingPoints.stream().distinct();
   }
   
-  private int endingPointPosition (int endingPoint) {
+  private int inputPosition (int endingPoint) {
     
     return
       range(position(), movePoints.length)
@@ -285,7 +285,7 @@ public class MoveSelection extends Moves {
         .orElse(-1);
   }
   
-  private int doubleEndingPointPosition (int endingPoint) {
+  private int doublesInputPosition(int endingPoint) {
     
     int pointDistance;
     
@@ -298,16 +298,16 @@ public class MoveSelection extends Moves {
   
   private void setEndingPoint () {
 
-    int endingPointPosition = endingPointPosition(inputPoint);
+    int inputPosition = inputPosition(inputPoint);
 
-    if (endingPointPosition > position()) {
+    if (inputPosition > position()) {
       if (getDiceObj().areDouble()) {
-        projectMovePointsTo(doubleEndingPointPosition(inputPoint));
+        projectMovePointsTo(doublesInputPosition (inputPoint));
       } else {
-        projectMovePointsTo(endingPointPosition);
+        projectMovePointsTo(inputPosition);
       }
     } else {
-      movePoints[endingPointPosition] = inputPoint;
+      movePoints[inputPosition] = inputPoint;
     }
   }
   

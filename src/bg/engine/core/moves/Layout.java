@@ -268,12 +268,13 @@ public class Layout {
     Layout layout = new Layout(this);
     int[] dice;
 
-    if (layout.playerID == 2) {
       dice = diceT.startRoll().getDice();
+    if (layout.playerID == 2) {
       layout.playerID = dice[0] > dice[1] ? 0 : 1;
-    } else {
-      dice = diceT.rollDice().getDice();
     }
+//    else {
+//      dice = diceT.rollDice().getDice();
+//    }
     if (layout.playerID == 1) {
       layout.flipLayout();
     }
