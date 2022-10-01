@@ -88,7 +88,7 @@ public class MoveSelection extends Moves {
   private Stream<Integer> endingPointsIn (int position) {
 
     return
-      getDiceObj().areDouble() || position() > 1
+      getDiceObj().areDouble() || position == 3
       ? pointsIn(position)
       : pointsIn(position)
           .filter(endingPoint ->
