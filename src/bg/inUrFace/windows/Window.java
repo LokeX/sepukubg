@@ -88,8 +88,8 @@ public class Window extends JFrame {
     public void componentResized (ComponentEvent e) {
 
       canvas.getDimensions().recalculateDimensions();
-      if (mouse != null && mouse.scenarioEditor != null) {
-        mouse.scenarioEditor.generateClickPoints();
+      if (mouse != null && mouse.scenarioEditPainter != null) {
+        mouse.scenarioEditPainter.generateClickPoints();
       }
       if (!sepuku.getSettings().getWinMaximized()) {
         sepuku.getSettings().setCanvasWidth(canvas.getWidth());

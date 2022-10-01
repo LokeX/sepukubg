@@ -1,7 +1,8 @@
-package bg.inUrFace.canvas;
+package bg.inUrFace.canvas.painters;
 
 import bg.Main;
 import bg.engine.core.moves.Layout;
+import bg.inUrFace.canvas.BoardDim;
 import bg.util.Batch;
 
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.MouseEvent;
 
 import static bg.Main.*;
 
-public class ScenarioEditor extends MouseAdapter implements Paintable {
+public class ScenarioEditPainter extends MouseAdapter implements Paintable {
 
   private Batch[] clickPoints = new Batch[28];
   private int player = 0;
@@ -18,7 +19,7 @@ public class ScenarioEditor extends MouseAdapter implements Paintable {
   @Override
   public void paint(Graphics g) {
 
-    if (mouse != null && mouse.scenarioEditor != null && isEditing()) {
+    if (mouse != null && mouse.scenarioEditPainter != null && isEditing()) {
       generateClickPoints();
       for (Batch clickPoint : clickPoints) {
         if (clickPoint != null) {

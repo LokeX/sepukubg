@@ -1,9 +1,11 @@
-package bg.inUrFace.canvas;
+package bg.inUrFace.canvas.painters;
 
 import static bg.Main.getDisplayedLayout;
 import static bg.Main.win;
 
 import bg.engine.core.moves.Layout;
+import bg.inUrFace.canvas.BoardDim;
+
 import java.awt.*;
 
 public class LayoutPainter implements Paintable {

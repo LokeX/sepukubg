@@ -1,6 +1,7 @@
-package bg.inUrFace.canvas;
+package bg.inUrFace.canvas.painters;
 
 import bg.engine.core.Cube;
+import bg.inUrFace.canvas.BoardDim;
 import bg.util.Batch;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ import java.awt.event.MouseEvent;
 import static bg.Main.sepuku;
 import static bg.Main.win;
 
-public class DoublingCube extends MouseAdapter implements Paintable {
+public class CubePainter extends MouseAdapter implements Paintable {
 
   ImageIcon cubeScab = new ImageIcon(this.getClass().getResource("cube/double.gif"));
   ImageIcon cubeIcon;

@@ -146,7 +146,7 @@ public class Sepuku {
         .equals("New match");
   }
   
-  public void newMatch () {
+  public void startNewMatch() {
     
     matchPlay = new MatchPlay(this);
     getScenarios().setEditing(true);
@@ -158,13 +158,9 @@ public class Sepuku {
   private void nextPlay () {
     
     if (isNewMatch()) {
-      newMatch();
-    } else if (!gameIsPlaying() || gameOver()) {
-      matchPlay.startGame();
-    } else if (!matchPlay.cubeWasRejected()){
-      matchPlay.newTurn();
+      startNewMatch();
     } else {
-      matchPlay.endTurn();
+      matchPlay.nextMatchPlay();
     }
   }
   

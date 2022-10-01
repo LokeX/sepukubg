@@ -6,8 +6,8 @@ import bg.engine.api.Sepuku;
 import bg.engine.core.moves.Layout;
 import bg.engine.core.trainer.Trainer;
 import bg.inUrFace.canvas.Canvas;
-import bg.inUrFace.canvas.BonusPainter;
-import bg.inUrFace.canvas.MouseListeners;
+import bg.inUrFace.canvas.painters.BonusPainter;
+import bg.inUrFace.canvas.listeners.MouseListeners;
 import bg.util.time.TimedTasks;
 import bg.inUrFace.windows.Window;
 

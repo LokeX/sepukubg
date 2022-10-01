@@ -1,5 +1,6 @@
-package bg.inUrFace.canvas;
+package bg.inUrFace.canvas.painters;
 
+import bg.inUrFace.canvas.BoardDim;
 import bg.util.TextBatch;
 
 import java.awt.*;

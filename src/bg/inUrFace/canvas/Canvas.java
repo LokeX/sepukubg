@@ -1,6 +1,8 @@
 package bg.inUrFace.canvas;
 
 import bg.engine.core.moves.Layout;
+import bg.inUrFace.canvas.painters.Painters;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,7 +12,7 @@ public class Canvas extends JPanel {
 
   private Layout displayedLayout = sepuku.getScenarios().getSelectedScenariosLayout();
   private BoardDim dimensions = new BoardDim();
-  private PaintJobs paintJobs = new PaintJobs();
+  private Painters painters = new Painters();
 
   public Canvas() {
 
@@ -26,7 +28,7 @@ public class Canvas extends JPanel {
   protected void paintComponent(Graphics g) {
 
     super.paintComponent(g);
-    paintJobs.paint(g);
+    painters.paint(g);
   }
 
   public BoardDim getDimensions() {
@@ -44,9 +46,9 @@ public class Canvas extends JPanel {
     return displayedLayout;
   }
 
-  public PaintJobs getPaintJobs () {
+  public Painters getPaintJobs () {
 
-    return paintJobs;
+    return painters;
   }
 
 }

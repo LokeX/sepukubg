@@ -1,7 +1,11 @@
-package bg.inUrFace.canvas;
+package bg.inUrFace.canvas.listeners;
 
 import bg.Main;
-import bg.inUrFace.canvas.move.MoveInputListener;
+import bg.inUrFace.canvas.BoardDim;
+import bg.inUrFace.canvas.painters.BonusPainter;
+import bg.inUrFace.canvas.painters.CubePainter;
+import bg.inUrFace.canvas.painters.PlayButtonPainter;
+import bg.inUrFace.canvas.painters.ScenarioEditPainter;
 import bg.util.Batch;
 
 import java.awt.event.MouseAdapter;
@@ -17,9 +21,9 @@ import static bg.util.Reflection.getFieldsList;
 public class MouseListeners extends MouseAdapter {
 
   public MoveInputListener moveInputListener = new MoveInputListener();
-  public ActionButton actionButton = getCanvas().getPaintJobs().actionButton;
-  public ScenarioEditor scenarioEditor = getCanvas().getPaintJobs().scenarioEditor;
-  public DoublingCube doublingCube = getCanvas().getPaintJobs().doublingCube;
+  public PlayButtonPainter playButtonPainter = getCanvas().getPaintJobs().actionButton;
+  public ScenarioEditPainter scenarioEditPainter = getCanvas().getPaintJobs().scenarioEditPainter;
+  public CubePainter cubePainter = getCanvas().getPaintJobs().cubePainter;
   public BonusPainter bonusPainter = getCanvas().getPaintJobs().bonusPainter;
   private List<MouseListener> listeners = new ArrayList<>();
 
@@ -43,7 +47,6 @@ public class MouseListeners extends MouseAdapter {
   public void mouseClicked (MouseEvent e) {
 
     listeners.forEach(listener -> listener.mouseClicked(e));
-    getCanvas().repaint();
   }
   
   public Batch[] getRegularClickPoints () {

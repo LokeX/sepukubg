@@ -1,4 +1,4 @@
-package bg.inUrFace.canvas.move;
+package bg.inUrFace.canvas.listeners;
 
 import bg.inUrFace.canvas.BoardDim;
 import bg.util.Batch;

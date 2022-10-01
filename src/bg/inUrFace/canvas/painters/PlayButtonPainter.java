@@ -1,18 +1,19 @@
-package bg.inUrFace.canvas;
+package bg.inUrFace.canvas.painters;
 
 import bg.Main;
+import bg.inUrFace.canvas.BoardDim;
 import bg.util.TextBatch;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
 import static bg.Main.*;
 
-public class ActionButton extends TextBatch implements Paintable {
+public class PlayButtonPainter extends TextBatch implements Paintable {
 
   private Color readyBackgroundColor = new Color(255, 0, 255, 75);
   private Color notReadyBackgroundColor = new Color(108,13,13);
 
-  public ActionButton() {
+  public PlayButtonPainter() {
 
     super(470, 250, 125, 65);
     setMargins(25, 25, 7, 5);

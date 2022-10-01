@@ -1,4 +1,4 @@
-package bg.inUrFace.canvas;
+package bg.inUrFace.canvas.painters;
 
 import java.awt.Graphics;
 

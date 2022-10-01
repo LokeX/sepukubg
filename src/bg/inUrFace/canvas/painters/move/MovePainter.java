@@ -1,7 +1,7 @@
-package bg.inUrFace.canvas.move;
+package bg.inUrFace.canvas.painters.move;
 
 import bg.Main;
-import bg.inUrFace.canvas.Paintable;
+import bg.inUrFace.canvas.painters.Paintable;
 
 import java.awt.*;
 

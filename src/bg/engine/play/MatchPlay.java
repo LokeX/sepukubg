@@ -297,7 +297,7 @@ public class MatchPlay {
     }
   }
 
-  public void newTurn() {
+  public void startNewTurn() {
 
     if (humanMove.inputReady() && !getSelectedMove().isIllegal()) {
       System.out.println("Playing HumanMove");
@@ -316,7 +316,7 @@ public class MatchPlay {
     scenario.setUseBlackBot(settings().getBlackBotOpponent());
   }
   
-  public void startGame() {
+  public void startNewGame() {
 
     System.out.println("Starting game");
     if (gameIsPlaying()) {
@@ -326,7 +326,18 @@ public class MatchPlay {
     getMoveOutput().setOutputLayout(scenario);
     sepuku.getScenarios().setEditing(false);
     gameState = new GameState(this);
-    newTurn();
+    startNewTurn();
+  }
+  
+  public void nextMatchPlay () {
+  
+    if (!gameIsPlaying() || gameOver()) {
+      startNewGame();
+    } else if (!cubeWasRejected()){
+      startNewTurn();
+    } else {
+      endTurn();
+    }
   }
   
 }

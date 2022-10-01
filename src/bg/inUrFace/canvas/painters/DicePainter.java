@@ -1,4 +1,6 @@
-package bg.inUrFace.canvas;
+package bg.inUrFace.canvas.painters;
+
+import bg.inUrFace.canvas.BoardDim;
 
 import static bg.Main.sepuku;
 import static bg.Main.win;
