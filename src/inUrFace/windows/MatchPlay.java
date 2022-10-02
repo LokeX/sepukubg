@@ -1,6 +1,6 @@
 package inUrFace.windows;
 
-import sepuku.App;
+import sepuku.WinApp;
 import engine.core.trainer.Trainer;
 import util.NumberUtil;
 
@@ -9,9 +9,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
 
-import static sepuku.App.timedTasks;
-import static sepuku.App.trainer;
-import static sepuku.App.win;
+import static sepuku.WinApp.timedTasks;
+import static sepuku.WinApp.trainer;
+import static sepuku.WinApp.win;
 import static util.Dialogs.confirmed;
 
 public class MatchPlay extends JFrame {
@@ -82,7 +82,7 @@ public class MatchPlay extends JFrame {
     initialReport.setText(
       Trainer.bots.get(Trainer.whiteBot).name()+" vs "+
       Trainer.bots.get(Trainer.blackBot).name()+"\n"+
-      App.trainer.getInitialReport()
+      WinApp.trainer.getInitialReport()
     );
   }
 

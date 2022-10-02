@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static sepuku.App.*;
+import static sepuku.WinApp.*;
 
 public class MoveInputListener extends MouseAdapter {
 
@@ -18,7 +18,7 @@ public class MoveInputListener extends MouseAdapter {
     Batch[] points = new Batch[26];
     Color pointsColor = new Color(56, 75, 174, 150);
 
-    if (playSepuku.getHumanMove().getPlayerID() == 1) {
+    if (sepukuPlay.getHumanMove().getPlayerID() == 1) {
       points[0] = new Batch(
         d.leftPlayAreaOffsetX+d.leftPlayAreaWidth,
         d.frameOffsetY+d.boardInnerHeight/2,
@@ -39,7 +39,7 @@ public class MoveInputListener extends MouseAdapter {
       points[a+1] = regularPoints[a];
       points[a+1].setBackgroundColor(pointsColor);
     }
-    if (playSepuku.getHumanMove().getPlayerID() == 1) {
+    if (sepukuPlay.getHumanMove().getPlayerID() == 1) {
       points[25] = new Batch(
         d.topRightBearOffOffsetX,
         d.topRightBearOffOffsetY,
@@ -87,7 +87,7 @@ public class MoveInputListener extends MouseAdapter {
   private void inputPoint (MouseEvent mouseEvent) {
 
     if (clickedPoint() != -1 || rightButtonClicked(mouseEvent)) {
-      playSepuku
+      sepukuPlay
         .getHumanMove()
         .pointClicked(
           rightButtonClicked(mouseEvent)
@@ -100,9 +100,9 @@ public class MoveInputListener extends MouseAdapter {
   private boolean humanIsMoving() {
 
     return
-      playSepuku != null
+      sepukuPlay != null
       &&
-      playSepuku
+      sepukuPlay
         .getHumanMove()
         .humanInputActive();
   }

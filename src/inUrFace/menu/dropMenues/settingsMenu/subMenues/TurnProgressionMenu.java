@@ -1,6 +1,6 @@
 package inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
@@ -12,12 +12,12 @@ public class TurnProgressionMenu extends JMenu {
   JRadioButtonMenuItem automateEndTurn =
     new JRadioButtonMenuItem(
       "Automatic",
-      playSepuku.getSettings().isAutomatedEndTurn()
+      sepukuPlay.getSettings().isAutomatedEndTurn()
     );
   JRadioButtonMenuItem manualEndTurn =
     new JRadioButtonMenuItem(
       "Manual",
-      !playSepuku.getSettings().isAutomatedEndTurn()
+      !sepukuPlay.getSettings().isAutomatedEndTurn()
     );
   ButtonGroup endTurnChoices = new ButtonGroup();
 
@@ -39,7 +39,7 @@ public class TurnProgressionMenu extends JMenu {
 
     add(automateEndTurn);
     automateEndTurn.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setAutomateEndTurn(true);
+        sepukuPlay.getSettings().setAutomateEndTurn(true);
     });
   }
 
@@ -47,7 +47,7 @@ public class TurnProgressionMenu extends JMenu {
 
     add(manualEndTurn);
     manualEndTurn.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setAutomateEndTurn(false);
+        sepukuPlay.getSettings().setAutomateEndTurn(false);
     });
   }
 

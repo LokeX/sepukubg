@@ -1,32 +1,32 @@
 package inUrFace.canvas.painters.move;
 
-import sepuku.App;
+import sepuku.WinApp;
 import inUrFace.canvas.painters.Paintable;
 
 import java.awt.*;
 
-import static sepuku.App.playSepuku;
-import static sepuku.App.win;
+import static sepuku.WinApp.sepukuPlay;
+import static sepuku.WinApp.win;
 
 public class MovePainter implements Paintable {
     
   private boolean hasMoveOutput () {
   
     return
-      playSepuku != null
-        && playSepuku.getMoveOutput() != null
-        && playSepuku.getMoveOutput().hasOutput();
+      sepukuPlay != null
+        && sepukuPlay.getMoveOutput() != null
+        && sepukuPlay.getMoveOutput().hasOutput();
   }
   
   public void paint (Graphics g) {
     
     if (hasMoveOutput()) {
       win.canvas.setDisplayedLayout(
-        playSepuku
+        sepukuPlay
           .getMoveOutput()
           .getMovePointLayout()
       );
-      App.sound.playSoundEffect(
+      WinApp.sound.playSoundEffect(
         "Blop-Mark_DiAngelo"
       );
     }

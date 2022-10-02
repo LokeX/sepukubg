@@ -1,7 +1,7 @@
 package engine.play;
 
 import engine.api.Settings;
-import engine.api.PlaySepuku;
+import engine.api.SepukuPlay;
 import engine.core.Turn;
 import engine.core.moves.EvaluatedMove;
 import engine.play.humanMove.HumanMove;
@@ -14,12 +14,12 @@ import java.util.List;
 
 import static util.ThreadUtil.runWhenNotified;
 
-public class PlayMatch {
+public class MatchPlay {
 
   private GameInfo gameInfo;
   private ScoreBoard scoreBoard;
   private MatchCube matchCube;
-  private PlaySepuku playSepuku;
+  private SepukuPlay sepukuPlay;
   private Layout scenario;
   private MatchBoard matchBoard;
   private GameState gameState;
@@ -28,9 +28,9 @@ public class PlayMatch {
   private MoveOutput moveOutput;
   private boolean autoCompleteGame = false;
 
-  public PlayMatch(PlaySepuku playSepuku) {
+  public MatchPlay(SepukuPlay sepukuPlay) {
 
-    this.playSepuku = playSepuku;
+    this.sepukuPlay = sepukuPlay;
     matchCube = new MatchCube(this);
     matchBoard = new MatchBoard(settings().getScoreToWin());
     scoreBoard = new ScoreBoard(this);
@@ -48,7 +48,7 @@ public class PlayMatch {
   public Settings settings () {
     
     return
-      playSepuku.getSettings();
+      sepukuPlay.getSettings();
   }
 
   public MoveOutput getMoveOutput() {
@@ -125,7 +125,7 @@ public class PlayMatch {
       ? getSelectedTurn()
         .getMoveBonuses(getSelectedMove())
         .getMoveBonusList(
-          playSepuku
+          sepukuPlay
             .getSettings()
             .getBonusDisplayMode()
         )
@@ -252,7 +252,7 @@ public class PlayMatch {
       matchBoard.addGameScore(getGameState().getGameScore());
     } else if (settings().isAutomatedEndTurn() || autoCompleteGame) {
       humanMove.endMove();
-      playSepuku.execNextPlay();
+      sepukuPlay.execNextPlay();
     }
   }
 
@@ -310,7 +310,7 @@ public class PlayMatch {
   
   private void initScenario () {
 
-    scenario = new Layout(playSepuku.getScenarios().getMatchLayout());
+    scenario = new Layout(sepukuPlay.getScenarios().getMatchLayout());
     scenario.setPlayerID(settings().getGameStartMode());
     scenario.setUseWhiteBot(settings().getWhiteBotOpponent());
     scenario.setUseBlackBot(settings().getBlackBotOpponent());
@@ -324,7 +324,7 @@ public class PlayMatch {
     }
     initScenario();
     getMoveOutput().setOutputLayout(scenario);
-    playSepuku.getScenarios().setEditing(false);
+    sepukuPlay.getScenarios().setEditing(false);
     gameState = new GameState(this);
     startNewTurn();
   }

@@ -3,7 +3,7 @@ package inUrFace.windows;
 import javax.swing.*;
 import java.awt.*;
 
-import static sepuku.App.win;
+import static sepuku.WinApp.win;
 
 public class TextDisplay extends JFrame {
 

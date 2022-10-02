@@ -6,11 +6,11 @@ import engine.core.trainer.Trainer;
 
 public class StateEdit {
   
-  private PlaySepuku playSepuku;
+  private SepukuPlay sepukuPlay;
   
-  public StateEdit (PlaySepuku playSepuku) {
+  public StateEdit (SepukuPlay sepukuPlay) {
     
-    this.playSepuku = playSepuku;
+    this.sepukuPlay = sepukuPlay;
   }
 
   public void inputStatScoreToWin (int newScore) {
@@ -25,35 +25,35 @@ public class StateEdit {
     return
       name != null
       && name.length() > 0
-      && !playSepuku.getScenarios().isMember(name);
+      && !sepukuPlay.getScenarios().isMember(name);
   }
 
   public void saveLayout (String name, Layout layout) {
 
     if (layoutNameOK(name)) {
-      playSepuku.getScenarios().addNamedLayout(name, layout);
+      sepukuPlay.getScenarios().addNamedLayout(name, layout);
     }
   }
 
   public void renameSelectedLayout (String name) {
 
     if (layoutNameOK(name)) {
-      playSepuku.getScenarios().setSelectedScenariosName(name);
+      sepukuPlay.getScenarios().setSelectedScenariosName(name);
     }
   }
 
   public void inputNewDice (String diceInput) {
 
-    if (diceInput != null && playSepuku.gameIsPlaying()) {
+    if (diceInput != null && sepukuPlay.gameIsPlaying()) {
 
       Dice dice = new Dice(diceInput);
 
       if (dice.diceAreValid()) {
-        playSepuku.getMatchPlay().getSelectedTurn().setDice(dice.getDice());
-        playSepuku.getGame().truncateTurns(playSepuku.getGameState().getTurnNr());
-        playSepuku.getGameState().setMoveNr(playSepuku.getMatchPlay().getPlayedMoveNr());
-        playSepuku.getMatchPlay().getSearch().searchRolledMoves();
-        playSepuku.getMatchPlay().move();
+        sepukuPlay.getMatchPlay().getSelectedTurn().setDice(dice.getDice());
+        sepukuPlay.getGame().truncateTurns(sepukuPlay.getGameState().getTurnNr());
+        sepukuPlay.getGameState().setMoveNr(sepukuPlay.getMatchPlay().getPlayedMoveNr());
+        sepukuPlay.getMatchPlay().getSearch().searchRolledMoves();
+        sepukuPlay.getMatchPlay().move();
       }
     }
   }
@@ -61,22 +61,22 @@ public class StateEdit {
   public void inputPlayToScore (int newScore) {
 
     if (newScore < 100 && newScore % 2 == 1) {
-      playSepuku.getMatchBoard().setPlayToScore(newScore);
-      playSepuku.getSettings().setScoreToWin(newScore);
+      sepukuPlay.getMatchBoard().setPlayToScore(newScore);
+      sepukuPlay.getSettings().setScoreToWin(newScore);
     }
   }
   
   public void inputPlayerMatchScore (int playerID, int newScore) {
     
     if (newScore >= 0 && newScore < 100) {
-      playSepuku.getMatchBoard().setPlayersMatchScore(playerID, newScore);
+      sepukuPlay.getMatchBoard().setPlayersMatchScore(playerID, newScore);
     }
   }
 
   public void inputCubeValue (int newCubeValue) {
 
     if (newCubeValue >= 2 && newCubeValue <= 64 && newCubeValue % 2 == 0) {
-      playSepuku.getGame().getGameCube().setValue(newCubeValue);
+      sepukuPlay.getGame().getGameCube().setValue(newCubeValue);
     }
   }
 

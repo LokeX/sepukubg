@@ -6,8 +6,8 @@ import util.Batch;
 import java.awt.*;
 import java.util.stream.Stream;
 
-import static sepuku.App.playSepuku;
-import static sepuku.App.mouse;
+import static sepuku.WinApp.sepukuPlay;
+import static sepuku.WinApp.mouse;
 
 public class EndingPointsPainter implements Paintable {
 
@@ -15,8 +15,8 @@ public class EndingPointsPainter implements Paintable {
 
     return
       mouse != null
-        && playSepuku.getHumanMove() != null
-        && playSepuku.getHumanMove().humanInputActive();
+        && sepukuPlay.getHumanMove() != null
+        && sepukuPlay.getHumanMove().humanInputActive();
   }
 
   private Batch[] clickPoints () {
@@ -32,7 +32,7 @@ public class EndingPointsPainter implements Paintable {
     Batch[] clickPoints = clickPoints();
 
     return
-      playSepuku
+      sepukuPlay
         .getHumanMove()
         .getEndingPoints()
         .map(endingPoint -> clickPoints[endingPoint]);
@@ -42,7 +42,7 @@ public class EndingPointsPainter implements Paintable {
 
     return
       humanMoveReady()
-      && playSepuku
+      && sepukuPlay
         .getHumanMove()
         .endingPointIsNext();
   }

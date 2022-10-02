@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-import static sepuku.App.*;
+import static sepuku.WinApp.*;
 import static util.Dialogs.confirmed;
 
 public class MatchMenu extends JMenu implements Timeable {
@@ -35,7 +35,7 @@ public class MatchMenu extends JMenu implements Timeable {
     newMatch.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.ALT_MASK));
     newMatch.addActionListener((ActionEvent e) -> {
       if (confirmed("Start a new match?",win)) {
-        playSepuku.startNewMatch();
+        sepukuPlay.startNewMatch();
       }
     });
   }
@@ -45,14 +45,14 @@ public class MatchMenu extends JMenu implements Timeable {
     add(autoCompleteGame);
     autoCompleteGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
     autoCompleteGame.addActionListener((ActionEvent e) -> {
-      if (playSepuku.getAutoCompleteGame()) {
+      if (sepukuPlay.getAutoCompleteGame()) {
         autoCompleteGame.setText("Auto complete game");
-        playSepuku.setAutoCompleteGame(false);
+        sepukuPlay.setAutoCompleteGame(false);
       } else {
         autoCompleteGame.setText("Stop auto complete");
-        playSepuku.setAutoCompleteGame(true);
+        sepukuPlay.setAutoCompleteGame(true);
         new Thread(() ->
-          playSepuku.execNextPlay()
+          sepukuPlay.execNextPlay()
         ).start();
       }
     });
@@ -64,24 +64,24 @@ public class MatchMenu extends JMenu implements Timeable {
     nextAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
     nextAction.addActionListener((ActionEvent e) ->
       new Thread(() ->
-        playSepuku.execNextPlay()
+        sepukuPlay.execNextPlay()
       ).start()
     );
   }
 
   public void timerUpdate () {
 
-    resignGame.setEnabled(playSepuku != null && playSepuku.getMatchPlay().getNrOfTurns() > 0);
+    resignGame.setEnabled(sepukuPlay != null && sepukuPlay.getMatchPlay().getNrOfTurns() > 0);
     resignGame.setVisible(resignGame.isEnabled());
     newMatch.setEnabled(resignGame.isEnabled());
     newMatch.setVisible(resignGame.isEnabled());
-    autoCompleteGame.setEnabled(playSepuku.gameIsPlaying() && !playSepuku.gameOver());
+    autoCompleteGame.setEnabled(sepukuPlay.gameIsPlaying() && !sepukuPlay.gameOver());
     autoCompleteGame.setVisible(autoCompleteGame.isEnabled());
-    nextAction.setText(playSepuku.getPlayState().nextPlayTitle());
+    nextAction.setText(sepukuPlay.getPlayState().nextPlayTitle());
     nextAction.setEnabled(
-      playSepuku.getPlayState().nextPlayReady()
-      && !playSepuku.getAutoCompleteGame()
-      && !playSepuku.getPlayState().isSearching()
+      sepukuPlay.getPlayState().nextPlayReady()
+      && !sepukuPlay.getAutoCompleteGame()
+      && !sepukuPlay.getPlayState().isSearching()
     );
     nextAction.setVisible(nextAction.isEnabled());
   }

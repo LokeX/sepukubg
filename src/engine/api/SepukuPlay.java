@@ -6,16 +6,16 @@ import engine.play.score.ScoreBoard;
 import engine.core.Game;
 import engine.play.GameState;
 import engine.play.MatchCube;
-import engine.play.PlayMatch;
+import engine.play.MatchPlay;
 import engine.play.MoveOutput;
 
-public class PlaySepuku {
+public class SepukuPlay {
 
   private Settings settings = new Settings();
   private Scenarios scenarios = new Scenarios();
   private ScenarioInfoHTML scenarioInfoHTML = new ScenarioInfoHTML(this);
   private GameInfoHTML gameInfoHTML = new GameInfoHTML();
-  private PlayMatch playMatch = new PlayMatch(this);
+  private MatchPlay matchPlay = new MatchPlay(this);
   private StateOfPlay stateOfPlay =  new StateOfPlay(this);
   private StateEdit stateEdit = new StateEdit(this);
 
@@ -28,7 +28,7 @@ public class PlaySepuku {
   public HumanMove getHumanMove () {
    
    return
-     playMatch.getHumanMove();
+     matchPlay.getHumanMove();
  }
  
   public Scenarios getScenarios () {
@@ -54,16 +54,16 @@ public class PlaySepuku {
   public int[] getUsedDicePattern () {
 
     return
-      playMatch != null
-      ? playMatch.getUsedDicePattern()
+      matchPlay != null
+      ? matchPlay.getUsedDicePattern()
       : null;
   }
 
   public Game getGame () {
 
     return
-      playMatch.gameIsPlaying()
-      ? playMatch.getGameState()
+      matchPlay.gameIsPlaying()
+      ? matchPlay.getGameState()
       : null;
     
   }
@@ -78,19 +78,19 @@ public class PlaySepuku {
       : null;
   }
 
-  public PlayMatch getMatchPlay() {
+  public MatchPlay getMatchPlay() {
 
-    return playMatch;
+    return matchPlay;
   }
 
   public GameState getGameState () {
 
-    return playMatch.getGameState();
+    return matchPlay.getGameState();
   }
 
   public MatchCube getMatchCube () {
 
-    return playMatch.getMatchCube();
+    return matchPlay.getMatchCube();
   }
 
   public StateEdit getInput () {
@@ -102,43 +102,43 @@ public class PlaySepuku {
   public boolean gameIsPlaying () {
 
     return
-      playMatch
+      matchPlay
         .gameIsPlaying();
   }
 
  public MoveOutput getMoveOutput () {
 
     return
-      playMatch != null
-      ? playMatch.getMoveOutput()
+      matchPlay != null
+      ? matchPlay.getMoveOutput()
       : null;
  }
 
   public ScoreBoard getScoreBoard() {
 
     return
-      playMatch.getScoreBoard();
+      matchPlay.getScoreBoard();
   }
 
   public MatchBoard getMatchBoard() {
 
-    return playMatch.getMatchBoard();
+    return matchPlay.getMatchBoard();
   }
 
   public boolean getAutoCompleteGame () {
 
-    return playMatch.getAutoCompleteGame();
+    return matchPlay.getAutoCompleteGame();
   }
 
   public void setAutoCompleteGame (boolean autoComplete) {
 
-    playMatch.setAutoCompleteGame(autoComplete);
+    matchPlay.setAutoCompleteGame(autoComplete);
   }
 
   public boolean gameOver () {
 
     return
-      playMatch.gameOver();
+      matchPlay.gameOver();
   }
 
   private boolean isNewMatch () {
@@ -151,7 +151,7 @@ public class PlaySepuku {
   
   public void startNewMatch() {
     
-    playMatch = new PlayMatch(this);
+    matchPlay = new MatchPlay(this);
     getScenarios().setEditing(true);
     getMoveOutput().setOutputLayout(
       getScenarios().getSelectedScenariosLayout()
@@ -163,7 +163,7 @@ public class PlaySepuku {
     if (isNewMatch()) {
       startNewMatch();
     } else {
-      playMatch.nextMatchPlay();
+      matchPlay.nextMatchPlay();
     }
   }
   

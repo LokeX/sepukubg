@@ -3,43 +3,43 @@ package engine.play;
 import engine.play.score.MatchBoard;
 import engine.core.Game;
 
-import static sepuku.App.win;
+import static sepuku.WinApp.win;
 import static util.Dialogs.confirmed;
 import static util.Dialogs.showMessage;
 
 public class MatchCube {
 
-  private PlayMatch playMatch;
+  private MatchPlay matchPlay;
 
-  public MatchCube(PlayMatch playMatch) {
+  public MatchCube(MatchPlay matchPlay) {
 
-    this.playMatch = playMatch;
+    this.matchPlay = matchPlay;
   }
 
   private Game getGame () {
 
-    return playMatch.getGameState();
+    return matchPlay.getGameState();
   }
 
   private MatchBoard getMatchBoard () {
 
-    return playMatch.getMatchBoard();
+    return matchPlay.getMatchBoard();
   }
 
   private boolean playerIsHuman() {
 
     return
-      playMatch
+      matchPlay
         .humanTurnSelected();
   }
 
   boolean cubeWasRejected () {
 
     return
-      playMatch
+      matchPlay
         .gameIsPlaying()
       &&
-        playMatch.getGameState()
+        matchPlay.getGameState()
         .getGameCube()
         .cubeWasRejected();
   }
@@ -54,7 +54,7 @@ public class MatchCube {
       );
     } else {
       getGame().getGameCube().setCubeWasRejected(
-        !playMatch.getSelectedMove().shouldTake()
+        !matchPlay.getSelectedMove().shouldTake()
       );
     }
     if (!cubeWasRejected()) {
@@ -65,7 +65,7 @@ public class MatchCube {
   private boolean shouldDouble () {
     
     return
-      playMatch
+      matchPlay
         .getSelectedMove()
         .shouldDouble();
   }
@@ -80,7 +80,7 @@ public class MatchCube {
   private boolean mayOfferCube () {
     
     return
-      playMatch.gameIsPlaying()
+      matchPlay.gameIsPlaying()
       && getGame().playerCanOfferCube()
       && !getMatchBoard().isCrawfordGame();
   }
@@ -95,7 +95,7 @@ public class MatchCube {
             + "\nand resigns!",
           win
         );
-        playMatch.endTurn();
+        matchPlay.endTurn();
       }
     }
   }
@@ -103,9 +103,9 @@ public class MatchCube {
   private boolean playerIsComputer() {
 
     return
-      playMatch.settings()
+      matchPlay.settings()
         .playerIsComputer(
-          playMatch.getPlayerOnRollsID() == 0 ? 1 : 0
+          matchPlay.getPlayerOnRollsID() == 0 ? 1 : 0
         );
   }
 

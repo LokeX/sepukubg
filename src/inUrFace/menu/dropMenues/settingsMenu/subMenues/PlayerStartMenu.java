@@ -1,6 +1,6 @@
 package inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
@@ -12,17 +12,17 @@ public class PlayerStartMenu extends JMenu {
   JRadioButtonMenuItem whitePlayerStart =
     new JRadioButtonMenuItem(
       "White player starts",
-      playSepuku.getSettings().getGameStartMode() == 0
+      sepukuPlay.getSettings().getGameStartMode() == 0
     );
   JRadioButtonMenuItem blackPlayerStart =
     new JRadioButtonMenuItem(
       "Black player starts",
-      playSepuku.getSettings().getGameStartMode() == 1
+      sepukuPlay.getSettings().getGameStartMode() == 1
     );
   JRadioButtonMenuItem throwDiceStart =
     new JRadioButtonMenuItem(
       "Throw dice",
-      playSepuku.getSettings().getGameStartMode() == 2
+      sepukuPlay.getSettings().getGameStartMode() == 2
     );
   ButtonGroup startMethods = new ButtonGroup();
 
@@ -46,7 +46,7 @@ public class PlayerStartMenu extends JMenu {
 
     add(whitePlayerStart);
     whitePlayerStart.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setGameStartMode(0);
+        sepukuPlay.getSettings().setGameStartMode(0);
     });
   }
 
@@ -54,7 +54,7 @@ public class PlayerStartMenu extends JMenu {
 
     add(blackPlayerStart);
     blackPlayerStart.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setGameStartMode(1);
+        sepukuPlay.getSettings().setGameStartMode(1);
     });
   }
 
@@ -62,7 +62,7 @@ public class PlayerStartMenu extends JMenu {
 
     add(throwDiceStart);
     throwDiceStart.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setGameStartMode(2);
+        sepukuPlay.getSettings().setGameStartMode(2);
     });
   }
 

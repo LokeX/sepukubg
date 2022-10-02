@@ -7,7 +7,7 @@ import util.menus.Listable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 public class BlackBotMenu implements Listable {
 
@@ -18,7 +18,7 @@ public class BlackBotMenu implements Listable {
 
     this.selectedItemNr = selectedItemNr;
     Trainer.blackBot = selectedItemNr;
-    playSepuku.getSettings().setTrainerBlackBot(selectedItemNr);
+    sepukuPlay.getSettings().setTrainerBlackBot(selectedItemNr);
   }
 
   @Override

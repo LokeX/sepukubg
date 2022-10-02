@@ -1,12 +1,12 @@
 package inUrFace.menu.dropMenues;
 
-import sepuku.App;
+import sepuku.WinApp;
 import util.time.Timeable;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 
-import static sepuku.App.*;
+import static sepuku.WinApp.*;
 import static util.Dialogs.getIntegerInput;
 
 public class EditMenu extends JMenu implements Timeable {
@@ -46,7 +46,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editMove);
     editMove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0));
     editMove.addActionListener((ActionEvent e) -> {
-      playSepuku.getHumanMove().startMove();
+      sepukuPlay.getHumanMove().startMove();
     });
   }
 
@@ -55,7 +55,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editDice);
     editDice.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.ALT_MASK));
     editDice.addActionListener((ActionEvent e) -> {
-      playSepuku.getInput().inputNewDice(
+      sepukuPlay.getInput().inputNewDice(
         JOptionPane.showInputDialog(win,
           "Input dice values with no separation" +
             "\nfor doubles type only one value"
@@ -69,7 +69,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editPlayToScore);
     editPlayToScore.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.ALT_MASK));
     editPlayToScore.addActionListener((ActionEvent e) -> {
-      playSepuku.getInput().inputPlayToScore(
+      sepukuPlay.getInput().inputPlayToScore(
         getIntegerInput(
           "Type the score required to win the game:" +
             "\nType 0 (or hit Enter) for money-game",win
@@ -88,7 +88,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editCubeValue);
     editCubeValue.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
     editCubeValue.addActionListener((ActionEvent e) -> {
-      playSepuku.getInput().inputCubeValue(
+      sepukuPlay.getInput().inputCubeValue(
         getIntegerInput(
           "Type the new doublingCube value:",win
         )
@@ -109,7 +109,7 @@ public class EditMenu extends JMenu implements Timeable {
 //    add(editCubeOwner);
     editCubeOwner.add(noOwner);
     noOwner.addActionListener((ActionEvent e) -> {
-      playSepuku.getGame().getGameCube().setOwner(-1);
+      sepukuPlay.getGame().getGameCube().setOwner(-1);
     });
   }
 
@@ -117,7 +117,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editCubeOwner.add(whitePlayerOwner);
     whitePlayerOwner.addActionListener((ActionEvent e) -> {
-      playSepuku.getGame().getGameCube().setOwner(0);
+      sepukuPlay.getGame().getGameCube().setOwner(0);
     });
   }
 
@@ -125,7 +125,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editCubeOwner.add(blackPlayerOwner);
     blackPlayerOwner.addActionListener((ActionEvent e) -> {
-      playSepuku.getGame().getGameCube().setOwner(1);
+      sepukuPlay.getGame().getGameCube().setOwner(1);
     });
   }
 
@@ -147,7 +147,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editPlayerScore.add(whitePlayerScore);
     whitePlayerScore.addActionListener((ActionEvent e) -> {
-      playSepuku.getInput().inputPlayerMatchScore(0, inputScore(0));
+      sepukuPlay.getInput().inputPlayerMatchScore(0, inputScore(0));
     });
   }
 
@@ -155,22 +155,22 @@ public class EditMenu extends JMenu implements Timeable {
 
     editPlayerScore.add(blackPlayerScore);
     blackPlayerScore.addActionListener((ActionEvent e) -> {
-      playSepuku.getInput().inputPlayerMatchScore(1, inputScore(1));
+      sepukuPlay.getInput().inputPlayerMatchScore(1, inputScore(1));
     });
   }
 
   @Override
   public void timerUpdate() {
 
-    editDice.setEnabled(playSepuku.gameIsPlaying());
+    editDice.setEnabled(sepukuPlay.gameIsPlaying());
     editDice.setVisible(editDice.isEnabled());
-    editMove.setEnabled(playSepuku.gameIsPlaying());
+    editMove.setEnabled(sepukuPlay.gameIsPlaying());
     editMove.setVisible(editMove.isEnabled());
     editPlayerScore.setEnabled(editMove.isEnabled());
     editPlayerScore.setVisible(editPlayerScore.isEnabled());
 
     editMenuSeparator.setEnabled(
-      mouse != null && App.mouse.cubePainter.isVisible()
+      mouse != null && WinApp.mouse.cubePainter.isVisible()
     );
     editMenuSeparator.setVisible(editMenuSeparator.isEnabled());
     editCubeValue.setEnabled(editMenuSeparator.isEnabled());

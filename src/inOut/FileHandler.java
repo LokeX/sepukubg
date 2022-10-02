@@ -1,7 +1,7 @@
-package IO;
+package inOut;
 
 //import engine.Sepuku;
-import sepuku.App;
+import sepuku.WinApp;
 import engine.api.Settings;
 import engine.api.Scenarios.NamedLayout;
 import engine.core.trainer.Bot;
@@ -21,8 +21,8 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
-import static sepuku.App.playSepuku;
-import static sepuku.App.timedTasks;
+import static sepuku.WinApp.sepukuPlay;
+import static sepuku.WinApp.timedTasks;
 
 public class FileHandler extends WindowAdapter {
 
@@ -53,7 +53,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        out.writeObject(playSepuku.getScenarios().getScenarios());
+        out.writeObject(sepukuPlay.getScenarios().getScenarios());
         out.close();
       } catch (IOException e) {
         System.out.println("Error writing file ["+path+"]: "+e.getMessage());
@@ -73,7 +73,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        playSepuku.getScenarios().setScenarios((List<NamedLayout>)in.readObject());
+        sepukuPlay.getScenarios().setScenarios((List<NamedLayout>)in.readObject());
         in.close();
       } catch (IOException e) {
         System.out.println(e.getMessage());
@@ -137,7 +137,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        out.writeObject(playSepuku.getSettings());
+        out.writeObject(sepukuPlay.getSettings());
         out.close();
       } catch (IOException e) {
         System.out.println("Error writing file ["+path+"]: "+e.getMessage());
@@ -157,7 +157,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        playSepuku.setSettings((Settings) in.readObject());
+        sepukuPlay.setSettings((Settings) in.readObject());
         in.close();
       } catch (IOException e) {
         System.out.println("Error reading file: "+e.getMessage());
@@ -170,7 +170,7 @@ public class FileHandler extends WindowAdapter {
 
       if ((System.currentTimeMillis() - oldTime) > 300000) {
         oldTime = System.currentTimeMillis();
-        App.files.saveFiles();
+        WinApp.files.saveFiles();
       }
     }
 

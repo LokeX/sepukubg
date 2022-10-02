@@ -6,7 +6,7 @@ import engine.core.moves.Layout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static sepuku.App.*;
+import static sepuku.WinApp.*;
 import static util.ThreadUtil.threadSleep;
 import static util.time.Time.getConvertedTime;
 import static java.util.Arrays.stream;
@@ -41,11 +41,11 @@ public class Trainer {
       bots.add(new Bot("Default bot"));
       blackBot = 0;
       whiteBot = 0;
-      playSepuku.getSettings().setBlackBotOpponent(0);
-      playSepuku.getSettings().setWhiteBotOpponent(0);
+      sepukuPlay.getSettings().setBlackBotOpponent(0);
+      sepukuPlay.getSettings().setWhiteBotOpponent(0);
     } else {
-      blackBot = playSepuku.getSettings().getTrainerBlackBot();
-      whiteBot = playSepuku.getSettings().getTrainerWhiteBot();
+      blackBot = sepukuPlay.getSettings().getTrainerBlackBot();
+      whiteBot = sepukuPlay.getSettings().getTrainerWhiteBot();
     }
   }
 
@@ -84,7 +84,7 @@ public class Trainer {
 
   public String getUsedScenarioTitle () {
 
-    return playSepuku.getScenarios().getScenarios().get(selectedScenarioNr).getName();
+    return sepukuPlay.getScenarios().getScenarios().get(selectedScenarioNr).getName();
   }
 
   public String getFinalReport () {
@@ -136,7 +136,7 @@ public class Trainer {
   public String getInitialReport () {
 
     return
-      "Using scenario: "+ playSepuku.getScenarios().getScenarios().get(selectedScenarioNr).getName()+
+      "Using scenario: "+ sepukuPlay.getScenarios().getScenarios().get(selectedScenarioNr).getName()+
       "\nPlaying to matchScore: "+statScoreToWin+
       "\nUsing Nr of cores: "+getNrOfCores();
   }
@@ -145,7 +145,7 @@ public class Trainer {
 
     System.out.println("Running "+nrOfMatchesToPlay+" matches");
     System.out.println("Playing to matchScore: "+statScoreToWin);
-    System.out.println("Using scenario: "+ playSepuku.getScenarios().getScenarios().get(selectedScenarioNr).getName());
+    System.out.println("Using scenario: "+ sepukuPlay.getScenarios().getScenarios().get(selectedScenarioNr).getName());
     System.out.println("Using Nr of cores: "+getNrOfCores());
   }
 
@@ -209,7 +209,7 @@ public class Trainer {
 
     new Thread(() -> {
 
-      Layout layout = playSepuku.getScenarios().getLayoutByNr(selectedScenarioNr);
+      Layout layout = sepukuPlay.getScenarios().getLayoutByNr(selectedScenarioNr);
       List<Match> matches = new ArrayList<>();
 
       for (int a = 0; a < nrOfMatches; a++) {

@@ -1,7 +1,7 @@
 package inUrFace.canvas.painters;
 
-import static sepuku.App.getDisplayedLayout;
-import static sepuku.App.win;
+import static sepuku.WinApp.getDisplayedLayout;
+import static sepuku.WinApp.win;
 
 import engine.core.moves.Layout;
 import inUrFace.canvas.BoardDim;

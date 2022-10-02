@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static sepuku.App.win;
+import static sepuku.WinApp.win;
 
 public class CloneBotMenu implements Listable {
 

@@ -8,8 +8,8 @@ package inUrFace.canvas.painters;
 
 import inUrFace.canvas.BoardDim;
 
-import static sepuku.App.playSepuku;
-import static sepuku.App.win;
+import static sepuku.WinApp.sepukuPlay;
+import static sepuku.WinApp.win;
 
 import java.awt.*;
 
@@ -100,7 +100,7 @@ public class BoardPainter implements Paintable {
     g.setFont(new Font("Ariel", Font.BOLD, (int) (20.0 * d.factor)));
     g.setColor(Color.WHITE);
 
-    if (playSepuku != null) {
+    if (sepukuPlay != null) {
 
       int t;
       String s;

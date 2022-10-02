@@ -2,13 +2,13 @@ package engine.api;
 
 public class ScenarioInfoHTML {
   
-  private PlaySepuku playSepuku;
+  private SepukuPlay sepukuPlay;
   private String scenarioName = "";
   private String scenarioDataHTML;
   
-  public ScenarioInfoHTML (PlaySepuku playSepuku) {
+  public ScenarioInfoHTML (SepukuPlay sepukuPlay) {
     
-    this.playSepuku = playSepuku;
+    this.sepukuPlay = sepukuPlay;
   }
 
   private String scenarioDataHTML() {
@@ -38,7 +38,7 @@ public class ScenarioInfoHTML {
   private String getScenarioName () {
     
     return
-      playSepuku.getScenarios().getSelectedScenariosTitle();
+      sepukuPlay.getScenarios().getSelectedScenariosTitle();
   }
 
   private String HTML_Label (String label) {

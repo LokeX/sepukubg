@@ -1,6 +1,6 @@
 package inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
@@ -12,18 +12,18 @@ public class MoveCompletionMenu extends JMenu {
   JRadioButtonMenuItem manualMoves =
     new JRadioButtonMenuItem(
       "Manual completion",
-      !playSepuku.getSettings().isAutoCompleteMoves()
-          && !playSepuku.getSettings().isAutoCompletePartMoves()
+      !sepukuPlay.getSettings().isAutoCompleteMoves()
+          && !sepukuPlay.getSettings().isAutoCompletePartMoves()
     );
   JRadioButtonMenuItem automateMoves =
     new JRadioButtonMenuItem(
       "Auto complete forced moves",
-      playSepuku.getSettings().isAutoCompleteMoves()
+      sepukuPlay.getSettings().isAutoCompleteMoves()
     );
   JRadioButtonMenuItem automatePartMoves =
     new JRadioButtonMenuItem(
       "Auto complete forced partmoves",
-      playSepuku.getSettings().isAutoCompletePartMoves()
+      sepukuPlay.getSettings().isAutoCompletePartMoves()
     );
   ButtonGroup moveCompletionChoices = new ButtonGroup();
 
@@ -47,7 +47,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(manualMoves);
     manualMoves.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setAutoMoves(0);
+        sepukuPlay.getSettings().setAutoMoves(0);
     });
   }
 
@@ -55,7 +55,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(automateMoves);
     automateMoves.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setAutoMoves(1);
+        sepukuPlay.getSettings().setAutoMoves(1);
     });
   }
 
@@ -63,7 +63,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(automatePartMoves);
     automatePartMoves.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setAutoMoves(2);
+        sepukuPlay.getSettings().setAutoMoves(2);
     });
   }
 

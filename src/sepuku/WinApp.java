@@ -1,8 +1,8 @@
 package sepuku;
 
-import IO.FileHandler;
-import IO.Sound;
-import engine.api.PlaySepuku;
+import inOut.FileHandler;
+import inOut.Sound;
+import engine.api.SepukuPlay;
 import engine.core.moves.Layout;
 import engine.core.trainer.Trainer;
 import inUrFace.canvas.Canvas;
@@ -11,17 +11,15 @@ import inUrFace.canvas.listeners.MouseListeners;
 import util.time.TimedTasks;
 import inUrFace.windows.Window;
 
-public class App {
+public class WinApp {
 
   static public TimedTasks timedTasks;
   static public FileHandler files;
   static public Window win;
   static public MouseListeners mouse;
-  static public PlaySepuku playSepuku;
+  static public SepukuPlay sepukuPlay;
   static public Trainer trainer;
   static public Sound sound;
-
-  static public final int nrOfStatGames = 0;
 
   public static Window getWin () {
 
@@ -47,16 +45,12 @@ public class App {
 
     timedTasks = new TimedTasks();
     sound = new Sound();
-    playSepuku = new PlaySepuku();
+    sepukuPlay = new SepukuPlay();
     files = new FileHandler();
     trainer = new Trainer();
 
-    if (nrOfStatGames == 0) {
-      Window.runWindow();
-      mouse = new MouseListeners();
-    } else {
-      trainer.playMatches(nrOfStatGames);
-    }
+    Window.runWindow();
+    mouse = new MouseListeners();
   }
 
 }

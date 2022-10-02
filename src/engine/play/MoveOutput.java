@@ -5,7 +5,7 @@ import engine.core.moves.Layout;
 import java.util.ArrayList;
 import java.util.List;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 
 public class MoveOutput {
@@ -90,7 +90,7 @@ public class MoveOutput {
   private boolean timeDelayElapsed () {
 
     return
-       firstLayout || elapsedTime() > playSepuku.getSettings().getShowMoveDelay();
+       firstLayout || elapsedTime() > sepukuPlay.getSettings().getShowMoveDelay();
   }
 
 }

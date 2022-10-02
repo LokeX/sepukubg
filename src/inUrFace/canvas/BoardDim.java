@@ -1,6 +1,6 @@
 package inUrFace.canvas;
 
-import static sepuku.App.win;
+import static sepuku.WinApp.win;
 public class BoardDim {
 
   public BoardDim () {

@@ -1,12 +1,12 @@
 package inUrFace.canvas.painters;
 
-import sepuku.App;
+import sepuku.WinApp;
 import inUrFace.canvas.BoardDim;
 import util.TextBatch;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-import static sepuku.App.*;
+import static sepuku.WinApp.*;
 
 public class PlayButtonPainter extends TextBatch implements Paintable {
 
@@ -29,7 +29,7 @@ public class PlayButtonPainter extends TextBatch implements Paintable {
   public boolean showWaitBackground () {
 
     return
-      playSepuku.getPlayState().isSearching();
+      sepukuPlay.getPlayState().isSearching();
   }
 
   private boolean buttonClicked (MouseEvent e) {
@@ -75,16 +75,16 @@ public class PlayButtonPainter extends TextBatch implements Paintable {
 
     if (buttonClicked(e)) {
       if (!nextPlayTitle().equals("New match")) {
-        App.sound.playSoundEffect("wuerfelbecher");
+        WinApp.sound.playSoundEffect("wuerfelbecher");
       }
-      playSepuku.execNextPlay();
+      sepukuPlay.execNextPlay();
     }
   }
   
   private String nextPlayTitle () {
     
     return
-      playSepuku
+      sepukuPlay
         .getPlayState()
         .nextPlayTitle();
   }
@@ -92,7 +92,7 @@ public class PlayButtonPainter extends TextBatch implements Paintable {
   public boolean showButton() {
 
     return
-      playSepuku.getPlayState().nextPlayReady()
+      sepukuPlay.getPlayState().nextPlayReady()
       || showWaitBackground();
   }
 

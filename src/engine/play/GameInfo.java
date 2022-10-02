@@ -8,14 +8,14 @@ import static java.util.stream.Collectors.joining;
 
 public class GameInfo {
 
-  private PlayMatch matchState;
+  private MatchPlay matchState;
   private String[] dataItems;
   private String movePoints = "";
   private boolean dataUpdate = false;
   private int selectedTurnNr;
   private int selectedMoveNr;
 
-  public GameInfo(PlayMatch matchState) {
+  public GameInfo(MatchPlay matchState) {
 
     this.matchState = matchState;
   }

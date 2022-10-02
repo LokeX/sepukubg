@@ -4,15 +4,15 @@ import inUrFace.canvas.painters.Paintable;
 
 import java.awt.*;
 
-import static sepuku.App.playSepuku;
-import static sepuku.App.getCanvas;
+import static sepuku.WinApp.sepukuPlay;
+import static sepuku.WinApp.getCanvas;
 
 public class ChequerPainter implements Paintable {
 
   private int playerID () {
 
     return
-      playSepuku
+      sepukuPlay
         .getHumanMove()
         .getPlayerID();
   }
@@ -59,10 +59,10 @@ public class ChequerPainter implements Paintable {
   private boolean mustPaint () {
 
     return
-      playSepuku != null
-      && playSepuku.getHumanMove().humanInputActive()
-      && playSepuku.getMatchPlay().playerIsHuman()
-      && playSepuku.getHumanMove().endingPointIsNext()
+      sepukuPlay != null
+      && sepukuPlay.getHumanMove().humanInputActive()
+      && sepukuPlay.getMatchPlay().playerIsHuman()
+      && sepukuPlay.getHumanMove().endingPointIsNext()
       && mousePosition() != null;
   }
 

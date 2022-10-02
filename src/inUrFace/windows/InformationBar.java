@@ -6,8 +6,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-import static sepuku.App.playSepuku;
-import static sepuku.App.timedTasks;
+import static sepuku.WinApp.sepukuPlay;
+import static sepuku.WinApp.timedTasks;
 
 public class InformationBar extends JLabel implements Timeable {
 
@@ -25,16 +25,16 @@ public class InformationBar extends JLabel implements Timeable {
   private boolean gameInfoAvailable () {
 
     return
-      playSepuku.getGameInfoHTML() != null
-      && !playSepuku.getScenarios().isEditing();
+      sepukuPlay.getGameInfoHTML() != null
+      && !sepukuPlay.getScenarios().isEditing();
   }
   
   private String getDataHTML () {
     
     return
       gameInfoAvailable()
-      ? playSepuku.getGameInfoHTML().getHTMLFormattedDataString()
-      : playSepuku.getScenarioInfoHTML().getHTMLFormattedDataString();
+      ? sepukuPlay.getGameInfoHTML().getHTMLFormattedDataString()
+      : sepukuPlay.getScenarioInfoHTML().getHTMLFormattedDataString();
   }
 
   @Override

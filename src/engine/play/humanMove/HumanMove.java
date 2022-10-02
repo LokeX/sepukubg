@@ -3,7 +3,7 @@ package engine.play.humanMove;
 import engine.api.Settings;
 import engine.play.MoveOutput;
 import engine.play.GameState;
-import engine.play.PlayMatch;
+import engine.play.MatchPlay;
 
 import java.util.stream.Stream;
 
@@ -11,12 +11,12 @@ import static util.ThreadUtil.runWhenNotified;
 
 public class HumanMove {
 
-  private PlayMatch playMatch;
+  private MatchPlay matchPlay;
   private MoveSelection moveSelection;
 
-  public HumanMove (PlayMatch playMatch) {
+  public HumanMove (MatchPlay matchPlay) {
 
-    this.playMatch = playMatch;
+    this.matchPlay = matchPlay;
   }
   
   public int getPlayerID() {
@@ -30,7 +30,7 @@ public class HumanMove {
   public boolean humanInputActive() {
     
     return
-      playMatch.gameIsPlaying()
+      matchPlay.gameIsPlaying()
       && inputReady();
   }
   
@@ -106,7 +106,7 @@ public class HumanMove {
   private Settings settings () {
     
     return
-      playMatch.settings();
+      matchPlay.settings();
   }
 
   private boolean autoCompleteMove () {
@@ -125,13 +125,13 @@ public class HumanMove {
   private GameState gameState () {
 
     return
-      playMatch.getGameState();
+      matchPlay.getGameState();
   }
 
   private MoveOutput moveOutput () {
 
     return
-      playMatch
+      matchPlay
         .getMoveOutput();
   }
 
@@ -140,7 +140,7 @@ public class HumanMove {
     moveSelection = new MoveSelection(
       gameState().selectedTurn()
     );
-    playMatch
+    matchPlay
       .getMoveOutput()
       .setOutputLayout(
         moveSelection
@@ -150,9 +150,9 @@ public class HumanMove {
 
   public void startMove () {
 
-    if (playMatch.getSelectedMove().isIllegal()) {
+    if (matchPlay.getSelectedMove().isIllegal()) {
       endMove();
-      playMatch.endTurn();
+      matchPlay.endTurn();
     } else {
       startMoveSelection();
       if (autoSelectPartMoves()) {
@@ -171,7 +171,7 @@ public class HumanMove {
 
     return
       moveSelection != null
-      && !playMatch
+      && !matchPlay
           .getMoveOutput()
           .hasOutput();
   }
@@ -179,13 +179,13 @@ public class HumanMove {
   private void outputMoveLayouts () {
 
     if (moveSelection.endOfInput()) {
-      playMatch
+      matchPlay
         .getMoveOutput()
         .setEndOfOutputNotifier(
-          runWhenNotified(playMatch::endTurn)
+          runWhenNotified(matchPlay::endTurn)
         );
     }
-    playMatch
+    matchPlay
       .getMoveOutput()
       .setOutputLayouts(
         moveSelection.getMovePointLayouts()

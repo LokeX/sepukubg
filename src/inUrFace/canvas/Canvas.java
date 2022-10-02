@@ -6,11 +6,11 @@ import inUrFace.canvas.painters.Painters;
 import javax.swing.*;
 import java.awt.*;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 public class Canvas extends JPanel {
 
-  private Layout displayedLayout = playSepuku.getScenarios().getSelectedScenariosLayout();
+  private Layout displayedLayout = sepukuPlay.getScenarios().getSelectedScenariosLayout();
   private BoardDim dimensions = new BoardDim();
   private Painters painters = new Painters();
 
@@ -18,8 +18,8 @@ public class Canvas extends JPanel {
 
     setPreferredSize(
       new Dimension(
-        playSepuku.getSettings().getCanvasWidth(),
-        playSepuku.getSettings().getCanvasHeight()
+        sepukuPlay.getSettings().getCanvasWidth(),
+        sepukuPlay.getSettings().getCanvasHeight()
       )
     );
   }

@@ -3,24 +3,24 @@ package inUrFace.menu.dropMenues.settingsMenu.subMenues;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 public class LookaheadLimitMenu extends JMenu {
 
   JRadioButtonMenuItem limit3 =
     new JRadioButtonMenuItem(
       "3 best moves",
-      playSepuku.getSettings().getNrOfMovesToSearch() == 3
+      sepukuPlay.getSettings().getNrOfMovesToSearch() == 3
     );
   JRadioButtonMenuItem limit5 =
     new JRadioButtonMenuItem(
       "5 best moves",
-      playSepuku.getSettings().getNrOfMovesToSearch() == 5
+      sepukuPlay.getSettings().getNrOfMovesToSearch() == 5
     );
   JRadioButtonMenuItem limit10 =
     new JRadioButtonMenuItem(
       "10 best moves",
-      playSepuku.getSettings().getNrOfMovesToSearch() == 10
+      sepukuPlay.getSettings().getNrOfMovesToSearch() == 10
     );
   ButtonGroup limitChoices = new ButtonGroup();
 
@@ -44,7 +44,7 @@ public class LookaheadLimitMenu extends JMenu {
 
     add(limit3);
     limit3.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setNrOfMovesToSearch(3);
+        sepukuPlay.getSettings().setNrOfMovesToSearch(3);
     });
   }
 
@@ -52,7 +52,7 @@ public class LookaheadLimitMenu extends JMenu {
 
     add(limit5);
     limit5.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setNrOfMovesToSearch(5);
+        sepukuPlay.getSettings().setNrOfMovesToSearch(5);
     });
   }
 
@@ -60,7 +60,7 @@ public class LookaheadLimitMenu extends JMenu {
 
     add(limit10);
     limit10.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setNrOfMovesToSearch(10);
+        sepukuPlay.getSettings().setNrOfMovesToSearch(10);
     });
   }
 

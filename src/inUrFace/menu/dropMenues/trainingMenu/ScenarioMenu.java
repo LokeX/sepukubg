@@ -1,10 +1,10 @@
 package inUrFace.menu.dropMenues.trainingMenu;
 
-import sepuku.App;
+import sepuku.WinApp;
 import util.menus.Listable;
 import java.util.List;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 public class ScenarioMenu implements Listable {
 
@@ -14,7 +14,7 @@ public class ScenarioMenu implements Listable {
   public void itemSelectedAction(int selectedItemNr) {
 
     this.selectedItemNr = selectedItemNr;
-    App.trainer.setSelectedScenarioNr(selectedItemNr);
+    WinApp.trainer.setSelectedScenarioNr(selectedItemNr);
   }
 
   @Override
@@ -32,7 +32,7 @@ public class ScenarioMenu implements Listable {
   @Override
   public List<String> getElementTitles() {
 
-    return playSepuku.getScenarios().getLayoutTitles();
+    return sepukuPlay.getScenarios().getLayoutTitles();
   }
 
 }

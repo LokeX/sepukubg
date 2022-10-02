@@ -3,7 +3,7 @@ package inUrFace.windows;
 import inUrFace.canvas.Canvas;
 import inUrFace.menu.MenuBar;
 
-import static sepuku.App.*;
+import static sepuku.WinApp.*;
 import static util.ThreadUtil.threadSleep;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
@@ -31,7 +31,7 @@ public class Window extends JFrame {
 
   public Window() {
 
-    super("Sepuku Backgammon - Alpha-Ver.2022.10.01");
+    super("Sepuku Backgammon / beta - ver. 2022.10.02");
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
     setIconImage(new ImageIcon(getClass().getResource("Icon/AppIcon.gif")).getImage());
@@ -46,7 +46,7 @@ public class Window extends JFrame {
     pack();
     setWindowLocation();
     timedTasks.addTimedTask(this::repaint);
-    if (playSepuku.getSettings().getWinMaximized()) {
+    if (sepukuPlay.getSettings().getWinMaximized()) {
       setExtendedState(MAXIMIZED_BOTH);
     }
     setVisible(true);
@@ -74,7 +74,7 @@ public class Window extends JFrame {
     @Override
     public void windowStateChanged (WindowEvent e) {
 
-      playSepuku.getSettings().setWinMaximized(
+      sepukuPlay.getSettings().setWinMaximized(
         e.getOldState() == JFrame.NORMAL &&
         e.getNewState() == JFrame.MAXIMIZED_BOTH
       );
@@ -91,9 +91,9 @@ public class Window extends JFrame {
       if (mouse != null && mouse.scenarioEditPainter != null) {
         mouse.scenarioEditPainter.generateClickPoints();
       }
-      if (!playSepuku.getSettings().getWinMaximized()) {
-        playSepuku.getSettings().setCanvasWidth(canvas.getWidth());
-        playSepuku.getSettings().setCanvasHeight(canvas.getHeight());
+      if (!sepukuPlay.getSettings().getWinMaximized()) {
+        sepukuPlay.getSettings().setCanvasWidth(canvas.getWidth());
+        sepukuPlay.getSettings().setCanvasHeight(canvas.getHeight());
       }
     }
 
@@ -104,8 +104,8 @@ public class Window extends JFrame {
 
         Point p = getLocationOnScreen();
 
-        playSepuku.getSettings().setFrameX((int) p.getX());
-        playSepuku.getSettings().setFrameY((int) p.getY());
+        sepukuPlay.getSettings().setFrameX((int) p.getX());
+        sepukuPlay.getSettings().setFrameY((int) p.getY());
       } catch (IllegalComponentStateException icse) {
         System.out.println("JFrame: win.getLocation(), error: " + icse.getMessage());
         System.out.println("Severity: none");
@@ -116,8 +116,8 @@ public class Window extends JFrame {
 
   private void setWindowLocation () {
 
-    if (playSepuku.getSettings().getFrameX() > -1 && playSepuku.getSettings().getFrameY() > -1) {
-      setLocation(playSepuku.getSettings().getFrameX(), playSepuku.getSettings().getFrameY());
+    if (sepukuPlay.getSettings().getFrameX() > -1 && sepukuPlay.getSettings().getFrameY() > -1) {
+      setLocation(sepukuPlay.getSettings().getFrameX(), sepukuPlay.getSettings().getFrameY());
     } else {
       setLocationRelativeTo(null);
     }

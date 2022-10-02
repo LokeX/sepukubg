@@ -6,12 +6,12 @@ import inUrFace.windows.TextDisplay;
 
 public class Search {
 
-  private PlayMatch playMatch;
+  private MatchPlay matchPlay;
   private boolean searching = false;
 
-  public Search (PlayMatch playMatch) {
+  public Search (MatchPlay matchPlay) {
 
-    this.playMatch = playMatch;
+    this.matchPlay = matchPlay;
   }
 
   public boolean isSearching() {
@@ -22,13 +22,13 @@ public class Search {
   private GameState gameState () {
 
     return
-      playMatch.getGameState();
+      matchPlay.getGameState();
 
   }
   
   private Settings settings () {
     
-    return playMatch.settings();
+    return matchPlay.settings();
   }
 
   private void displaySearchReport () {
@@ -58,7 +58,7 @@ public class Search {
   private boolean okToSearch () {
 
     return
-      playMatch.gameIsPlaying()
+      matchPlay.gameIsPlaying()
       && gameState().nrOfTurns() > 0
       && !settings().searchIsOff()
       && playerLooksAhead();

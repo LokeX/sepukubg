@@ -6,9 +6,9 @@ import util.menus.Listable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 import static util.Dialogs.confirmed;
-import static sepuku.App.win;
+import static sepuku.WinApp.win;
 
 public class DeleteBotMenu implements Listable {
 
@@ -25,11 +25,11 @@ public class DeleteBotMenu implements Listable {
       if (Trainer.blackBot >= selectedItemNr) {
         Trainer.blackBot = 0;
       }
-      if (playSepuku.getSettings().getWhiteBotOpponent() >= selectedItemNr) {
-        playSepuku.getSettings().setWhiteBotOpponent(0);
+      if (sepukuPlay.getSettings().getWhiteBotOpponent() >= selectedItemNr) {
+        sepukuPlay.getSettings().setWhiteBotOpponent(0);
       }
-      if (playSepuku.getSettings().getBlackBotOpponent() >= selectedItemNr) {
-        playSepuku.getSettings().setBlackBotOpponent(0);
+      if (sepukuPlay.getSettings().getBlackBotOpponent() >= selectedItemNr) {
+        sepukuPlay.getSettings().setBlackBotOpponent(0);
       }
     }
   }

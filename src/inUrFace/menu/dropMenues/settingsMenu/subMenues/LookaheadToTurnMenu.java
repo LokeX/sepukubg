@@ -3,29 +3,29 @@ package inUrFace.menu.dropMenues.settingsMenu.subMenues;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 public class LookaheadToTurnMenu extends JMenu {
 
   JRadioButtonMenuItem searchIsOff =
     new JRadioButtonMenuItem(
       "None",
-      playSepuku.getSettings().getSearchToPly() == 0
+      sepukuPlay.getSettings().getSearchToPly() == 0
     );
   JRadioButtonMenuItem searchToPly1 =
     new JRadioButtonMenuItem(
       "1 turn",
-      playSepuku.getSettings().getSearchToPly() == 1
+      sepukuPlay.getSettings().getSearchToPly() == 1
     );
   JRadioButtonMenuItem searchToPly2 =
     new JRadioButtonMenuItem(
       "2 turns",
-      playSepuku.getSettings().getSearchToPly() == 2
+      sepukuPlay.getSettings().getSearchToPly() == 2
     );
   JRadioButtonMenuItem searchToPly3 =
     new JRadioButtonMenuItem(
       "3 turns",
-      playSepuku.getSettings().getSearchToPly() == 3
+      sepukuPlay.getSettings().getSearchToPly() == 3
     );
   ButtonGroup searchToPlyChoices = new ButtonGroup();
 
@@ -51,7 +51,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchIsOff);
     searchIsOff.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setSearchToPly(0);
+        sepukuPlay.getSettings().setSearchToPly(0);
     });
   }
 
@@ -59,7 +59,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly1);
     searchToPly1.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setSearchToPly(1);
+        sepukuPlay.getSettings().setSearchToPly(1);
     });
   }
 
@@ -67,7 +67,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly2);
     searchToPly2.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setSearchToPly(2);
+        sepukuPlay.getSettings().setSearchToPly(2);
     });
   }
 
@@ -75,7 +75,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly3);
     searchToPly3.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setSearchToPly(3);
+        sepukuPlay.getSettings().setSearchToPly(3);
     });
   }
 

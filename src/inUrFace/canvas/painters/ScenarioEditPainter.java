@@ -1,6 +1,6 @@
 package inUrFace.canvas.painters;
 
-import sepuku.App;
+import sepuku.WinApp;
 import engine.core.moves.Layout;
 import inUrFace.canvas.BoardDim;
 import util.Batch;
@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static sepuku.App.*;
+import static sepuku.WinApp.*;
 
 public class ScenarioEditPainter extends MouseAdapter implements Paintable {
 
@@ -44,8 +44,8 @@ public class ScenarioEditPainter extends MouseAdapter implements Paintable {
   private boolean isEditing () {
 
     return
-      playSepuku != null
-      && playSepuku.getScenarios().isEditing();
+      sepukuPlay != null
+      && sepukuPlay.getScenarios().isEditing();
   }
 
   @Override
@@ -56,7 +56,7 @@ public class ScenarioEditPainter extends MouseAdapter implements Paintable {
       int clickedPoint = getClickedPoint();
       int button;
 
-      Layout layout = App.win.canvas.getDisplayedLayout();
+      Layout layout = WinApp.win.canvas.getDisplayedLayout();
       if (clickedPoint >= 0) {
         if (clickedPoint == 0 || clickedPoint < 25 && layout.point[clickedPoint] > 0 && layout.point[clickedPoint + 26] == 0) {
           clickPoints[0].setBackgroundColor(Color.yellow);
@@ -93,7 +93,7 @@ public class ScenarioEditPainter extends MouseAdapter implements Paintable {
           }
         }
       }
-      playSepuku.getScenarios().setEditedScenario(new Layout(layout));
+      sepukuPlay.getScenarios().setEditedScenario(new Layout(layout));
     }
   }
 
@@ -110,7 +110,7 @@ public class ScenarioEditPainter extends MouseAdapter implements Paintable {
       d.chequerSize,
       d.chequerSize
     );
-    clickPoints[0].setComponent(App.win.canvas);
+    clickPoints[0].setComponent(WinApp.win.canvas);
     clickPoints[0].setDrawFrame(true);
     clickPoints[0].setFrameColor(frameColor);
     clickPoints[0].setBackgroundColor(player == 0 ? Color.yellow : Color.black);
@@ -139,7 +139,7 @@ public class ScenarioEditPainter extends MouseAdapter implements Paintable {
       d.chequerSize
     );
     for (int a = 25; a < 28; a++) {
-      clickPoints[a].setComponent(App.win.canvas);
+      clickPoints[a].setComponent(WinApp.win.canvas);
       clickPoints[a].setDrawFrame(true);
       clickPoints[a].setFrameColor(frameColor);
       clickPoints[a].setBackgroundColor(

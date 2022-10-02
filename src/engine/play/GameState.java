@@ -11,15 +11,15 @@ import java.util.stream.IntStream;
 
 public class GameState extends Game {
 
-  private PlayMatch playMatch;
+  private MatchPlay matchPlay;
   private int turnNr = 0;
   private int moveNr = 0;
   private int partMoveNr = -1;
 
-  public GameState (PlayMatch playMatch) {
+  public GameState (MatchPlay matchPlay) {
 
-    super(playMatch.getScenario());
-    this.playMatch = playMatch;
+    super(matchPlay.getScenario());
+    this.matchPlay = matchPlay;
   }
 
   public boolean playedMoveSelected() {
@@ -90,7 +90,7 @@ public class GameState extends Game {
   protected boolean isHumanTurn (Turn turn) {
 
     return
-      playMatch.settings()
+      matchPlay.settings()
         .playerIsHuman(
           turn.getPlayerOnRollsID()
         );

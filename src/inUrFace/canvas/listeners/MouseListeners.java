@@ -1,6 +1,6 @@
 package inUrFace.canvas.listeners;
 
-import sepuku.App;
+import sepuku.WinApp;
 import inUrFace.canvas.BoardDim;
 import inUrFace.canvas.painters.BonusPainter;
 import inUrFace.canvas.painters.CubePainter;
@@ -14,8 +14,8 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static sepuku.App.getCanvas;
-import static sepuku.App.win;
+import static sepuku.WinApp.getCanvas;
+import static sepuku.WinApp.win;
 import static util.Reflection.getFieldsList;
 
 public class MouseListeners extends MouseAdapter {
@@ -71,7 +71,7 @@ public class MouseListeners extends MouseAdapter {
           new Batch(offSet + ((x-y) * d.chequerTotalSpace * sign),
             (y == 0 ? (d.frameOffsetY+d.boardInnerHeight)-(d.chequerSize*5) : d.frameOffsetY),
             d.chequerSize, d.chequerSize*5);
-        points[count++].setComponent(App.win.canvas);
+        points[count++].setComponent(WinApp.win.canvas);
       }
     }
     return points;

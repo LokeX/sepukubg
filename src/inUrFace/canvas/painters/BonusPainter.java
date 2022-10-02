@@ -6,9 +6,9 @@ import util.TextBatch;
 import java.awt.*;
 import java.util.List;
 
-import static sepuku.App.getTextArea;
-import static sepuku.App.playSepuku;
-import static sepuku.App.win;
+import static sepuku.WinApp.getTextArea;
+import static sepuku.WinApp.sepukuPlay;
+import static sepuku.WinApp.win;
 
 public class BonusPainter extends TextBatch implements Paintable {
 
@@ -31,7 +31,7 @@ public class BonusPainter extends TextBatch implements Paintable {
 
       BonusPainter text = getTextArea();
       BoardDim d = win.canvas.getDimensions();
-      List<String> bonuses = playSepuku.getMatchPlay().getMoveBonuses();
+      List<String> bonuses = sepukuPlay.getMatchPlay().getMoveBonuses();
       Font font = new Font("Ariel", Font.BOLD, (int) (10 * (d.factor * 1.0)));
       int offsetX = (int) ((d.boardOffsetX + d.boardWidth) * 1.03);
       int width = win.canvas.getWidth() - offsetX;

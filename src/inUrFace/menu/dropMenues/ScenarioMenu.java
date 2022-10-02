@@ -1,7 +1,7 @@
 package inUrFace.menu.dropMenues;
 
 
-import sepuku.App;
+import sepuku.WinApp;
 import util.Dialogs;
 import util.time.Timeable;
 
@@ -9,8 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 
-import static sepuku.App.playSepuku;
-import static sepuku.App.win;
+import static sepuku.WinApp.sepukuPlay;
+import static sepuku.WinApp.win;
 
 public class ScenarioMenu extends JMenu implements Timeable {
 
@@ -37,9 +37,9 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(saveScenario);
     saveScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
     saveScenario.addActionListener((ActionEvent e) -> {
-      playSepuku.getInput().saveLayout(
+      sepukuPlay.getInput().saveLayout(
         inputLayoutName(),
-        App.getCanvas().getDisplayedLayout()
+        WinApp.getCanvas().getDisplayedLayout()
       );
     });
   }
@@ -49,7 +49,7 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(renameScenario);
     renameScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
     renameScenario.addActionListener((ActionEvent e) -> {
-      playSepuku.getInput().renameSelectedLayout(inputLayoutName());
+      sepukuPlay.getInput().renameSelectedLayout(inputLayoutName());
     });
   }
 
@@ -58,9 +58,9 @@ public class ScenarioMenu extends JMenu implements Timeable {
     add(removeScenario);
     removeScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
     removeScenario.addActionListener((ActionEvent e) -> {
-      if (playSepuku.getScenarios().getSelectedScenariosNr() > 0 ) {
+      if (sepukuPlay.getScenarios().getSelectedScenariosNr() > 0 ) {
         if (Dialogs.confirmed("Really delete scenario?", win)) {
-          playSepuku.getScenarios().deleteSelectedScenario();
+          sepukuPlay.getScenarios().deleteSelectedScenario();
         }
       }
     });
@@ -70,15 +70,15 @@ public class ScenarioMenu extends JMenu implements Timeable {
   public void timerUpdate () {
 
     removeScenario.setEnabled(
-      playSepuku != null &&
-        playSepuku.gameIsPlaying() &&
-        playSepuku.getScenarios().getSelectedScenariosNr() > 0
+      sepukuPlay != null &&
+        sepukuPlay.gameIsPlaying() &&
+        sepukuPlay.getScenarios().getSelectedScenariosNr() > 0
     );
     removeScenario.setVisible(removeScenario.isEnabled());
     renameScenario.setEnabled(
-      playSepuku != null &&
-        playSepuku.gameIsPlaying() &&
-        playSepuku.getScenarios().getSelectedScenariosNr() > 0
+      sepukuPlay != null &&
+        sepukuPlay.gameIsPlaying() &&
+        sepukuPlay.getScenarios().getSelectedScenariosNr() > 0
     );
     renameScenario.setVisible(renameScenario.isEnabled());
   }

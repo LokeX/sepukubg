@@ -6,7 +6,7 @@ import inUrFace.menu.dropMenues.NavigateMenu;
 import inUrFace.menu.dropMenues.EditMenu;
 import inUrFace.menu.dropMenues.MatchMenu;
 
-import static sepuku.App.timedTasks;
+import static sepuku.WinApp.timedTasks;
 import util.time.Timeable;
 import inUrFace.menu.dropMenues.settingsMenu.SettingsMenu;
 

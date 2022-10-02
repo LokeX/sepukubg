@@ -2,8 +2,8 @@ package inUrFace.canvas.painters;
 
 import inUrFace.canvas.BoardDim;
 
-import static sepuku.App.playSepuku;
-import static sepuku.App.win;
+import static sepuku.WinApp.sepukuPlay;
+import static sepuku.WinApp.win;
 
 import java.awt.*;
 import javax.swing.ImageIcon;
@@ -88,7 +88,7 @@ public class DicePainter implements Paintable {
 
   private void makeDice () {
 
-    dice = playSepuku.getMatchPlay().getSelectedTurn().getDice();
+    dice = sepukuPlay.getMatchPlay().getSelectedTurn().getDice();
     for (int a = 0; a < dice.length; a++) {
       if (dieIcons[a] == null) {
         dieIcons[a] = new DieIcon();
@@ -101,10 +101,10 @@ public class DicePainter implements Paintable {
   @Override
   public void paint (Graphics g) {
 
-    if (playSepuku != null && playSepuku.getMatchPlay().getSelectedTurn() != null) {
+    if (sepukuPlay != null && sepukuPlay.getMatchPlay().getSelectedTurn() != null) {
       makeDice();
 
-      int[] shades = playSepuku.getUsedDicePattern();
+      int[] shades = sepukuPlay.getUsedDicePattern();
 
       g.setColor(new Color(0,0,0,125));
       for (int a = 0; a < dice.length; a++) {

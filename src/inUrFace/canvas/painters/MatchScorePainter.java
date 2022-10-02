@@ -2,12 +2,12 @@ package inUrFace.canvas.painters;
 
 import inUrFace.canvas.BoardDim;
 
-import static sepuku.App.win;
+import static sepuku.WinApp.win;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 public class MatchScorePainter implements Paintable {
 
@@ -15,9 +15,9 @@ public class MatchScorePainter implements Paintable {
   public void paint(Graphics g) {
 
     BoardDim d = win.canvas.getDimensions();
-    String toScore = Integer.toString(playSepuku.getScoreBoard().getPlayToScore());
-    String whiteScore = playSepuku.getScoreBoard().getWhiteMatchScore();
-    String blackScore = playSepuku.getScoreBoard().getBlackMatchScore();
+    String toScore = Integer.toString(sepukuPlay.getScoreBoard().getPlayToScore());
+    String whiteScore = sepukuPlay.getScoreBoard().getWhiteMatchScore();
+    String blackScore = sepukuPlay.getScoreBoard().getBlackMatchScore();
     
     g.setFont(new Font("Ariel", Font.BOLD, (int)(26*d.factor)));
 

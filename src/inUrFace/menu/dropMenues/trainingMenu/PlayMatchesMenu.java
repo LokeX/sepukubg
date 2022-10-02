@@ -3,8 +3,8 @@ package inUrFace.menu.dropMenues.trainingMenu;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import static sepuku.App.trainer;
-import static sepuku.App.win;
+import static sepuku.WinApp.trainer;
+import static sepuku.WinApp.win;
 
 public class PlayMatchesMenu extends JMenu {
 

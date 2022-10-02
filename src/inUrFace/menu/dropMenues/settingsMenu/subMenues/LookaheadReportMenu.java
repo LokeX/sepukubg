@@ -3,19 +3,19 @@ package inUrFace.menu.dropMenues.settingsMenu.subMenues;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 public class LookaheadReportMenu extends JMenu {
 
   JRadioButtonMenuItem reportOn =
     new JRadioButtonMenuItem(
       "On",
-      playSepuku.getSettings().isSearchReportOn()
+      sepukuPlay.getSettings().isSearchReportOn()
     );
   JRadioButtonMenuItem reportOff =
     new JRadioButtonMenuItem(
       "Off",
-      !playSepuku.getSettings().isSearchReportOn()
+      !sepukuPlay.getSettings().isSearchReportOn()
     );
   ButtonGroup buttonGroup = new ButtonGroup();
 
@@ -37,7 +37,7 @@ public class LookaheadReportMenu extends JMenu {
 
     add(reportOn);
     reportOn.addActionListener(
-      (ActionEvent e) -> playSepuku.getSettings().setSearchReportOn(true)
+      (ActionEvent e) -> sepukuPlay.getSettings().setSearchReportOn(true)
     );
   }
 
@@ -45,7 +45,7 @@ public class LookaheadReportMenu extends JMenu {
 
     add(reportOff);
     reportOff.addActionListener(
-      (ActionEvent e) -> playSepuku.getSettings().setSearchReportOn(false)
+      (ActionEvent e) -> sepukuPlay.getSettings().setSearchReportOn(false)
     );
   }
 

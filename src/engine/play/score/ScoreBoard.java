@@ -1,23 +1,23 @@
 package engine.play.score;
 
-import engine.play.PlayMatch;
+import engine.play.MatchPlay;
 
 public class ScoreBoard {
 
   private MatchBoard matchBoard;
-  private PlayMatch playMatch;
+  private MatchPlay matchPlay;
 
-  public ScoreBoard (PlayMatch playMatch) {
+  public ScoreBoard (MatchPlay matchPlay) {
 
-    matchBoard = playMatch.getMatchBoard();
-    this.playMatch = playMatch;
+    matchBoard = matchPlay.getMatchBoard();
+    this.matchPlay = matchPlay;
   }
 
   public boolean gameOver () {
 
     return
-      playMatch.gameOver()
-      && playMatch.lastTurnSelected();
+      matchPlay.gameOver()
+      && matchPlay.lastTurnSelected();
   }
 
   private int [] matchScores () {

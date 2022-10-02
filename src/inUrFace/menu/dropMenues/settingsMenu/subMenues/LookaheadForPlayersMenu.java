@@ -3,19 +3,19 @@ package inUrFace.menu.dropMenues.settingsMenu.subMenues;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 public class LookaheadForPlayersMenu extends JMenu {
 
   JRadioButtonMenuItem allPlayers =
     new JRadioButtonMenuItem(
       "All players",
-      playSepuku.getSettings().getLookaheadForAllPlayers()
+      sepukuPlay.getSettings().getLookaheadForAllPlayers()
     );
   JRadioButtonMenuItem botsOnly =
     new JRadioButtonMenuItem(
       "Bots only",
-      !playSepuku.getSettings().getLookaheadForAllPlayers()
+      !sepukuPlay.getSettings().getLookaheadForAllPlayers()
     );
   ButtonGroup playerChoices = new ButtonGroup();
 
@@ -37,7 +37,7 @@ public class LookaheadForPlayersMenu extends JMenu {
 
     add(allPlayers);
     allPlayers.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setLookaheadForAllPlayers(true);
+        sepukuPlay.getSettings().setLookaheadForAllPlayers(true);
     });
   }
 
@@ -45,7 +45,7 @@ public class LookaheadForPlayersMenu extends JMenu {
 
     add(botsOnly);
     botsOnly.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setLookaheadForAllPlayers(false);
+        sepukuPlay.getSettings().setLookaheadForAllPlayers(false);
     });
   }
 

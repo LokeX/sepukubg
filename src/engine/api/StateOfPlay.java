@@ -1,11 +1,11 @@
 package engine.api;
 
-import engine.play.PlayMatch;
+import engine.play.MatchPlay;
 import engine.play.humanMove.HumanMove;
 
 public class StateOfPlay {
 
-  private PlaySepuku playSepuku;
+  private SepukuPlay sepukuPlay;
   private boolean autoComplete = false;
   private String[] playTitles = new String[] {
     "Start match",
@@ -19,7 +19,7 @@ public class StateOfPlay {
   public boolean isSearching () {
 
     return
-      playSepuku.getMatchPlay().getSearch().isSearching();
+      sepukuPlay.getMatchPlay().getSearch().isSearching();
   }
 
   void setAutoComplete (boolean complete) {
@@ -27,14 +27,14 @@ public class StateOfPlay {
     autoComplete = complete;
   }
 
-  public StateOfPlay(PlaySepuku engineApi) {
+  public StateOfPlay(SepukuPlay engineApi) {
 
-    this.playSepuku = engineApi;
+    this.sepukuPlay = engineApi;
   }
 
-  private PlayMatch matchPlay () {
+  private MatchPlay matchPlay () {
 
-    return playSepuku.getMatchPlay();
+    return sepukuPlay.getMatchPlay();
   }
 
   private boolean lastTurnSelected () {
@@ -117,7 +117,7 @@ public class StateOfPlay {
   private boolean scenarioEdit () {
 
     return
-      playSepuku.getScenarios().isEditing();
+      sepukuPlay.getScenarios().isEditing();
   }
 
   public boolean nextPlayReady () {

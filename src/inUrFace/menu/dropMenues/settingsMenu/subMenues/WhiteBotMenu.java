@@ -7,7 +7,7 @@ import util.menus.Listable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 
 public class WhiteBotMenu implements Listable {
@@ -18,7 +18,7 @@ public class WhiteBotMenu implements Listable {
   public void itemSelectedAction(int selectedItemNr) {
 
     this.selectedItemNr = selectedItemNr;
-    playSepuku.getSettings().setWhiteBotOpponent(selectedItemNr);
+    sepukuPlay.getSettings().setWhiteBotOpponent(selectedItemNr);
   }
 
   @Override

@@ -1,6 +1,6 @@
 package inUrFace.menu.dropMenues.settingsMenu.subMenues;
 
-import static sepuku.App.playSepuku;
+import static sepuku.WinApp.sepukuPlay;
 
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
@@ -12,22 +12,22 @@ public class MoveDelayMenu extends JMenu {
   JRadioButtonMenuItem milli500 =
     new JRadioButtonMenuItem(
       "500 milliseconds",
-      playSepuku.getSettings().getShowMoveDelay() == 500
+      sepukuPlay.getSettings().getShowMoveDelay() == 500
     );
   JRadioButtonMenuItem milli300 =
     new JRadioButtonMenuItem(
       "300 milliseconds",
-      playSepuku.getSettings().getShowMoveDelay() == 300
+      sepukuPlay.getSettings().getShowMoveDelay() == 300
     );
   JRadioButtonMenuItem milli150 =
     new JRadioButtonMenuItem(
       "150 milliseconds",
-      playSepuku.getSettings().getShowMoveDelay() == 150
+      sepukuPlay.getSettings().getShowMoveDelay() == 150
     );
   JRadioButtonMenuItem milli0 =
     new JRadioButtonMenuItem(
       "Show move immediately",
-      playSepuku.getSettings().getShowMoveDelay() == 0
+      sepukuPlay.getSettings().getShowMoveDelay() == 0
     );
   ButtonGroup showMoveChoices = new ButtonGroup();
 
@@ -53,7 +53,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli500);
     milli500.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setShowMoveDelay(500);
+        sepukuPlay.getSettings().setShowMoveDelay(500);
     });
   }
 
@@ -61,7 +61,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli300);
     milli300.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setShowMoveDelay(300);
+        sepukuPlay.getSettings().setShowMoveDelay(300);
     });
   }
 
@@ -69,7 +69,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli150);
     milli150.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setShowMoveDelay(150);
+        sepukuPlay.getSettings().setShowMoveDelay(150);
     });
   }
 
@@ -77,7 +77,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli0);
     milli0.addActionListener((ActionEvent e) -> {
-        playSepuku.getSettings().setShowMoveDelay(0);
+        sepukuPlay.getSettings().setShowMoveDelay(0);
     });
   }
 
