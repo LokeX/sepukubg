@@ -6,6 +6,7 @@ import util.Dialogs;
 import util.time.Timeable;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 
@@ -35,28 +36,34 @@ public class ScenarioMenu extends JMenu implements Timeable {
   private void setupSaveScenarioMenu() {
 
     add(saveScenario);
-    saveScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.ALT_MASK));
-    saveScenario.addActionListener((ActionEvent e) -> {
+    saveScenario.setAccelerator(
+      KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK)
+    );
+    saveScenario.addActionListener((ActionEvent e) ->
       sepukuPlay.getInput().saveLayout(
         inputLayoutName(),
         WinApp.getCanvas().getDisplayedLayout()
-      );
-    });
+      )
+    );
   }
 
   private void setupRenameScenarioMenu() {
 
     add(renameScenario);
-    renameScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
-    renameScenario.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getInput().renameSelectedLayout(inputLayoutName());
-    });
+    renameScenario.setAccelerator(
+      KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_DOWN_MASK)
+    );
+    renameScenario.addActionListener((ActionEvent e) ->
+      sepukuPlay.getInput().renameSelectedLayout(inputLayoutName())
+    );
   }
 
   private void setupRemoveScenarioMenu() {
 
     add(removeScenario);
-    removeScenario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+    removeScenario.setAccelerator(
+      KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0)
+    );
     removeScenario.addActionListener((ActionEvent e) -> {
       if (sepukuPlay.getScenarios().getSelectedScenariosNr() > 0 ) {
         if (Dialogs.confirmed("Really delete scenario?", win)) {
@@ -71,13 +78,13 @@ public class ScenarioMenu extends JMenu implements Timeable {
 
     removeScenario.setEnabled(
       sepukuPlay != null &&
-        sepukuPlay.gameIsPlaying() &&
+        sepukuPlay.getScenarios().isEditing() &&
         sepukuPlay.getScenarios().getSelectedScenariosNr() > 0
     );
     removeScenario.setVisible(removeScenario.isEnabled());
     renameScenario.setEnabled(
       sepukuPlay != null &&
-        sepukuPlay.gameIsPlaying() &&
+        sepukuPlay.getScenarios().isEditing() &&
         sepukuPlay.getScenarios().getSelectedScenariosNr() > 0
     );
     renameScenario.setVisible(renameScenario.isEnabled());

@@ -167,7 +167,7 @@ public class GameInfo {
         dice(gameState().selectedTurn().getDice()),
         moveNr()+"/"+nrOfMoves(),
         movePoints(),
-        selectedMoveAnnotationString()
+//        selectedMoveAnnotationString()
       };
   }
 
@@ -179,7 +179,7 @@ public class GameInfo {
       "Dice:  ",
       "Move:  ",
       "Points:  ",
-      ""
+//      ""
     };
   }
 

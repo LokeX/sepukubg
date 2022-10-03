@@ -34,6 +34,7 @@ public class Layout {
     useBlackBot = layout.useBlackBot;
     useWhiteBot = layout.useWhiteBot;
     hash = layout.hash;
+    rearPos = layout.rearPos;
   }
 
   public Layout (int[] point) {

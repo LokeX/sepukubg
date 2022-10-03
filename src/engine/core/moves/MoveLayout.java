@@ -81,7 +81,7 @@ public class MoveLayout extends Layout {
 
     List<Integer> moveablePoints = new ArrayList<>(20);
 
-    if (rearPos < 0) {
+    if (rearPos < 0 || (rearPos == 25 && point[25] == 0)) {
       calcRearPos();
     } else if (rearPos < 25 && point[25] > 0) {
       rearPos = 25;
@@ -204,39 +204,46 @@ public class MoveLayout extends Layout {
         .collect(joining(","));
   }
   
+  private String dubleStr (int position) {
+  
+    int duble = !parentMoves.getDiceObj().areDouble() || position%2 != 1 ? 0 :
+      (int) IntStream.range(0,parentMoves.getNrOfLegalPartMoves()*2)
+        .filter(pos -> pos%2 == 1)
+        .filter(pos -> movePoints[pos] == movePoints[position])
+        .count();
+
+    return
+      duble > 1
+      ? "("+duble+")"
+      : "";
+  }
+  
   private String pointNotation (int position) {
     
-    int duble =
-      !parentMoves.getDiceObj().areDouble() || position%2 != 1 ? 0 :
-        (int) IntStream.range(0,parentMoves.getNrOfLegalPartMoves()*2)
-          .filter(pos -> pos%2 == 1)
-          .filter(pos -> movePoints[pos] == movePoints[position])
-          .count();
-    String dubleStr = duble > 1 ? "("+duble+")" : "";
+    String dubleStr = dubleStr(position);
     
     return
         movePoints[position] == 0 ||
         movePoints[position] == 26
-      ? "/off"+dubleStr
+      ? "off"+dubleStr
       : movePoints[position] == 25 ||
         movePoints[position] == 51
       ? "bar/"
       : position%2 == 1 &&
         hitPoints[position] != -1
-      ? "/"+movePoints[position]+"*"+dubleStr
+      ? movePoints[position]+"*"+dubleStr
       : position%2 == 0
       ? movePoints[position]+"/"
       : movePoints[position]+dubleStr;
   }
   
-  private List<String> listPartMoves (List<String> notedPoints) {
+  private List<String> listPartMoves (List<String> notePoints) {
     
     List<String> partMoves = new ArrayList<>();
     
-    for (int a = 0; a < notedPoints.size()/2; a+=2) {
-      partMoves.add(notedPoints.get(a)+notedPoints.get(a+1));
+    for (int index = 0; index < notePoints.size(); index+=2) {
+      partMoves.add(notePoints.get(index)+notePoints.get(index+1));
     }
-
     return
       partMoves;
   }
@@ -255,10 +262,9 @@ public class MoveLayout extends Layout {
     
     String dice = parentMoves.getDiceObj().getDiceInt()+": ";
     List<String> partMovesList = listPartMoves(
-      IntStream
-        .range(0,parentMoves.getNrOfLegalPartMoves()*2)
-        .mapToObj(this::pointNotation)
-        .toList()
+      IntStream.range(0,parentMoves.getNrOfLegalPartMoves()*2)
+      .mapToObj(this::pointNotation)
+      .toList()
     );
     return
       partMovesList.isEmpty()

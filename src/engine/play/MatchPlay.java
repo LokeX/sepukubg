@@ -184,18 +184,45 @@ public class MatchPlay {
         ? humanMove.getMoveSelection().dicePattern()
         : computerUsedDicePattern();
   }
-
+  
   private int[] computerUsedDicePattern () {
 
-    int[] dicePattern = null;
-
+    int[] dicePattern = new int[gameState.selectedTurn().getDice().length];
+    int nrOfMovePointLayouts = gameState
+      .selectedMove()
+      .getMovePointLayouts()
+      .size();
+    boolean firstLayoutDispatched =
+      moveOutput.nrOfOutputLayouts() <= nrOfMovePointLayouts;
+    boolean noDice =
+      gameState.selectedMove().isIllegal()
+      || (moveOutput.nrOfOutputLayouts() == 0 && !search.isSearching());
+    
     if (gameIsPlaying()) {
-      dicePattern = new int[gameState.selectedTurn().getDice().length];
-      Arrays.fill(dicePattern,1);
+      if (noDice) {
+        Arrays.fill(dicePattern,1);
+      } else if (firstLayoutDispatched && moveOutput.nrOfOutputLayouts() > 0) {
+        dicePattern = gameState
+          .selectedMove()
+          .getMovePointLayouts()
+          .get(nrOfMovePointLayouts - moveOutput.nrOfOutputLayouts())
+          .dicePattern();
+      }
     }
     return dicePattern;
   }
 
+//  private int[] computerUsedDicePattern () {
+//
+//    int[] dicePattern = null;
+//
+//    if (gameIsPlaying()) {
+//      dicePattern = new int[gameState.selectedTurn().getDice().length];
+//      Arrays.fill(dicePattern,1);
+//    }
+//    return dicePattern;
+//  }
+//
   public boolean playerIsHuman () {
 
     return
