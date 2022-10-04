@@ -52,7 +52,7 @@ public class MoveLayout extends Layout {
     return temp;
   }
 
-  public int[] getMovePointsBackupPoints () {
+  public int[] getMovePointsBackup () {
 
     int[] temp = new int[hitPoints.length];
 
@@ -71,7 +71,7 @@ public class MoveLayout extends Layout {
     movePoints = moveLayout.getMovePoints();
     movePoints2 = moveLayout.getMovePoints2();
     hitPoints = moveLayout.getHitPoints();
-    movePointsBackup = moveLayout.movePointsBackup;
+    movePointsBackup = moveLayout.getMovePointsBackup();
   }
 
   MoveLayout (Moves moves, Layout layout) {
