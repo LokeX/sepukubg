@@ -232,13 +232,11 @@ public class MoveSelection extends Moves {
   public int[] dicePattern () {
 
     return
-      position() == 0
-      ? new int[getDice().length]
-      : matchingMoves()
-        .findAny()
-        .get()
-        .dicePatterns()
-        .get(position()-1);
+      matchingMoves()
+      .findAny()
+      .get()
+      .dicePatterns()
+      .get(position() == 0 ? 0 : position()-1);
   }
   
   private Stream<Integer> projectMovePointsTo (int terminalPosition) {

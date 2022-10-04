@@ -40,10 +40,8 @@ public class DicePattern extends MoveLayout {
     
     return
       dieValue(
-        Arrays.copyOfRange(movePointLayouts
-          .getMoveLayoutsList()
-          .get(1)
-          .getMovePoints(),
+        Arrays.copyOfRange(
+          movePointsBackup,
           0,
           2
         )
@@ -67,8 +65,8 @@ public class DicePattern extends MoveLayout {
   private int usedDieValue () {
     
     return
-      dieValue(Arrays
-        .copyOfRange(
+      dieValue(
+        Arrays.copyOfRange(
           movePoints,
           0,
           2
@@ -84,10 +82,12 @@ public class DicePattern extends MoveLayout {
       );
   }
   
-  private int diePosOf(int die) {
+  private int diePosOf(int dieValue) {
     
     return
-      getDice()[0] == die ? 0 : 1;
+      getDice()[0] == dieValue
+      ? 0
+      : 1;
   }
   
   private boolean noAvailableDice() {
@@ -115,6 +115,7 @@ public class DicePattern extends MoveLayout {
     if (noAvailableDice()) {
       Arrays.fill(dicePattern,1);
     } else if (gotAnInvalidDie()) {
+      System.out.println("Got an invalid die");
       dicePattern[invalidDiePosition()] = 1;
     } else if (oneDieIsUsed()) {
       dicePattern[usedDiePosition()] = 1;

@@ -10,12 +10,13 @@ import static java.util.stream.Collectors.joining;
 
 public class MoveLayout extends Layout {
 
-  protected List<int[]> dicePatterns;
-  protected MovePointLayouts movePointLayouts;
+  private List<int[]> dicePatterns;
+  private MovePointLayouts movePointLayouts;
   protected Moves parentMoves;
   protected int[] hitPoints;
   protected int[] movePoints;
   protected int[] movePoints2;
+  protected int[] movePointsBackup;
 
   public MoveLayout getParentMoveLayout () {
 
@@ -51,6 +52,14 @@ public class MoveLayout extends Layout {
     return temp;
   }
 
+  public int[] getMovePointsBackupPoints () {
+
+    int[] temp = new int[hitPoints.length];
+
+    System.arraycopy(movePointsBackup, 0, temp, 0, movePointsBackup.length);
+    return temp;
+  }
+
   protected MoveLayout () {
 
   }
@@ -62,6 +71,7 @@ public class MoveLayout extends Layout {
     movePoints = moveLayout.getMovePoints();
     movePoints2 = moveLayout.getMovePoints2();
     hitPoints = moveLayout.getHitPoints();
+    movePointsBackup = moveLayout.movePointsBackup;
   }
 
   MoveLayout (Moves moves, Layout layout) {
@@ -71,10 +81,12 @@ public class MoveLayout extends Layout {
     movePoints = new int[parentMoves.getDice().length*2];
     hitPoints = new int[movePoints.length];
     movePoints2 = new int[movePoints.length];
+    movePointsBackup = new int[movePoints.length];
     for (int a = 0; a < movePoints.length; a++) {
       movePoints[a] = -1;
       hitPoints[a] = -1;
       movePoints2[a] = -1;
+      movePointsBackup[a] = -1;
     }
   }
 
@@ -120,17 +132,21 @@ public class MoveLayout extends Layout {
   private MoveLayout setPartMove (int dieNr, int[] dieFaces, int startingPoint) {
 
     int endingPoint = startingPoint - dieFaces[dieNr];
+    int startPos = dieNr*2;
+    int endPos = startPos+1;
 
     if (endingPoint < 0) {
       endingPoint = 0;
     }
-    movePoints[dieNr * 2] = playerID == 1 ? 25 - startingPoint : startingPoint;
-    movePoints[(dieNr * 2) + 1] = playerID == 1 ? 25 - endingPoint : endingPoint;
-    movePoints2[dieNr * 2] = startingPoint;
-    movePoints2[(dieNr * 2) + 1] = endingPoint;
+    movePoints[startPos] = playerID == 1 ? 25 - startingPoint : startingPoint;
+    movePoints[endPos] = playerID == 1 ? 25 - endingPoint : endingPoint;
+    movePointsBackup[startPos] = movePoints[startPos];
+    movePointsBackup[endPos] = movePoints[endPos];
+    movePoints2[startPos] = startingPoint;
+    movePoints2[endPos] = endingPoint;
     if (point[endingPoint + 26] == 1) {
-      hitPoints[dieNr * 2] = endingPoint + 26;
-      hitPoints[(dieNr * 2) + 1] = 26;
+      hitPoints[startPos] = endingPoint + 26;
+      hitPoints[endPos] = 26;
       point[endingPoint + 26]--;
       point[26]++;
     }

@@ -31,11 +31,11 @@ public class SearchEvaluation {
       .limit(nrOfMoves)
       .forEach(move ->
         move.setSearchEvaluation(
-          move.getLayoutStrength() -
-            projectedStrengthAverage(
-              1,
-              move
-            )
+          move.getLayoutStrength()
+          - projectedStrengthAverage(
+            1,
+            move
+          )
         )
       );
     report += "Before values:\n";
