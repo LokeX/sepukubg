@@ -1,10 +1,12 @@
-package engine.play;
+package engine.play.game;
 
 import engine.core.Game;
 import engine.core.Turn;
 import engine.core.moves.EvaluatedMove;
 import engine.core.moves.Layout;
 import engine.core.moves.MoveLayout;
+import engine.play.MatchPlay;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;

@@ -10,7 +10,8 @@ import static java.util.stream.Collectors.joining;
 
 public class MoveLayout extends Layout {
 
-  private MovePointLayouts movePointLayouts;
+  protected List<int[]> dicePatterns;
+  protected MovePointLayouts movePointLayouts;
   protected Moves parentMoves;
   protected int[] hitPoints;
   protected int[] movePoints;
@@ -191,9 +192,11 @@ public class MoveLayout extends Layout {
   public List<MoveLayout> getMovePointLayouts() {
 
     if (movePointLayouts == null) {
-      movePointLayouts = new MovePointLayouts(new MoveLayout(this));
+      movePointLayouts =
+        new MovePointLayouts(new MoveLayout(this));
     }
-    return movePointLayouts.getMoveLayoutsList();
+    return
+      movePointLayouts.getMoveLayoutsList();
   }
 
   public String getMovePointsString() {
@@ -278,64 +281,19 @@ public class MoveLayout extends Layout {
       parentMoves.getNrOfLegalPartMoves();
   }
   
-  private int position () {
-    
-    return (int)
-      Arrays.stream(movePoints)
-        .filter(point -> point != -1)
-        .count();
-  }
-  
-  private int[] doubleDicePattern () {
-    
-    int[] dicePattern = new int[4];
-    int nrOfUsedDice =
-      (position()/2)+((movePoints.length/2)-getNrOfLegalPartMoves());
-    
-    if (nrOfUsedDice > 0) {
-      Arrays.fill(dicePattern,0,nrOfUsedDice,1);
+  public List<int[]> dicePatterns () {
+
+    if (dicePatterns == null) {
+      dicePatterns = getMovePointLayouts()
+        .stream()
+        .map(DicePattern::new)
+        .map(DicePattern::dicePattern)
+        .toList();
     }
     return
-      dicePattern;
+      dicePatterns;
   }
-  
-  private int usedDie () {
-    
-    return
-      getPlayerID() == 0
-        ? movePoints[0] - movePoints[1]
-        : (movePoints[0] - movePoints[1])*-1;
-  }
-  
-  private int diePosOf(int die) {
-    
-    return
-      getDice()[0] == die ? 0 : 1;
-  }
-  
-  private int[] regularDicePattern () {
-    
-    int[] dicePattern = new int[2];
-    
-    if (position() == getNrOfLegalPartMoves()*2) {
-      Arrays.fill(dicePattern,1);
-    } else if (position() < 2 && getNrOfLegalPartMoves() == 1) {
-      dicePattern[diePosOf(usedDie()) == 0 ? 1 : 0] = 1;
-    } else if (position() > 1) {
-      dicePattern[diePosOf(usedDie())] = 1;
-    }
-    return
-      dicePattern;
-  }
-  
-  public int[] dicePattern () {
-    
-    return
-      parentMoves.getDiceObj().areDouble()
-        ? doubleDicePattern()
-        : regularDicePattern();
-  }
-  
+
   public void printMovePoints () {
 
     System.out.println("["+getMovePointsString()+"]");

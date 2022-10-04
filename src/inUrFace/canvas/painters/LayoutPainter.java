@@ -16,24 +16,33 @@ public class LayoutPainter implements Paintable {
     yellowColor,
     redColor,
   };
-
+  Layout layout = new Layout();
+//  Layout displayedLayout;
+  int[][] playerPoints;
+  int whitePip;
+  int blackPip;
+  
   @Override
   public void paint (Graphics g) {
 
     BoardDim d = win.canvas.getDimensions();
-    Layout layout = getDisplayedLayout();
-    int[][] playerPoints = new int[][] {
-      layout.getWhitePoints(),
-      layout.getBlackPoints(),
-    };
-    int whitePip = layout.getWhitePip();
-    int blackPip = layout.getBlackPip();
     int bottomRightOffsetX =
       d.rightPlayAreaOffsetX+d.rightPlayAreaWidth;
     int chequerBottomOffsetY =
       d.boardOffsetY+d.boardHeight-d.frameHeight-d.chequerSize;
     int x,y;
-
+    
+//    displayedLayout = getDisplayedLayout();
+//    displayedLayout.generateHashCode();
+//    if (!layout.isIdenticalTo(displayedLayout)) {
+      layout = getDisplayedLayout();
+      playerPoints = new int[][] {
+        layout.getWhitePoints(),
+        layout.getBlackPoints(),
+      };
+      whitePip = layout.getWhitePip();
+      blackPip = layout.getBlackPip();
+  //  }
     g.setColor(Color.RED);
     g.drawString(
       Integer.toString(blackPip),

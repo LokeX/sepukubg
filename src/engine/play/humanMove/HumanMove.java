@@ -2,7 +2,7 @@ package engine.play.humanMove;
 
 import engine.api.Settings;
 import engine.play.MoveOutput;
-import engine.play.GameState;
+import engine.play.game.GameState;
 import engine.play.MatchPlay;
 
 import java.util.stream.Stream;

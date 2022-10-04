@@ -1,6 +1,6 @@
 package engine.api;
 
-import engine.play.GameInfo;
+import engine.play.game.GameInfo;
 
 import java.util.stream.IntStream;
 

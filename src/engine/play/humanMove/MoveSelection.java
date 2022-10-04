@@ -229,26 +229,16 @@ public class MoveSelection extends Moves {
       : -1;
   }
   
-  private int[] noUsedDicePattern () {
-    
-    int[] pattern = getDice().clone();
-    
-    Arrays.fill(pattern,0);
-    return
-      pattern;
-  }
-
   public int[] dicePattern () {
 
     return
       position() == 0
-      ? noUsedDicePattern()
+      ? new int[getDice().length]
       : matchingMoves()
         .findAny()
         .get()
-        .getMovePointLayouts()
-        .get(position()-1)
-        .dicePattern();
+        .dicePatterns()
+        .get(position()-1);
   }
   
   private Stream<Integer> projectMovePointsTo (int terminalPosition) {

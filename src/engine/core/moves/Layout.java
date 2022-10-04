@@ -179,7 +179,7 @@ public class Layout {
   }
 
   public Layout getClone () {
-
+    
     return new Layout(this);
   }
 

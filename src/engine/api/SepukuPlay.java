@@ -4,7 +4,7 @@ import engine.play.humanMove.HumanMove;
 import engine.play.score.MatchBoard;
 import engine.play.score.ScoreBoard;
 import engine.core.Game;
-import engine.play.GameState;
+import engine.play.game.GameState;
 import engine.play.MatchCube;
 import engine.play.MatchPlay;
 import engine.play.MoveOutput;
@@ -54,7 +54,7 @@ public class SepukuPlay {
   public int[] getUsedDicePattern () {
 
     return
-      matchPlay != null
+      gameIsPlaying()
       ? matchPlay.getUsedDicePattern()
       : null;
   }
@@ -62,8 +62,8 @@ public class SepukuPlay {
   public Game getGame () {
 
     return
-      matchPlay.gameIsPlaying()
-      ? matchPlay.getGameState()
+      gameIsPlaying()
+      ? getGameState()
       : null;
     
   }

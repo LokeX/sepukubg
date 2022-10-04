@@ -32,23 +32,15 @@ public class DicePainter implements Paintable {
       int newDieHeight = (int)(dieFaces[dieFace].getIconHeight()*(d.factor/1.65));
       int oldDieWidth = (dieFaceIcons[dieFace].getIconWidth());
       int oldDieHeight = (dieFaceIcons[dieFace].getIconHeight());
-      boolean rescaled = false;
 
       if (newDieWidth != oldDieWidth || newDieHeight != oldDieHeight || oldDiceLength != dice.length) {
-        rescaled = true;
         dieWidth = newDieWidth;
         dieHeight = newDieHeight;
-
-        dieFaceIcons[dieFace] = new ImageIcon(dieFaces[dieFace]
-          .getImage()
-//          .getScaledInstance(dieWidth, dieHeight, Image.SCALE_DEFAULT)
-        );
+        dieFaceIcons[dieFace] = new ImageIcon(dieFaces[dieFace].getImage());
       }
-//      if (oldDiceLength != dice.length || rescaled) {
-        oldDiceLength = dice.length;
-        centerX = d.leftPlayAreaOffsetX+(d.leftPlayAreaWidth-(((int)(dieWidth*1.2))*dice.length))/2;
-        centerY = (int)((d.frameOffsetY+(d.boardInnerHeight/2))*0.95);
-//      }
+      oldDiceLength = dice.length;
+      centerX = d.leftPlayAreaOffsetX+(d.leftPlayAreaWidth-(((int)(dieWidth*1.2))*dice.length))/2;
+      centerY = (int)((d.frameOffsetY+(d.boardInnerHeight/2))*0.95);
       Graphics2D g2 = (Graphics2D) g;
       g2.setRenderingHint(
         RenderingHints.KEY_INTERPOLATION,
@@ -80,7 +72,7 @@ public class DicePainter implements Paintable {
 
     for (int a = 0; a < dieFaces.length; a++) {
       dieFaces[a] = new ImageIcon(
-        getClass().getResource("dice/" + Integer.toString(a + 1) + ".gif")
+        getClass().getResource("dice/" + (a + 1) + ".gif")
       );
       dieFaceIcons[a] = new ImageIcon(dieFaces[a].getImage());
     }
@@ -101,15 +93,12 @@ public class DicePainter implements Paintable {
   @Override
   public void paint (Graphics g) {
 
-    if (sepukuPlay != null && sepukuPlay.getMatchPlay().getSelectedTurn() != null) {
+    if (sepukuPlay.gameIsPlaying()) {
       makeDice();
-
-      int[] shades = sepukuPlay.getUsedDicePattern();
-
       g.setColor(new Color(0,0,0,125));
       for (int a = 0; a < dice.length; a++) {
         dieIcons[a].paintDie(g);
-        if (shades[a] > 0) {
+        if (sepukuPlay.getUsedDicePattern()[a] > 0) {
           dieIcons[a].paintShade(g);
         }
       }

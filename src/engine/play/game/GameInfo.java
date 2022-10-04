@@ -1,5 +1,6 @@
-package engine.play;
+package engine.play.game;
 
+import engine.play.MatchPlay;
 import engine.play.humanMove.HumanMove;
 
 import java.util.Arrays;

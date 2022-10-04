@@ -4,18 +4,20 @@ import engine.api.Settings;
 import engine.api.SepukuPlay;
 import engine.core.Turn;
 import engine.core.moves.EvaluatedMove;
+import engine.play.game.GameInfo;
+import engine.play.game.GameState;
 import engine.play.humanMove.HumanMove;
 import engine.play.score.MatchBoard;
 import engine.play.score.ScoreBoard;
 import engine.core.moves.Layout;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static util.ThreadUtil.runWhenNotified;
 
 public class MatchPlay {
 
+  private UsedDice usedDice;
   private GameInfo gameInfo;
   private ScoreBoard scoreBoard;
   private MatchCube matchCube;
@@ -38,6 +40,7 @@ public class MatchPlay {
     humanMove = new HumanMove(this);
     moveOutput = new MoveOutput();
     gameInfo = new GameInfo(this);
+    usedDice = new UsedDice(this);
   }
   
   public Layout getScenario () {
@@ -178,51 +181,9 @@ public class MatchPlay {
   public int[] getUsedDicePattern () {
 
     return
-      playerIsHuman()
-      && humanMove.getMoveSelection() != null
-      && !getSelectedMove().isIllegal()
-        ? humanMove.getMoveSelection().dicePattern()
-        : computerUsedDicePattern();
+      usedDice.getUsedDicePattern();
   }
   
-  private int[] computerUsedDicePattern () {
-
-    int[] dicePattern = new int[gameState.selectedTurn().getDice().length];
-    int nrOfMovePointLayouts = gameState
-      .selectedMove()
-      .getMovePointLayouts()
-      .size();
-    boolean firstLayoutDispatched =
-      moveOutput.nrOfOutputLayouts() <= nrOfMovePointLayouts;
-    boolean noDice =
-      gameState.selectedMove().isIllegal()
-      || (moveOutput.nrOfOutputLayouts() == 0 && !search.isSearching());
-    
-    if (gameIsPlaying()) {
-      if (noDice) {
-        Arrays.fill(dicePattern,1);
-      } else if (firstLayoutDispatched && moveOutput.nrOfOutputLayouts() > 0) {
-        dicePattern = gameState
-          .selectedMove()
-          .getMovePointLayouts()
-          .get(nrOfMovePointLayouts - moveOutput.nrOfOutputLayouts())
-          .dicePattern();
-      }
-    }
-    return dicePattern;
-  }
-
-//  private int[] computerUsedDicePattern () {
-//
-//    int[] dicePattern = null;
-//
-//    if (gameIsPlaying()) {
-//      dicePattern = new int[gameState.selectedTurn().getDice().length];
-//      Arrays.fill(dicePattern,1);
-//    }
-//    return dicePattern;
-//  }
-//
   public boolean playerIsHuman () {
 
     return

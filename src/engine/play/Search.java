@@ -2,6 +2,7 @@ package engine.play;
 
 import engine.api.Settings;
 import engine.core.Turn;
+import engine.play.game.GameState;
 import inUrFace.windows.TextDisplay;
 
 public class Search {
