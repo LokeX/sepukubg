@@ -7,6 +7,7 @@ public class DicePattern extends MoveLayout {
   public DicePattern (MoveLayout moveLayout) {
     
     super(moveLayout);
+    movePointsBackup = moveLayout.getMovePointsBackup();
   }
 
   public int getNrOfLegalPartMoves () {

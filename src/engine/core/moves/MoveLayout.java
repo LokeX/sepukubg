@@ -3,6 +3,7 @@ package engine.core.moves;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.*;
@@ -11,7 +12,7 @@ import static java.util.stream.Collectors.joining;
 public class MoveLayout extends Layout {
 
   private List<int[]> dicePatterns;
-  private MovePointLayouts movePointLayouts;
+  private List<MoveLayout> movePointLayouts;
   protected Moves parentMoves;
   protected int[] hitPoints;
   protected int[] movePoints;
@@ -71,7 +72,6 @@ public class MoveLayout extends Layout {
     movePoints = moveLayout.getMovePoints();
     movePoints2 = moveLayout.getMovePoints2();
     hitPoints = moveLayout.getHitPoints();
-    movePointsBackup = moveLayout.getMovePointsBackup();
   }
 
   MoveLayout (Moves moves, Layout layout) {
@@ -81,12 +81,10 @@ public class MoveLayout extends Layout {
     movePoints = new int[parentMoves.getDice().length*2];
     hitPoints = new int[movePoints.length];
     movePoints2 = new int[movePoints.length];
-    movePointsBackup = new int[movePoints.length];
     for (int a = 0; a < movePoints.length; a++) {
       movePoints[a] = -1;
       hitPoints[a] = -1;
       movePoints2[a] = -1;
-      movePointsBackup[a] = -1;
     }
   }
 
@@ -140,8 +138,6 @@ public class MoveLayout extends Layout {
     }
     movePoints[startPos] = playerID == 1 ? 25 - startingPoint : startingPoint;
     movePoints[endPos] = playerID == 1 ? 25 - endingPoint : endingPoint;
-    movePointsBackup[startPos] = movePoints[startPos];
-    movePointsBackup[endPos] = movePoints[endPos];
     movePoints2[startPos] = startingPoint;
     movePoints2[endPos] = endingPoint;
     if (point[endingPoint + 26] == 1) {
@@ -204,15 +200,18 @@ public class MoveLayout extends Layout {
       hitPoints[1] != -1 &&
       movePoints[1] == movePoints[2];
   }
-
+  
   public List<MoveLayout> getMovePointLayouts() {
 
     if (movePointLayouts == null) {
       movePointLayouts =
-        new MovePointLayouts(new MoveLayout(this));
+        new MovePointLayouts(new MoveLayout(this)).getMoveLayoutsList();
+      movePointLayouts.forEach(
+        moveLayout -> moveLayout.movePointsBackup = getMovePoints()
+      );
     }
     return
-      movePointLayouts.getMoveLayoutsList();
+      movePointLayouts;
   }
 
   public String getMovePointsString() {
