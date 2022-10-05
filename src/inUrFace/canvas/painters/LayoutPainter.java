@@ -17,7 +17,7 @@ public class LayoutPainter implements Paintable {
     redColor,
   };
   Layout layout = new Layout();
-//  Layout displayedLayout;
+  Layout displayedLayout;
   int[][] playerPoints;
   int whitePip;
   int blackPip;
@@ -32,17 +32,17 @@ public class LayoutPainter implements Paintable {
       d.boardOffsetY+d.boardHeight-d.frameHeight-d.chequerSize;
     int x,y;
     
-//    displayedLayout = getDisplayedLayout();
-//    displayedLayout.generateHashCode();
-//    if (!layout.isIdenticalTo(displayedLayout)) {
-      layout = getDisplayedLayout();
+    displayedLayout = getDisplayedLayout();
+    displayedLayout.generateHashCode();
+    if (!layout.isIdenticalTo(displayedLayout)) {
+      layout = new Layout(getDisplayedLayout());
       playerPoints = new int[][] {
         layout.getWhitePoints(),
         layout.getBlackPoints(),
       };
       whitePip = layout.getWhitePip();
       blackPip = layout.getBlackPip();
-  //  }
+    }
     g.setColor(Color.RED);
     g.drawString(
       Integer.toString(blackPip),

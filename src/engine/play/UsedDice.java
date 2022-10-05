@@ -5,6 +5,8 @@ import java.util.Arrays;
 public class UsedDice {
   
   private MatchPlay matchPlay;
+  private int[] noUsedDicePattern;
+  private int[] allUsedDicePattern;
   
   public UsedDice(MatchPlay matchPlay) {
     
@@ -33,28 +35,50 @@ public class UsedDice {
       || (nrOfOutputLayouts() == 0 && !matchPlay.getSearch().isSearching());
   }
   
+  private int outputLayoutNr () {
+    
+    return
+      Math.max(nrOfMovePointLayouts() - 1 - nrOfOutputLayouts(), 0);
+  }
+  
   private int[] dicePattern () {
     
     return
       matchPlay
       .getSelectedMove()
       .dicePatterns()
-      .get(nrOfMovePointLayouts() - nrOfOutputLayouts());
+      .get(outputLayoutNr());
+  }
+  
+  private int[] dice () {
+    
+    return
+      matchPlay.getSelectedTurn().getDice();
+  }
+  
+  private boolean isInvalidDicePattern (int[] dicePattern) {
+    
+    return
+      dicePattern == null || dicePattern.length != dice().length;
   }
 
   private int[] noUsedDicePattern () {
     
+    if (isInvalidDicePattern(noUsedDicePattern)) {
+      noUsedDicePattern = new int[dice().length];
+    }
     return
-      new int[matchPlay.getSelectedTurn().getDice().length];
+      noUsedDicePattern;
   }
   
   private int[] allUsedDicePattern () {
     
-    int[] dicePattern = noUsedDicePattern();
-    
-    Arrays.fill(dicePattern,1);
+    if (isInvalidDicePattern(allUsedDicePattern)) {
+      allUsedDicePattern = new int[dice().length];
+      Arrays.fill(allUsedDicePattern,1);
+    }
     return
-      dicePattern;
+      allUsedDicePattern;
   }
   
   private boolean outputtingMove () {
