@@ -140,7 +140,7 @@ public class GameInfo {
     return
       gameState()
         .selectedMove()
-        .notation();
+        .annotation();
   }
   
   private boolean humanIsInputtingMove () {
@@ -168,7 +168,7 @@ public class GameInfo {
         dice(gameState().selectedTurn().getDice()),
         moveNr()+"/"+nrOfMoves(),
         movePoints(),
-//        selectedMoveAnnotationString()
+        turnNr()+") "+selectedMoveAnnotationString()
       };
   }
 
@@ -180,7 +180,7 @@ public class GameInfo {
       "Dice:  ",
       "Move:  ",
       "Points:  ",
-//      ""
+      ""
     };
   }
 

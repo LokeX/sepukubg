@@ -3,7 +3,6 @@ package engine.core.moves;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.*;
@@ -11,8 +10,9 @@ import static java.util.stream.Collectors.joining;
 
 public class MoveLayout extends Layout {
 
+  private String annotation;
   private List<int[]> dicePatterns;
-  private List<MoveLayout> movePointLayouts;
+  protected List<MoveLayout> movePointLayouts;
   protected Moves parentMoves;
   protected int[] hitPoints;
   protected int[] movePoints;
@@ -205,13 +205,12 @@ public class MoveLayout extends Layout {
 
     if (movePointLayouts == null) {
       movePointLayouts =
-        new MovePointLayouts(new MoveLayout(this)).getMoveLayoutsList();
+        new MovePointLayouts(this).getMoveLayoutsList();
       movePointLayouts.forEach(
         moveLayout -> moveLayout.movePointsBackup = getMovePoints()
       );
     }
-    return
-      movePointLayouts;
+    return movePointLayouts;
   }
 
   public String getMovePointsString() {
@@ -222,82 +221,8 @@ public class MoveLayout extends Layout {
         .collect(joining(","));
   }
   
-  private String dubleStr (int position) {
-  
-    int duble = !parentMoves.getDiceObj().areDouble() || position%2 != 1 ? 0 :
-      (int) IntStream.range(0,parentMoves.getNrOfLegalPartMoves()*2)
-        .filter(pos -> pos%2 == 1)
-        .filter(pos -> movePoints[pos] == movePoints[position])
-        .count();
-
-    return
-      duble > 1
-      ? "("+duble+")"
-      : "";
-  }
-  
-  private String pointNotation (int position) {
-    
-    String dubleStr = dubleStr(position);
-    
-    return
-        movePoints[position] == 0 ||
-        movePoints[position] == 26
-      ? "off"+dubleStr
-      : movePoints[position] == 25 ||
-        movePoints[position] == 51
-      ? "bar/"
-      : position%2 == 1 &&
-        hitPoints[position] != -1
-      ? movePoints[position]+"*"+dubleStr
-      : position%2 == 0
-      ? movePoints[position]+"/"
-      : movePoints[position]+dubleStr;
-  }
-  
-  private List<String> listPartMoves (List<String> notePoints) {
-    
-    List<String> partMoves = new ArrayList<>();
-    
-    for (int index = 0; index < notePoints.size(); index+=2) {
-      partMoves.add(notePoints.get(index)+notePoints.get(index+1));
-    }
-    return
-      partMoves;
-  }
-  
-  private String partMoves (List<String> partMovesList) {
-    
-    return partMovesList
-      .stream()
-      .distinct()
-      .collect(
-        joining(" ")
-      );
-  }
-  
-  public String notation () {
-    
-    String dice = parentMoves.getDiceObj().getDiceInt()+": ";
-    List<String> partMovesList = listPartMoves(
-      IntStream.range(0,parentMoves.getNrOfLegalPartMoves()*2)
-      .mapToObj(this::pointNotation)
-      .toList()
-    );
-    return
-      partMovesList.isEmpty()
-      ? dice+"N/A"
-      : dice+partMoves(partMovesList);
-  }
-  
-  public int getNrOfLegalPartMoves () {
-    
-    return
-      parentMoves.getNrOfLegalPartMoves();
-  }
-  
   public List<int[]> dicePatterns () {
-
+    
     if (dicePatterns == null) {
       dicePatterns = getMovePointLayouts()
         .stream()
@@ -309,6 +234,14 @@ public class MoveLayout extends Layout {
       dicePatterns;
   }
 
+  public String annotation () {
+    
+    if (annotation == null) {
+      annotation = new Annotation(this).notation();
+    }
+    return annotation;
+  }
+  
   public void printMovePoints () {
 
     System.out.println("["+getMovePointsString()+"]");
