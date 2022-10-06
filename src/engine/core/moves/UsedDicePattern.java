@@ -2,9 +2,9 @@ package engine.core.moves;
 
 import java.util.Arrays;
 
-public class DicePattern extends MoveLayout {
+public class UsedDicePattern extends MoveLayout {
   
-  public DicePattern (MoveLayout moveLayout) {
+  public UsedDicePattern(MoveLayout moveLayout) {
     
     super(moveLayout);
     movePointsBackup = moveLayout.getMovePointsBackup();

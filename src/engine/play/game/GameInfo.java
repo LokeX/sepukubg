@@ -140,7 +140,7 @@ public class GameInfo {
     return
       gameState()
         .selectedMove()
-        .annotation();
+        .MoveNotation();
   }
   
   private boolean humanIsInputtingMove () {

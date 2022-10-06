@@ -226,18 +226,18 @@ public class MoveLayout extends Layout {
     if (dicePatterns == null) {
       dicePatterns = getMovePointLayouts()
         .stream()
-        .map(DicePattern::new)
-        .map(DicePattern::dicePattern)
+        .map(UsedDicePattern::new)
+        .map(UsedDicePattern::dicePattern)
         .toList();
     }
     return
       dicePatterns;
   }
 
-  public String annotation () {
+  public String MoveNotation() {
     
     if (annotation == null) {
-      annotation = new Annotation(this).notation();
+      annotation = new MoveNotation(this).notation();
     }
     return annotation;
   }

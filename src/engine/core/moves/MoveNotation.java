@@ -5,14 +5,14 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.joining;
 
-public class Annotation extends MoveLayout {
+public class MoveNotation extends MoveLayout {
   
-  public Annotation (MoveLayout moveLayout) {
+  public MoveNotation(MoveLayout moveLayout) {
     
     super(moveLayout);
   }
   
-  private boolean thereAreDoublesToAnnotateIn(List<String> annotatedPartMoves) {
+  private boolean thereAreDoublesIn(List<String> annotatedPartMoves) {
     
     return
       parentMoves.getDiceObj().areDouble()
@@ -20,7 +20,7 @@ public class Annotation extends MoveLayout {
         .stream().distinct().count() < parentMoves.getNrOfLegalPartMoves();
   }
   
-  private String nrOfDuplicates (List<String> annotatedPartMoves, String partMove) {
+  private String nrOfDuplicatesIn(List<String> annotatedPartMoves, String partMove) {
     
     int nrOfDuplicates =
       (int) IntStream.range(0,annotatedPartMoves.size())
@@ -34,22 +34,25 @@ public class Annotation extends MoveLayout {
       : "";
   }
   
-  private List<String> annotateDoublesIn(List<String> annotatedPartMoves) {
+  private List<String> annotateDoublesIn(List<String> annotatedPartMovesOf) {
   
-    List<String> distinctPartMoves =
-      annotatedPartMoves.stream().distinct().toList();
-    
     return
-      distinctPartMoves.stream()
-      .map(partMove -> partMove + nrOfDuplicates(
-        annotatedPartMoves, partMove
-      )).toList();
+      annotatedPartMovesOf
+      .stream()
+      .distinct()
+      .map(partMove ->
+        partMove+nrOfDuplicatesIn(
+          annotatedPartMovesOf,
+          partMove
+        )
+      )
+      .toList();
   }
   
   private List<String> annotatedDoublesIn(List<String> annotatedPartMoves) {
     
     return
-      thereAreDoublesToAnnotateIn(annotatedPartMoves)
+      thereAreDoublesIn(annotatedPartMoves)
       ? annotateDoublesIn(annotatedPartMoves)
       : annotatedPartMoves;
   }
@@ -71,18 +74,18 @@ public class Annotation extends MoveLayout {
         : movePoints[position]+"";
   }
   
-  private List<String> listOfPartMovesFrom(List<String> annotatedPoints) {
+  private List<String> listOfPartMovesFrom(List<String> annotatedMovePoints) {
     
     return
-      IntStream.range(0,annotatedPoints.size())
+      IntStream.range(0,annotatedMovePoints.size())
         .filter(position -> position%2 == 0)
         .mapToObj(position ->
-          annotatedPoints.get(position) + annotatedPoints.get(position+1)
+          annotatedMovePoints.get(position) + annotatedMovePoints.get(position+1)
         )
         .toList();
   }
   
-  private List<String> annotatedPoints() {
+  private List<String> annotatedMovePoints() {
     
     return
       IntStream.range(0,parentMoves.getNrOfLegalPartMoves()*2)
@@ -90,7 +93,7 @@ public class Annotation extends MoveLayout {
         .toList();
   }
   
-  private String notationOf(List<String> partMovesList) {
+  private String distinctSpaceDelimited(List<String> partMovesList) {
     
     return
       partMovesList
@@ -105,12 +108,12 @@ public class Annotation extends MoveLayout {
     
     String dice = parentMoves.getDiceObj().getDiceInt()+": ";
     List<String> annotatedPartMoves =
-      annotatedDoublesIn(listOfPartMovesFrom(annotatedPoints()));
+      annotatedDoublesIn(listOfPartMovesFrom(annotatedMovePoints()));
     
     return
       annotatedPartMoves.isEmpty()
         ? dice+"N/A"
-        : dice+ notationOf(annotatedPartMoves);
+        : dice+distinctSpaceDelimited(annotatedPartMoves);
   }
   
 }
