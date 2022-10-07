@@ -1,7 +1,6 @@
 package engine.play.humanMove;
 
 import engine.api.Settings;
-import engine.play.MoveOutput;
 import engine.play.game.GameState;
 import engine.play.MatchPlay;
 
@@ -128,13 +127,6 @@ public class HumanMove {
       matchPlay.getGameState();
   }
 
-  private MoveOutput moveOutput () {
-
-    return
-      matchPlay
-        .getMoveOutput();
-  }
-
   private void startMoveSelection () {
 
     moveSelection = new MoveSelection(
@@ -150,7 +142,7 @@ public class HumanMove {
 
   public void startMove () {
 
-    if (matchPlay.getSelectedMove().isIllegal()) {
+    if (matchPlay.selectedMove().isIllegal()) {
       endMove();
       matchPlay.endTurn();
     } else {

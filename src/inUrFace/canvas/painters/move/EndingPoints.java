@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 import static sepuku.WinApp.sepukuPlay;
 import static sepuku.WinApp.mouse;
 
-public class EndingPointsPainter implements Paintable {
+public class EndingPoints implements Paintable {
 
   private boolean humanMoveReady () {
 

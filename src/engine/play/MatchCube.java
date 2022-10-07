@@ -54,7 +54,7 @@ public class MatchCube {
       );
     } else {
       getGame().getGameCube().setCubeWasRejected(
-        !matchPlay.getSelectedMove().shouldTake()
+        !matchPlay.selectedMove().shouldTake()
       );
     }
     if (!cubeWasRejected()) {
@@ -66,7 +66,7 @@ public class MatchCube {
     
     return
       matchPlay
-        .getSelectedMove()
+        .selectedMove()
         .shouldDouble();
   }
 

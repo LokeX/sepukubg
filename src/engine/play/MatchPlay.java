@@ -126,7 +126,7 @@ public class MatchPlay {
     return
       gameIsPlaying()
       ? getSelectedTurn()
-        .getMoveBonuses(getSelectedMove())
+        .getMoveBonuses(selectedMove())
         .getMoveBonusList(
           sepukuPlay
             .getSettings()
@@ -168,7 +168,7 @@ public class MatchPlay {
       : null;
   }
   
-  public EvaluatedMove getSelectedMove() {
+  public EvaluatedMove selectedMove() {
     
     return
       gameIsPlaying()
@@ -228,14 +228,18 @@ public class MatchPlay {
     return false;
   }
   
+  private boolean isLegalHumanMove () {
+    
+    return
+      playerIsHuman() && !selectedMove().isIllegal();
+  }
+  
   public void endTurn () {
 
-    System.out.println("Ending turn");
-    if (playerIsHuman() && !getSelectedMove().isIllegal()) {
+    if (isLegalHumanMove()) {
       humanMove.setPlayedMoveToSelectedMove();
     }
     if (gameOver()) {
-      System.out.println("Game Over: adding gameScore");
       autoCompleteGame = false;
       matchBoard.addGameScore(getGameState().getGameScore());
     } else if (settings().isAutomatedEndTurn() || autoCompleteGame) {
@@ -246,13 +250,11 @@ public class MatchPlay {
 
   public void humanMove() {
 
-    System.out.println("In matchState.humanMove");
     humanMove.startMove();
   }
 
   private void computerMove () {
 
-    System.out.println("Computer move");
     moveOutput.setEndOfOutputNotifier(
       runWhenNotified(this::endTurn)
     );
@@ -268,27 +270,23 @@ public class MatchPlay {
 
   private void noMove () {
 
-    System.out.println("No move");
     endTurn();
   }
 
   public void move() {
 
-    if (!gameState.selectedMove().isIllegal()) {
-      if (!autoCompleteGame && gameState.humanTurnSelected()) {
-        humanMove();
-      } else {
-        computerMove();
-      }
-    } else {
+    if (selectedMove().isIllegal()) {
       noMove();
+    } else if (playerIsHuman() && !autoCompleteGame) {
+      humanMove();
+    } else {
+      computerMove();
     }
   }
 
   public void startNewTurn() {
 
-    if (humanMove.inputReady() && !getSelectedMove().isIllegal()) {
-      System.out.println("Playing HumanMove");
+    if (isLegalHumanMove()) {
       humanMove.playMove();
     }
     gameState.newTurn();

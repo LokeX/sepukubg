@@ -83,7 +83,7 @@ public class StateOfPlay {
   private boolean illegalMove () {
     
     return
-      matchPlay().getSelectedMove().isIllegal();
+      matchPlay().selectedMove().isIllegal();
   }
 
   private boolean humanInputComplete () {

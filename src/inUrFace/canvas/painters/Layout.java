@@ -2,13 +2,12 @@ package inUrFace.canvas.painters;
 
 import static sepuku.WinApp.win;
 
-import engine.core.moves.Layout;
 import inUrFace.canvas.BoardDim;
 import sepuku.WinApp;
 
 import java.awt.*;
 
-public class LayoutPainter implements Paintable {
+public class Layout implements Paintable {
   
   private Color yellowColor = new Color (220,213,34);
   private Color redColor = new Color (178,18,18);
@@ -16,8 +15,8 @@ public class LayoutPainter implements Paintable {
     yellowColor,
     redColor,
   };
-  Layout layout = new Layout();
-  Layout displayedLayout;
+  engine.core.moves.Layout layout = new engine.core.moves.Layout();
+  engine.core.moves.Layout displayedLayout;
   int[][] playerPoints;
   int whitePip;
   int blackPip;
@@ -35,7 +34,7 @@ public class LayoutPainter implements Paintable {
     displayedLayout = WinApp.getCanvas().getDisplayedLayout();
     displayedLayout.generateHashCode();
     if (!layout.isIdenticalTo(displayedLayout)) {
-      layout = new Layout(displayedLayout);
+      layout = new engine.core.moves.Layout(displayedLayout);
       playerPoints = new int[][] {
         layout.getWhitePoints(),
         layout.getBlackPoints(),

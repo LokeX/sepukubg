@@ -1,6 +1,5 @@
 package inUrFace.canvas.painters;
 
-import engine.core.Cube;
 import inUrFace.canvas.BoardDim;
 import util.Batch;
 
@@ -12,7 +11,7 @@ import java.awt.event.MouseEvent;
 import static sepuku.WinApp.sepukuPlay;
 import static sepuku.WinApp.win;
 
-public class CubePainter extends MouseAdapter implements Paintable {
+public class Cube extends MouseAdapter implements Paintable {
 
   ImageIcon cubeScab = new ImageIcon(this.getClass().getResource("cube/double.gif"));
   ImageIcon cubeIcon;
@@ -70,7 +69,7 @@ public class CubePainter extends MouseAdapter implements Paintable {
     
       if (isVisible()) {
 
-        Cube cube = sepukuPlay.getMatchPlay().getSelectedTurn().getTurnCube();
+        engine.core.Cube cube = sepukuPlay.getMatchPlay().getSelectedTurn().getTurnCube();
         BoardDim d = win.canvas.getDimensions();
         int offsetX = (int)(d.topLeftBearOffOffsetX*1.05);
         int offsetY;

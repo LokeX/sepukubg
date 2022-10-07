@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 
 import static sepuku.WinApp.*;
 
-public class ScenarioEditPainter extends MouseAdapter implements Paintable {
+public class ScenarioEdit extends MouseAdapter implements Paintable {
 
   private Batch[] clickPoints = new Batch[28];
   private int player = 0;
@@ -19,7 +19,7 @@ public class ScenarioEditPainter extends MouseAdapter implements Paintable {
   @Override
   public void paint(Graphics g) {
 
-    if (mouse != null && mouse.scenarioEditPainter != null && isEditing()) {
+    if (mouse != null && mouse.scenarioEdit != null && isEditing()) {
       generateClickPoints();
       for (Batch clickPoint : clickPoints) {
         if (clickPoint != null) {

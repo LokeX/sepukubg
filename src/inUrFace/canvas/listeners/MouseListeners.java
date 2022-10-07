@@ -2,10 +2,10 @@ package inUrFace.canvas.listeners;
 
 import sepuku.WinApp;
 import inUrFace.canvas.BoardDim;
-import inUrFace.canvas.painters.TextPanelPainter;
-import inUrFace.canvas.painters.CubePainter;
-import inUrFace.canvas.painters.PlayButtonPainter;
-import inUrFace.canvas.painters.ScenarioEditPainter;
+import inUrFace.canvas.painters.TextPanel;
+import inUrFace.canvas.painters.Cube;
+import inUrFace.canvas.painters.PlayButton;
+import inUrFace.canvas.painters.ScenarioEdit;
 import util.Batch;
 
 import java.awt.event.MouseAdapter;
@@ -21,10 +21,10 @@ import static util.Reflection.getFieldsList;
 public class MouseListeners extends MouseAdapter {
 
   public MoveInputListener moveInputListener = new MoveInputListener();
-  public PlayButtonPainter playButtonPainter = getCanvas().getPaintJobs().playButton;
-  public ScenarioEditPainter scenarioEditPainter = getCanvas().getPaintJobs().scenarioEditPainter;
-  public CubePainter cubePainter = getCanvas().getPaintJobs().cubePainter;
-  public TextPanelPainter textPanelPainter = getCanvas().getPaintJobs().textPanelPainter;
+  public PlayButton playButton = getCanvas().getPaintJobs().playButton;
+  public ScenarioEdit scenarioEdit = getCanvas().getPaintJobs().scenarioEdit;
+  public Cube cube = getCanvas().getPaintJobs().cube;
+  public TextPanel textPanel = getCanvas().getPaintJobs().textPanel;
   private List<MouseListener> listeners = new ArrayList<>();
 
   public MouseListeners() {

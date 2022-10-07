@@ -17,7 +17,7 @@ public class UsedDice {
     
     return
       matchPlay
-        .getSelectedMove()
+        .selectedMove()
         .getMovePointLayouts()
         .size();
   }
@@ -31,7 +31,7 @@ public class UsedDice {
   private boolean allDiceAreUsed () {
     
     return
-      !matchPlay.gameIsPlaying() || matchPlay.getSelectedMove().isIllegal()
+      !matchPlay.gameIsPlaying() || matchPlay.selectedMove().isIllegal()
       || (nrOfOutputLayouts() == 0 && !matchPlay.getSearch().isSearching());
   }
   
@@ -45,7 +45,7 @@ public class UsedDice {
     
     return
       matchPlay
-      .getSelectedMove()
+      .selectedMove()
       .dicePatterns()
       .get(outputLayoutNr());
   }
@@ -111,7 +111,7 @@ public class UsedDice {
     return
       matchPlay.playerIsHuman()
       && matchPlay.getHumanMove().getMoveSelection() != null
-      && !matchPlay.getSelectedMove().isIllegal();
+      && !matchPlay.selectedMove().isIllegal();
   }
   
   public int[] getUsedDicePattern () {

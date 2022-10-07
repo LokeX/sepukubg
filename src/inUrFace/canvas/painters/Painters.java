@@ -1,8 +1,8 @@
 package inUrFace.canvas.painters;
 
-import inUrFace.canvas.painters.move.ChequerPainter;
-import inUrFace.canvas.painters.move.EndingPointsPainter;
-import inUrFace.canvas.painters.move.MovePainter;
+import inUrFace.canvas.painters.move.Chequer;
+import inUrFace.canvas.painters.move.EndingPoints;
+import inUrFace.canvas.painters.move.Move;
 
 import static util.Reflection.getFieldsList;
 import java.awt.Graphics;
@@ -11,17 +11,17 @@ import java.util.List;
 
 public class Painters {
 
-  public MovePainter movePainter = new MovePainter();
-  public BoardPainter boardPainter = new BoardPainter();
-  public EndingPointsPainter endingPointsPainter = new EndingPointsPainter();
-  public ScenarioEditPainter scenarioEditPainter = new ScenarioEditPainter();
-  public MatchScorePainter matchScorePainter = new MatchScorePainter();
-  public TextPanelPainter textPanelPainter = new TextPanelPainter();
-  public PlayButtonPainter playButton = new PlayButtonPainter();
-  public DicePainter dicePainter = new DicePainter();
-  public CubePainter cubePainter = new CubePainter();
-  public LayoutPainter layoutPainter = new LayoutPainter();
-  public ChequerPainter chequerPainter = new ChequerPainter();
+  public Move move = new Move();
+  public Board board = new Board();
+  public EndingPoints endingPoints = new EndingPoints();
+  public ScenarioEdit scenarioEdit = new ScenarioEdit();
+  public MatchScore matchScore = new MatchScore();
+  public TextPanel textPanel = new TextPanel();
+  public PlayButton playButton = new PlayButton();
+  public Dice dice = new Dice();
+  public Cube cube = new Cube();
+  public Layout layout = new Layout();
+  public Chequer chequer = new Chequer();
 
   private List<Paintable> painters = new ArrayList<>();
 

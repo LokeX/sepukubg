@@ -7,7 +7,7 @@ import java.awt.*;
 import static sepuku.WinApp.sepukuPlay;
 import static sepuku.WinApp.getCanvas;
 
-public class ChequerPainter implements Paintable {
+public class Chequer implements Paintable {
 
   private int playerID () {
 

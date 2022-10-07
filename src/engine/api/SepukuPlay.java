@@ -150,11 +150,10 @@ public class SepukuPlay {
 
   private boolean isNewMatch () {
     
-    System.out.println("isNewMatch: "+getPlayState().nextPlayTitle());
     return
       getPlayState()
         .nextPlayTitle()
-        .equals("Start match");
+        .equals("New match");
   }
   
   public void startNewMatch() {
@@ -164,7 +163,6 @@ public class SepukuPlay {
     getMoveOutput().setOutputLayout(
       getScenarios().getSelectedScenariosLayout()
     );
-    matchPlay.nextMatchPlay();
   }
   
   private void nextPlay () {

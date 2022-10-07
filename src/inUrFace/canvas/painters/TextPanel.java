@@ -9,9 +9,9 @@ import java.util.List;
 import static sepuku.WinApp.sepukuPlay;
 import static sepuku.WinApp.win;
 
-public class TextPanelPainter extends TextBatch implements Paintable {
+public class TextPanel extends TextBatch implements Paintable {
 
-  public TextPanelPainter() {
+  public TextPanel() {
 
     setHeaderColor(Color.yellow);
     setTextColor(new Color(27,124,34));

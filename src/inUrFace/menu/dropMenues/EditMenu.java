@@ -170,7 +170,7 @@ public class EditMenu extends JMenu implements Timeable {
     editPlayerScore.setVisible(editPlayerScore.isEnabled());
 
     editMenuSeparator.setEnabled(
-      mouse != null && WinApp.mouse.cubePainter.isVisible()
+      mouse != null && WinApp.mouse.cube.isVisible()
     );
     editMenuSeparator.setVisible(editMenuSeparator.isEnabled());
     editCubeValue.setEnabled(editMenuSeparator.isEnabled());

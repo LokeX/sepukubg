@@ -35,7 +35,7 @@ public class Window extends JFrame {
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
     setIconImage(new ImageIcon(getClass().getResource("Icon/AppIcon.gif")).getImage());
-    canvas.getPaintJobs().textPanelPainter.setComponent(canvas);
+    canvas.getPaintJobs().textPanel.setComponent(canvas);
     setJMenuBar(menu);
     setLayout(new BorderLayout());
     add(canvas, BorderLayout.CENTER);
@@ -88,8 +88,8 @@ public class Window extends JFrame {
     public void componentResized (ComponentEvent e) {
 
       canvas.getDimensions().recalculateDimensions();
-      if (mouse != null && mouse.scenarioEditPainter != null) {
-        mouse.scenarioEditPainter.generateClickPoints();
+      if (mouse != null && mouse.scenarioEdit != null) {
+        mouse.scenarioEdit.generateClickPoints();
       }
       if (!sepukuPlay.getSettings().getWinMaximized()) {
         sepukuPlay.getSettings().setCanvasWidth(canvas.getWidth());

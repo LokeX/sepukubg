@@ -9,7 +9,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import static sepuku.WinApp.sepukuPlay;
 
-public class MatchScorePainter implements Paintable {
+public class MatchScore implements Paintable {
 
   @Override
   public void paint(Graphics g) {
