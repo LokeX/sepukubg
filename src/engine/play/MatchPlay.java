@@ -306,7 +306,6 @@ public class MatchPlay {
   
   public void startNewGame() {
 
-    System.out.println("Starting game");
     if (gameIsPlaying()) {
       matchBoard.mergeScores();
     }

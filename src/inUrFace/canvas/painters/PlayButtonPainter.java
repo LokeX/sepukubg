@@ -74,11 +74,16 @@ public class PlayButtonPainter extends TextBatch implements Paintable {
   public void mouseClicked (MouseEvent e) {
 
     if (buttonClicked(e)) {
-      if (!nextPlayTitle().equals("New match")) {
-        WinApp.sound.playSoundEffect("wuerfelbecher");
-      }
-      sepukuPlay.execNextPlay();
+      execNextPlay();
     }
+  }
+  
+  public void execNextPlay () {
+    
+    if (!nextPlayTitle().equals("New match")) {
+      WinApp.sound.playSoundEffect("wuerfelbecher");
+    }
+    sepukuPlay.execNextPlay();
   }
   
   private String nextPlayTitle () {

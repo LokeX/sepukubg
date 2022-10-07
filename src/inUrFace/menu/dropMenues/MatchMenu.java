@@ -51,9 +51,7 @@ public class MatchMenu extends JMenu implements Timeable {
       } else {
         autoCompleteGame.setText("Stop auto complete");
         sepukuPlay.setAutoCompleteGame(true);
-        new Thread(() ->
-          sepukuPlay.execNextPlay()
-        ).start();
+          sepukuPlay.execNextPlay();
       }
     });
   }
@@ -63,9 +61,7 @@ public class MatchMenu extends JMenu implements Timeable {
     add(nextAction);
     nextAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
     nextAction.addActionListener((ActionEvent e) ->
-      new Thread(() ->
-        sepukuPlay.execNextPlay()
-      ).start()
+      getCanvas().getPaintJobs().playButton.execNextPlay()
     );
   }
 

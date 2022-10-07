@@ -21,7 +21,7 @@ import static util.Reflection.getFieldsList;
 public class MouseListeners extends MouseAdapter {
 
   public MoveInputListener moveInputListener = new MoveInputListener();
-  public PlayButtonPainter playButtonPainter = getCanvas().getPaintJobs().actionButton;
+  public PlayButtonPainter playButtonPainter = getCanvas().getPaintJobs().playButton;
   public ScenarioEditPainter scenarioEditPainter = getCanvas().getPaintJobs().scenarioEditPainter;
   public CubePainter cubePainter = getCanvas().getPaintJobs().cubePainter;
   public TextPanelPainter textPanelPainter = getCanvas().getPaintJobs().textPanelPainter;
