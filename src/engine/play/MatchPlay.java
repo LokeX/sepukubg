@@ -248,11 +248,6 @@ public class MatchPlay {
     }
   }
 
-  public void humanMove() {
-
-    humanMove.startMove();
-  }
-
   private void computerMove () {
 
     moveOutput.setEndOfOutputNotifier(
@@ -260,25 +255,20 @@ public class MatchPlay {
     );
     moveOutput.setOutputLayouts(
       gameState
-        .selectedMove()
-        .getMovePointLayouts()
-        .stream()
-        .map(Layout::new)
-        .toList()
+      .selectedMove()
+      .getMovePointLayouts()
+      .stream()
+      .map(Layout::new)
+      .toList()
     );
-  }
-
-  private void noMove () {
-
-    endTurn();
   }
 
   public void move() {
 
     if (selectedMove().isIllegal()) {
-      noMove();
+      endTurn();
     } else if (playerIsHuman() && !autoCompleteGame) {
-      humanMove();
+      humanMove.startMove();
     } else {
       computerMove();
     }

@@ -156,7 +156,7 @@ public class SepukuPlay {
         .equals("New match");
   }
   
-  public void startNewMatch() {
+  public void newMatch() {
     
     matchPlay = new MatchPlay(this);
     getScenarios().setEditing(true);
@@ -168,7 +168,7 @@ public class SepukuPlay {
   private void nextPlay () {
     
     if (isNewMatch()) {
-      startNewMatch();
+      newMatch();
     } else {
       matchPlay.nextMatchPlay();
     }
