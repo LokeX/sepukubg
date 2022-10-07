@@ -1,5 +1,6 @@
 package engine.api;
 
+import engine.play.Search;
 import engine.play.humanMove.HumanMove;
 import engine.play.score.MatchBoard;
 import engine.play.score.ScoreBoard;
@@ -23,6 +24,12 @@ public class SepukuPlay {
     
     return
       scenarioInfoHTML;
+  }
+  
+  public Search getSearch () {
+    
+    return
+      matchPlay.getSearch();
   }
   
   public HumanMove getHumanMove () {

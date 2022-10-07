@@ -26,16 +26,16 @@ public class Window extends JFrame {
 
   public Canvas canvas = new Canvas();
   public MenuBar menu = new MenuBar();
-  public MatchPlay progressBar = new MatchPlay();
+  public TrainerPlay progressBar = new TrainerPlay();
   public InformationBar informationBar = new InformationBar();
 
   public Window() {
 
-    super("Sepuku Backgammon / beta - ver. 2022.10.06");
+    super("Sepuku Backgammon / beta - ver. 2022.10.07");
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
     setIconImage(new ImageIcon(getClass().getResource("Icon/AppIcon.gif")).getImage());
-    canvas.getPaintJobs().bonusPainter.setComponent(canvas);
+    canvas.getPaintJobs().textPanelPainter.setComponent(canvas);
     setJMenuBar(menu);
     setLayout(new BorderLayout());
     add(canvas, BorderLayout.CENTER);

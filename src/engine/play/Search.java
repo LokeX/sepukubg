@@ -5,6 +5,8 @@ import engine.core.Turn;
 import engine.play.game.GameState;
 import inUrFace.windows.TextDisplay;
 
+import java.util.List;
+
 public class Search {
 
   private MatchPlay matchPlay;
@@ -32,21 +34,21 @@ public class Search {
     return matchPlay.settings();
   }
 
-  private void displaySearchReport () {
-
-    TextDisplay.displayReport(
-      "Search report",
-      "Turn nr: "+(gameState().lastTurnNr()+1)+"\n"+
-        gameState().lastTurn().getSearchEvaluation().getReport()
-    );
-  }
-
   private void searchTurn (Turn turn) {
 
     turn.generateSearchEvaluations(
       settings().getNrOfMovesToSearch(),
       settings().getSearchToPly()
     ).sortMovesBySearchEvaluation();
+  }
+  
+  public List<String> getSearchReport () {
+    
+    return
+      gameState()
+      .lastTurn()
+      .getSearchEvaluation()
+      .getSearchReport();
   }
 
   private boolean playerLooksAhead () {
@@ -56,7 +58,7 @@ public class Search {
       || !gameState().humanTurnSelected();
   }
 
-  private boolean okToSearch () {
+  public boolean okToSearch () {
 
     return
       matchPlay.gameIsPlaying()
@@ -71,9 +73,9 @@ public class Search {
       searching = true;
       searchTurn(gameState().lastTurn());
       searching = false;
-      if (settings().isSearchReportOn()) {
-        displaySearchReport();
-      }
+//      if (settings().isSearchReportOn()) {
+//        displaySearchReport();
+//      }
     }
   }
 

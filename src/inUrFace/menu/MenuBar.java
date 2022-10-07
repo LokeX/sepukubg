@@ -45,9 +45,6 @@ public class MenuBar extends JMenuBar {
     timedTasks.addTimedTask(
       new MenuTimedTasks(timedTaskList)
     );
-//    timedTasks.setMenuTimedTasks(
-//      new MenuTimedTasks(timedTaskList)
-//    );
   }
 
 }

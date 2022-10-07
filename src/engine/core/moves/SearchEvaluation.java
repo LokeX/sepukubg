@@ -1,5 +1,6 @@
 package engine.core.moves;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -7,15 +8,10 @@ import static java.util.stream.Collectors.toList;
 public class SearchEvaluation {
 
   private List<EvaluatedMove> searchMoves;
-  private String report = "";
+  private List<String> searchReport;
   private int nrOfMoves;
   private int nrOfTurns;
   private long startTime;
-
-  public String getReport () {
-
-    return report;
-  }
 
   SearchEvaluation generateSearchEvaluations (
 
@@ -38,8 +34,6 @@ public class SearchEvaluation {
           )
         )
       );
-    report += "Before values:\n";
-    appendReportValues();
     return this;
   }
 
@@ -99,56 +93,95 @@ public class SearchEvaluation {
     }
     return movesStrengthAverage(bestMoves) - projectedStrengthAverage;
   }
+  
+  private void addSearchEvaluationsToReport() {
+    
+    searchReport.add("Search evaluations:");
+    searchReport.add("");
+    searchReport.addAll(moveSearchReports());
+    searchReport.add(timeReport());
+    searchReport.add("");
+  }
+  
+  private void addMoveEvaluationsToReport() {
+    
+    searchReport.add("Move evaluations:");
+    searchReport.add("");
+    searchReport.addAll(moveEvaluationReports());
+    searchReport.add(timeReport());
+    searchReport.add("");
+  }
+  
+  private void createReportHeader() {
+    
+    searchReport = new ArrayList<>();
+    searchReport.add(
+      "Search report ["+nrOfMoves+" best moves, to ply "+nrOfTurns+"]:"
+    );
+    searchReport.add("");
+  }
 
   void sortEvaluatedMoves() {
 
-    printSearchReport();
+    createReportHeader();
+    addMoveEvaluationsToReport();
 
     List<EvaluatedMove> sortedMoves
       = searchMoves.stream()
-        .limit(nrOfMoves)
-        .sorted((a, b) -> b.searchEvaluation - a.searchEvaluation)
-        .collect(toList());
+      .limit(nrOfMoves)
+      .sorted((a, b) -> b.searchEvaluation - a.searchEvaluation)
+      .toList();
 
     for (int a = 0; a < sortedMoves.size(); a++) {
       searchMoves.set(a, sortedMoves.get(a));
     }
-    report += "After values:\n";
-    appendReportValues();
-    appendTime();
+    addSearchEvaluationsToReport();
     printSearchReport();
   }
 
-  private void appendTime () {
+  private String timeReport () {
 
-    report +=
-      "Time in milliseconds: "+
-      (System.currentTimeMillis()- startTime)+
-      "\n";
+    long searchEndTime = System.currentTimeMillis();
+    
+    return
+      "Time Millis: "+(searchEndTime- startTime);
   }
 
-  private void appendReportValues () {
+  private List<String> moveSearchReports() {
 
-    report += searchMoves.stream().
-      limit(nrOfMoves).
-      map(move ->
-        move.getMovePointsString()+": "+
-        move.getSearchEvaluation()+"\n"
-      ).reduce(String::concat);
+    return
+      searchMoves
+      .stream()
+      .limit(nrOfMoves)
+      .map(move ->
+        "["+move.getMovePointsString()+"]: "+move.getSearchEvaluation()
+      )
+      .toList();
+  }
+
+  private List<String> moveEvaluationReports() {
+
+    return
+      searchMoves
+      .stream()
+      .limit(nrOfMoves)
+      .map(move ->
+        "["+move.getMovePointsString()+"]: "+move.getLayoutStrength()
+      )
+      .toList();
   }
 
   public SearchEvaluation printSearchReport () {
 
-    long searchEndTime = System.currentTimeMillis();
-
-    System.out.println("SearchMove: strength difference");
-    searchMoves.stream().limit(nrOfMoves).forEach(move -> {
-      move.printMovePoints();
-      System.out.print(": "+move.getSearchEvaluation());
-      System.out.println();
-    });
-    System.out.println("Time Millis: "+(searchEndTime- startTime));
+    searchReport.forEach(System.out::println);
+    
     return this;
   }
+  
+  public List<String> getSearchReport() {
 
+    return
+      searchReport;
+  }
+  
 }

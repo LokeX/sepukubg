@@ -1,10 +1,10 @@
 package inUrFace.canvas.painters;
 
-import static sepuku.WinApp.getDisplayedLayout;
 import static sepuku.WinApp.win;
 
 import engine.core.moves.Layout;
 import inUrFace.canvas.BoardDim;
+import sepuku.WinApp;
 
 import java.awt.*;
 
@@ -32,10 +32,10 @@ public class LayoutPainter implements Paintable {
       d.boardOffsetY+d.boardHeight-d.frameHeight-d.chequerSize;
     int x,y;
     
-    displayedLayout = getDisplayedLayout();
+    displayedLayout = WinApp.getCanvas().getDisplayedLayout();
     displayedLayout.generateHashCode();
     if (!layout.isIdenticalTo(displayedLayout)) {
-      layout = new Layout(getDisplayedLayout());
+      layout = new Layout(displayedLayout);
       playerPoints = new int[][] {
         layout.getWhitePoints(),
         layout.getBlackPoints(),

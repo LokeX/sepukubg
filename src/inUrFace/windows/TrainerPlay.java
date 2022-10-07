@@ -14,7 +14,7 @@ import static sepuku.WinApp.trainer;
 import static sepuku.WinApp.win;
 import static util.Dialogs.confirmed;
 
-public class MatchPlay extends JFrame {
+public class TrainerPlay extends JFrame {
 
   private JTextPane initialReport = new JTextPane();
   private JProgressBar progressBar = new JProgressBar();
@@ -22,7 +22,7 @@ public class MatchPlay extends JFrame {
   private DecimalFormat df = NumberUtil.getDottedDecimalFormat();
   private int endValue;
 
-  public MatchPlay() {
+  public TrainerPlay() {
 
     setIconImage(new ImageIcon(getClass().getResource("Icon/AppIcon.gif")).getImage());
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

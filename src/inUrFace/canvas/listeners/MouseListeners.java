@@ -2,7 +2,7 @@ package inUrFace.canvas.listeners;
 
 import sepuku.WinApp;
 import inUrFace.canvas.BoardDim;
-import inUrFace.canvas.painters.BonusPainter;
+import inUrFace.canvas.painters.TextPanelPainter;
 import inUrFace.canvas.painters.CubePainter;
 import inUrFace.canvas.painters.PlayButtonPainter;
 import inUrFace.canvas.painters.ScenarioEditPainter;
@@ -24,7 +24,7 @@ public class MouseListeners extends MouseAdapter {
   public PlayButtonPainter playButtonPainter = getCanvas().getPaintJobs().actionButton;
   public ScenarioEditPainter scenarioEditPainter = getCanvas().getPaintJobs().scenarioEditPainter;
   public CubePainter cubePainter = getCanvas().getPaintJobs().cubePainter;
-  public BonusPainter bonusPainter = getCanvas().getPaintJobs().bonusPainter;
+  public TextPanelPainter textPanelPainter = getCanvas().getPaintJobs().textPanelPainter;
   private List<MouseListener> listeners = new ArrayList<>();
 
   public MouseListeners() {

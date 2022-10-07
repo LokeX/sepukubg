@@ -3,10 +3,8 @@ package sepuku;
 import inOut.FileHandler;
 import inOut.Sound;
 import engine.api.SepukuPlay;
-import engine.core.moves.Layout;
 import engine.core.trainer.Trainer;
 import inUrFace.canvas.Canvas;
-import inUrFace.canvas.painters.BonusPainter;
 import inUrFace.canvas.listeners.MouseListeners;
 import util.time.TimedTasks;
 import inUrFace.windows.Window;
@@ -21,26 +19,11 @@ public class WinApp {
   static public Trainer trainer;
   static public Sound sound;
 
-  public static Window getWin () {
-
-    return win;
-  }
-
-  public static Layout getDisplayedLayout () {
-
-    return win.canvas.getDisplayedLayout();
-  }
-
   public static Canvas getCanvas () {
 
-    return getWin().getCanvas();
+    return win.getCanvas();
   }
 
-  public static BonusPainter getTextArea () {
-
-    return win.getCanvas().getPaintJobs().bonusPainter;
-  }
-  
   public static void main (String[] args) {
 
     timedTasks = new TimedTasks();

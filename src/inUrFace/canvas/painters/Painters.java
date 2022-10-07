@@ -16,7 +16,7 @@ public class Painters {
   public EndingPointsPainter endingPointsPainter = new EndingPointsPainter();
   public ScenarioEditPainter scenarioEditPainter = new ScenarioEditPainter();
   public MatchScorePainter matchScorePainter = new MatchScorePainter();
-  public BonusPainter bonusPainter = new BonusPainter();
+  public TextPanelPainter textPanelPainter = new TextPanelPainter();
   public PlayButtonPainter actionButton = new PlayButtonPainter();
   public DicePainter dicePainter = new DicePainter();
   public CubePainter cubePainter = new CubePainter();

@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.joining;
 
 public class MoveLayout extends Layout {
 
-  private String annotation;
+  private String moveNotation;
   private List<int[]> dicePatterns;
   protected List<MoveLayout> movePointLayouts;
   protected Moves parentMoves;
@@ -236,10 +236,10 @@ public class MoveLayout extends Layout {
 
   public String MoveNotation() {
     
-    if (annotation == null) {
-      annotation = new MoveNotation(this).notation();
+    if (moveNotation == null) {
+      moveNotation = new MoveNotation(this).notation();
     }
-    return annotation;
+    return moveNotation;
   }
   
   public void printMovePoints () {
