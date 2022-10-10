@@ -60,18 +60,18 @@ public class MoveNotation extends MoveLayout {
   private String pointNotation (int position) {
     
     return
-      movePoints[position] == 0 ||
-        movePoints[position] == 26
-        ? "off"
-        : movePoints[position] == 25 ||
-        movePoints[position] == 51
-        ? "bar/"
-        : position%2 == 1 &&
-        hitPoints[position] != -1
-        ? movePoints[position]+"*"
-        : position%2 == 0
-        ? movePoints[position]+"/"
-        : movePoints[position]+"";
+      movePoints[position] == 0
+      || movePoints[position] == 26
+      ? "off"
+      : movePoints[position] == 25
+      || movePoints[position] == 51
+      ? "bar/"
+      : position%2 == 1
+      && hitPoints[position] != -1
+      ? movePoints[position]+"*"
+      : position%2 == 0
+      ? movePoints[position]+"/"
+      : movePoints[position]+"";
   }
   
   private List<String> listOfPartMovesFrom(List<String> annotatedMovePoints) {
@@ -80,7 +80,7 @@ public class MoveNotation extends MoveLayout {
       IntStream.range(0,annotatedMovePoints.size())
         .filter(position -> position%2 == 0)
         .mapToObj(position ->
-          annotatedMovePoints.get(position) + annotatedMovePoints.get(position+1)
+          annotatedMovePoints.get(position)+annotatedMovePoints.get(position+1)
         )
         .toList();
   }

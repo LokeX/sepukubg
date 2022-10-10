@@ -116,7 +116,6 @@ public class UsedDicePattern extends MoveLayout {
     if (noAvailableDice()) {
       Arrays.fill(dicePattern,1);
     } else if (gotAnInvalidDie()) {
-      System.out.println("Got an invalid die");
       dicePattern[invalidDiePosition()] = 1;
     } else if (oneDieIsUsed()) {
       dicePattern[usedDiePosition()] = 1;

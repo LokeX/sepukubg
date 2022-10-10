@@ -103,6 +103,15 @@ public class StateOfPlay {
       playerIsHuman()
       && playMove();
   }
+  
+  private boolean isNavigating () {
+    
+    return
+      sepukuPlay
+        .getMatchPlay()
+        .navigation()
+        .isNavigating();
+  }
 
   private boolean playMove () {
 
@@ -110,8 +119,8 @@ public class StateOfPlay {
       !matchPlay().matchOver()
       && !matchPlay().gameOver()
       && !matchPlay().getMoveOutput().isBusy()
-      && (lastTurnSelected() || !playedMoveSelected())
-      && (!playerIsHuman() || humanInputComplete());
+//      && (lastTurnSelected() || !playedMoveSelected())
+      && (!playerIsHuman() || humanInputComplete() || isNavigating());
   }
 
   private boolean scenarioEdit () {

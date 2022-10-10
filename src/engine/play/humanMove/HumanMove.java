@@ -138,6 +138,9 @@ public class HumanMove {
         moveSelection
           .getParentMoveLayout()
       );
+    matchPlay
+      .navigation()
+      .setIsNavigating(false);
   }
 
   public void startMove () {
@@ -156,6 +159,9 @@ public class HumanMove {
 
   public void endMove () {
 
+    matchPlay
+      .navigation()
+      .setIsNavigating(true);
     moveSelection = null;
   }
 

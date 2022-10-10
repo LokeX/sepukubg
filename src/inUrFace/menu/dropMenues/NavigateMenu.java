@@ -57,14 +57,14 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousHumanTurn
       .addActionListener((ActionEvent e) -> {
-        sepukuPlay
-          .getMoveOutput()
-          .setOutputLayout(
-            sepukuPlay
-              .getGameState()
-              .selectPreviousHumanTurn()
-              .getPlayedMove()
-          );
+        sepukuPlay.navigation().selectAndDisplayPreviousHumanTurn();
+//          .getMoveOutput()
+//          .setOutputLayout(
+//            sepukuPlay
+//              .getGameState()
+//              .selectPreviousHumanTurn()
+//              .getPlayedMove()
+//          );
       });
   }
 
@@ -81,14 +81,14 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     nextHumanTurn
       .addActionListener((ActionEvent e) -> {
-        sepukuPlay
-          .getMoveOutput()
-          .setOutputLayout(
-            sepukuPlay
-              .getGameState()
-              .selectNextHumanTurn()
-              .getPlayedMove()
-          );
+        sepukuPlay.navigation().selectAndDisplayNextHumanTurn();
+//          .getMoveOutput()
+//          .setOutputLayout(
+//            sepukuPlay
+//              .getGameState()
+//              .selectNextHumanTurn()
+//              .getPlayedMove()
+//          );
       });
   }
 
@@ -105,14 +105,14 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     latestHumanTurn
       .addActionListener((ActionEvent e) -> {
-        sepukuPlay
-          .getMoveOutput()
-          .setOutputLayout(
-            sepukuPlay
-              .getGameState()
-              .selectLatestHumanTurn()
-              .getPlayedMove()
-          );
+        sepukuPlay.navigation().selectAndDisplayLatestHumanTurn();
+//          .getMoveOutput()
+//          .setOutputLayout(
+//            sepukuPlay
+//              .getGameState()
+//              .selectLatestHumanTurn()
+//              .getPlayedMove()
+//          );
       });
   }
 
@@ -134,14 +134,14 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     nextTurn.addActionListener((ActionEvent e) -> {
       if (sepukuPlay.gameIsPlaying()) {
-        sepukuPlay
-          .getMoveOutput()
-          .setOutputLayout(
-            sepukuPlay
-              .getGameState()
-              .selectNextTurn()
-              .getPlayedMove()
-          );
+        sepukuPlay.navigation().selectAndDisplayNextTurn();
+//          .getMoveOutput()
+//          .setOutputLayout(
+//            sepukuPlay
+//              .getGameState()
+//              .selectNextTurn()
+//              .getPlayedMove()
+//          );
       }
     });
   }
@@ -159,14 +159,14 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousTurn.addActionListener((ActionEvent e) -> {
       if (sepukuPlay.gameIsPlaying()) {
-        sepukuPlay
-          .getMoveOutput()
-          .setOutputLayout(
-            sepukuPlay
-              .getGameState()
-              .selectPreviousTurn()
-              .getPlayedMove()
-          );
+        sepukuPlay.navigation().selectAndDisplayPreviousTurn();
+//          .getMoveOutput()
+//          .setOutputLayout(
+//            sepukuPlay
+//              .getGameState()
+//              .selectPreviousTurn()
+//              .getPlayedMove()
+//          );
       }
     });
   }
@@ -184,13 +184,13 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousMove.addActionListener((ActionEvent e) -> {
       if (sepukuPlay.gameIsPlaying()) {
-        sepukuPlay
-          .getMoveOutput()
-          .setOutputLayout(
-            sepukuPlay
-              .getGameState()
-              .selectPreviousMove()
-          );
+        sepukuPlay.navigation().selectAndDisplayPreviousMove();
+//          .getMoveOutput()
+//          .setOutputLayout(
+//            sepukuPlay
+//              .getGameState()
+//              .selectPreviousMove()
+//          );
       }
     });
   }
@@ -207,13 +207,13 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextMove.addActionListener((ActionEvent e) -> {
-        sepukuPlay
-          .getMoveOutput()
-          .setOutputLayout(
-            sepukuPlay
-              .getGameState()
-              .selectNextMove()
-          );
+        sepukuPlay.navigation().selectAndDisplayNextMove();
+//          .getMoveOutput()
+//          .setOutputLayout(
+//            sepukuPlay
+//              .getGameState()
+//              .selectNextMove()
+//          );
     });
   }
 
@@ -230,13 +230,13 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousPartMove.addActionListener((ActionEvent e) -> {
       if (sepukuPlay.gameIsPlaying()) {
-        sepukuPlay
-          .getMoveOutput()
-          .setOutputLayout(
-            sepukuPlay
-              .getGameState()
-              .selectPreviousPartMove()
-          );
+        sepukuPlay.navigation().selectAndDisplayPreviousPartMove();
+//          .getMoveOutput()
+//          .setOutputLayout(
+//            sepukuPlay
+//              .getGameState()
+//              .selectPreviousPartMove()
+//          );
       }
     });
   }
@@ -253,13 +253,13 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextPartMove.addActionListener((ActionEvent e) -> {
-        sepukuPlay
-          .getMoveOutput()
-          .setOutputLayout(
-            sepukuPlay
-              .getGameState()
-              .selectNextPartMove()
-          );
+        sepukuPlay.navigation().selectAndDisplayNextPartMove();
+//          .getMoveOutput()
+//          .setOutputLayout(
+//            sepukuPlay
+//              .getGameState()
+//              .selectNextPartMove()
+//          );
     });
   }
 

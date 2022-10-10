@@ -17,6 +17,7 @@ import static util.ThreadUtil.runWhenNotified;
 
 public class MatchPlay {
 
+  private Navigation navigation;
   private UsedDice usedDice;
   private GameInfo gameInfo;
   private ScoreBoard scoreBoard;
@@ -41,6 +42,13 @@ public class MatchPlay {
     moveOutput = new MoveOutput();
     gameInfo = new GameInfo(this);
     usedDice = new UsedDice(this);
+    navigation = new Navigation(this);
+  }
+  
+  public Navigation navigation () {
+    
+    return
+      navigation;
   }
   
   public Layout getScenario () {
@@ -172,9 +180,7 @@ public class MatchPlay {
     
     return
       gameIsPlaying()
-      ? getSelectedTurn()
-        .getMoveByNr(getGameState()
-        .getMoveNr())
+      ? getGameState().selectedMove()
       : null;
   }
   

@@ -1,14 +1,11 @@
 package engine.api;
 
-import engine.play.Search;
+import engine.play.*;
 import engine.play.humanMove.HumanMove;
 import engine.play.score.MatchBoard;
 import engine.play.score.ScoreBoard;
 import engine.core.Game;
 import engine.play.game.GameState;
-import engine.play.MatchCube;
-import engine.play.MatchPlay;
-import engine.play.MoveOutput;
 
 public class SepukuPlay {
 
@@ -20,6 +17,12 @@ public class SepukuPlay {
   private StateOfPlay stateOfPlay =  new StateOfPlay(this);
   private StateEdit stateEdit = new StateEdit(this);
 
+  public Navigation navigation () {
+    
+    return
+      matchPlay.navigation();
+  }
+  
   public ScenarioInfoHTML getScenarioInfoHTML () {
     
     return
