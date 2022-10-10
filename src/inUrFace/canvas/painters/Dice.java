@@ -17,6 +17,16 @@ public class Dice implements Paintable {
   private int dieWidth;
   private int dieHeight;
 
+  public Dice() {
+
+    for (int a = 0; a < dieFaces.length; a++) {
+      dieFaces[a] = new ImageIcon(
+        getClass().getResource("dice/" + (a + 1) + ".gif")
+      );
+      dieFaceIcons[a] = new ImageIcon(dieFaces[a].getImage());
+    }
+  }
+
   class DieIcon {
 
     public int dieFace;
@@ -53,7 +63,7 @@ public class Dice implements Paintable {
 
     public void paintShade (Graphics g) {
 
-      g.fillRect(centerX+(diePosition*(int)(dieWidth*1.2)),centerY, dieHeight, dieWidth);
+      g.fillRect(centerX+(diePosition*(int)(dieWidth*1.2)),centerY,dieWidth,dieHeight);
     }
 
     public void setDieFace(int dieFace) {
@@ -68,33 +78,18 @@ public class Dice implements Paintable {
 
   }
 
-  public Dice() {
-
-    for (int a = 0; a < dieFaces.length; a++) {
-      dieFaces[a] = new ImageIcon(
-        getClass().getResource("dice/" + (a + 1) + ".gif")
-      );
-      dieFaceIcons[a] = new ImageIcon(dieFaces[a].getImage());
-    }
-  }
-
-  private void makeDice () {
-
-    dice = sepukuPlay.dice();
-    for (int a = 0; a < dice.length; a++) {
-      if (dieIcons[a] == null) {
-        dieIcons[a] = new DieIcon();
-      }
-      dieIcons[a].setDieFace(dice[a]-1);
-      dieIcons[a].setDiePosition(a);
-    }
-  }
-
   @Override
   public void paint (Graphics g) {
 
     if (sepukuPlay.gameIsPlaying()) {
-      makeDice();
+      dice = sepukuPlay.dice();
+      for (int a = 0; a < dice.length; a++) {
+        if (dieIcons[a] == null) {
+          dieIcons[a] = new DieIcon();
+        }
+        dieIcons[a].setDieFace(dice[a]-1);
+        dieIcons[a].setDiePosition(a);
+      }
       g.setColor(new Color(0,0,0,125));
       for (int a = 0; a < dice.length; a++) {
         dieIcons[a].paintDie(g);
