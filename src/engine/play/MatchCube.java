@@ -105,7 +105,7 @@ public class MatchCube {
     return
       matchPlay.settings()
         .playerIsComputer(
-          matchPlay.getPlayerOnRollsID() == 0 ? 1 : 0
+          matchPlay.playerOnRollsID() == 0 ? 1 : 0
         );
   }
 

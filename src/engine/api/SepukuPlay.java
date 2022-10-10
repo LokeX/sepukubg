@@ -32,9 +32,7 @@ public class SepukuPlay {
   public int nrOfTurns () {
     
     return
-      gameIsPlaying()
-      ? matchPlay.gameState().nrOfTurns()
-      : 0;
+      matchPlay.nrOfTurns();
   }
   
   public int[] dice () {
@@ -46,7 +44,7 @@ public class SepukuPlay {
   public List<String> moveBonuses () {
     
     return
-      matchPlay.getMoveBonuses();
+      matchPlay.moveBonuses();
   }
   
   public Navigation navigation () {
@@ -93,11 +91,11 @@ public class SepukuPlay {
     return stateOfPlay;
   }
 
-  public int[] getUsedDicePattern () {
+  public int[] usedDicePattern() {
 
     return
       gameIsPlaying()
-      ? matchPlay.getUsedDicePattern()
+      ? matchPlay.usedDicePattern()
       : null;
   }
 

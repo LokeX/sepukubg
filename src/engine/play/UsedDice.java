@@ -114,7 +114,7 @@ public class UsedDice {
       && !matchPlay.selectedMove().isIllegal();
   }
   
-  public int[] getUsedDicePattern () {
+  public int[] usedDicePattern() {
     
     return
       isLegalHumanMove()

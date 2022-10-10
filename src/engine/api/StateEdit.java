@@ -65,7 +65,7 @@ public class StateEdit {
       if (dice.diceAreValid()) {
         matchPlay().selectedTurn().setDice(dice.getDice());
         gameState().truncateTurns(gameState().getTurnNr());
-        gameState().setMoveNr(matchPlay().getPlayedMoveNr());
+        gameState().setMoveNr(matchPlay().playedMoveNr());
         matchPlay().search().searchRolledMoves();
         matchPlay().move();
       }

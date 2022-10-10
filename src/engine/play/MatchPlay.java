@@ -121,7 +121,7 @@ public class MatchPlay {
       && gameState.nrOfTurns() > 0;
   }
   
-  public Turn getLatestTurn () {
+  public Turn latestTurn() {
     
     return
       gameIsPlaying()
@@ -129,7 +129,7 @@ public class MatchPlay {
       : null;
   }
   
-  public List<String> getMoveBonuses () {
+  public List<String> moveBonuses() {
     
     return
       gameIsPlaying()
@@ -150,17 +150,17 @@ public class MatchPlay {
         .humanTurnSelected();
   }
   
-  public int getPlayerOnRollsID () {
+  public int playerOnRollsID() {
     
-    return getLatestTurn().getPlayerOnRollsID();
+    return latestTurn().getPlayerOnRollsID();
   }
   
-  public int getPlayedMoveNr () {
+  public int playedMoveNr() {
     
     return selectedTurn().getPlayedMoveNr();
   }
   
-  public int getNrOfTurns () {
+  public int nrOfTurns() {
     
     return
       gameIsPlaying()
@@ -184,10 +184,10 @@ public class MatchPlay {
       : null;
   }
   
-  public int[] getUsedDicePattern () {
+  public int[] usedDicePattern() {
 
     return
-      usedDice.getUsedDicePattern();
+      usedDice.usedDicePattern();
   }
   
   public boolean playerIsHuman () {

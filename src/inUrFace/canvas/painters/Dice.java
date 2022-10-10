@@ -93,7 +93,7 @@ public class Dice implements Paintable {
       g.setColor(new Color(0,0,0,125));
       for (int a = 0; a < dice.length; a++) {
         dieIcons[a].paintDie(g);
-        if (sepukuPlay.getUsedDicePattern()[a] > 0) {
+        if (sepukuPlay.usedDicePattern()[a] > 0) {
           dieIcons[a].paintShade(g);
         }
       }
