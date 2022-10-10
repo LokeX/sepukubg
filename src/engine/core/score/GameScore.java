@@ -17,7 +17,7 @@ public class GameScore {
   public GameScore (Game game) {
 
     finalTurn = game.lastTurn();
-    cube = game.getGameCube();
+    cube = game.gameCube();
     calcScore();
   }
 

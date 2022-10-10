@@ -15,9 +15,9 @@ public class MatchScore implements Paintable {
   public void paint(Graphics g) {
 
     BoardDim d = win.canvas.getDimensions();
-    String toScore = Integer.toString(sepukuPlay.getScoreBoard().getPlayToScore());
-    String whiteScore = sepukuPlay.getScoreBoard().getWhiteMatchScore();
-    String blackScore = sepukuPlay.getScoreBoard().getBlackMatchScore();
+    String toScore = Integer.toString(sepukuPlay.scoreBoard().getPlayToScore());
+    String whiteScore = sepukuPlay.scoreBoard().getWhiteMatchScore();
+    String blackScore = sepukuPlay.scoreBoard().getBlackMatchScore();
     
     g.setFont(new Font("Ariel", Font.BOLD, (int)(26*d.factor)));
 

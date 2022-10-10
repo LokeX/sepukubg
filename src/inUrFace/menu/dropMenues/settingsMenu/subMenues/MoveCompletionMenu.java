@@ -12,18 +12,18 @@ public class MoveCompletionMenu extends JMenu {
   JRadioButtonMenuItem manualMoves =
     new JRadioButtonMenuItem(
       "Manual completion",
-      !sepukuPlay.getSettings().isAutoCompleteMoves()
-          && !sepukuPlay.getSettings().isAutoCompletePartMoves()
+      !sepukuPlay.settings().isAutoCompleteMoves()
+          && !sepukuPlay.settings().isAutoCompletePartMoves()
     );
   JRadioButtonMenuItem automateMoves =
     new JRadioButtonMenuItem(
       "Auto complete forced moves",
-      sepukuPlay.getSettings().isAutoCompleteMoves()
+      sepukuPlay.settings().isAutoCompleteMoves()
     );
   JRadioButtonMenuItem automatePartMoves =
     new JRadioButtonMenuItem(
       "Auto complete forced partmoves",
-      sepukuPlay.getSettings().isAutoCompletePartMoves()
+      sepukuPlay.settings().isAutoCompletePartMoves()
     );
   ButtonGroup moveCompletionChoices = new ButtonGroup();
 
@@ -47,7 +47,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(manualMoves);
     manualMoves.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setAutoMoves(0);
+        sepukuPlay.settings().setAutoMoves(0);
     });
   }
 
@@ -55,7 +55,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(automateMoves);
     automateMoves.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setAutoMoves(1);
+        sepukuPlay.settings().setAutoMoves(1);
     });
   }
 
@@ -63,7 +63,7 @@ public class MoveCompletionMenu extends JMenu {
 
     add(automatePartMoves);
     automatePartMoves.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setAutoMoves(2);
+        sepukuPlay.settings().setAutoMoves(2);
     });
   }
 

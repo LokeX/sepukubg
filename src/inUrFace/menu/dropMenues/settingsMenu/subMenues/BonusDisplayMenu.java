@@ -12,22 +12,22 @@ public class BonusDisplayMenu extends JMenu {
   JRadioButtonMenuItem movingPlayer =
     new JRadioButtonMenuItem(
       "Show moving player",
-      sepukuPlay.getSettings().getBonusDisplayMode() == 1
+      sepukuPlay.settings().getBonusDisplayMode() == 1
     );
   JRadioButtonMenuItem showOpponent =
     new JRadioButtonMenuItem(
       "Show opponent",
-      sepukuPlay.getSettings().getBonusDisplayMode() == 2
+      sepukuPlay.settings().getBonusDisplayMode() == 2
     );
   JRadioButtonMenuItem showBothPlayers =
     new JRadioButtonMenuItem(
       "Show both players",
-      sepukuPlay.getSettings().getBonusDisplayMode() == 0
+      sepukuPlay.settings().getBonusDisplayMode() == 0
     );
   JRadioButtonMenuItem showNone =
     new JRadioButtonMenuItem(
       "Show none",
-      sepukuPlay.getSettings().getBonusDisplayMode() == 3
+      sepukuPlay.settings().getBonusDisplayMode() == 3
     );
   ButtonGroup showBonusChoices = new ButtonGroup();
 
@@ -53,7 +53,7 @@ public class BonusDisplayMenu extends JMenu {
 
     add(movingPlayer);
     movingPlayer.addActionListener((ActionEvent e) ->  {
-        sepukuPlay.getSettings().setBonusDisplayMode(1);
+        sepukuPlay.settings().setBonusDisplayMode(1);
     });
   }
 
@@ -61,7 +61,7 @@ public class BonusDisplayMenu extends JMenu {
 
     add(showOpponent);
     showOpponent.addActionListener((ActionEvent e) ->  {
-        sepukuPlay.getSettings().setBonusDisplayMode(2);
+        sepukuPlay.settings().setBonusDisplayMode(2);
     });
   }
 
@@ -69,7 +69,7 @@ public class BonusDisplayMenu extends JMenu {
 
     add(showBothPlayers);
     showBothPlayers.addActionListener((ActionEvent e) ->  {
-        sepukuPlay.getSettings().setBonusDisplayMode(0);
+        sepukuPlay.settings().setBonusDisplayMode(0);
     });
   }
 
@@ -77,7 +77,7 @@ public class BonusDisplayMenu extends JMenu {
 
     add(showNone);
     showNone.addActionListener((ActionEvent e) ->  {
-        sepukuPlay.getSettings().setBonusDisplayMode(3);
+        sepukuPlay.settings().setBonusDisplayMode(3);
     });
   }
 

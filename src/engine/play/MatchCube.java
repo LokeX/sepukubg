@@ -18,12 +18,12 @@ public class MatchCube {
 
   private Game getGame () {
 
-    return matchPlay.getGameState();
+    return matchPlay.gameState();
   }
 
   private MatchBoard getMatchBoard () {
 
-    return matchPlay.getMatchBoard();
+    return matchPlay.matchBoard();
   }
 
   private boolean playerIsHuman() {
@@ -39,21 +39,21 @@ public class MatchCube {
       matchPlay
         .gameIsPlaying()
       &&
-        matchPlay.getGameState()
-        .getGameCube()
+        matchPlay.gameState()
+        .gameCube()
         .cubeWasRejected();
   }
 
   private void resolveCubeHandling () {
 
     if (playerIsHuman()) {
-      getGame().getGameCube().setCubeWasRejected(
+      getGame().gameCube().setCubeWasRejected(
         !confirmed(
           "Opponent doubles - accept?",win
         )
       );
     } else {
-      getGame().getGameCube().setCubeWasRejected(
+      getGame().gameCube().setCubeWasRejected(
         !matchPlay.selectedMove().shouldTake()
       );
     }

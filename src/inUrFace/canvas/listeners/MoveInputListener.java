@@ -18,7 +18,7 @@ public class MoveInputListener extends MouseAdapter {
     Batch[] points = new Batch[26];
     Color pointsColor = new Color(56, 75, 174, 150);
 
-    if (sepukuPlay.getHumanMove().getPlayerID() == 1) {
+    if (sepukuPlay.humanMove().getPlayerID() == 1) {
       points[0] = new Batch(
         d.leftPlayAreaOffsetX+d.leftPlayAreaWidth,
         d.frameOffsetY+d.boardInnerHeight/2,
@@ -39,7 +39,7 @@ public class MoveInputListener extends MouseAdapter {
       points[a+1] = regularPoints[a];
       points[a+1].setBackgroundColor(pointsColor);
     }
-    if (sepukuPlay.getHumanMove().getPlayerID() == 1) {
+    if (sepukuPlay.humanMove().getPlayerID() == 1) {
       points[25] = new Batch(
         d.topRightBearOffOffsetX,
         d.topRightBearOffOffsetY,
@@ -88,7 +88,7 @@ public class MoveInputListener extends MouseAdapter {
 
     if (clickedPoint() != -1 || rightButtonClicked(mouseEvent)) {
       sepukuPlay
-        .getHumanMove()
+        .humanMove()
         .pointClicked(
           rightButtonClicked(mouseEvent)
             ? -1
@@ -103,8 +103,8 @@ public class MoveInputListener extends MouseAdapter {
       sepukuPlay != null
       &&
       sepukuPlay
-        .getHumanMove()
-        .humanInputActive();
+        .humanMove()
+        .inputActive();
   }
 
 }

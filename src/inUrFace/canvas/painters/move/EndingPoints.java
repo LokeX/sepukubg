@@ -15,8 +15,8 @@ public class EndingPoints implements Paintable {
 
     return
       mouse != null
-        && sepukuPlay.getHumanMove() != null
-        && sepukuPlay.getHumanMove().humanInputActive();
+        && sepukuPlay.humanMove() != null
+        && sepukuPlay.humanMove().inputActive();
   }
 
   private Batch[] clickPoints () {
@@ -33,7 +33,7 @@ public class EndingPoints implements Paintable {
 
     return
       sepukuPlay
-        .getHumanMove()
+        .humanMove()
         .getEndingPoints()
         .map(endingPoint -> clickPoints[endingPoint]);
   }
@@ -43,7 +43,7 @@ public class EndingPoints implements Paintable {
     return
       humanMoveReady()
       && sepukuPlay
-        .getHumanMove()
+        .humanMove()
         .endingPointIsNext();
   }
 

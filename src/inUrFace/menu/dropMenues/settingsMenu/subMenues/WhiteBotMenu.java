@@ -18,7 +18,7 @@ public class WhiteBotMenu implements Listable {
   public void itemSelectedAction(int selectedItemNr) {
 
     this.selectedItemNr = selectedItemNr;
-    sepukuPlay.getSettings().setWhiteBotOpponent(selectedItemNr);
+    sepukuPlay.settings().setWhiteBotOpponent(selectedItemNr);
   }
 
   @Override

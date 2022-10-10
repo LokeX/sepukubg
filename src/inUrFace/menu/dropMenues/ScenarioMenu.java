@@ -40,7 +40,7 @@ public class ScenarioMenu extends JMenu implements Timeable {
       KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK)
     );
     saveScenario.addActionListener((ActionEvent e) ->
-      sepukuPlay.getInput().saveLayout(
+      sepukuPlay.stateEdit().saveLayout(
         inputLayoutName(),
         WinApp.getCanvas().getDisplayedLayout()
       )
@@ -54,7 +54,7 @@ public class ScenarioMenu extends JMenu implements Timeable {
       KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_DOWN_MASK)
     );
     renameScenario.addActionListener((ActionEvent e) ->
-      sepukuPlay.getInput().renameSelectedLayout(inputLayoutName())
+      sepukuPlay.stateEdit().renameSelectedLayout(inputLayoutName())
     );
   }
 
@@ -65,9 +65,9 @@ public class ScenarioMenu extends JMenu implements Timeable {
       KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0)
     );
     removeScenario.addActionListener((ActionEvent e) -> {
-      if (sepukuPlay.getScenarios().getSelectedScenariosNr() > 0 ) {
+      if (sepukuPlay.scenarios().getSelectedScenariosNr() > 0 ) {
         if (Dialogs.confirmed("Really delete scenario?", win)) {
-          sepukuPlay.getScenarios().deleteSelectedScenario();
+          sepukuPlay.scenarios().deleteSelectedScenario();
         }
       }
     });
@@ -78,14 +78,14 @@ public class ScenarioMenu extends JMenu implements Timeable {
 
     removeScenario.setEnabled(
       sepukuPlay != null &&
-        sepukuPlay.getScenarios().isEditing() &&
-        sepukuPlay.getScenarios().getSelectedScenariosNr() > 0
+        sepukuPlay.scenarios().isEditing() &&
+        sepukuPlay.scenarios().getSelectedScenariosNr() > 0
     );
     removeScenario.setVisible(removeScenario.isEnabled());
     renameScenario.setEnabled(
       sepukuPlay != null &&
-        sepukuPlay.getScenarios().isEditing() &&
-        sepukuPlay.getScenarios().getSelectedScenariosNr() > 0
+        sepukuPlay.scenarios().isEditing() &&
+        sepukuPlay.scenarios().getSelectedScenariosNr() > 0
     );
     renameScenario.setVisible(renameScenario.isEnabled());
   }

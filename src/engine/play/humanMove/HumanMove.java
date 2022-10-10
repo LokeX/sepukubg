@@ -21,12 +21,12 @@ public class HumanMove {
   public int getPlayerID() {
     
     return
-      humanInputActive()
+      inputActive()
         ? moveSelection.getPlayerID()
         : -1;
   }
   
-  public boolean humanInputActive() {
+  public boolean inputActive() {
     
     return
       matchPlay.gameIsPlaying()
@@ -36,7 +36,7 @@ public class HumanMove {
   public boolean endingPointIsNext() {
     
     return
-      humanInputActive()
+      inputActive()
         && !moveSelection.endOfInput()
         && moveSelection.positionIsEndingPoint();
   }
@@ -44,7 +44,7 @@ public class HumanMove {
   public Stream<Integer> getEndingPoints() {
     
     return
-      humanInputActive()
+      inputActive()
         ? moveSelection.validEndingPoints()
         : null;
   }
@@ -124,7 +124,7 @@ public class HumanMove {
   private GameState gameState () {
 
     return
-      matchPlay.getGameState();
+      matchPlay.gameState();
   }
 
   private void startMoveSelection () {
@@ -155,6 +155,12 @@ public class HumanMove {
         outputMoveLayouts();
       }
     }
+  }
+  
+  public boolean playerIsHuman () {
+    
+    return
+      matchPlay.playerIsHuman();
   }
 
   public void endMove () {

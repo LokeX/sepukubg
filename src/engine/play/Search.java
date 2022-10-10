@@ -3,7 +3,6 @@ package engine.play;
 import engine.api.Settings;
 import engine.core.Turn;
 import engine.play.game.GameState;
-import inUrFace.windows.TextDisplay;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class Search {
   private GameState gameState () {
 
     return
-      matchPlay.getGameState();
+      matchPlay.gameState();
 
   }
   

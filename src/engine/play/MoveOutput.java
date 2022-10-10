@@ -90,7 +90,7 @@ public class MoveOutput {
   private boolean timeDelayElapsed () {
 
     return
-       firstLayout || elapsedTime() > sepukuPlay.getSettings().getShowMoveDelay();
+       firstLayout || elapsedTime() > sepukuPlay.settings().getShowMoveDelay();
   }
 
 }

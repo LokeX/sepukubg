@@ -1,11 +1,11 @@
 package engine.api;
 
+import engine.core.Cube;
 import engine.play.*;
 import engine.play.humanMove.HumanMove;
 import engine.play.score.MatchBoard;
 import engine.play.score.ScoreBoard;
-import engine.core.Game;
-import engine.play.game.GameState;
+import java.util.List;
 
 public class SepukuPlay {
 
@@ -17,6 +17,38 @@ public class SepukuPlay {
   private StateOfPlay stateOfPlay =  new StateOfPlay(this);
   private StateEdit stateEdit = new StateEdit(this);
 
+  public Cube gameCube () {
+    
+    return
+      matchPlay.gameState().gameCube();
+  }
+  
+  public Cube turnCube () {
+    
+    return 
+      matchPlay.selectedTurn().turnCube();
+  }
+  
+  public int nrOfTurns () {
+    
+    return
+      gameIsPlaying()
+      ? matchPlay.gameState().nrOfTurns()
+      : 0;
+  }
+  
+  public int[] dice () {
+    
+    return
+      matchPlay.selectedTurn().getDice();
+  }
+  
+  public List<String> moveBonuses () {
+    
+    return
+      matchPlay.getMoveBonuses();
+  }
+  
   public Navigation navigation () {
     
     return
@@ -29,24 +61,24 @@ public class SepukuPlay {
       scenarioInfoHTML;
   }
   
-  public Search getSearch () {
+  public Search search() {
     
     return
-      matchPlay.getSearch();
+      matchPlay.search();
   }
   
-  public HumanMove getHumanMove () {
+  public HumanMove humanMove() {
    
    return
-     matchPlay.getHumanMove();
+     matchPlay.humanMove();
  }
  
-  public Scenarios getScenarios () {
+  public Scenarios scenarios() {
 
     return scenarios;
   }
   
-  public Settings getSettings () {
+  public Settings settings() {
     
     return settings;
   }
@@ -56,7 +88,7 @@ public class SepukuPlay {
     this.settings = settings;
   }
 
-  public StateOfPlay getPlayState() {
+  public StateOfPlay stateOfPlay () {
 
     return stateOfPlay;
   }
@@ -69,41 +101,27 @@ public class SepukuPlay {
       : null;
   }
 
-  public Game getGame () {
-
-    return
-      gameIsPlaying()
-      ? getGameState()
-      : null;
-    
-  }
-
   public GameInfoHTML getGameInfoHTML() {
 
     return
       gameIsPlaying()
       ? gameInfoHTML.getGameDataHTML(
-          getMatchPlay().getGameInfo()
+          matchPlay().getGameInfo()
         )
       : null;
   }
 
-  public MatchPlay getMatchPlay() {
+  MatchPlay matchPlay() {
 
     return matchPlay;
   }
 
-  public GameState getGameState () {
+  public MatchCube matchCube() {
 
-    return matchPlay.getGameState();
+    return matchPlay.matchCube();
   }
 
-  public MatchCube getMatchCube () {
-
-    return matchPlay.getMatchCube();
-  }
-
-  public StateEdit getInput () {
+  public StateEdit stateEdit() {
 
     return
       stateEdit;
@@ -116,7 +134,7 @@ public class SepukuPlay {
         .gameIsPlaying();
   }
 
- public MoveOutput getMoveOutput () {
+ public MoveOutput moveOutput() {
 
     return
       matchPlay != null
@@ -124,20 +142,20 @@ public class SepukuPlay {
       : null;
  }
 
-  public ScoreBoard getScoreBoard() {
+  public ScoreBoard scoreBoard() {
 
     return
-      matchPlay.getScoreBoard();
+      matchPlay.scoreBoard();
   }
 
-  public MatchBoard getMatchBoard() {
+  public MatchBoard matchBoard() {
 
-    return matchPlay.getMatchBoard();
+    return matchPlay.matchBoard();
   }
 
-  public boolean getAutoCompleteGame () {
+  public boolean autoCompleteGame() {
 
-    return matchPlay.getAutoCompleteGame();
+    return matchPlay.autoCompleteGame();
   }
 
   public void setAutoCompleteGame (boolean autoComplete) {
@@ -154,7 +172,7 @@ public class SepukuPlay {
   private boolean isNewMatch () {
     
     return
-      getPlayState()
+      stateOfPlay()
         .nextPlayTitle()
         .equals("New match");
   }
@@ -162,9 +180,9 @@ public class SepukuPlay {
   public void newMatch() {
     
     matchPlay = new MatchPlay(this);
-    getScenarios().setEditing(true);
-    getMoveOutput().setOutputLayout(
-      getScenarios().getSelectedScenariosLayout()
+    scenarios().setEditing(true);
+    moveOutput().setOutputLayout(
+      scenarios().getSelectedScenariosLayout()
     );
   }
   

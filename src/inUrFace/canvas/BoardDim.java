@@ -50,7 +50,7 @@ public class BoardDim {
     float heightFactor = (float)win.canvas.getHeight()/(float)575;
     float widthFactor = (float)win.canvas.getWidth()/(float)775;
 
-    factor = heightFactor < widthFactor ? heightFactor : widthFactor;
+    factor = Math.min(heightFactor, widthFactor);
     boardOffsetX *= factor;
     boardOffsetY *= factor;
     boardWidth *= factor;

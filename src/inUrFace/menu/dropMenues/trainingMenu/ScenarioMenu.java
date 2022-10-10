@@ -32,7 +32,7 @@ public class ScenarioMenu implements Listable {
   @Override
   public List<String> getElementTitles() {
 
-    return sepukuPlay.getScenarios().getLayoutTitles();
+    return sepukuPlay.scenarios().getLayoutTitles();
   }
 
 }

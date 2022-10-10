@@ -53,7 +53,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        out.writeObject(sepukuPlay.getScenarios().getScenarios());
+        out.writeObject(sepukuPlay.scenarios().getScenarios());
         out.close();
       } catch (IOException e) {
         System.out.println("Error writing file ["+path+"]: "+e.getMessage());
@@ -73,7 +73,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        sepukuPlay.getScenarios().setScenarios((List<NamedLayout>)in.readObject());
+        sepukuPlay.scenarios().setScenarios((List<NamedLayout>)in.readObject());
         in.close();
       } catch (IOException e) {
         System.out.println(e.getMessage());
@@ -137,7 +137,7 @@ public class FileHandler extends WindowAdapter {
             )
           );
 
-        out.writeObject(sepukuPlay.getSettings());
+        out.writeObject(sepukuPlay.settings());
         out.close();
       } catch (IOException e) {
         System.out.println("Error writing file ["+path+"]: "+e.getMessage());

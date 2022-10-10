@@ -12,12 +12,12 @@ public class TurnProgressionMenu extends JMenu {
   JRadioButtonMenuItem automateEndTurn =
     new JRadioButtonMenuItem(
       "Automatic",
-      sepukuPlay.getSettings().isAutomatedEndTurn()
+      sepukuPlay.settings().isAutomatedEndTurn()
     );
   JRadioButtonMenuItem manualEndTurn =
     new JRadioButtonMenuItem(
       "Manual",
-      !sepukuPlay.getSettings().isAutomatedEndTurn()
+      !sepukuPlay.settings().isAutomatedEndTurn()
     );
   ButtonGroup endTurnChoices = new ButtonGroup();
 
@@ -39,7 +39,7 @@ public class TurnProgressionMenu extends JMenu {
 
     add(automateEndTurn);
     automateEndTurn.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setAutomateEndTurn(true);
+        sepukuPlay.settings().setAutomateEndTurn(true);
     });
   }
 
@@ -47,7 +47,7 @@ public class TurnProgressionMenu extends JMenu {
 
     add(manualEndTurn);
     manualEndTurn.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setAutomateEndTurn(false);
+        sepukuPlay.settings().setAutomateEndTurn(false);
     });
   }
 

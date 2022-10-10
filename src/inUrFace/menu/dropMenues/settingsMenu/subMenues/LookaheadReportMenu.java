@@ -10,12 +10,12 @@ public class LookaheadReportMenu extends JMenu {
   JRadioButtonMenuItem reportOn =
     new JRadioButtonMenuItem(
       "On",
-      sepukuPlay.getSettings().isSearchReportOn()
+      sepukuPlay.settings().isSearchReportOn()
     );
   JRadioButtonMenuItem reportOff =
     new JRadioButtonMenuItem(
       "Off",
-      !sepukuPlay.getSettings().isSearchReportOn()
+      !sepukuPlay.settings().isSearchReportOn()
     );
   ButtonGroup buttonGroup = new ButtonGroup();
 
@@ -37,7 +37,7 @@ public class LookaheadReportMenu extends JMenu {
 
     add(reportOn);
     reportOn.addActionListener(
-      (ActionEvent e) -> sepukuPlay.getSettings().setSearchReportOn(true)
+      (ActionEvent e) -> sepukuPlay.settings().setSearchReportOn(true)
     );
   }
 
@@ -45,7 +45,7 @@ public class LookaheadReportMenu extends JMenu {
 
     add(reportOff);
     reportOff.addActionListener(
-      (ActionEvent e) -> sepukuPlay.getSettings().setSearchReportOn(false)
+      (ActionEvent e) -> sepukuPlay.settings().setSearchReportOn(false)
     );
   }
 

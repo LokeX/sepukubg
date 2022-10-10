@@ -46,7 +46,7 @@ public class Window extends JFrame {
     pack();
     setWindowLocation();
     timedTasks.addTimedTask(this::repaint);
-    if (sepukuPlay.getSettings().getWinMaximized()) {
+    if (sepukuPlay.settings().getWinMaximized()) {
       setExtendedState(MAXIMIZED_BOTH);
     }
     setVisible(true);
@@ -74,7 +74,7 @@ public class Window extends JFrame {
     @Override
     public void windowStateChanged (WindowEvent e) {
 
-      sepukuPlay.getSettings().setWinMaximized(
+      sepukuPlay.settings().setWinMaximized(
         e.getOldState() == JFrame.NORMAL &&
         e.getNewState() == JFrame.MAXIMIZED_BOTH
       );
@@ -91,9 +91,9 @@ public class Window extends JFrame {
       if (mouse != null && mouse.scenarioEdit != null) {
         mouse.scenarioEdit.generateClickPoints();
       }
-      if (!sepukuPlay.getSettings().getWinMaximized()) {
-        sepukuPlay.getSettings().setCanvasWidth(canvas.getWidth());
-        sepukuPlay.getSettings().setCanvasHeight(canvas.getHeight());
+      if (!sepukuPlay.settings().getWinMaximized()) {
+        sepukuPlay.settings().setCanvasWidth(canvas.getWidth());
+        sepukuPlay.settings().setCanvasHeight(canvas.getHeight());
       }
     }
 
@@ -104,8 +104,8 @@ public class Window extends JFrame {
 
         Point p = getLocationOnScreen();
 
-        sepukuPlay.getSettings().setFrameX((int) p.getX());
-        sepukuPlay.getSettings().setFrameY((int) p.getY());
+        sepukuPlay.settings().setFrameX((int) p.getX());
+        sepukuPlay.settings().setFrameY((int) p.getY());
       } catch (IllegalComponentStateException icse) {
         System.out.println("JFrame: win.getLocation(), error: " + icse.getMessage());
         System.out.println("Severity: none");
@@ -116,8 +116,8 @@ public class Window extends JFrame {
 
   private void setWindowLocation () {
 
-    if (sepukuPlay.getSettings().getFrameX() > -1 && sepukuPlay.getSettings().getFrameY() > -1) {
-      setLocation(sepukuPlay.getSettings().getFrameX(), sepukuPlay.getSettings().getFrameY());
+    if (sepukuPlay.settings().getFrameX() > -1 && sepukuPlay.settings().getFrameY() > -1) {
+      setLocation(sepukuPlay.settings().getFrameX(), sepukuPlay.settings().getFrameY());
     } else {
       setLocationRelativeTo(null);
     }

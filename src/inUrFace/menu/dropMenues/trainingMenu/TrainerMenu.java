@@ -70,7 +70,7 @@ public class TrainerMenu extends JMenu implements Timeable {
     add(setScoreToWin);
     setScoreToWin.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
     setScoreToWin.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getInput().inputStatScoreToWin(
+      sepukuPlay.stateEdit().inputStatScoreToWin(
         getIntegerInput(
           "Type the score required " +
             "to win a statistical match:",

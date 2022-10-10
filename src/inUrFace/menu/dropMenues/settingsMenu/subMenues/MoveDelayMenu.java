@@ -12,22 +12,22 @@ public class MoveDelayMenu extends JMenu {
   JRadioButtonMenuItem milli500 =
     new JRadioButtonMenuItem(
       "500 milliseconds",
-      sepukuPlay.getSettings().getShowMoveDelay() == 500
+      sepukuPlay.settings().getShowMoveDelay() == 500
     );
   JRadioButtonMenuItem milli300 =
     new JRadioButtonMenuItem(
       "300 milliseconds",
-      sepukuPlay.getSettings().getShowMoveDelay() == 300
+      sepukuPlay.settings().getShowMoveDelay() == 300
     );
   JRadioButtonMenuItem milli150 =
     new JRadioButtonMenuItem(
       "150 milliseconds",
-      sepukuPlay.getSettings().getShowMoveDelay() == 150
+      sepukuPlay.settings().getShowMoveDelay() == 150
     );
   JRadioButtonMenuItem milli0 =
     new JRadioButtonMenuItem(
       "Show move immediately",
-      sepukuPlay.getSettings().getShowMoveDelay() == 0
+      sepukuPlay.settings().getShowMoveDelay() == 0
     );
   ButtonGroup showMoveChoices = new ButtonGroup();
 
@@ -53,7 +53,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli500);
     milli500.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setShowMoveDelay(500);
+        sepukuPlay.settings().setShowMoveDelay(500);
     });
   }
 
@@ -61,7 +61,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli300);
     milli300.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setShowMoveDelay(300);
+        sepukuPlay.settings().setShowMoveDelay(300);
     });
   }
 
@@ -69,7 +69,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli150);
     milli150.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setShowMoveDelay(150);
+        sepukuPlay.settings().setShowMoveDelay(150);
     });
   }
 
@@ -77,7 +77,7 @@ public class MoveDelayMenu extends JMenu {
 
     add(milli0);
     milli0.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setShowMoveDelay(0);
+        sepukuPlay.settings().setShowMoveDelay(0);
     });
   }
 

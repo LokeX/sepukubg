@@ -10,22 +10,22 @@ public class LookaheadToTurnMenu extends JMenu {
   JRadioButtonMenuItem searchIsOff =
     new JRadioButtonMenuItem(
       "None",
-      sepukuPlay.getSettings().getSearchToPly() == 0
+      sepukuPlay.settings().getSearchToPly() == 0
     );
   JRadioButtonMenuItem searchToPly1 =
     new JRadioButtonMenuItem(
       "1 turn",
-      sepukuPlay.getSettings().getSearchToPly() == 1
+      sepukuPlay.settings().getSearchToPly() == 1
     );
   JRadioButtonMenuItem searchToPly2 =
     new JRadioButtonMenuItem(
       "2 turns",
-      sepukuPlay.getSettings().getSearchToPly() == 2
+      sepukuPlay.settings().getSearchToPly() == 2
     );
   JRadioButtonMenuItem searchToPly3 =
     new JRadioButtonMenuItem(
       "3 turns",
-      sepukuPlay.getSettings().getSearchToPly() == 3
+      sepukuPlay.settings().getSearchToPly() == 3
     );
   ButtonGroup searchToPlyChoices = new ButtonGroup();
 
@@ -51,7 +51,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchIsOff);
     searchIsOff.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setSearchToPly(0);
+        sepukuPlay.settings().setSearchToPly(0);
     });
   }
 
@@ -59,7 +59,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly1);
     searchToPly1.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setSearchToPly(1);
+        sepukuPlay.settings().setSearchToPly(1);
     });
   }
 
@@ -67,7 +67,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly2);
     searchToPly2.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setSearchToPly(2);
+        sepukuPlay.settings().setSearchToPly(2);
     });
   }
 
@@ -75,7 +75,7 @@ public class LookaheadToTurnMenu extends JMenu {
 
     add(searchToPly3);
     searchToPly3.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setSearchToPly(3);
+        sepukuPlay.settings().setSearchToPly(3);
     });
   }
 

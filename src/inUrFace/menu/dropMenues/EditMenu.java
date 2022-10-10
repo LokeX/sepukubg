@@ -46,7 +46,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editMove);
     editMove.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, 0));
     editMove.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getHumanMove().startMove();
+      sepukuPlay.humanMove().startMove();
     });
   }
 
@@ -55,7 +55,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editDice);
     editDice.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.ALT_MASK));
     editDice.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getInput().inputNewDice(
+      sepukuPlay.stateEdit().inputNewDice(
         JOptionPane.showInputDialog(win,
           "Input dice values with no separation" +
             "\nfor doubles type only one value"
@@ -69,7 +69,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editPlayToScore);
     editPlayToScore.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, ActionEvent.ALT_MASK));
     editPlayToScore.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getInput().inputPlayToScore(
+      sepukuPlay.stateEdit().inputPlayToScore(
         getIntegerInput(
           "Type the score required to win the game:" +
             "\nType 0 (or hit Enter) for money-game",win
@@ -88,7 +88,7 @@ public class EditMenu extends JMenu implements Timeable {
     add(editCubeValue);
     editCubeValue.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
     editCubeValue.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getInput().inputCubeValue(
+      sepukuPlay.stateEdit().inputCubeValue(
         getIntegerInput(
           "Type the new doublingCube value:",win
         )
@@ -109,7 +109,7 @@ public class EditMenu extends JMenu implements Timeable {
 //    add(editCubeOwner);
     editCubeOwner.add(noOwner);
     noOwner.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getGame().getGameCube().setOwner(-1);
+      sepukuPlay.gameCube().setOwner(-1);
     });
   }
 
@@ -117,7 +117,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editCubeOwner.add(whitePlayerOwner);
     whitePlayerOwner.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getGame().getGameCube().setOwner(0);
+      sepukuPlay.gameCube().setOwner(0);
     });
   }
 
@@ -125,7 +125,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editCubeOwner.add(blackPlayerOwner);
     blackPlayerOwner.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getGame().getGameCube().setOwner(1);
+      sepukuPlay.gameCube().setOwner(1);
     });
   }
 
@@ -147,7 +147,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editPlayerScore.add(whitePlayerScore);
     whitePlayerScore.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getInput().inputPlayerMatchScore(0, inputScore(0));
+      sepukuPlay.stateEdit().inputPlayerMatchScore(0, inputScore(0));
     });
   }
 
@@ -155,7 +155,7 @@ public class EditMenu extends JMenu implements Timeable {
 
     editPlayerScore.add(blackPlayerScore);
     blackPlayerScore.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getInput().inputPlayerMatchScore(1, inputScore(1));
+      sepukuPlay.stateEdit().inputPlayerMatchScore(1, inputScore(1));
     });
   }
 

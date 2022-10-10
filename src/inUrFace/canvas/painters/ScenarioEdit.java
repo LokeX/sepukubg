@@ -45,7 +45,7 @@ public class ScenarioEdit extends MouseAdapter implements Paintable {
 
     return
       sepukuPlay != null
-      && sepukuPlay.getScenarios().isEditing();
+      && sepukuPlay.scenarios().isEditing();
   }
 
   @Override
@@ -93,7 +93,7 @@ public class ScenarioEdit extends MouseAdapter implements Paintable {
           }
         }
       }
-      sepukuPlay.getScenarios().setEditedScenario(new Layout(layout));
+      sepukuPlay.scenarios().setEditedScenario(new Layout(layout));
     }
   }
 

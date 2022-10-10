@@ -80,7 +80,7 @@ public class Dice implements Paintable {
 
   private void makeDice () {
 
-    dice = sepukuPlay.getMatchPlay().getSelectedTurn().getDice();
+    dice = sepukuPlay.dice();
     for (int a = 0; a < dice.length; a++) {
       if (dieIcons[a] == null) {
         dieIcons[a] = new DieIcon();

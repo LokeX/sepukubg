@@ -57,7 +57,7 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousHumanTurn
       .addActionListener((ActionEvent e) -> {
-        sepukuPlay.navigation().selectAndDisplayPreviousHumanTurn();
+        sepukuPlay.navigation().selectAndOutputPreviousHumanTurn();
 //          .getMoveOutput()
 //          .setOutputLayout(
 //            sepukuPlay
@@ -81,7 +81,7 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     nextHumanTurn
       .addActionListener((ActionEvent e) -> {
-        sepukuPlay.navigation().selectAndDisplayNextHumanTurn();
+        sepukuPlay.navigation().selectAndOutputNextHumanTurn();
 //          .getMoveOutput()
 //          .setOutputLayout(
 //            sepukuPlay
@@ -105,7 +105,7 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     latestHumanTurn
       .addActionListener((ActionEvent e) -> {
-        sepukuPlay.navigation().selectAndDisplayLatestHumanTurn();
+        sepukuPlay.navigation().selectAndOutputLatestHumanTurn();
 //          .getMoveOutput()
 //          .setOutputLayout(
 //            sepukuPlay
@@ -134,7 +134,7 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     nextTurn.addActionListener((ActionEvent e) -> {
       if (sepukuPlay.gameIsPlaying()) {
-        sepukuPlay.navigation().selectAndDisplayNextTurn();
+        sepukuPlay.navigation().selectAndOutputNextTurn();
 //          .getMoveOutput()
 //          .setOutputLayout(
 //            sepukuPlay
@@ -159,7 +159,7 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousTurn.addActionListener((ActionEvent e) -> {
       if (sepukuPlay.gameIsPlaying()) {
-        sepukuPlay.navigation().selectAndDisplayPreviousTurn();
+        sepukuPlay.navigation().selectAndOutputPreviousTurn();
 //          .getMoveOutput()
 //          .setOutputLayout(
 //            sepukuPlay
@@ -184,7 +184,7 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousMove.addActionListener((ActionEvent e) -> {
       if (sepukuPlay.gameIsPlaying()) {
-        sepukuPlay.navigation().selectAndDisplayPreviousMove();
+        sepukuPlay.navigation().selectAndOutputPreviousMove();
 //          .getMoveOutput()
 //          .setOutputLayout(
 //            sepukuPlay
@@ -207,7 +207,7 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextMove.addActionListener((ActionEvent e) -> {
-        sepukuPlay.navigation().selectAndDisplayNextMove();
+        sepukuPlay.navigation().selectAndOutputNextMove();
 //          .getMoveOutput()
 //          .setOutputLayout(
 //            sepukuPlay
@@ -230,7 +230,7 @@ public class NavigateMenu extends JMenu implements Timeable {
       );
     previousPartMove.addActionListener((ActionEvent e) -> {
       if (sepukuPlay.gameIsPlaying()) {
-        sepukuPlay.navigation().selectAndDisplayPreviousPartMove();
+        sepukuPlay.navigation().selectAndOutputPreviousPartMove();
 //          .getMoveOutput()
 //          .setOutputLayout(
 //            sepukuPlay
@@ -253,7 +253,7 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextPartMove.addActionListener((ActionEvent e) -> {
-        sepukuPlay.navigation().selectAndDisplayNextPartMove();
+        sepukuPlay.navigation().selectAndOutputNextPartMove();
 //          .getMoveOutput()
 //          .setOutputLayout(
 //            sepukuPlay
@@ -275,9 +275,9 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     previousScenario.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getScenarios().selectPreviousScenario();
+      sepukuPlay.scenarios().selectPreviousScenario();
       WinApp.getCanvas().setDisplayedLayout(
-        sepukuPlay.getScenarios().getSelectedScenariosLayout()
+        sepukuPlay.scenarios().getSelectedScenariosLayout()
       );
 //      new ScenarioOutput(scenarios).outputSelectedScenario();
     });
@@ -295,9 +295,9 @@ public class NavigateMenu extends JMenu implements Timeable {
           )
       );
     nextScenario.addActionListener((ActionEvent e) -> {
-      sepukuPlay.getScenarios().selectNextScenario();
+      sepukuPlay.scenarios().selectNextScenario();
       WinApp.getCanvas().setDisplayedLayout(
-        sepukuPlay.getScenarios().getSelectedScenariosLayout()
+        sepukuPlay.scenarios().getSelectedScenariosLayout()
       );
 //      new ScenarioOutput(scenarios).outputSelectedScenario();
     });
@@ -309,7 +309,7 @@ public class NavigateMenu extends JMenu implements Timeable {
     previousHumanTurn.setEnabled(
       sepukuPlay != null
       && sepukuPlay.gameIsPlaying()
-      && sepukuPlay.getSettings().humanPlayerExists()
+      && sepukuPlay.settings().humanPlayerExists()
     );
     previousHumanTurn.setVisible(previousHumanTurn.isEnabled());
     nextHumanTurn.setEnabled(previousHumanTurn.isEnabled());
@@ -332,7 +332,7 @@ public class NavigateMenu extends JMenu implements Timeable {
     previousPartMove.setEnabled(nextPartMove.isEnabled());
     previousPartMove.setVisible(previousPartMove.isEnabled());
 
-    previousScenario.setEnabled(sepukuPlay.getPlayState().nextPlayTitle().equals("Start match"));
+    previousScenario.setEnabled(sepukuPlay.stateOfPlay().nextPlayTitle().equals("Start match"));
     previousScenario.setVisible(previousScenario.isEnabled());
     nextScenario.setEnabled(previousScenario.isEnabled());
     nextScenario.setVisible(nextScenario.isEnabled());

@@ -18,7 +18,7 @@ public class BlackBotMenu implements Listable {
   public void itemSelectedAction(int selectedItemNr) {
 
     this.selectedItemNr = selectedItemNr;
-    sepukuPlay.getSettings().setBlackBotOpponent(selectedItemNr);
+    sepukuPlay.settings().setBlackBotOpponent(selectedItemNr);
   }
 
   @Override

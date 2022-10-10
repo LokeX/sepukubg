@@ -41,11 +41,11 @@ public class Trainer {
       bots.add(new Bot("Default bot"));
       blackBot = 0;
       whiteBot = 0;
-      sepukuPlay.getSettings().setBlackBotOpponent(0);
-      sepukuPlay.getSettings().setWhiteBotOpponent(0);
+      sepukuPlay.settings().setBlackBotOpponent(0);
+      sepukuPlay.settings().setWhiteBotOpponent(0);
     } else {
-      blackBot = sepukuPlay.getSettings().getTrainerBlackBot();
-      whiteBot = sepukuPlay.getSettings().getTrainerWhiteBot();
+      blackBot = sepukuPlay.settings().getTrainerBlackBot();
+      whiteBot = sepukuPlay.settings().getTrainerWhiteBot();
     }
   }
 
@@ -84,7 +84,7 @@ public class Trainer {
 
   public String getUsedScenarioTitle () {
 
-    return sepukuPlay.getScenarios().getScenarios().get(selectedScenarioNr).getName();
+    return sepukuPlay.scenarios().getScenarios().get(selectedScenarioNr).getName();
   }
 
   public String getFinalReport () {
@@ -136,7 +136,7 @@ public class Trainer {
   public String getInitialReport () {
 
     return
-      "Using scenario: "+ sepukuPlay.getScenarios().getScenarios().get(selectedScenarioNr).getName()+
+      "Using scenario: "+ sepukuPlay.scenarios().getScenarios().get(selectedScenarioNr).getName()+
       "\nPlaying to matchScore: "+statScoreToWin+
       "\nUsing Nr of cores: "+getNrOfCores();
   }
@@ -145,7 +145,7 @@ public class Trainer {
 
     System.out.println("Running "+nrOfMatchesToPlay+" matches");
     System.out.println("Playing to matchScore: "+statScoreToWin);
-    System.out.println("Using scenario: "+ sepukuPlay.getScenarios().getScenarios().get(selectedScenarioNr).getName());
+    System.out.println("Using scenario: "+ sepukuPlay.scenarios().getScenarios().get(selectedScenarioNr).getName());
     System.out.println("Using Nr of cores: "+getNrOfCores());
   }
 
@@ -209,7 +209,7 @@ public class Trainer {
 
     new Thread(() -> {
 
-      Layout layout = sepukuPlay.getScenarios().getLayoutByNr(selectedScenarioNr);
+      Layout layout = sepukuPlay.scenarios().getLayoutByNr(selectedScenarioNr);
       List<Match> matches = new ArrayList<>();
 
       for (int a = 0; a < nrOfMatches; a++) {

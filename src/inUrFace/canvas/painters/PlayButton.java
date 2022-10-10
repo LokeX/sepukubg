@@ -29,7 +29,7 @@ public class PlayButton extends TextBatch implements Paintable {
   public boolean showWaitBackground () {
 
     return
-      sepukuPlay.getPlayState().isSearching();
+      sepukuPlay.stateOfPlay().isSearching();
   }
 
   private boolean buttonClicked (MouseEvent e) {
@@ -90,14 +90,14 @@ public class PlayButton extends TextBatch implements Paintable {
     
     return
       sepukuPlay
-        .getPlayState()
+        .stateOfPlay()
         .nextPlayTitle();
   }
   
   public boolean showButton() {
 
     return
-      sepukuPlay.getPlayState().nextPlayReady()
+      sepukuPlay.stateOfPlay().nextPlayReady()
       || showWaitBackground();
   }
 

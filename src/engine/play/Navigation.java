@@ -15,7 +15,7 @@ public class Navigation {
   private GameState gameState () {
     
     return
-      matchPlay.getGameState();
+      matchPlay.gameState();
   }
   
   public boolean isNavigating () {
@@ -28,82 +28,82 @@ public class Navigation {
     isNavigating = navigating;
   }
   
-  public void selectAndDisplayNextTurn() {
+  public void selectAndOutputNextTurn () {
     
     isNavigating = true;
-    matchPlay.getHumanMove().endMove();
+    matchPlay.humanMove().endMove();
     matchPlay.getMoveOutput().setOutputLayout(
       gameState().selectNextTurn().getPlayedMove()
     );
   }
   
-  public void selectAndDisplayPreviousTurn() {
+  public void selectAndOutputPreviousTurn () {
   
     isNavigating = true;
-    matchPlay.getHumanMove().endMove();
+    matchPlay.humanMove().endMove();
     matchPlay.getMoveOutput().setOutputLayout(
       gameState().selectPreviousTurn().getPlayedMove()
     );
   }
   
-  public void selectAndDisplayNextHumanTurn() {
+  public void selectAndOutputNextHumanTurn () {
   
     isNavigating = true;
-    matchPlay.getHumanMove().endMove();
+    matchPlay.humanMove().endMove();
     matchPlay.getMoveOutput().setOutputLayout(
       gameState().selectNextHumanTurn().getPlayedMove()
     );
   }
   
-  public void selectAndDisplayPreviousHumanTurn() {
+  public void selectAndOutputPreviousHumanTurn () {
   
     isNavigating = true;
-    matchPlay.getHumanMove().endMove();
+    matchPlay.humanMove().endMove();
     matchPlay.getMoveOutput().setOutputLayout(
       gameState().selectPreviousHumanTurn().getPlayedMove()
     );
   }
   
-  public void selectAndDisplayLatestHumanTurn() {
+  public void selectAndOutputLatestHumanTurn () {
   
     isNavigating = true;
-    matchPlay.getHumanMove().endMove();
+    matchPlay.humanMove().endMove();
     matchPlay.getMoveOutput().setOutputLayout(
       gameState().selectLatestHumanTurn().getPlayedMove()
     );
   }
   
-  public void selectAndDisplayNextMove() {
+  public void selectAndOutputNextMove () {
   
     isNavigating = true;
-    matchPlay.getHumanMove().endMove();
+    matchPlay.humanMove().endMove();
     matchPlay.getMoveOutput().setOutputLayout(
       gameState().selectNextMove()
     );
   }
   
-  public void selectAndDisplayPreviousMove() {
+  public void selectAndOutputPreviousMove () {
   
     isNavigating = true;
-    matchPlay.getHumanMove().endMove();
+    matchPlay.humanMove().endMove();
     matchPlay.getMoveOutput().setOutputLayout(
       gameState().selectPreviousMove()
     );
   }
   
-  public void selectAndDisplayNextPartMove() {
+  public void selectAndOutputNextPartMove () {
   
     isNavigating = true;
-    matchPlay.getHumanMove().endMove();
+    matchPlay.humanMove().endMove();
     matchPlay.getMoveOutput().setOutputLayout(
       gameState().selectNextPartMove()
     );
   }
   
-  public void selectAndDisplayPreviousPartMove() {
+  public void selectAndOutputPreviousPartMove () {
   
     isNavigating = true;
-    matchPlay.getHumanMove().endMove();
+    matchPlay.humanMove().endMove();
     matchPlay.getMoveOutput().setOutputLayout(
       gameState().selectPreviousPartMove()
     );

@@ -173,7 +173,7 @@ public class MoveSelection extends Moves {
 
     return
       startPos != endPos
-      ?  matchingMoves()
+      ? matchingMoves()
         .findAny()
         .get()
         .getMovePointLayouts()

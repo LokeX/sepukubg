@@ -23,8 +23,8 @@ public class Cube extends MouseAdapter implements Paintable {
     return
       sepukuPlay != null
       && sepukuPlay.gameIsPlaying()
-      && !sepukuPlay.getMatchBoard().isCrawfordGame()
-      && sepukuPlay.getSettings().getScoreToWin() > 1;
+      && !sepukuPlay.matchBoard().isCrawfordGame()
+      && sepukuPlay.settings().getScoreToWin() > 1;
   }
 
   private Batch[] getClickPoints () {
@@ -69,7 +69,7 @@ public class Cube extends MouseAdapter implements Paintable {
     
       if (isVisible()) {
 
-        engine.core.Cube cube = sepukuPlay.getMatchPlay().getSelectedTurn().getTurnCube();
+        engine.core.Cube cube = sepukuPlay.turnCube();
         BoardDim d = win.canvas.getDimensions();
         int offsetX = (int)(d.topLeftBearOffOffsetX*1.05);
         int offsetY;
@@ -113,9 +113,8 @@ public class Cube extends MouseAdapter implements Paintable {
   @Override
   public void mouseClicked (MouseEvent e) {
 
-    if (sepukuPlay != null && sepukuPlay.getGame() != null && !sepukuPlay.getGame().gameOver() && getClickedPoint(e) >= 0) {
-      System.out.println("DoublingCube clicked");
-      sepukuPlay.getMatchCube().humanHandlesCube();
+    if (sepukuPlay.gameIsPlaying() && !sepukuPlay.gameOver() && getClickedPoint(e) >= 0) {
+      sepukuPlay.matchCube().humanHandlesCube();
     }
   }
 

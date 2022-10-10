@@ -10,7 +10,7 @@ import static sepuku.WinApp.sepukuPlay;
 
 public class Canvas extends JPanel {
 
-  private Layout displayedLayout = sepukuPlay.getScenarios().getSelectedScenariosLayout();
+  private Layout displayedLayout = sepukuPlay.scenarios().getSelectedScenariosLayout();
   private BoardDim dimensions = new BoardDim();
   private Painters painters = new Painters();
 
@@ -18,8 +18,8 @@ public class Canvas extends JPanel {
 
     setPreferredSize(
       new Dimension(
-        sepukuPlay.getSettings().getCanvasWidth(),
-        sepukuPlay.getSettings().getCanvasHeight()
+        sepukuPlay.settings().getCanvasWidth(),
+        sepukuPlay.settings().getCanvasHeight()
       )
     );
   }

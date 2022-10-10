@@ -23,7 +23,7 @@ public class Game {
     while (turnNr < turns.size()-1) {
       turns.remove(turnNr+1);
     }
-    gameCube = new Cube(lastTurn().getTurnCube());
+    gameCube = new Cube(lastTurn().turnCube());
   }
 
   public void nextTurn (int turnNr, int moveNr) {
@@ -72,7 +72,7 @@ public class Game {
       || gameCube.cubeWasRejected());
   }
 
-  public Cube getGameCube() {
+  public Cube gameCube() {
 
     return gameCube;
   }

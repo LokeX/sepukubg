@@ -26,7 +26,7 @@ public class InformationBar extends JLabel implements Timeable {
 
     return
       sepukuPlay.getGameInfoHTML() != null
-      && !sepukuPlay.getScenarios().isEditing();
+      && !sepukuPlay.scenarios().isEditing();
   }
   
   private String getDataHTML () {

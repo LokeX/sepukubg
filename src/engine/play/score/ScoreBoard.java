@@ -9,7 +9,7 @@ public class ScoreBoard {
 
   public ScoreBoard (MatchPlay matchPlay) {
 
-    matchBoard = matchPlay.getMatchBoard();
+    matchBoard = matchPlay.matchBoard();
     this.matchPlay = matchPlay;
   }
 

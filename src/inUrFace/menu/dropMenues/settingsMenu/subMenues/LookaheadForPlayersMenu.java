@@ -10,12 +10,12 @@ public class LookaheadForPlayersMenu extends JMenu {
   JRadioButtonMenuItem allPlayers =
     new JRadioButtonMenuItem(
       "All players",
-      sepukuPlay.getSettings().getLookaheadForAllPlayers()
+      sepukuPlay.settings().getLookaheadForAllPlayers()
     );
   JRadioButtonMenuItem botsOnly =
     new JRadioButtonMenuItem(
       "Bots only",
-      !sepukuPlay.getSettings().getLookaheadForAllPlayers()
+      !sepukuPlay.settings().getLookaheadForAllPlayers()
     );
   ButtonGroup playerChoices = new ButtonGroup();
 
@@ -37,7 +37,7 @@ public class LookaheadForPlayersMenu extends JMenu {
 
     add(allPlayers);
     allPlayers.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setLookaheadForAllPlayers(true);
+        sepukuPlay.settings().setLookaheadForAllPlayers(true);
     });
   }
 
@@ -45,7 +45,7 @@ public class LookaheadForPlayersMenu extends JMenu {
 
     add(botsOnly);
     botsOnly.addActionListener((ActionEvent e) -> {
-        sepukuPlay.getSettings().setLookaheadForAllPlayers(false);
+        sepukuPlay.settings().setLookaheadForAllPlayers(false);
     });
   }
 

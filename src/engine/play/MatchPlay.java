@@ -59,7 +59,7 @@ public class MatchPlay {
   public Settings settings () {
     
     return
-      sepukuPlay.getSettings();
+      sepukuPlay.settings();
   }
 
   public MoveOutput getMoveOutput() {
@@ -68,12 +68,12 @@ public class MatchPlay {
       moveOutput;
   }
 
-  public ScoreBoard getScoreBoard () {
+  public ScoreBoard scoreBoard() {
 
     return scoreBoard;
   }
 
-  public MatchCube getMatchCube () {
+  public MatchCube matchCube() {
 
     return matchCube;
   }
@@ -83,28 +83,28 @@ public class MatchPlay {
     return gameInfo.getGameData();
   }
 
-  public Search getSearch() {
+  public Search search() {
 
     return search;
   }
 
-  public MatchBoard getMatchBoard() {
+  public MatchBoard matchBoard() {
 
     return matchBoard;
   }
 
-  public GameState getGameState() {
+  public GameState gameState() {
 
     return gameState;
   }
 
-  public HumanMove getHumanMove () {
+  public HumanMove humanMove() {
 
     return
       humanMove;
   }
 
-  public boolean getAutoCompleteGame () {
+  public boolean autoCompleteGame() {
 
     return autoCompleteGame;
   }
@@ -125,7 +125,7 @@ public class MatchPlay {
     
     return
       gameIsPlaying()
-      ? getGameState().lastTurn()
+      ? gameState().lastTurn()
       : null;
   }
   
@@ -133,11 +133,11 @@ public class MatchPlay {
     
     return
       gameIsPlaying()
-      ? getSelectedTurn()
+      ? selectedTurn()
         .getMoveBonuses(selectedMove())
         .getMoveBonusList(
           sepukuPlay
-            .getSettings()
+            .settings()
             .getBonusDisplayMode()
         )
       : null;
@@ -146,7 +146,7 @@ public class MatchPlay {
   public boolean humanTurnSelected() {
     
     return
-      getGameState()
+      gameState()
         .humanTurnSelected();
   }
   
@@ -157,22 +157,22 @@ public class MatchPlay {
   
   public int getPlayedMoveNr () {
     
-    return getSelectedTurn().getPlayedMoveNr();
+    return selectedTurn().getPlayedMoveNr();
   }
   
   public int getNrOfTurns () {
     
     return
       gameIsPlaying()
-      ? getGameState().nrOfTurns()
+      ? gameState().nrOfTurns()
       : 0;
   }
   
-  public Turn getSelectedTurn() {
+  public Turn selectedTurn() {
     
     return
       gameIsPlaying()
-      ? getGameState().selectedTurn()
+      ? gameState().selectedTurn()
       : null;
   }
   
@@ -180,7 +180,7 @@ public class MatchPlay {
     
     return
       gameIsPlaying()
-      ? getGameState().selectedMove()
+      ? gameState().selectedMove()
       : null;
   }
   
@@ -247,7 +247,7 @@ public class MatchPlay {
     }
     if (gameOver()) {
       autoCompleteGame = false;
-      matchBoard.addGameScore(getGameState().getGameScore());
+      matchBoard.addGameScore(gameState().getGameScore());
     } else if (settings().isAutomatedEndTurn() || autoCompleteGame) {
       humanMove.endMove();
       sepukuPlay.execNextPlay();
@@ -286,13 +286,13 @@ public class MatchPlay {
       humanMove.playMove();
     }
     gameState.newTurn();
-    getSearch().searchRolledMoves();
+    search().searchRolledMoves();
     move();
   }
   
   private void initScenario () {
 
-    scenario = new Layout(sepukuPlay.getScenarios().getMatchLayout());
+    scenario = new Layout(sepukuPlay.scenarios().getMatchLayout());
     scenario.setPlayerID(settings().getGameStartMode());
     scenario.setUseWhiteBot(settings().getWhiteBotOpponent());
     scenario.setUseBlackBot(settings().getBlackBotOpponent());
@@ -305,7 +305,7 @@ public class MatchPlay {
     }
     initScenario();
     getMoveOutput().setOutputLayout(scenario);
-    sepukuPlay.getScenarios().setEditing(false);
+    sepukuPlay.scenarios().setEditing(false);
     gameState = new GameState(this);
     startNewTurn();
   }

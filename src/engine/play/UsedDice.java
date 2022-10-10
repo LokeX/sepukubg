@@ -32,7 +32,7 @@ public class UsedDice {
     
     return
       !matchPlay.gameIsPlaying() || matchPlay.selectedMove().isIllegal()
-      || (nrOfOutputLayouts() == 0 && !matchPlay.getSearch().isSearching());
+      || (nrOfOutputLayouts() == 0 && !matchPlay.search().isSearching());
   }
   
   private int outputLayoutNr () {
@@ -53,7 +53,7 @@ public class UsedDice {
   private int[] dice () {
     
     return
-      matchPlay.getSelectedTurn().getDice();
+      matchPlay.selectedTurn().getDice();
   }
   
   private boolean isInvalidDicePattern (int[] dicePattern) {
@@ -101,7 +101,7 @@ public class UsedDice {
     
     return
       matchPlay
-      .getHumanMove()
+      .humanMove()
       .getMoveSelection()
       .dicePattern();
   }
@@ -110,7 +110,7 @@ public class UsedDice {
     
     return
       matchPlay.playerIsHuman()
-      && matchPlay.getHumanMove().getMoveSelection() != null
+      && matchPlay.humanMove().getMoveSelection() != null
       && !matchPlay.selectedMove().isIllegal();
   }
   

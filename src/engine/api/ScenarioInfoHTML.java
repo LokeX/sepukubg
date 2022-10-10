@@ -38,7 +38,7 @@ public class ScenarioInfoHTML {
   private String getScenarioName () {
     
     return
-      sepukuPlay.getScenarios().getSelectedScenariosTitle();
+      sepukuPlay.scenarios().getSelectedScenariosTitle();
   }
 
   private String HTML_Label (String label) {

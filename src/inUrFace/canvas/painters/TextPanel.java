@@ -26,16 +26,16 @@ public class TextPanel extends TextBatch implements Paintable {
   private boolean displaySearch () {
     
     return
-      sepukuPlay.getSettings().isSearchReportOn()
-      && sepukuPlay.getSearch().okToSearch()
-      && !sepukuPlay.getSearch().isSearching();
+      sepukuPlay.settings().isSearchReportOn()
+      && sepukuPlay.search().okToSearch()
+      && !sepukuPlay.search().isSearching();
   }
 
   @Override
   public void paint(Graphics g) {
 
     BoardDim d = win.canvas.getDimensions();
-    List<String> bonuses = sepukuPlay.getMatchPlay().getMoveBonuses();
+    List<String> bonuses = sepukuPlay.moveBonuses();
     Font font = new Font("Ariel", Font.BOLD, (int) (10 * (d.factor * 1.0)));
     int offsetX = (int) ((d.boardOffsetX + d.boardWidth) * 1.03);
     int width = win.canvas.getWidth() - offsetX;
@@ -47,7 +47,7 @@ public class TextPanel extends TextBatch implements Paintable {
     } else if (displaySearch()) {
       clear();
       sepukuPlay
-        .getSearch()
+        .search()
         .getSearchReport()
         .forEach(this::writeLine);
     }

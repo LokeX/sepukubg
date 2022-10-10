@@ -52,7 +52,7 @@ public class Turn extends Moves {
     return playedMoveNr;
   }
 
-  public Cube getTurnCube() {
+  public Cube turnCube() {
 
     return new Cube(turnCube);
   }

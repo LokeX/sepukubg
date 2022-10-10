@@ -13,7 +13,7 @@ public class Chequer implements Paintable {
 
     return
       sepukuPlay
-        .getHumanMove()
+        .humanMove()
         .getPlayerID();
   }
 
@@ -60,9 +60,9 @@ public class Chequer implements Paintable {
 
     return
       sepukuPlay != null
-      && sepukuPlay.getHumanMove().humanInputActive()
-      && sepukuPlay.getMatchPlay().playerIsHuman()
-      && sepukuPlay.getHumanMove().endingPointIsNext()
+      && sepukuPlay.humanMove().inputActive()
+      && sepukuPlay.humanMove().playerIsHuman()
+      && sepukuPlay.humanMove().endingPointIsNext()
       && mousePosition() != null;
   }
 

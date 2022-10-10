@@ -45,7 +45,7 @@ public class MatchMenu extends JMenu implements Timeable {
     add(autoCompleteGame);
     autoCompleteGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
     autoCompleteGame.addActionListener((ActionEvent e) -> {
-      if (sepukuPlay.getAutoCompleteGame()) {
+      if (sepukuPlay.autoCompleteGame()) {
         autoCompleteGame.setText("Auto complete game");
         sepukuPlay.setAutoCompleteGame(false);
       } else {
@@ -67,17 +67,17 @@ public class MatchMenu extends JMenu implements Timeable {
 
   public void timerUpdate () {
 
-    resignGame.setEnabled(sepukuPlay != null && sepukuPlay.getMatchPlay().getNrOfTurns() > 0);
+    resignGame.setEnabled(sepukuPlay != null && sepukuPlay.nrOfTurns() > 0);
     resignGame.setVisible(resignGame.isEnabled());
     newMatch.setEnabled(resignGame.isEnabled());
     newMatch.setVisible(resignGame.isEnabled());
     autoCompleteGame.setEnabled(sepukuPlay.gameIsPlaying() && !sepukuPlay.gameOver());
     autoCompleteGame.setVisible(autoCompleteGame.isEnabled());
-    nextAction.setText(sepukuPlay.getPlayState().nextPlayTitle());
+    nextAction.setText(sepukuPlay.stateOfPlay().nextPlayTitle());
     nextAction.setEnabled(
-      sepukuPlay.getPlayState().nextPlayReady()
-      && !sepukuPlay.getAutoCompleteGame()
-      && !sepukuPlay.getPlayState().isSearching()
+      sepukuPlay.stateOfPlay().nextPlayReady()
+      && !sepukuPlay.autoCompleteGame()
+      && !sepukuPlay.stateOfPlay().isSearching()
     );
     nextAction.setVisible(nextAction.isEnabled());
   }

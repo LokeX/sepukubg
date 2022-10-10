@@ -24,7 +24,7 @@ public class GameInfo {
   private GameState gameState () {
 
     return
-      matchState.getGameState();
+      matchState.gameState();
   }
 
   public GameInfo getGameData () {
@@ -100,7 +100,7 @@ public class GameInfo {
 
     return
       matchState
-        .getHumanMove();
+        .humanMove();
   }
 
   private String commaSeparated (int[] temp) {

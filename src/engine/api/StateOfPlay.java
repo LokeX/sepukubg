@@ -19,7 +19,7 @@ public class StateOfPlay {
   public boolean isSearching () {
 
     return
-      sepukuPlay.getMatchPlay().getSearch().isSearching();
+      sepukuPlay.matchPlay().search().isSearching();
   }
 
   void setAutoComplete (boolean complete) {
@@ -34,7 +34,7 @@ public class StateOfPlay {
 
   private MatchPlay matchPlay () {
 
-    return sepukuPlay.getMatchPlay();
+    return sepukuPlay.matchPlay();
   }
 
   private boolean lastTurnSelected () {
@@ -77,7 +77,7 @@ public class StateOfPlay {
 
     return
       matchPlay()
-        .getHumanMove();
+        .humanMove();
   }
   
   private boolean illegalMove () {
@@ -92,7 +92,7 @@ public class StateOfPlay {
       illegalMove()
       || humanMove().inputReady()
       && matchPlay()
-        .getHumanMove()
+        .humanMove()
         .getMoveSelection()
         .endOfInput();
   }
@@ -108,7 +108,7 @@ public class StateOfPlay {
     
     return
       sepukuPlay
-        .getMatchPlay()
+        .matchPlay()
         .navigation()
         .isNavigating();
   }
@@ -126,7 +126,7 @@ public class StateOfPlay {
   private boolean scenarioEdit () {
 
     return
-      sepukuPlay.getScenarios().isEditing();
+      sepukuPlay.scenarios().isEditing();
   }
 
   public boolean nextPlayReady () {

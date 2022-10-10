@@ -25,11 +25,11 @@ public class DeleteBotMenu implements Listable {
       if (Trainer.blackBot >= selectedItemNr) {
         Trainer.blackBot = 0;
       }
-      if (sepukuPlay.getSettings().getWhiteBotOpponent() >= selectedItemNr) {
-        sepukuPlay.getSettings().setWhiteBotOpponent(0);
+      if (sepukuPlay.settings().getWhiteBotOpponent() >= selectedItemNr) {
+        sepukuPlay.settings().setWhiteBotOpponent(0);
       }
-      if (sepukuPlay.getSettings().getBlackBotOpponent() >= selectedItemNr) {
-        sepukuPlay.getSettings().setBlackBotOpponent(0);
+      if (sepukuPlay.settings().getBlackBotOpponent() >= selectedItemNr) {
+        sepukuPlay.settings().setBlackBotOpponent(0);
       }
     }
   }

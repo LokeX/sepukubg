@@ -14,8 +14,8 @@ public class Move implements Paintable {
   
     return
       sepukuPlay != null
-        && sepukuPlay.getMoveOutput() != null
-        && sepukuPlay.getMoveOutput().hasOutput();
+        && sepukuPlay.moveOutput() != null
+        && sepukuPlay.moveOutput().hasOutput();
   }
   
   public void paint (Graphics g) {
@@ -23,7 +23,7 @@ public class Move implements Paintable {
     if (hasMoveOutput()) {
       win.canvas.setDisplayedLayout(
         sepukuPlay
-          .getMoveOutput()
+          .moveOutput()
           .getMovePointLayout()
       );
       WinApp.sound.playSoundEffect(
