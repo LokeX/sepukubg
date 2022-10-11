@@ -1,6 +1,7 @@
 package inUrFace.windows;
 
 import inUrFace.canvas.Canvas;
+import inUrFace.canvas.listeners.MouseListeners;
 import inUrFace.menu.MenuBar;
 
 import static sepuku.WinApp.*;
@@ -28,10 +29,11 @@ public class Window extends JFrame {
   public MenuBar menu = new MenuBar();
   public TrainerPlay progressBar = new TrainerPlay();
   public InformationBar informationBar = new InformationBar();
+  public MouseListeners mouse = new MouseListeners(canvas);
 
   public Window() {
 
-    super("Sepuku Backgammon / beta - ver. 2022.10.10");
+    super("Sepuku Backgammon / beta - ver. 2022.10.11");
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
     setIconImage(new ImageIcon(getClass().getResource("Icon/AppIcon.gif")).getImage());
@@ -49,12 +51,11 @@ public class Window extends JFrame {
     if (sepukuPlay.settings().getWinMaximized()) {
       setExtendedState(MAXIMIZED_BOTH);
     }
-    setVisible(true);
   }
 
   static public void runWindow () {
 
-    Font font = new Font("Sansserif",Font.PLAIN,16);
+    Font font = new Font("Sanserif",Font.PLAIN,16);
 
     UIManager.put("Menu.font", font);
     UIManager.put("MenuItem.font", font);
@@ -67,6 +68,7 @@ public class Window extends JFrame {
     while (!windowReady) {
       threadSleep(100);
     }
+    win.setVisible(true);
   }
 
   public class WinMax extends WindowAdapter {

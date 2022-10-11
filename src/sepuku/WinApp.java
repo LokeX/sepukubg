@@ -14,7 +14,6 @@ public class WinApp {
   static public TimedTasks timedTasks;
   static public FileHandler files;
   static public Window win;
-  static public MouseListeners mouse;
   static public SepukuPlay sepukuPlay;
   static public Trainer trainer;
   static public Sound sound;
@@ -33,7 +32,6 @@ public class WinApp {
     trainer = new Trainer();
 
     Window.runWindow();
-    mouse = new MouseListeners();
   }
 
 }

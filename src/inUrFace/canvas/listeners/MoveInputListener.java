@@ -14,7 +14,7 @@ public class MoveInputListener extends MouseAdapter {
   public Batch[] getClickPoints() {
 
     BoardDim d = win.canvas.getDimensions();
-    Batch[] regularPoints = mouse.getRegularClickPoints();
+    Batch[] regularPoints = win.mouse.getRegularClickPoints();
     Batch[] points = new Batch[26];
     Color pointsColor = new Color(56, 75, 174, 150);
 

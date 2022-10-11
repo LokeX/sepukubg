@@ -6,15 +6,14 @@ import util.Batch;
 import java.awt.*;
 import java.util.stream.Stream;
 
-import static sepuku.WinApp.sepukuPlay;
-import static sepuku.WinApp.mouse;
+import static sepuku.WinApp.*;
 
 public class EndingPoints implements Paintable {
 
   private boolean humanMoveReady () {
 
     return
-      mouse != null
+      win.mouse != null
         && sepukuPlay.humanMove() != null
         && sepukuPlay.humanMove().inputActive();
   }
@@ -22,7 +21,7 @@ public class EndingPoints implements Paintable {
   private Batch[] clickPoints () {
 
     return
-      mouse
+      win.mouse
         .getMoveInputListener()
         .getClickPoints();
   }

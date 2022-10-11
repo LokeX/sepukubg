@@ -19,7 +19,7 @@ public class ScenarioEdit extends MouseAdapter implements Paintable {
   @Override
   public void paint(Graphics g) {
 
-    if (mouse != null && mouse.scenarioEdit != null && isEditing()) {
+    if (win.mouse != null && win.mouse.scenarioEdit != null && isEditing()) {
       generateClickPoints();
       for (Batch clickPoint : clickPoints) {
         if (clickPoint != null) {
@@ -100,7 +100,7 @@ public class ScenarioEdit extends MouseAdapter implements Paintable {
   final public void generateClickPoints () {
 
     BoardDim d = win.canvas.getDimensions();
-    Batch[] regularPoints = mouse.getRegularClickPoints();
+    Batch[] regularPoints = win.mouse.getRegularClickPoints();
     final Color backgroundColor = new Color(0, 0, 0, 0);
     final Color frameColor = new Color(0, 0, 0, 15);
 

@@ -1,5 +1,6 @@
 package inUrFace.canvas.listeners;
 
+import inUrFace.canvas.Canvas;
 import sepuku.WinApp;
 import inUrFace.canvas.BoardDim;
 import inUrFace.canvas.painters.TextPanel;
@@ -20,16 +21,28 @@ import static util.Reflection.getFieldsList;
 
 public class MouseListeners extends MouseAdapter {
 
-  public MoveInputListener moveInputListener = new MoveInputListener();
-  public PlayButton playButton = getCanvas().getPaintJobs().playButton;
-  public ScenarioEdit scenarioEdit = getCanvas().getPaintJobs().scenarioEdit;
-  public Cube cube = getCanvas().getPaintJobs().cube;
-  public TextPanel textPanel = getCanvas().getPaintJobs().textPanel;
+  public MoveInputListener moveInputListener;
+  public PlayButton playButton;
+  public ScenarioEdit scenarioEdit;
+  public Cube cube;
+  public TextPanel textPanel;
+//  public MoveInputListener moveInputListener = new MoveInputListener();
+//  public PlayButton playButton = getCanvas().getPaintJobs().playButton;
+//  public ScenarioEdit scenarioEdit = getCanvas().getPaintJobs().scenarioEdit;
+//  public Cube cube = getCanvas().getPaintJobs().cube;
+//  public TextPanel textPanel = getCanvas().getPaintJobs().textPanel;
   private List<MouseListener> listeners = new ArrayList<>();
+  private Canvas canvas;
 
-  public MouseListeners() {
+  public MouseListeners(Canvas canvas) {
 
-    getCanvas().addMouseListener(this);
+    this.canvas = canvas;
+    moveInputListener = new MoveInputListener();
+    playButton = canvas.getPaintJobs().playButton;
+    scenarioEdit = canvas.getPaintJobs().scenarioEdit;
+    cube = canvas.getPaintJobs().cube;
+    textPanel = canvas.getPaintJobs().textPanel;
+    canvas.addMouseListener(this);
     setupControllersList();
   }
 
