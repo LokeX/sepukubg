@@ -10,27 +10,21 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Sound {
 
-  final static String[] EFFECT_FILES = {
+  private static final String[] EFFECT_FILES = {
     "wuerfelbecher",
     "Blop-Mark_DiAngelo",
   };
-
-  static private boolean playFX = true;
-
-  AudioInputStream audioIn;
-  Clip[] soundEffect = new Clip[EFFECT_FILES.length];
+  private static boolean playFX = true;
+  
+  private Clip[] soundEffect = new Clip[EFFECT_FILES.length];
 
   public Sound () {
 
     for (int a = 0; a < soundEffect.length; a++) {
       try {
-        audioIn =
-          AudioSystem
-            .getAudioInputStream(
-              getClass()
-                .getResource(
-                  "Sounds/" + EFFECT_FILES[a] + ".wav")
-            );
+        AudioInputStream audioIn = AudioSystem.getAudioInputStream(
+          getClass().getResource("Sounds/" + EFFECT_FILES[a] + ".wav")
+        );
         soundEffect[a] = AudioSystem.getClip();
         soundEffect[a].open(audioIn);
 

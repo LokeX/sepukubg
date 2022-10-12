@@ -133,14 +133,14 @@ public class HumanMove {
       gameState().selectedTurn()
     );
     matchPlay
-      .getMoveOutput()
-      .setOutputLayout(
-        moveSelection
-          .getParentMoveLayout()
-      );
+    .getMoveOutput()
+    .setOutputLayout(
+      moveSelection
+      .getParentMoveLayout()
+    );
     matchPlay
-      .navigation()
-      .setIsNavigating(false);
+    .navigation()
+    .setIsNavigating(false);
   }
 
   public void startMove () {

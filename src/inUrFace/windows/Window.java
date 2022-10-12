@@ -5,7 +5,6 @@ import inUrFace.canvas.listeners.MouseListeners;
 import inUrFace.menu.MenuBar;
 
 import static sepuku.WinApp.*;
-import static util.ThreadUtil.threadSleep;
 import java.awt.BorderLayout;
 import java.awt.Dialog;
 import java.awt.Font;
@@ -22,9 +21,6 @@ import javax.swing.UIManager;
 
 public class Window extends JFrame {
 
-
-  static boolean windowReady = false;
-
   public Canvas canvas = new Canvas();
   public MenuBar menu = new MenuBar();
   public TrainerPlay progressBar = new TrainerPlay();
@@ -33,10 +29,12 @@ public class Window extends JFrame {
 
   public Window() {
 
-    super("Sepuku Backgammon / beta - ver. 2022.10.11");
+    super("Sepuku Backgammon / beta - ver. 2022.10.12");
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
-    setIconImage(new ImageIcon(getClass().getResource("Icon/AppIcon.gif")).getImage());
+    setIconImage(new ImageIcon(
+      getClass().getResource("Icon/AppIcon.gif")).getImage()
+    );
     canvas.getPaintJobs().textPanel.setComponent(canvas);
     setJMenuBar(menu);
     setLayout(new BorderLayout());
@@ -51,6 +49,7 @@ public class Window extends JFrame {
     if (sepukuPlay.settings().getWinMaximized()) {
       setExtendedState(MAXIMIZED_BOTH);
     }
+    setVisible(true);
   }
 
   static public void runWindow () {
@@ -63,12 +62,7 @@ public class Window extends JFrame {
 
     SwingUtilities.invokeLater(() -> {
       win = new Window();
-      windowReady = true;
     });
-    while (!windowReady) {
-      threadSleep(100);
-    }
-    win.setVisible(true);
   }
 
   public class WinMax extends WindowAdapter {

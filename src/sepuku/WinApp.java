@@ -5,7 +5,6 @@ import inOut.Sound;
 import engine.api.SepukuPlay;
 import engine.core.trainer.Trainer;
 import inUrFace.canvas.Canvas;
-import inUrFace.canvas.listeners.MouseListeners;
 import util.time.TimedTasks;
 import inUrFace.windows.Window;
 

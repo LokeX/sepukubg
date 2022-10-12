@@ -1,6 +1,7 @@
 package util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 public class Reflection {
@@ -11,7 +12,9 @@ public class Reflection {
     
     for (Field field : fields) {
       try {
-        tList.add((T)field.get(obj));
+        if (!Modifier.isPrivate(field.getModifiers())) {
+          tList.add((T)field.get(obj));
+        }
       } catch (IllegalArgumentException | IllegalAccessException ex) {
         System.out.println(ex.getMessage());
       }       

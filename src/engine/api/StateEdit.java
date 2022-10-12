@@ -22,24 +22,24 @@ public class StateEdit {
     }
   }
 
-  private boolean layoutNameOK (String name) {
+  private boolean nameOK(String layoutName) {
 
     return
-      name != null
-      && name.length() > 0
-      && !sepukuPlay.scenarios().isMember(name);
+      layoutName != null
+      && layoutName.length() > 0
+      && !sepukuPlay.scenarios().isMember(layoutName);
   }
 
   public void saveLayout (String name, Layout layout) {
 
-    if (layoutNameOK(name)) {
+    if (nameOK(name)) {
       sepukuPlay.scenarios().addNamedLayout(name, layout);
     }
   }
 
   public void renameSelectedLayout (String name) {
 
-    if (layoutNameOK(name)) {
+    if (nameOK(name)) {
       sepukuPlay.scenarios().setSelectedScenariosName(name);
     }
   }

@@ -56,14 +56,24 @@ public class StateOfPlay {
     return
       matchPlay().gameIsPlaying()
       && matchPlay().matchOver()
-      && lastTurnSelected();
+      && lastTurnSelected()
+      && moveComplete();
+  }
+  
+  private boolean moveComplete () {
+    
+    return
+      !playerIsHuman()
+      || humanInputComplete()
+      || isNavigating() ;
   }
 
   private boolean newGamePlay() {
 
     return
       matchPlay().gameOver()
-      && lastTurnSelected();
+      && lastTurnSelected()
+      && moveComplete();
   }
 
   private boolean playedMoveSelected () {
@@ -120,7 +130,7 @@ public class StateOfPlay {
       && !matchPlay().gameOver()
       && !matchPlay().getMoveOutput().isBusy()
 //      && (lastTurnSelected() || !playedMoveSelected())
-      && (!playerIsHuman() || humanInputComplete() || isNavigating());
+      && moveComplete();
   }
 
   private boolean scenarioEdit () {
