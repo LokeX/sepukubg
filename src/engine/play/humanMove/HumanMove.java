@@ -1,7 +1,7 @@
 package engine.play.humanMove;
 
 import engine.api.Settings;
-import engine.play.game.GameState;
+import engine.play.gamePlay.GamePlay;
 import engine.play.MatchPlay;
 
 import java.util.stream.Stream;
@@ -121,7 +121,7 @@ public class HumanMove {
       settings().isAutoCompletePartMoves();
   }
 
-  private GameState gameState () {
+  private GamePlay gameState () {
 
     return
       matchPlay.gameState();

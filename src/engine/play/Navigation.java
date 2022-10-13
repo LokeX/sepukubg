@@ -1,6 +1,6 @@
 package engine.play;
 
-import engine.play.game.GameState;
+import engine.play.gamePlay.GamePlay;
 
 public class Navigation {
   
@@ -12,7 +12,7 @@ public class Navigation {
     this.matchPlay = matchPlay;
   }
   
-  private GameState gameState () {
+  private GamePlay gameState () {
     
     return
       matchPlay.gameState();

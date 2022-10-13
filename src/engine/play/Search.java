@@ -2,7 +2,7 @@ package engine.play;
 
 import engine.api.Settings;
 import engine.core.Turn;
-import engine.play.game.GameState;
+import engine.play.gamePlay.GamePlay;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class Search {
     return searching;
   }
 
-  private GameState gameState () {
+  private GamePlay gameState () {
 
     return
       matchPlay.gameState();

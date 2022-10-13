@@ -4,7 +4,7 @@ import engine.core.Dice;
 import engine.core.moves.Layout;
 import engine.core.trainer.Trainer;
 import engine.play.MatchPlay;
-import engine.play.game.GameState;
+import engine.play.gamePlay.GamePlay;
 
 public class StateEdit {
   
@@ -44,7 +44,7 @@ public class StateEdit {
     }
   }
   
-  private GameState gameState () {
+  private GamePlay gameState () {
     
     return
       sepukuPlay.matchPlay().gameState();

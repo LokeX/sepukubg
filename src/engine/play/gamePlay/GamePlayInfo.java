@@ -1,4 +1,4 @@
-package engine.play.game;
+package engine.play.gamePlay;
 
 import engine.play.MatchPlay;
 import engine.play.humanMove.HumanMove;
@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import static java.util.stream.Collectors.joining;
 
-public class GameInfo {
+public class GamePlayInfo {
 
   private MatchPlay matchState;
   private String[] dataItems;
@@ -16,18 +16,18 @@ public class GameInfo {
   private int selectedTurnNr;
   private int selectedMoveNr;
 
-  public GameInfo(MatchPlay matchState) {
+  public GamePlayInfo(MatchPlay matchState) {
 
     this.matchState = matchState;
   }
 
-  private GameState gameState () {
+  private GamePlay gameState () {
 
     return
       matchState.gameState();
   }
 
-  public GameInfo getGameData () {
+  public GamePlayInfo getGameData () {
 
     dataUpdate = updateRequired();
     if (dataUpdate) {

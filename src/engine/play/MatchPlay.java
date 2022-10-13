@@ -4,8 +4,8 @@ import engine.api.Settings;
 import engine.api.SepukuPlay;
 import engine.core.Turn;
 import engine.core.moves.EvaluatedMove;
-import engine.play.game.GameInfo;
-import engine.play.game.GameState;
+import engine.play.gamePlay.GamePlayInfo;
+import engine.play.gamePlay.GamePlay;
 import engine.play.humanMove.HumanMove;
 import engine.play.score.MatchBoard;
 import engine.play.score.ScoreBoard;
@@ -19,13 +19,13 @@ public class MatchPlay {
 
   private Navigation navigation;
   private UsedDice usedDice;
-  private GameInfo gameInfo;
+  private GamePlayInfo gamePlayInfo;
   private ScoreBoard scoreBoard;
   private MatchCube matchCube;
   private SepukuPlay sepukuPlay;
   private Layout scenario;
   private MatchBoard matchBoard;
-  private GameState gameState;
+  private GamePlay gamePlay;
   private Search search;
   private HumanMove humanMove;
   private MoveOutput moveOutput;
@@ -40,7 +40,7 @@ public class MatchPlay {
     search = new Search(this);
     humanMove = new HumanMove(this);
     moveOutput = new MoveOutput();
-    gameInfo = new GameInfo(this);
+    gamePlayInfo = new GamePlayInfo(this);
     usedDice = new UsedDice(this);
     navigation = new Navigation(this);
   }
@@ -78,9 +78,9 @@ public class MatchPlay {
     return matchCube;
   }
 
-  public GameInfo getGameInfo() {
+  public GamePlayInfo getGameInfo() {
 
-    return gameInfo.getGameData();
+    return gamePlayInfo.getGameData();
   }
 
   public Search search() {
@@ -93,9 +93,9 @@ public class MatchPlay {
     return matchBoard;
   }
 
-  public GameState gameState() {
+  public GamePlay gameState() {
 
-    return gameState;
+    return gamePlay;
   }
 
   public HumanMove humanMove() {
@@ -117,8 +117,8 @@ public class MatchPlay {
   public boolean gameIsPlaying () {
 
     return
-      gameState != null
-      && gameState.nrOfTurns() > 0;
+      gamePlay != null
+      && gamePlay.nrOfTurns() > 0;
   }
   
   public Turn latestTurn() {
@@ -195,14 +195,14 @@ public class MatchPlay {
     return
       !autoCompleteGame
       && gameIsPlaying()
-      && gameState.humanTurnSelected();
+      && gamePlay.humanTurnSelected();
   }
 
   public boolean lastTurnSelected () {
 
     return
       gameIsPlaying()
-      && gameState.lastTurnSelected();
+      && gamePlay.lastTurnSelected();
   }
 
   public boolean matchOver () {
@@ -215,14 +215,14 @@ public class MatchPlay {
 
     return
       gameIsPlaying()
-      && gameState.gameOver();
+      && gamePlay.gameOver();
   }
 
   public boolean playedMoveSelected () {
 
     return
       gameIsPlaying()
-      && gameState.playedMoveSelected();
+      && gamePlay.playedMoveSelected();
   }
   
   public boolean cubeWasRejected () {
@@ -260,7 +260,7 @@ public class MatchPlay {
       runWhenNotified(this::endTurn)
     );
     moveOutput.setOutputLayouts(
-      gameState
+      gamePlay
       .selectedMove()
       .getMovePointLayouts()
       .stream()
@@ -285,7 +285,7 @@ public class MatchPlay {
     if (isLegalHumanMove()) {
       humanMove.playMove();
     }
-    gameState.newTurn();
+    gamePlay.newTurn();
     if (!autoCompleteGame) {
       search().searchRolledMoves();
     }
@@ -308,7 +308,7 @@ public class MatchPlay {
     initScenario();
     getMoveOutput().setOutputLayout(scenario);
     sepukuPlay.scenarios().setEditing(false);
-    gameState = new GameState(this);
+    gamePlay = new GamePlay(this);
     startNewTurn();
   }
   

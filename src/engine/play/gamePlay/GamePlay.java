@@ -1,4 +1,4 @@
-package engine.play.game;
+package engine.play.gamePlay;
 
 import engine.core.Game;
 import engine.core.Turn;
@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class GameState extends Game {
+public class GamePlay extends Game {
 
   private MatchPlay matchPlay;
   private int turnNr = 0;
   private int moveNr = 0;
   private int partMoveNr = -1;
 
-  public GameState (MatchPlay matchPlay) {
+  public GamePlay(MatchPlay matchPlay) {
 
     super(matchPlay.getScenario());
     this.matchPlay = matchPlay;

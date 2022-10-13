@@ -1,6 +1,6 @@
 package engine.api;
 
-import engine.play.game.GameInfo;
+import engine.play.gamePlay.GamePlayInfo;
 
 import java.util.stream.IntStream;
 
@@ -15,11 +15,11 @@ public class GameInfoHTML {
 
   private String HTMLFormattedDataString;
 
-  public GameInfoHTML getGameDataHTML(GameInfo gameInfo) {
+  public GameInfoHTML getGameDataHTML(GamePlayInfo gamePlayInfo) {
 
-    if (gameInfo.dataIsUpdated()) {
-      labels = gameInfo.labels();
-      dataItems = gameInfo.getDataItems();
+    if (gamePlayInfo.dataIsUpdated()) {
+      labels = gamePlayInfo.labels();
+      dataItems = gamePlayInfo.getDataItems();
       HTMLFormattedDataString = HTML_DataString();
     }
     return this;

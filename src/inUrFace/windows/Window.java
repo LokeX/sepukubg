@@ -29,7 +29,7 @@ public class Window extends JFrame {
 
   public Window() {
 
-    super("Sepuku Backgammon / beta - ver. 2022.10.12");
+    super("Sepuku Backgammon / beta - ver. 2022.10.13");
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
     setIconImage(new ImageIcon(
