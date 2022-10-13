@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jpackage" name="sepukubg">
+    <output-path>$PROJECT_DIR$/out/artifacts/sepukubg</output-path>
+    <root id="root">
+      <element id="archive" name="sepukubg.jar">
+        <element id="module-output" name="sepukubg" />
+      </element>
+    </root>
+  </artifact>
+</component>

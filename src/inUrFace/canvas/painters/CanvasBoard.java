@@ -13,7 +13,7 @@ import static sepuku.WinApp.win;
 
 import java.awt.*;
 
-public class Board implements Paintable {
+public class CanvasBoard implements Paintable {
 
   @Override
   public void paint(Graphics g) {

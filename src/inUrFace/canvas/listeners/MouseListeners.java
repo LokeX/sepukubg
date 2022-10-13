@@ -4,8 +4,8 @@ import inUrFace.canvas.Canvas;
 import sepuku.WinApp;
 import inUrFace.canvas.BoardDim;
 import inUrFace.canvas.painters.TextPanel;
-import inUrFace.canvas.painters.Cube;
-import inUrFace.canvas.painters.PlayButton;
+import inUrFace.canvas.painters.CanvasCube;
+import inUrFace.canvas.painters.CanvasPlayButton;
 import inUrFace.canvas.painters.ScenarioEdit;
 import util.Batch;
 
@@ -15,16 +15,15 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static sepuku.WinApp.getCanvas;
 import static sepuku.WinApp.win;
 import static util.Reflection.getFieldsList;
 
 public class MouseListeners extends MouseAdapter {
 
   public MoveInputListener moveInputListener;
-  public PlayButton playButton;
+  public CanvasPlayButton canvasPlayButton;
   public ScenarioEdit scenarioEdit;
-  public Cube cube;
+  public CanvasCube canvasCube;
   public TextPanel textPanel;
 //  public MoveInputListener moveInputListener = new MoveInputListener();
 //  public PlayButton playButton = getCanvas().getPaintJobs().playButton;
@@ -38,9 +37,9 @@ public class MouseListeners extends MouseAdapter {
 
     this.canvas = canvas;
     moveInputListener = new MoveInputListener();
-    playButton = canvas.getPaintJobs().playButton;
+    canvasPlayButton = canvas.getPaintJobs().canvasPlayButton;
     scenarioEdit = canvas.getPaintJobs().scenarioEdit;
-    cube = canvas.getPaintJobs().cube;
+    canvasCube = canvas.getPaintJobs().canvasCube;
     textPanel = canvas.getPaintJobs().textPanel;
     canvas.addMouseListener(this);
     setupControllersList();
@@ -60,6 +59,7 @@ public class MouseListeners extends MouseAdapter {
   public void mouseClicked (MouseEvent e) {
 
     listeners.forEach(listener -> listener.mouseClicked(e));
+    canvas.repaint();
   }
   
   public Batch[] getRegularClickPoints () {

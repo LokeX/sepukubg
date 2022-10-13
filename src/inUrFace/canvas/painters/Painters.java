@@ -12,15 +12,15 @@ import java.util.List;
 public class Painters {
 
   public Move move = new Move();
-  public Board board = new Board();
+  public CanvasBoard canvasBoard = new CanvasBoard();
   public EndingPoints endingPoints = new EndingPoints();
   public ScenarioEdit scenarioEdit = new ScenarioEdit();
-  public MatchScore matchScore = new MatchScore();
+  public CanvasMatchScore canvasMatchScore = new CanvasMatchScore();
   public TextPanel textPanel = new TextPanel();
-  public PlayButton playButton = new PlayButton();
-  public Dice dice = new Dice();
-  public Cube cube = new Cube();
-  public Layout layout = new Layout();
+  public CanvasPlayButton canvasPlayButton = new CanvasPlayButton();
+  public CanvasDice canvasDice = new CanvasDice();
+  public CanvasCube canvasCube = new CanvasCube();
+  public CanvasLayout canvasLayout = new CanvasLayout();
   public Chequer chequer = new Chequer();
 
   private List<Paintable> painters = new ArrayList<>();

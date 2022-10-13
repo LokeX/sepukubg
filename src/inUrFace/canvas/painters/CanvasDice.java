@@ -8,7 +8,7 @@ import static sepuku.WinApp.win;
 import java.awt.*;
 import javax.swing.ImageIcon;
 
-public class Dice implements Paintable {
+public class CanvasDice implements Paintable {
 
   private int[] dice;
   private DieIcon[] dieIcons = new DieIcon[4];
@@ -17,7 +17,7 @@ public class Dice implements Paintable {
   private int dieWidth;
   private int dieHeight;
 
-  public Dice() {
+  public CanvasDice() {
 
     for (int a = 0; a < dieFaces.length; a++) {
       dieFaces[a] = new ImageIcon(

@@ -1,6 +1,5 @@
 package inUrFace.menu.dropMenues;
 
-import sepuku.WinApp;
 import util.time.Timeable;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -170,7 +169,7 @@ public class EditMenu extends JMenu implements Timeable {
     editPlayerScore.setVisible(editPlayerScore.isEnabled());
 
     editMenuSeparator.setEnabled(
-      win != null && win.mouse != null && win.mouse.cube.isVisible()
+      win != null && win.mouse != null && win.mouse.canvasCube.isVisible()
     );
     editMenuSeparator.setVisible(editMenuSeparator.isEnabled());
     editCubeValue.setEnabled(editMenuSeparator.isEnabled());

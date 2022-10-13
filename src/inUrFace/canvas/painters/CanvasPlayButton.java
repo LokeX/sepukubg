@@ -8,12 +8,12 @@ import java.awt.event.MouseEvent;
 
 import static sepuku.WinApp.*;
 
-public class PlayButton extends TextBatch implements Paintable {
+public class CanvasPlayButton extends TextBatch implements Paintable {
 
   private Color readyBackgroundColor = new Color(255, 0, 255, 75);
   private Color notReadyBackgroundColor = new Color(108,13,13);
 
-  public PlayButton() {
+  public CanvasPlayButton() {
 
     super(470, 250, 125, 65);
     setMargins(25, 25, 7, 5);

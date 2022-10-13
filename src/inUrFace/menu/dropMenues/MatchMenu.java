@@ -61,7 +61,7 @@ public class MatchMenu extends JMenu implements Timeable {
     add(nextAction);
     nextAction.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
     nextAction.addActionListener((ActionEvent e) ->
-      getCanvas().getPaintJobs().playButton.execNextPlay()
+      getCanvas().getPaintJobs().canvasPlayButton.execNextPlay()
     );
   }
 

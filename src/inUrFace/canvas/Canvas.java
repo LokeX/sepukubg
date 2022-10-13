@@ -30,6 +30,13 @@ public class Canvas extends JPanel {
     super.paintComponent(g);
     painters.paint(g);
   }
+  
+  public void repaintCanvas () {
+    
+    if (sepukuPlay.humanMove().endingPointIsNext() || sepukuPlay.moveOutput().hasOutput()) {
+      this.repaint();
+    }
+  }
 
   public BoardDim getDimensions() {
 
@@ -39,6 +46,7 @@ public class Canvas extends JPanel {
   public void setDisplayedLayout(Layout layOutToDisplay) {
 
     displayedLayout = layOutToDisplay;
+    this.repaint();
   }
 
   public Layout getDisplayedLayout() {

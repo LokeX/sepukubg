@@ -143,20 +143,18 @@ public class GameInfo {
         .MoveNotation();
   }
   
-  private boolean humanIsInputtingMove () {
-    
-    return
-      humanMove().inputReady()
-      && matchState.lastTurnSelected()
-      && matchState.playedMoveSelected();
-  }
-
   private String movePoints () {
 
     return
-      humanIsInputtingMove()
+      humanMove().inputReady()
         ? humanMovePoints()
         : selectedMovePointsString();
+   }
+  
+  private boolean isNavigating () {
+    
+    return
+      matchState.navigation().isNavigating();
   }
 
   private String[] dataItems () {
@@ -168,7 +166,9 @@ public class GameInfo {
         dice(gameState().selectedTurn().getDice()),
         moveNr()+"/"+nrOfMoves(),
         movePoints(),
-        turnNr()+") "+selectedMoveAnnotationString()
+        isNavigating()
+        ? turnNr()+") "+selectedMoveAnnotationString()
+        : "N/A"
       };
   }
 
@@ -180,7 +180,7 @@ public class GameInfo {
       "Dice:  ",
       "Move:  ",
       "Points:  ",
-      ""
+      "Notes: "
     };
   }
 

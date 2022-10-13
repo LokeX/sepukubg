@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import static sepuku.WinApp.sepukuPlay;
 import static sepuku.WinApp.win;
 
-public class Cube extends MouseAdapter implements Paintable {
+public class CanvasCube extends MouseAdapter implements Paintable {
 
   ImageIcon cubeScab = new ImageIcon(
     this.getClass().getResource("cube/double.gif")
