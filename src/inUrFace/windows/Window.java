@@ -46,7 +46,8 @@ public class Window extends JFrame {
     pack();
     setWindowLocation();
 //    timedTasks.addTimedTask(canvas::repaintCanvas);
-    timedTasks.addTimedTask(this::repaint);
+//    timedTasks.addTimedTask(this::repaint);
+    timedTasks.addTimedTask(canvas::repaint);
     if (sepukuPlay.settings().getWinMaximized()) {
       setExtendedState(MAXIMIZED_BOTH);
     }

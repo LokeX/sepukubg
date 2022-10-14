@@ -11,8 +11,11 @@ import static sepuku.WinApp.sepukuPlay;
 public class Canvas extends JPanel {
 
   private Layout displayedLayout = sepukuPlay.scenarios().getSelectedScenariosLayout();
+  private Layout oldDisplayedLayout = null;
   private BoardDim dimensions = new BoardDim();
   private Painters painters = new Painters();
+  private int mouseX;
+  private int mouseY;
 
   public Canvas() {
 
@@ -31,10 +34,55 @@ public class Canvas extends JPanel {
     painters.paint(g);
   }
   
+  private void saveDisplay () {
+    
+    oldDisplayedLayout = new Layout(displayedLayout);
+    oldDisplayedLayout.generateHashCode();
+  }
+  
+  private boolean displayHasChanged () {
+    
+    displayedLayout.generateHashCode();
+    return
+      !displayedLayout.isIdenticalTo(oldDisplayedLayout);
+  }
+  
+  private boolean paintChequer () {
+    
+    return
+      sepukuPlay
+      .humanMove()
+      .endingPointIsNext();
+  }
+  
+  private boolean mouseMoved () {
+    
+    int newMouseX = (int) getMousePosition().getX();
+    int newMouseY = (int) getMousePosition().getY();
+    boolean mouseMoved = mouseX != newMouseX || mouseY != newMouseY;
+    
+    mouseX = newMouseX;
+    mouseY = newMouseY;
+    return
+      mouseMoved;
+  }
+  
+  private boolean updateCanvas () {
+    
+    if (oldDisplayedLayout == null) {
+      saveDisplay();
+    }
+    return paintChequer()
+      || displayHasChanged()
+      || sepukuPlay.moveOutput().hasOutput()
+      || (getMousePosition() != null && mouseMoved());
+  }
+  
   public void repaintCanvas () {
     
-    if (sepukuPlay.humanMove().endingPointIsNext() || sepukuPlay.moveOutput().hasOutput()) {
-      this.repaint();
+    if (updateCanvas()) {
+      saveDisplay();
+      repaint();
     }
   }
 

@@ -16,7 +16,7 @@ public class CanvasLayout implements Paintable {
     yellowColor,
     redColor,
   };
-  Layout layout = new engine.core.moves.Layout();
+  Layout layout = new Layout();
   Layout displayedLayout;
   int[][] playerPoints;
   int whitePip;
@@ -35,7 +35,7 @@ public class CanvasLayout implements Paintable {
     displayedLayout = WinApp.getCanvas().getDisplayedLayout();
     displayedLayout.generateHashCode();
     if (!layout.isIdenticalTo(displayedLayout)) {
-      layout = new engine.core.moves.Layout(displayedLayout);
+      layout = new Layout(displayedLayout);
       playerPoints = new int[][] {
         layout.getWhitePoints(),
         layout.getBlackPoints(),
