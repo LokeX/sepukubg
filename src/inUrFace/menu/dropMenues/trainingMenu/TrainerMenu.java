@@ -17,7 +17,7 @@ public class TrainerMenu extends JMenu implements Timeable {
   private PlayMatchesMenu playMatchesMenu = new PlayMatchesMenu("Play");
   private BotPlayersMenu botPlayersMenu = new BotPlayersMenu("Bot players");
   private RadioButtonListMenu selectScenarioMenu = new RadioButtonListMenu(new ScenarioMenu());
-  private JMenuItem setScoreToWin = new JMenuItem("Set scoreBoard to win");
+  private JMenuItem setScoreToWin = new JMenuItem("Set matchScore to win");
 
   private JPopupMenu.Separator trainerMenuSeparator = new JPopupMenu.Separator();
 
@@ -136,7 +136,7 @@ public class TrainerMenu extends JMenu implements Timeable {
   @Override
   public void timerUpdate() {
 
-    setScoreToWin.setText("Set scoreBoard to win ("+Trainer.statScoreToWin+")");
+    setScoreToWin.setText("Set matchScore to win ("+Trainer.statScoreToWin+")");
 
     playMatchesMenu.setEnabled(!Trainer.running);
     playMatchesMenu.setVisible(!Trainer.running);

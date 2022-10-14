@@ -26,7 +26,7 @@ public class CanvasPlayButton extends TextBatch implements Paintable {
     setFont(new Font("Ariel", Font.BOLD, 18));
   }
 
-  public boolean showWaitBackground () {
+  public boolean isSearching () {
 
     return
       sepukuPlay.stateOfPlay().isSearching();
@@ -36,7 +36,7 @@ public class CanvasPlayButton extends TextBatch implements Paintable {
 
     return
       e.getButton() == MouseEvent.BUTTON1
-        && !showWaitBackground()
+        && !isSearching()
         && mouseOnBatch()
         && showButton();
   }
@@ -47,7 +47,7 @@ public class CanvasPlayButton extends TextBatch implements Paintable {
 
       BoardDim d = win.canvas.getDimensions();
 
-      if (showWaitBackground()) {
+      if (isSearching()) {
         setText("Please wait");
         setBackgroundColor(notReadyBackgroundColor);
       } else {
@@ -98,7 +98,7 @@ public class CanvasPlayButton extends TextBatch implements Paintable {
 
     return
       sepukuPlay.stateOfPlay().nextPlayReady()
-      || showWaitBackground();
+      || isSearching();
   }
 
 }

@@ -11,7 +11,7 @@ public class TurnProgressionMenu extends JMenu {
 
   JRadioButtonMenuItem automateEndTurn =
     new JRadioButtonMenuItem(
-      "Automatic",
+      "Auto",
       sepukuPlay.settings().isAutomatedEndTurn()
     );
   JRadioButtonMenuItem manualEndTurn =
@@ -25,8 +25,8 @@ public class TurnProgressionMenu extends JMenu {
 
     super("Turn Progression");
     setupButtonGroup();
-    setupAutomateEndTurn();
     setupManualEndTurn();
+    setupAutomateEndTurn();
   }
 
   private void setupButtonGroup () {

@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="sepukubg.jar">
+  <artifact type="jar" name="sepukubg.jar">
     <output-path>$PROJECT_DIR$/out/artifacts/sepukubg_jar</output-path>
     <root id="archive" name="sepukubg.jar">
       <element id="module-output" name="sepukubg" />
