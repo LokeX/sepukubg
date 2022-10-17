@@ -63,7 +63,8 @@ public class Search {
       matchPlay.gameIsPlaying()
       && gameState().nrOfTurns() > 0
       && !settings().searchIsOff()
-      && playerLooksAhead();
+      && playerLooksAhead()
+      && !matchPlay.autoCompleteGame();
   }
 
   public void searchRolledMoves () {

@@ -75,7 +75,8 @@ public class MatchCube {
   private boolean computerShouldOfferCube() {
     
     return
-      matchPlay.gameIsPlaying()
+      !matchPlay.autoCompleteGame()
+      && matchPlay.gameIsPlaying()
       && !cubeIsOffered
       && !matchPlay.gameOver()
       && playerIsComputer()

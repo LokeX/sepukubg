@@ -292,9 +292,7 @@ public class MatchPlay {
       humanMove.playMove();
     }
     gamePlay.newTurn();
-    if (!autoCompleteGame) {
-      search().searchRolledMoves();
-    }
+    search().searchRolledMoves();
     move();
   }
   
