@@ -93,7 +93,7 @@ public class MatchPlay {
     return matchBoard;
   }
 
-  public GamePlay gameState() {
+  public GamePlay gamePlay() {
 
     return gamePlay;
   }
@@ -125,7 +125,7 @@ public class MatchPlay {
     
     return
       gameIsPlaying()
-      ? gameState().lastTurn()
+      ? gamePlay().lastTurn()
       : null;
   }
   
@@ -146,7 +146,7 @@ public class MatchPlay {
   public boolean humanTurnSelected() {
     
     return
-      gameState()
+      gamePlay()
         .humanTurnSelected();
   }
   
@@ -164,7 +164,7 @@ public class MatchPlay {
     
     return
       gameIsPlaying()
-      ? gameState().nrOfTurns()
+      ? gamePlay().nrOfTurns()
       : 0;
   }
   
@@ -172,7 +172,7 @@ public class MatchPlay {
     
     return
       gameIsPlaying()
-      ? gameState().selectedTurn()
+      ? gamePlay().selectedTurn()
       : null;
   }
   
@@ -180,7 +180,7 @@ public class MatchPlay {
     
     return
       gameIsPlaying()
-      ? gameState().selectedMove()
+      ? gamePlay().selectedMove()
       : null;
   }
   
@@ -218,13 +218,6 @@ public class MatchPlay {
       && gamePlay.gameOver();
   }
 
-  public boolean playedMoveSelected () {
-
-    return
-      gameIsPlaying()
-      && gamePlay.playedMoveSelected();
-  }
-  
   public boolean cubeWasRejected () {
     
     if (gameIsPlaying()) {
@@ -232,6 +225,18 @@ public class MatchPlay {
       return matchCube.cubeWasRejected();
     }
     return false;
+  }
+  
+  public boolean cubeOffered () {
+    
+    return
+      matchCube.cubeIsOffered();
+  }
+  
+  public boolean cubeRejected () {
+    
+    return
+      matchCube.cubeWasRejected();
   }
   
   private boolean isLegalHumanMove () {
@@ -245,9 +250,10 @@ public class MatchPlay {
     if (isLegalHumanMove()) {
       humanMove.setPlayedMoveToSelectedMove();
     }
+    matchCube.setCubeIsOffered(false);
     if (gameOver()) {
       autoCompleteGame = false;
-      matchBoard.addGameScore(gameState().getGameScore());
+      matchBoard.addGameScore(gamePlay().getGameScore());
     } else if (settings().isAutomatedEndTurn() || autoCompleteGame) {
       humanMove.endMove();
       sepukuPlay.execNextPlay();
@@ -312,11 +318,37 @@ public class MatchPlay {
     startNewTurn();
   }
   
+  private boolean computerOffersCube () {
+    
+    return
+      gameIsPlaying() && cubeOffered() && !cubeRejected();
+  }
+  
+  private void humanHandlesCube () {
+    
+    gamePlay().gameCube().setCubeWasRejected(true);
+  }
+  
+  private boolean isNewGame () {
+    
+    return
+      !cubeOffered() && (!gameIsPlaying() || gameOver());
+  }
+  
+  private boolean isNewTurn () {
+    
+    return
+      !cubeOffered() && !cubeRejected();
+  }
+  
   public void nextMatchPlay () {
   
-    if (!gameIsPlaying() || gameOver()) {
+    matchCube.computerHandlesCube();
+    if (computerOffersCube()) {
+      humanHandlesCube();
+    } else if (isNewGame()) {
       startNewGame();
-    } else if (!cubeWasRejected()){
+    } else if (isNewTurn()){
       startNewTurn();
     } else {
       endTurn();

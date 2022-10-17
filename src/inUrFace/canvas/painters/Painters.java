@@ -13,7 +13,6 @@ public class Painters {
 
   public Move move = new Move();
   public CanvasBoard canvasBoard = new CanvasBoard();
-  public EndingPoints endingPoints = new EndingPoints();
   public ScenarioEdit scenarioEdit = new ScenarioEdit();
   public CanvasMatchScore canvasMatchScore = new CanvasMatchScore();
   public TextPanel textPanel = new TextPanel();
@@ -21,6 +20,7 @@ public class Painters {
   public CanvasDice canvasDice = new CanvasDice();
   public CanvasCube canvasCube = new CanvasCube();
   public CanvasLayout canvasLayout = new CanvasLayout();
+  public EndingPoints endingPoints = new EndingPoints();
   public Chequer chequer = new Chequer();
 
   private List<Paintable> painters = new ArrayList<>();

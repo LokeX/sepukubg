@@ -20,7 +20,7 @@ public class SepukuPlay {
   public Cube gameCube () {
     
     return
-      matchPlay.gameState().gameCube();
+      matchPlay.gamePlay().gameCube();
   }
   
   public Cube turnCube () {

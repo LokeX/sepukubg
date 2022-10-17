@@ -92,13 +92,14 @@ public class MoveLayout extends Layout {
 
     List<Integer> moveablePoints = new ArrayList<>(20);
 
-    if (rearPos < 0 || (rearPos == 25 && point[25] == 0)) {
-      calcRearPos();
-    } else if (rearPos < 25 && point[25] > 0) {
-      rearPos = 25;
-    } else if (point[rearPos] == 0) {
-      calcRearPos(rearPos);
-    }
+//    if (rearPos < 0 || (rearPos == 25 && point[25] == 0)) {
+//      calcRearPos();
+//    } else if (rearPos < 25 && point[25] > 0) {
+//      rearPos = 25;
+//    } else if (point[rearPos] == 0) {
+//      calcRearPos(rearPos);
+//    }
+    calcRearPos();
     for (int startingPoint = rearPos; startingPoint > 0; startingPoint--) {
       if (point[startingPoint] > 0) {
         if (partMoveIsLegal(startingPoint, startingPoint-die)) {
@@ -153,13 +154,13 @@ public class MoveLayout extends Layout {
 
   MoveLayout getPartMoveLayout (int dieNr, int[] dieFaces, int startingPoint) {
 
-    return new
-      MoveLayout(this)
-        .setPartMove(
-          dieNr,
-          dieFaces,
-          startingPoint
-        );
+    return
+      new MoveLayout(this)
+      .setPartMove(
+        dieNr,
+        dieFaces,
+        startingPoint
+      );
   }
 
   public boolean isIllegal () {

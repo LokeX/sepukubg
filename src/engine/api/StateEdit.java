@@ -47,7 +47,7 @@ public class StateEdit {
   private GamePlay gameState () {
     
     return
-      sepukuPlay.matchPlay().gameState();
+      sepukuPlay.matchPlay().gamePlay();
   }
   
   private MatchPlay matchPlay () {

@@ -10,6 +10,7 @@ import static util.Dialogs.showMessage;
 public class MatchCube {
 
   private MatchPlay matchPlay;
+  private boolean cubeIsOffered = false;
 
   public MatchCube(MatchPlay matchPlay) {
 
@@ -18,7 +19,7 @@ public class MatchCube {
 
   private Game getGame () {
 
-    return matchPlay.gameState();
+    return matchPlay.gamePlay();
   }
 
   private MatchBoard getMatchBoard () {
@@ -39,7 +40,7 @@ public class MatchCube {
       matchPlay
         .gameIsPlaying()
       &&
-        matchPlay.gameState()
+        matchPlay.gamePlay()
         .gameCube()
         .cubeWasRejected();
   }
@@ -47,18 +48,19 @@ public class MatchCube {
   private void resolveCubeHandling () {
 
     if (playerIsHuman()) {
-      getGame().gameCube().setCubeWasRejected(
-        !confirmed(
-          "Opponent doubles - accept?",win
-        )
-      );
+      cubeIsOffered = true;
+//      getGame().gameCube().setCubeWasRejected(
+//        !confirmed(
+//          "Opponent doubles - accept?",win
+//        )
+//      );
     } else {
       getGame().gameCube().setCubeWasRejected(
         !matchPlay.selectedMove().shouldTake()
       );
-    }
-    if (!cubeWasRejected()) {
-      getGame().playerDoubles();
+      if (!cubeWasRejected()) {
+        getGame().playerDoubles();
+      }
     }
   }
   
@@ -69,12 +71,29 @@ public class MatchCube {
         .selectedMove()
         .shouldDouble();
   }
+  
+  private boolean computerShouldOfferCube() {
+    
+    return
+      matchPlay.gameIsPlaying()
+      && !cubeIsOffered
+      && !matchPlay.gameOver()
+      && playerIsComputer()
+      && mayOfferCube()
+      && shouldDouble();
+  }
 
   public void computerHandlesCube () {
 
-    if (playerIsComputer() && mayOfferCube() && shouldDouble()) {
+    if (computerShouldOfferCube()) {
       resolveCubeHandling();
     }
+  }
+  
+  public boolean cubeIsOffered() {
+    
+    return
+      cubeIsOffered;
   }
   
   private boolean mayOfferCube () {
@@ -85,18 +104,25 @@ public class MatchCube {
       && !getMatchBoard().isCrawfordGame();
   }
   
+  public void humanAcceptsCube () {
+    
+    cubeIsOffered = false;
+    getGame().gameCube().setCubeWasRejected(false);
+    getGame().playerDoubles();
+  }
+  
   public void humanHandlesCube () {
 
     if (!playerIsComputer() && mayOfferCube()) {
       resolveCubeHandling();
-      if (cubeWasRejected()) {
-        showMessage(
-          "Opponent rejects the double"
-            + "\nand resigns!",
-          win
-        );
-        matchPlay.endTurn();
-      }
+//      if (cubeWasRejected()) {
+//        showMessage(
+//          "Opponent rejects the double"
+//            + "\nand resigns!",
+//          win
+//        );
+//        matchPlay.endTurn();
+//      }
     }
   }
 
@@ -109,4 +135,9 @@ public class MatchCube {
         );
   }
 
+  void setCubeIsOffered (boolean offered) {
+    
+    cubeIsOffered = offered;
+  }
+  
 }

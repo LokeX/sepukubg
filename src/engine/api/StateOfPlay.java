@@ -6,8 +6,8 @@ import engine.play.humanMove.HumanMove;
 public class StateOfPlay {
 
   private SepukuPlay sepukuPlay;
-  private boolean autoComplete = false;
   private String[] playTitles = new String[] {
+    "Resign",
     "Start match",
     "New match",
     "New game",
@@ -22,14 +22,14 @@ public class StateOfPlay {
       sepukuPlay.matchPlay().search().isSearching();
   }
 
-  void setAutoComplete (boolean complete) {
-
-    autoComplete = complete;
-  }
-
   public StateOfPlay(SepukuPlay engineApi) {
 
     this.sepukuPlay = engineApi;
+  }
+  
+  private boolean resign () {
+    
+    return matchPlay().cubeOffered();
   }
 
   private MatchPlay matchPlay () {
@@ -74,13 +74,6 @@ public class StateOfPlay {
       matchPlay().gameOver()
       && lastTurnSelected()
       && moveComplete();
-  }
-
-  private boolean playedMoveSelected () {
-
-    return
-      matchPlay().gameIsPlaying()
-      && matchPlay().playedMoveSelected();
   }
 
   private HumanMove humanMove () {
@@ -129,7 +122,6 @@ public class StateOfPlay {
       !matchPlay().matchOver()
       && !matchPlay().gameOver()
       && !matchPlay().getMoveOutput().isBusy()
-//      && (lastTurnSelected() || !playedMoveSelected())
       && moveComplete();
   }
 
@@ -154,17 +146,19 @@ public class StateOfPlay {
   public int nextPlayTitleNr() {
 
     return
-      scenarioEdit()
+      resign()
       ? 0
-      : newMatchPlay()
+      : scenarioEdit()
       ? 1
-      : newGamePlay()
+      : newMatchPlay()
       ? 2
-      : playHumanMove()
+      : newGamePlay()
       ? 3
-      : playMove()
+      : playHumanMove()
       ? 4
-      : 5;
+      : playMove()
+      ? 5
+      : 6;
   }
 
 }

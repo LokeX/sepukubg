@@ -15,7 +15,7 @@ public class Navigation {
   private GamePlay gameState () {
     
     return
-      matchPlay.gameState();
+      matchPlay.gamePlay();
   }
   
   public boolean isNavigating () {

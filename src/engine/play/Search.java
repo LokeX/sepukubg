@@ -24,7 +24,7 @@ public class Search {
   private GamePlay gameState () {
 
     return
-      matchPlay.gameState();
+      matchPlay.gamePlay();
 
   }
   

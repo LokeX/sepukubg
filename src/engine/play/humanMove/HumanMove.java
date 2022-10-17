@@ -108,13 +108,6 @@ public class HumanMove {
       matchPlay.settings();
   }
 
-  private boolean autoCompleteMove () {
-
-    return
-      moveSelection.getNrOfMoves() == 1
-      && settings().isAutoCompleteMoves();
-  }
-
   private boolean autoSelectPartMoves() {
 
     return
@@ -124,7 +117,7 @@ public class HumanMove {
   private GamePlay gameState () {
 
     return
-      matchPlay.gameState();
+      matchPlay.gamePlay();
   }
 
   private void startMoveSelection () {
@@ -145,15 +138,10 @@ public class HumanMove {
 
   public void startMove () {
 
-    if (matchPlay.selectedMove().isIllegal()) {
-      endMove();
-      matchPlay.endTurn();
-    } else {
-      startMoveSelection();
-      if (autoSelectPartMoves()) {
-        autoSelectPoints();
-        outputMoveLayouts();
-      }
+    startMoveSelection();
+    if (autoSelectPartMoves()) {
+      autoSelectPoints();
+      outputMoveLayouts();
     }
   }
   

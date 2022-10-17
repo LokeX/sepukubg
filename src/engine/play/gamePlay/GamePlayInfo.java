@@ -24,7 +24,7 @@ public class GamePlayInfo {
   private GamePlay gameState () {
 
     return
-      matchState.gameState();
+      matchState.gamePlay();
   }
 
   public GamePlayInfo getGameData () {

@@ -1,5 +1,6 @@
 package inUrFace.canvas.painters;
 
+import engine.core.Cube;
 import inUrFace.canvas.BoardDim;
 import util.Batch;
 
@@ -32,7 +33,7 @@ public class CanvasCube extends MouseAdapter implements Paintable {
   private Batch[] getClickPoints () {
 
     BoardDim d = win.canvas.getDimensions();
-    Batch[] clickPoints = new Batch[3];
+    Batch[] clickPoints = new Batch[4];
 
     clickPoints[0] = new Batch(
       d.bottomLeftBearOffOffsetX,
@@ -52,6 +53,12 @@ public class CanvasCube extends MouseAdapter implements Paintable {
       d.bearOffWidth,
       d.diePocketHeight
     );
+    clickPoints[3] = new Batch(
+      (int) (d.rightPlayAreaOffsetX*1.03),
+      d.diePocketOffsetY,
+      d.bearOffWidth,
+      d.diePocketHeight
+    );
     return clickPoints;
   }
 
@@ -67,17 +74,27 @@ public class CanvasCube extends MouseAdapter implements Paintable {
     return -1;
   }
   
+  private boolean cubeOffered () {
+    
+    return
+      sepukuPlay.matchCube().cubeIsOffered();
+  }
+  
   public void paint(Graphics g) {
     
     if (isVisible()) {
 
-      engine.core.Cube cube = sepukuPlay.turnCube();
+      Cube cube = sepukuPlay.turnCube();
       BoardDim d = win.canvas.getDimensions();
       int offsetX = (int)(d.topLeftBearOffOffsetX*1.05);
       int offsetY;
       int textOffsetY;
 
-      if (cube.getOwner() == -1) {
+      if (cubeOffered()) {
+        offsetX = (int) (d.rightPlayAreaOffsetX*1.03);
+        offsetY = (int)(d.diePocketOffsetY*1.07);
+        textOffsetY =  (int)(offsetY*1.07);
+      } else if (cube.getOwner() == -1) {
         offsetY = (int)(d.diePocketOffsetY*1.07);
         textOffsetY =  (int)(offsetY*1.07);
       } else if (cube.getOwner() == 0) {
@@ -106,17 +123,38 @@ public class CanvasCube extends MouseAdapter implements Paintable {
       g.setColor(Color.red);
       g.setFont(new Font("Ariel", Font.BOLD, (int)(14.0*d.factor)));
 
-      String s = Integer.toString(cube.getValue());
+      String cubeValue = Integer.toString(cube.getValue());
 
-      g.drawString(s, (int)(offsetX*(1.31-(0.095*(s.length()-1)))), textOffsetY);
+      g.drawString(
+        cubeValue,
+        (int)(offsetX*(cubeOffered() ? 1.027 : 1.29-(0.095*(cubeValue.length()-1)))),
+        textOffsetY
+      );
     }
+  }
+  
+  private boolean gameIsPlaying () {
+    
+    return
+      sepukuPlay.gameIsPlaying();
   }
 
   @Override
   public void mouseClicked (MouseEvent e) {
 
-    if (sepukuPlay.gameIsPlaying() && !sepukuPlay.gameOver() && getClickedPoint(e) >= 0) {
-      sepukuPlay.matchCube().humanHandlesCube();
+    if (isVisible()) {
+      int clickedPoint = getClickedPoint(e);
+      
+      if (gameIsPlaying() && clickedPoint >= 0) {
+        System.out.println("Cube clicked");
+        if (cubeOffered() && clickedPoint == 3) {
+          System.out.println("human accepts cube");
+          sepukuPlay.matchCube().humanAcceptsCube();
+        } else {
+          System.out.println("human handles cube");
+          sepukuPlay.matchCube().humanHandlesCube();
+        }
+      }
     }
   }
 
