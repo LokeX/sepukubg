@@ -3,10 +3,6 @@ package engine.play;
 import engine.play.score.MatchBoard;
 import engine.core.Game;
 
-import static sepuku.WinApp.win;
-import static util.Dialogs.confirmed;
-import static util.Dialogs.showMessage;
-
 public class MatchCube {
 
   private MatchPlay matchPlay;
@@ -60,6 +56,8 @@ public class MatchCube {
       );
       if (!cubeWasRejected()) {
         getGame().playerDoubles();
+      } else {
+        matchPlay.endTurn();
       }
     }
   }
