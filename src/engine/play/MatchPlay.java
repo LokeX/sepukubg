@@ -309,6 +309,7 @@ public class MatchPlay {
     if (gameIsPlaying()) {
       matchBoard.mergeScores();
     }
+    autoCompleteGame = false;
     initScenario();
     getMoveOutput().setOutputLayout(scenario);
     sepukuPlay.scenarios().setEditing(false);
