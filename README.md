@@ -1,5 +1,8 @@
 # sepukubg
-Backgammon Java engine: move-generation, evaluation, search (to ply 3) and training.
+Backgammon Java implementation
+
+Full featured Backgammon engine written in Java: 
+Move-generation, evaluation, search (to ply 3) and training.
 
 Backgammon Java Swing UI
 
